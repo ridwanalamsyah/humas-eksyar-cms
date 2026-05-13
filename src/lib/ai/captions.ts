@@ -1,0 +1,326 @@
+/**
+ * AI Caption Generator wrapper.
+ *
+ * - When `GEMINI_API_KEY` env var is present, calls Gemini 2.0 Flash via
+ *   `@google/genai` SDK.
+ * - When absent (preview / no key), falls back to a deterministic local
+ *   composer that mimics the structure: HEADLINE (caps), opening, body,
+ *   close + identitas + hashtags. Quality is good enough that the UI
+ *   demo doesn't break in the absence of a key.
+ *
+ * IMPORTANT: keep all Gemini imports inside the function so client builds
+ * don't try to bundle node-only SDK code.
+ */
+
+import { HASHTAG_BLOCK } from "@/lib/fixtures/contents";
+import type { CaptionStyle, ContentRubric } from "@/lib/data/types";
+
+export interface CaptionRequest {
+  /** What the post is about — short title or vibe */
+  title: string;
+  /** Free-form details the user wants in the caption */
+  details: string;
+  /** Division name to give writer-voice context */
+  divisionName: string;
+  /** Editorial rubric */
+  rubric: ContentRubric;
+  /** Style/tone tag */
+  style: CaptionStyle;
+  /** Number of alternative variants to produce (1..3) */
+  variants?: number;
+  /** Whether to include reel hook */
+  includeHook?: boolean;
+  /** Optional list of additional hashtags (already prefixed with #) */
+  extraHashtags?: string;
+}
+
+export interface CaptionResult {
+  /** Primary caption */
+  caption: string;
+  /** Alternative caption variants (style-bend) */
+  alternatives: string[];
+  /** Suggested hook line for reels */
+  hook?: string;
+  /** Final hashtag block */
+  hashtags: string;
+  /** Suggested call-to-action */
+  cta?: string;
+  /** Provider metadata */
+  provider: "gemini" | "mock";
+  /** Timestamp ISO */
+  generatedAt: string;
+}
+
+const STYLE_LABELS: Record<CaptionStyle, string> = {
+  formal_organisasi: "Formal Organisasi (resmi, hangat, struktur 5-bagian)",
+  gen_z_friendly: "Gen Z Friendly (santai, gaya IG-native, emoji minimalis)",
+  cinematic: "Cinematic Storytelling (kalimat pendek beruntun, visual)",
+  profesional: "Profesional (langsung, ringkas, format poin numerik)",
+  persuasif: "Persuasif (CTA kuat, retorika, urgensi)",
+  emotional_branding: "Emotional Branding (hangat, reflektif, koneksi pribadi)",
+  campaign: "Campaign Communication (mobilisasi massa, hashtag-driven)",
+};
+
+const RUBRIC_LABELS: Record<ContentRubric, string> = {
+  tausiyah_senin: "Tausiyah Senin (kajian singkat, ayat/hadits, refleksi pagi)",
+  eksyar_talks: "Eksyar Talks (talkshow / kuliah umum / podcast)",
+  bisnis_halal: "Bisnis Halal (spotlight UMKM, sertifikasi halal)",
+  eksphoria_update: "Eksphoria Update (festival tahunan)",
+  selamat_sukses: "Selamat & Sukses (ucapan hari besar / pencapaian)",
+  kajian: "Kajian Akademik",
+  pengumuman: "Pengumuman Resmi",
+  dokumentasi: "Dokumentasi Kegiatan (recap)",
+  campaign: "Campaign / Mobilisasi",
+};
+
+const FOOTER =
+  "———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!";
+
+function ensureFooter(text: string): string {
+  if (text.includes("Eksyar Satu, Victory in Harmony")) return text;
+  return `${text.trimEnd()}\n\n${FOOTER}`;
+}
+
+function buildPrompt(req: CaptionRequest): string {
+  return [
+    "Kamu adalah AI copywriter untuk Humas Eksyar — Ekonomi Syariah UIN SGD Bandung.",
+    "Tagline organisasi: Eksyar Satu, Victory in Harmony!.",
+    "Tone: hangat, akademik tapi tetap manusiawi, tidak kaku, tidak generic AI.",
+    "Hindari: kata 'unleash', 'elevate', 'leverage', tabel emoji berderet, ✨ berlebihan, hashtag bertumpuk-tumpuk di tengah caption.",
+    "Selalu hormati nilai Islam — tidak pakai bahasa flirty, tidak hyperbole.",
+    "Selalu tutup dengan: '———\\nHumas Eksyar UIN SGD\\nEksyar Satu, Victory in Harmony!'.",
+    "",
+    `Rubrik: ${RUBRIC_LABELS[req.rubric] ?? req.rubric}`,
+    `Gaya tulisan: ${STYLE_LABELS[req.style] ?? req.style}`,
+    `Divisi yang menulis: ${req.divisionName}`,
+    `Judul/topik: ${req.title}`,
+    `Detail: ${req.details}`,
+    "",
+    "Hasilkan JSON dengan kunci: caption (string), alternatives (array of 2 string), hook (1 kalimat 3-detik), cta (1 kalimat ajakan).",
+    "Caption maksimal 220 kata, hashtag JANGAN dimasukkan (akan disambung otomatis).",
+    "JANGAN menulis komentar di luar JSON, JANGAN bungkus dengan ```json.",
+  ].join("\n");
+}
+
+/**
+ * Mock generator that produces a believable, on-brand caption without
+ * requiring a Gemini API key. Used both as fallback and for offline dev.
+ */
+function mockCompose(req: CaptionRequest): CaptionResult {
+  const { title, details, divisionName, rubric, style } = req;
+  const headline = title.toUpperCase();
+
+  const styled = (() => {
+    switch (style) {
+      case "cinematic":
+        return [
+          headline,
+          "",
+          `Bayangkan ruangan itu. ${details ? details : "Suara pelan, langkah teratur."}`,
+          "Satu napas. Satu detik tertahan.",
+          "Lalu, momentum.",
+          "",
+          "Itulah yang kami siapkan — bukan sekadar acara, tapi perjalanan.",
+          "Tandai tanggalnya. Kita bertemu di sana.",
+        ].join("\n");
+      case "gen_z_friendly":
+        return [
+          `${title} hits different ✨`,
+          "",
+          details || "no exaggeration — ini real.",
+          "",
+          "highlight singkat:",
+          "• vibe-nya beneran beda",
+          "• siap-siap bookmark",
+          "• tag 1 temenmu yang harus liat",
+          "",
+          "geser kanan untuk full story →",
+        ].join("\n");
+      case "profesional":
+        return [
+          `${headline} — RILIS RESMI`,
+          "",
+          `Divisi ${divisionName} dengan ini menyampaikan informasi berikut:`,
+          "",
+          details || "Detail menyusul melalui kanal resmi.",
+          "",
+          "Mohon perhatian dan dukungan dari seluruh keluarga Eksyar.",
+        ].join("\n");
+      case "persuasif":
+        return [
+          `${title}.`,
+          "",
+          "Kalau bukan sekarang, kapan lagi?",
+          "",
+          details || "Bergabung. Ambil langkah pertama. Tinggalkan ragu.",
+          "",
+          "Daftar di link bio. Slot terbatas — yang serius duluan.",
+        ].join("\n");
+      case "emotional_branding":
+        return [
+          headline,
+          "",
+          "Untuk kamu yang masih bertanya: 'apakah jalan ini benar?'",
+          "",
+          details || "Kami pun pernah ragu. Tapi kami terus berjalan, dan ternyata jalan itu memimpin pulang.",
+          "",
+          "Selamat datang di rumah yang sama.",
+          "",
+          "🌟 Eksyar Satu.",
+        ].join("\n");
+      case "campaign":
+        return [
+          `${headline} — KAMI PERLU KAMU`,
+          "",
+          details || "Gerakan ini membutuhkan suara, kehadiran, dan dukunganmu.",
+          "",
+          "Ayo bergerak bersama:",
+          "1. Bagikan postingan ini",
+          "2. Tag 3 teman",
+          "3. Hadir di acara puncak",
+          "",
+          "Bersama, kita ciptakan momentum.",
+        ].join("\n");
+      case "formal_organisasi":
+      default:
+        return [
+          headline,
+          "",
+          "Assalamualaikum warahmatullahi wabarakatuh",
+          "",
+          `Segenap pengurus Humas Eksyar UIN SGD menyampaikan ${rubric === "selamat_sukses" ? "ucapan selamat" : "informasi resmi"} berikut.`,
+          "",
+          details ||
+            "Detail informasi akan diumumkan melalui kanal resmi organisasi.",
+          "",
+          "Mohon perhatian, dukungan, dan doa dari seluruh keluarga Eksyar 🌟",
+        ].join("\n");
+    }
+  })();
+
+  const caption = ensureFooter(styled);
+
+  // Simple alternative variants — bend tone slightly
+  const altA = ensureFooter(
+    `${title}.\n\n${details || "Detail kegiatan akan kami sampaikan via channel resmi."}\n\nSampai jumpa di sana — semoga harinya berkah.`,
+  );
+  const altB = ensureFooter(
+    `${title.toLowerCase()}.\n\n${details ? details : "tema kali ini terasa personal — semoga bisa beresonansi."}\n\nbaca sampai habis. tag yang perlu lihat. terima kasih sudah hadir di sini.`,
+  );
+
+  const hashtags = `${HASHTAG_BLOCK}${req.extraHashtags ? ` ${req.extraHashtags}` : ""}`;
+
+  return {
+    caption,
+    alternatives: [altA, altB],
+    hook: req.includeHook
+      ? "3 detik pertama: 'Lihat ini sebelum scroll ke bawah.'"
+      : undefined,
+    hashtags,
+    cta: "Simpan & bagikan kalau bermanfaat untuk satu orang lain.",
+    provider: "mock",
+    generatedAt: new Date().toISOString(),
+  };
+}
+
+/**
+ * Try calling Gemini 2.0 Flash via @google/genai. Returns null on
+ * any error (network, quota, parse failure) so the caller can fall back.
+ */
+async function callGemini(req: CaptionRequest): Promise<CaptionResult | null> {
+  const key = process.env.GEMINI_API_KEY;
+  if (!key) return null;
+
+  try {
+    const { GoogleGenAI } = await import("@google/genai");
+    const ai = new GoogleGenAI({ apiKey: key });
+    const result = await ai.models.generateContent({
+      model: "gemini-2.0-flash-exp",
+      contents: buildPrompt(req),
+      config: {
+        responseMimeType: "application/json",
+      },
+    });
+    const text = result.text ?? "";
+    const parsed = JSON.parse(text) as {
+      caption?: string;
+      alternatives?: string[];
+      hook?: string;
+      cta?: string;
+    };
+    if (!parsed.caption) return null;
+    return {
+      caption: ensureFooter(parsed.caption),
+      alternatives: (parsed.alternatives ?? []).map((c) => ensureFooter(c)),
+      hook: req.includeHook ? parsed.hook : undefined,
+      cta: parsed.cta,
+      hashtags: `${HASHTAG_BLOCK}${req.extraHashtags ? ` ${req.extraHashtags}` : ""}`,
+      provider: "gemini",
+      generatedAt: new Date().toISOString(),
+    };
+  } catch {
+    return null;
+  }
+}
+
+export async function generateCaption(req: CaptionRequest): Promise<CaptionResult> {
+  const gemini = await callGemini(req);
+  return gemini ?? mockCompose(req);
+}
+
+export const STYLE_LIST: Array<{ value: CaptionStyle; label: string; emoji: string; hint: string }> = [
+  {
+    value: "formal_organisasi",
+    label: "Formal Organisasi",
+    emoji: "🏛️",
+    hint: "Resmi, hangat, struktur 5-bagian",
+  },
+  {
+    value: "gen_z_friendly",
+    label: "Gen Z Friendly",
+    emoji: "✨",
+    hint: "Santai, IG-native, emoji minimalis",
+  },
+  {
+    value: "cinematic",
+    label: "Cinematic",
+    emoji: "🎬",
+    hint: "Kalimat pendek, visual, atmospheric",
+  },
+  {
+    value: "profesional",
+    label: "Profesional",
+    emoji: "📋",
+    hint: "Ringkas, format poin, langsung",
+  },
+  {
+    value: "persuasif",
+    label: "Persuasif",
+    emoji: "🎯",
+    hint: "CTA kuat, retorika, urgensi",
+  },
+  {
+    value: "emotional_branding",
+    label: "Emotional Branding",
+    emoji: "💛",
+    hint: "Hangat, reflektif, personal",
+  },
+  {
+    value: "campaign",
+    label: "Campaign",
+    emoji: "📣",
+    hint: "Mobilisasi massa, hashtag-driven",
+  },
+];
+
+export const RUBRIC_LIST: Array<{ value: ContentRubric; label: string; emoji: string }> = [
+  { value: "tausiyah_senin", label: "Tausiyah Senin", emoji: "🌙" },
+  { value: "eksyar_talks", label: "Eksyar Talks", emoji: "🎙️" },
+  { value: "bisnis_halal", label: "Bisnis Halal", emoji: "🛍️" },
+  { value: "eksphoria_update", label: "Eksphoria Update", emoji: "🎉" },
+  { value: "selamat_sukses", label: "Selamat & Sukses", emoji: "🌟" },
+  { value: "kajian", label: "Kajian Akademik", emoji: "📚" },
+  { value: "pengumuman", label: "Pengumuman", emoji: "📢" },
+  { value: "dokumentasi", label: "Dokumentasi Kegiatan", emoji: "📷" },
+  { value: "campaign", label: "Campaign", emoji: "📣" },
+];
