@@ -7,7 +7,7 @@
  * `provider.ts` can swap them seamlessly.
  */
 
-import { and, asc, desc, eq, ilike, or, sql as drizzleSql } from "drizzle-orm";
+import { and, asc, desc, eq, ilike, inArray, or, sql as drizzleSql } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
 import * as fixtures from "./mock-provider";
 import type {
@@ -122,7 +122,7 @@ export async function listContents(opts?: {
   const filters = [];
   if (opts?.status) {
     const set = Array.isArray(opts.status) ? opts.status : [opts.status];
-    filters.push(drizzleSql`${schema.contents.status} = ANY(${set})`);
+    filters.push(inArray(schema.contents.status, set));
   }
   if (opts?.divisionId) {
     filters.push(eq(schema.contents.divisionId, opts.divisionId));
