@@ -37,6 +37,8 @@ import type {
   WeeklyDigest,
   XPLog,
   CaptionTemplate,
+  CaptionVersion,
+  CaptionVersionSource,
   ID,
 } from "./types";
 
@@ -208,6 +210,71 @@ export async function listXPLogs(memberId: ID): Promise<XPLog[]> {
 
 export async function listCaptionTemplates(): Promise<CaptionTemplate[]> {
   return captionTemplates;
+}
+
+/* ------------------------------------------------------------------ */
+/* Caption versions (in-memory mock store)                              */
+/* ------------------------------------------------------------------ */
+
+const captionVersionsStore: CaptionVersion[] = [];
+
+export async function listCaptionVersions(
+  contentId: ID,
+): Promise<CaptionVersion[]> {
+  return captionVersionsStore
+    .filter((v) => v.contentId === contentId)
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+}
+
+export async function createCaptionVersion(input: {
+  contentId: ID;
+  caption: string;
+  hashtags?: string;
+  captionStyle?: string | null;
+  source?: CaptionVersionSource;
+  note?: string;
+  authorId?: ID | null;
+}): Promise<CaptionVersion> {
+  const id = `cvr-${Date.now().toString(36)}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}`;
+  const v: CaptionVersion = {
+    id,
+    contentId: input.contentId,
+    caption: input.caption,
+    hashtags: input.hashtags ?? "",
+    captionStyle: (input.captionStyle ?? null) as CaptionVersion["captionStyle"],
+    source: input.source ?? "manual",
+    note: input.note ?? "",
+    authorId: input.authorId ?? null,
+    createdAt: new Date().toISOString(),
+  };
+  captionVersionsStore.push(v);
+  return v;
+}
+
+export async function restoreCaptionVersion(
+  versionId: ID,
+): Promise<{ content: ContentItem; version: CaptionVersion } | null> {
+  const ver = captionVersionsStore.find((v) => v.id === versionId);
+  if (!ver) return null;
+  const content = findContent(ver.contentId);
+  if (!content) return null;
+  // Mutate the in-memory fixture (mock-only behavior; resets on reload).
+  content.caption = ver.caption;
+  content.hashtags = ver.hashtags;
+  content.captionStyle = ver.captionStyle ?? content.captionStyle;
+  content.updatedAt = new Date().toISOString();
+  await createCaptionVersion({
+    contentId: ver.contentId,
+    caption: ver.caption,
+    hashtags: ver.hashtags,
+    captionStyle: ver.captionStyle,
+    source: "restore",
+    note: `Restored from version ${versionId}`,
+    authorId: ver.authorId,
+  });
+  return { content, version: ver };
 }
 
 export async function listLeaderboard(): Promise<Member[]> {

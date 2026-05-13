@@ -39,7 +39,7 @@ async function main() {
   // Auth tables (users, accounts, sessions, verificationTokens) are untouched.
   if (process.argv.includes("--reset")) {
     console.log("seed: --reset flag detected, truncating domain tables…");
-    await sql`TRUNCATE "notifications", "xpLogs", "weeklyDigests", "quests", "badges", "events", "media", "captionTemplates", "contents", "members", "divisions" CASCADE`;
+    await sql`TRUNCATE "notifications", "xpLogs", "weeklyDigests", "quests", "badges", "events", "media", "captionTemplates", "captionVersions", "contents", "members", "divisions" CASCADE`;
   }
 
   console.log("seed: divisions");

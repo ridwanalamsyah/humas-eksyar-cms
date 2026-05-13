@@ -45,4 +45,8 @@ export const listCaptionTemplates = impl.listCaptionTemplates;
 export const listLeaderboard = impl.listLeaderboard;
 export const listDivisionLeaderboard = impl.listDivisionLeaderboard;
 
+export const listCaptionVersions = impl.listCaptionVersions;
+export const createCaptionVersion = impl.createCaptionVersion;
+export const restoreCaptionVersion = impl.restoreCaptionVersion;
+
 export { HASHTAG_BLOCK };

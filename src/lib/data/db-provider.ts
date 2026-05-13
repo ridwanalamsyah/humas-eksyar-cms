@@ -13,6 +13,8 @@ import * as fixtures from "./mock-provider";
 import type {
   Badge,
   CaptionTemplate,
+  CaptionVersion,
+  CaptionVersionSource,
   ContentItem,
   ContentStatus,
   Division,
@@ -366,4 +368,93 @@ export async function listDivisionLeaderboard(): Promise<
       };
     })
     .sort((a, b) => b.totalXP - a.totalXP);
+}
+
+/* ------------------------------------------------------------------ */
+/* Caption versions                                                    */
+/* ------------------------------------------------------------------ */
+
+export async function listCaptionVersions(
+  contentId: ID,
+): Promise<CaptionVersion[]> {
+  const rows = await client()
+    .select()
+    .from(schema.captionVersions)
+    .where(eq(schema.captionVersions.contentId, contentId))
+    .orderBy(desc(schema.captionVersions.createdAt));
+  return rows.map((r) => row<CaptionVersion>(r));
+}
+
+export async function createCaptionVersion(input: {
+  contentId: ID;
+  caption: string;
+  hashtags?: string;
+  captionStyle?: string | null;
+  source?: CaptionVersionSource;
+  note?: string;
+  authorId?: ID | null;
+}): Promise<CaptionVersion> {
+  const id = `cvr-${Date.now().toString(36)}-${Math.random()
+    .toString(36)
+    .slice(2, 8)}`;
+  const createdAt = new Date().toISOString();
+  const insertRow = {
+    id,
+    contentId: input.contentId,
+    caption: input.caption,
+    hashtags: input.hashtags ?? "",
+    captionStyle: input.captionStyle ?? null,
+    source: input.source ?? "manual",
+    note: input.note ?? "",
+    authorId: input.authorId ?? null,
+    createdAt,
+  };
+  await client().insert(schema.captionVersions).values(insertRow);
+  return row<CaptionVersion>(insertRow);
+}
+
+export async function restoreCaptionVersion(versionId: ID): Promise<{
+  content: ContentItem;
+  version: CaptionVersion;
+} | null> {
+  const verRows = await client()
+    .select()
+    .from(schema.captionVersions)
+    .where(eq(schema.captionVersions.id, versionId))
+    .limit(1);
+  const ver = verRows[0];
+  if (!ver) return null;
+
+  const updatedAt = new Date().toISOString();
+  await client()
+    .update(schema.contents)
+    .set({
+      caption: ver.caption,
+      hashtags: ver.hashtags,
+      captionStyle: ver.captionStyle ?? null,
+      updatedAt,
+    })
+    .where(eq(schema.contents.id, ver.contentId));
+
+  const updated = await client()
+    .select()
+    .from(schema.contents)
+    .where(eq(schema.contents.id, ver.contentId))
+    .limit(1);
+  if (!updated[0]) return null;
+
+  await createCaptionVersion({
+    contentId: ver.contentId,
+    caption: ver.caption,
+    hashtags: ver.hashtags,
+    captionStyle: ver.captionStyle,
+    source: "restore",
+    note: `Restored from version ${versionId}`,
+    authorId: ver.authorId,
+  });
+
+  return {
+    content: row<ContentItem>(updated[0]),
+    version: row<CaptionVersion>(ver),
+  };
 }

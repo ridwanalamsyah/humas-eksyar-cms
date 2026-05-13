@@ -227,6 +227,22 @@ export const notifications = pgTable("notifications", {
   at: text("at").notNull(),
 });
 
+export const captionVersions = pgTable("captionVersions", {
+  id: text("id").primaryKey(),
+  contentId: text("contentId")
+    .notNull()
+    .references(() => contents.id, { onDelete: "cascade" }),
+  caption: text("caption").notNull(),
+  hashtags: text("hashtags").notNull().default(""),
+  captionStyle: text("captionStyle"),
+  source: text("source").notNull().default("manual"),
+  note: text("note").notNull().default(""),
+  authorId: text("authorId").references(() => members.id, {
+    onDelete: "set null",
+  }),
+  createdAt: text("createdAt").notNull(),
+});
+
 export const captionTemplates = pgTable("captionTemplates", {
   id: text("id").primaryKey(),
   rubric: text("rubric").notNull(),
