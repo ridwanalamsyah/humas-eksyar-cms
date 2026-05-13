@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Inter, Inter_Tight, Fraunces } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { SessionProvider } from "@/components/providers/session-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { Toaster } from "sonner";
 import { PWARegister } from "@/components/providers/pwa-register";
@@ -80,6 +81,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${interTight.variable} ${fraunces.variable} ${geistSans.variable} ${geistMono.variable} relative min-h-dvh font-sans antialiased`}
       >
+        <SessionProvider>
         <ThemeProvider>
           <LenisProvider>
             {/* mesh gradient background, fixed behind content */}
@@ -104,6 +106,7 @@ export default function RootLayout({
             <PWARegister />
           </LenisProvider>
         </ThemeProvider>
+        </SessionProvider>
       </body>
     </html>
   );

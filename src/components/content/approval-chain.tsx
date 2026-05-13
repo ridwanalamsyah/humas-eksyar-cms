@@ -31,7 +31,7 @@ export function ApprovalChain({ content }: { content: ContentItem }) {
           stage === "review_divisi"
             ? division.leadId
             : stage === "review_sekjen"
-              ? "mbr-rifqi"
+              ? "mbr-evi"
               : stage === "draft"
                 ? content.authorId
                 : null;

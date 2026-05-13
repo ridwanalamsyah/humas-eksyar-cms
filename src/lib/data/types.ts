@@ -18,13 +18,7 @@ export type Role =
   | "sekjen"
   | "admin";
 
-export type DivisionSlug =
-  | "humas"
-  | "akademik"
-  | "kewirausahaan"
-  | "kaderisasi"
-  | "sekretariat"
-  | "bendahara";
+export type DivisionSlug = string;
 
 export type ContentStatus =
   | "idea"

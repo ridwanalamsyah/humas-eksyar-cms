@@ -35,6 +35,13 @@ async function main() {
   const sql = neon(url);
   const db = drizzle(sql, { schema });
 
+  // When --reset is passed, wipe domain tables so stale fixture IDs are removed.
+  // Auth tables (users, accounts, sessions, verificationTokens) are untouched.
+  if (process.argv.includes("--reset")) {
+    console.log("seed: --reset flag detected, truncating domain tables…");
+    await sql`TRUNCATE "notifications", "xpLogs", "weeklyDigests", "quests", "badges", "events", "media", "captionTemplates", "contents", "members", "divisions" CASCADE`;
+  }
+
   console.log("seed: divisions");
   await db.insert(schema.divisions).values(divisions).onConflictDoNothing();
 
