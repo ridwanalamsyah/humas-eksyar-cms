@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0d9488" offset="0"/>
+      <stop stop-color="#0a5f5a" offset="0.6"/>
+      <stop stop-color="#053330" offset="1"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="80" y1="60" x2="430" y2="430" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.5"/>
+      <stop stop-color="#ffffff" stop-opacity="0" offset="0.5"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect x="0" y="0" width="512" height="512" rx="112" fill="url(#shine)" opacity="0.6"/>
+  <!-- Octagon ornament behind ES -->
+  <path d="M256 96 L416 176 L416 336 L256 416 L96 336 L96 176 Z" stroke="rgba(255,255,255,0.18)" stroke-width="4" fill="none"/>
+  <!-- ES monogram -->
+  <text x="256" y="318" font-family="'Inter Tight', system-ui, -apple-system, sans-serif" font-weight="600" font-size="208" letter-spacing="-12" text-anchor="middle" fill="#f8f1dd">ES</text>
+  <!-- gold dot -->
+  <circle cx="384" cy="128" r="14" fill="#e89422"/>
+</svg>
