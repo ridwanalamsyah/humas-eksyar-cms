@@ -10,7 +10,7 @@ import { ArrowUpRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Divisi",
-  description: "6 divisi yang membentuk Humas Eksyar.",
+  description: "Struktur organisasi Humas Eksyar.",
 };
 
 export default async function DivisionsPage() {

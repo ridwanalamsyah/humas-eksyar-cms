@@ -16,8 +16,7 @@ export default async function ContentPage() {
           Konten
         </h1>
         <p className="mt-2 max-w-prose text-foreground/65">
-          Pipeline ide → publish dengan approval matrix Humas Eksyar. AI menandai
-          konten yang dihasilkan/dipoles otomatis.
+          Pipeline editorial: ide, draft, review, publish.
         </p>
       </header>
       <ContentBoard contents={contents} />

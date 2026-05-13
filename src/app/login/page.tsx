@@ -72,8 +72,8 @@ export default function LoginPage() {
               .
             </h1>
             <p className="max-w-[44ch] text-pretty text-foreground/70">
-              Manajemen anggota, divisi, kalender Hijriah, AI caption generator, gamifikasi,
-              hingga sinkron ERP — dirancang khusus untuk Humas Eksyar.
+              Manajemen anggota, editorial pipeline, AI caption, dan kalender kegiatan
+              dalam satu platform.
             </p>
           </div>
 

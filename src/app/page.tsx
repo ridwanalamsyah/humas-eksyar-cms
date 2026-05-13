@@ -69,7 +69,7 @@ export default async function HomePage() {
         <SectionHeader
           eyebrow="Aksi cepat"
           title="Mulai dari mana?"
-          description="Tools yang paling sering kamu pakai — supaya momentum tidak hilang."
+          description="Shortcut utama tim Humas."
         />
         <QuickActions />
       </div>
@@ -78,8 +78,8 @@ export default async function HomePage() {
         <section>
           <SectionHeader
             eyebrow="Editorial"
-            title="Konten terbaru tim"
-            description="Real-time feed dari semua divisi. Klik untuk buka detail + AI sidebar."
+            title="Konten terbaru"
+            description="Feed terbaru dari tim."
             cta={{ label: "Lihat semua", href: "/content" }}
           />
           <div className="grid gap-4 sm:grid-cols-2">
@@ -111,8 +111,8 @@ export default async function HomePage() {
       <div className="mt-10">
         <SectionHeader
           eyebrow="AI Highlight"
-          title="Konten paling resonan minggu ini"
-          description="Berdasarkan reach × engagement × sentiment."
+          title="Top konten minggu ini"
+          description="Berdasarkan reach, engagement, dan sentiment."
           cta={{ label: "Detail analytics", href: "/analytics" }}
         />
         <GlassCard variant="thick" className="grid gap-6 overflow-hidden p-6 sm:grid-cols-[1.1fr_1fr] sm:p-8">

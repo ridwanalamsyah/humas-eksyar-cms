@@ -17,7 +17,7 @@ export default async function CalendarPage() {
       <SectionHeader
         eyebrow="Agenda Organisasi"
         title="Kalender Hijriah &amp; Masehi"
-        description="Pantau kegiatan per divisi. Klik tanggal untuk lihat agenda harinya."
+        description="Jadwal kegiatan bulanan."
       />
       <CalendarView events={events} divisions={divisions} />
     </AppShell>

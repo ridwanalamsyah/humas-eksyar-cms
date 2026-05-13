@@ -83,7 +83,7 @@ export default async function AnalyticsPage() {
       <SectionHeader
         eyebrow="Insight Organisasi"
         title="Analytics Dashboard"
-        description={`${contents.length} konten publish · agregat dari semua channel.`}
+        description={`${contents.length} konten publish.`}
       />
 
       <div className="mt-2 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">

@@ -14,7 +14,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-aditya",
     body: "Tahun ini Universitas Islam Negeri Sunan Gunung Djati Bandung memasuki usia ke-58. HMJ Ekonomi Syariah turut bersyukur dan terus meneguhkan komitmen.",
     caption:
-      "DIES NATALIS UIN SUNAN GUNUNG DJATI BANDUNG KE-58\n\nAssalamualaikum warahmatullahi wabarakatuh\n\nSegenap pengurus Humas Eksyar UIN SGD menyampaikan ucapan selamat memperingati Dies Natalis ke-58. Semoga UIN SGD terus menjadi mercusuar peradaban Islam di tanah Sunda dan dunia, mencetak generasi rabbani yang siap memimpin ekonomi yang berkah.\n\nSemoga di usia yang ke-58, langkah kita semakin teguh, kokoh, dan berdampak luas bagi umat 🌟\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
+      "DIES NATALIS UIN SGD KE-58\n\nSelamat memperingati Dies Natalis ke-58 UIN Sunan Gunung Djati Bandung. Semoga terus mencetak generasi rabbani yang siap memimpin ekonomi berkah.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: HASHTAG_BLOCK,
     channels: ["instagram", "twitter", "facebook"],
     mediaIds: ["med-cover-dies-natalis"],
@@ -45,7 +45,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-alya",
     body: "Teaser pertama Eksphoria 2026 — festival tahunan Eksyar yang akan dipublikasikan H-30 acara.",
     caption:
-      "EKSPHORIA 2026 — VICTORY IN HARMONY\n\nFestival tahunan kebanggaan Eksyar kembali. Tahun ini kita angkat tema “Halal Future, Harmonized”.\n\n📍 Auditorium UIN SGD Bandung\n📅 30 Mei 2026\n⏰ Detail rundown coming soon\n\nKonser, talkshow tokoh, kompetisi UMKM halal, dan kejutan kolaborasi besar. Catat tanggalnya — kita lihatkan bahwa ekonomi syariah bisa keren, ramai, dan punya panggung sendiri.\n\nLink registrasi di bio. Tag teman yang harus ikut! 🔥\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
+      "EKSPHORIA 2026\n\nFestival tahunan Eksyar kembali. Tema: Halal Future, Harmonized. Auditorium UIN SGD Bandung, 30 Mei 2026. Konser, talkshow, kompetisi UMKM halal. Link registrasi di bio.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: `${HASHTAG_BLOCK} #EKSPHORIA2026 #HALALFUTURE`,
     channels: ["instagram", "tiktok", "twitter"],
     mediaIds: ["med-cover-eksphoria", "med-wide-stage-eksphoria"],
@@ -66,7 +66,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-alya",
     body: "Konten ucapan Hari Kartini — sedang direview Ketua Divisi Humas (Aulia).",
     caption:
-      "SELAMAT HARI KARTINI 2026\n\nUntuk seluruh perempuan Eksyar yang sedang berjuang di balik layar — kamu adalah Kartini hari ini.\n\nTerima kasih sudah menjaga semangat ilmu, memimpin diskusi tanpa henti, dan menulis caption sambil mengejar deadline kuliah.\n\nSemoga setiap langkah kita mengangkat lebih banyak perempuan untuk merdeka secara ilmu, ekonomi, dan iman.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
+      "SELAMAT HARI KARTINI 2026\n\nUntuk seluruh perempuan Eksyar yang terus berjuang. Semoga setiap langkah kita mengangkat lebih banyak perempuan untuk merdeka secara ilmu, ekonomi, dan iman.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: `${HASHTAG_BLOCK} #HARIKARTINI #PEREMPUANEKSYAR`,
     channels: ["instagram"],
     mediaIds: ["med-portrait-kartini"],
@@ -86,7 +86,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-arisman",
     body: "Recap kuliah umum tema ekonomi hijau bersama tokoh OJK syariah.",
     caption:
-      "KULIAH UMUM: AKSELERASI EKONOMI HIJAU DALAM KEUANGAN SYARIAH\n\nKemarin (2/5), Auditorium UIN SGD penuh oleh ratusan mahasiswa lintas prodi yang ingin tahu: bagaimana keuangan syariah bisa jadi katalis ekonomi hijau Indonesia?\n\nNarasumber: Bapak Dr. Aditya Pratama (OJK Syariah)\n3 poin penting yang beliau tegaskan:\n• Sukuk hijau bukan tren — sudah ada Rp 11T issued di 2025.\n• Bank syariah harus integrasi prinsip ESG ke pembiayaan korporasi.\n• Mahasiswa bisa mulai dari literasi UMKM halal.\n\nTerima kasih untuk semua yang hadir, untuk Bapak Aditya yang membagikan ilmu, dan untuk panitia yang menjaga acara tetap rapi.\n\nSampai jumpa di kuliah umum berikutnya 🌟\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
+      "KULIAH UMUM: AKSELERASI EKONOMI HIJAU\n\nAuditorium UIN SGD, 2 Mei 2026. Narasumber: Dr. Aditya Pratama (OJK Syariah). Sukuk hijau Rp 11T di 2025, integrasi ESG ke pembiayaan syariah, dan peran literasi UMKM halal.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: `${HASHTAG_BLOCK} #EKONOMIHIJAU #SUKUKHIJAU`,
     channels: ["instagram", "twitter"],
     mediaIds: ["med-cover-kuliah-umum"],
@@ -117,7 +117,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-arisman",
     body: "Tausiyah singkat tema zakat produktif untuk slot Senin pagi.",
     caption:
-      "TAUSIYAH SENIN — ZAKAT PRODUKTIF\n\n“Sesungguhnya zakat-zakat itu, hanyalah untuk orang-orang fakir, orang-orang miskin… dan untuk (memerdekakan) budak, orang-orang yang berhutang, untuk jalan Allah dan untuk orang-orang yang sedang dalam perjalanan.” (At-Taubah: 60)\n\nZakat tidak harus selalu konsumtif. Zakat produktif — diberikan dalam bentuk modal usaha kepada mustahik — terbukti memutus lingkaran kemiskinan dalam jangka panjang.\n\nMari kita gunakan instrumen zakat dengan lebih cerdas. Bukan hanya menolong satu malam, tapi memerdekakan satu keluarga.\n\nSemoga Senin ini diberkahi 🌙\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
+      "TAUSIYAH SENIN: ZAKAT PRODUKTIF\n\n\"Sesungguhnya zakat-zakat itu, hanyalah untuk orang-orang fakir, orang-orang miskin...\" (At-Taubah: 60)\n\nZakat produktif — modal usaha untuk mustahik — memutus lingkaran kemiskinan jangka panjang.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: `${HASHTAG_BLOCK} #TAUSIYAHSENIN #ZAKATPRODUKTIF`,
     channels: ["instagram"],
     mediaIds: ["med-square-tausiyah"],
@@ -138,7 +138,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-adnan",
     body: "Sorotan UMKM milik Rahma — sertifikasi halal sudah turun, mau highlight di IG.",
     caption:
-      "SPOTLIGHT UMKM EKSYAR: @rama.parfum\n\nApa rasanya bikin parfum sambil tetap menjaga prinsip syariah?\n\nRahma Nuraini (Eksyar 2023) jawab: bukan halal sertifikat saja yang dia kejar — tapi rantai pasok yang adil, supplier yang bayar buruh tepat waktu, dan kemasan minim plastik.\n\nDi 2025, Rama Parfum dapat sertifikasi halal MUI dan ekspor pertama ke Malaysia.\n\nKuncinya: ekonomi syariah itu bukan branding, tapi cara hidup.\n\nIngin tahu lebih lanjut? Geser ke samping ➡️ untuk lihat behind-the-scenes.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
+      "SPOTLIGHT UMKM: RAMA PARFUM\n\nRahma Nuraini (Eksyar 2023) membangun Rama Parfum dengan prinsip rantai pasok syariah. Sertifikasi halal MUI 2025, ekspor pertama ke Malaysia.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: `${HASHTAG_BLOCK} #BISNISHALAL #UMKMEKSYAR`,
     channels: ["instagram"],
     mediaIds: ["med-square-bisnis-halal"],
@@ -158,7 +158,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-alya",
     body: "Recap singkat Business Camp Halal Track minggu lalu.",
     caption:
-      "BUSINESS CAMP 2026 — HALAL TRACK\n\n3 hari, 24 peserta, 8 ide bisnis halal, 1 panel investor, dan 1 keluarga baru.\n\nDari sertifikasi halal sampai unit ekonomi pesantren — peserta diajak melihat ekonomi syariah dari ground level.\n\nWinner: Tim Ihsan dengan pitch “Mikrofintech Petani Tanah Adat”.\n\nTerima kasih untuk semua mentor, panelis, dan keluarga Eksyar yang menjaga acara ini hidup.\n\nSampai bertemu di Business Camp 2027 🌟\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
+      "BUSINESS CAMP 2026: HALAL TRACK\n\n3 hari, 24 peserta, 8 ide bisnis halal. Winner: Tim Ihsan — Mikrofintech Petani Tanah Adat. Terima kasih untuk semua mentor dan panelis.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: `${HASHTAG_BLOCK} #BUSINESSCAMP #UMKMHALAL`,
     channels: ["instagram", "twitter"],
     mediaIds: ["med-square-business-camp"],
@@ -189,7 +189,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-arisman",
     body: "Konten teaser podcast Eksyar Talks bulan Mei — tema investasi reksadana syariah.",
     caption:
-      "Episode terbaru Eksyar Talks coming soon — kami undang Bunga Aulia (founder @sukuk.muda) untuk bicara investasi syariah generasi Z.\n\nDari reksadana syariah, sukuk ritel, sampai lifestyle finance halal — semua kita bedah dalam 30 menit.\n\nSimpan tanggalnya — episode tayang Senin depan.\n\nDraft: ini perlu di-polish + tambahin hook 3 detik untuk reel.",
+      "EKSYAR TALKS MEI\n\nNarasumber: Bunga Aulia (founder @sukuk.muda). Tema: investasi syariah generasi Z — reksadana syariah, sukuk ritel. Episode tayang Senin depan.",
     hashtags: `${HASHTAG_BLOCK} #EKSYARTALKS #INVESTASISYARIAH`,
     channels: ["instagram", "tiktok"],
     mediaIds: ["med-portrait-tokoh"],
@@ -209,7 +209,7 @@ export const contents: ContentItem[] = [
     authorId: "mbr-husen",
     body: "Dokumentasi minggu pertama onboarding angkatan 2025.",
     caption:
-      "MINGGU PERTAMA, KELUARGA BARU\n\nSelamat datang Eksyar 2025 🌱\n\nKalian sudah lewatin: ice breaking, division meet-and-greet, dan sesi “Apa yang Bikin Kamu Pilih Eksyar?”. Setiap jawaban yang kalian tulis di sticky note akan kami simpan — itu janji kalian ke diri sendiri.\n\nNanti, di akhir periode, kita lihat bareng siapa yang konsisten dengan janji itu.\n\nMari berkembang bersama dalam harmoni, dalam kebaikan, dalam ekonomi rabbani.\n\nEksyar Satu, Victory in Harmony 🌟\n\n———\nHumas Eksyar UIN SGD",
+      "ONBOARDING EKSYAR 2025\n\nMinggu pertama selesai. Ice breaking, meet-and-greet divisi, dan sesi perkenalan. Selamat datang di keluarga Eksyar.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: `${HASHTAG_BLOCK} #ONBOARDING2025 #KADERISASIEKSYAR`,
     channels: ["instagram"],
     mediaIds: ["med-square-kaderisasi"],
@@ -260,7 +260,7 @@ export const captionTemplates: CaptionTemplate[] = [
     rubric: "tausiyah_senin",
     style: "formal_organisasi",
     example:
-      "TAUSIYAH SENIN — [TEMA]\n\n“[Ayat / hadits pendek]”\n\nIsi pesan utama 3-4 kalimat hangat dan reflektif. Kaitkan tema dengan kehidupan mahasiswa Eksyar.\n\nSemoga Senin ini diberkahi 🌙\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
+      "TAUSIYAH SENIN — [TEMA]\n\n“[Ayat / hadits pendek]”\n\nIsi pesan utama 3-4 kalimat hangat dan reflektif. Kaitkan tema dengan kehidupan mahasiswa Eksyar.\n\nSemoga Senin ini diberkahi.\n\n———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!",
     hashtags: `${HASHTAG_BLOCK} #TAUSIYAHSENIN`,
   },
   {
@@ -268,7 +268,7 @@ export const captionTemplates: CaptionTemplate[] = [
     rubric: "pengumuman",
     style: "formal_organisasi",
     example:
-      "PENGUMUMAN — [JUDUL]\n\nAssalamualaikum warahmatullahi wabarakatuh\n\nKepada seluruh keluarga besar Eksyar UIN SGD, dengan ini kami sampaikan [pengumuman].\n\nDetail: [tanggal/tempat/persyaratan]\n\nMohon perhatian dan dukungannya.\n\n———\nHumas Eksyar UIN SGD",
+      "PENGUMUMAN: [JUDUL]\n\n[Isi pengumuman singkat].\n\nDetail: [tanggal/tempat/persyaratan]\n\n———\nHumas Eksyar UIN SGD",
     hashtags: HASHTAG_BLOCK,
   },
   {
@@ -284,7 +284,7 @@ export const captionTemplates: CaptionTemplate[] = [
     rubric: "selamat_sukses",
     style: "emotional_branding",
     example:
-      "[JUDUL UCAPAN — kapital]\n\nUntuk semua yang sedang berjuang [konteks personal yang relate].\n\nKami melihat. Kami bangga.\n\nTerima kasih sudah memilih jalan yang tidak mudah, jalan yang penuh berkah.\n\nSemoga [doa singkat] 🌟\n\n———\nHumas Eksyar UIN SGD",
+      "[JUDUL UCAPAN — kapital]\n\nUntuk semua yang sedang berjuang [konteks personal yang relate].\n\nKami melihat. Kami bangga.\n\nTerima kasih sudah memilih jalan yang tidak mudah, jalan yang penuh berkah.\n\nSemoga [doa singkat].\n\n———\nHumas Eksyar UIN SGD",
     hashtags: HASHTAG_BLOCK,
   },
   {
@@ -292,7 +292,7 @@ export const captionTemplates: CaptionTemplate[] = [
     rubric: "bisnis_halal",
     style: "gen_z_friendly",
     example:
-      "wait, this UMKM is actually peak 🤌\n\n[Nama brand] — [tagline 1 baris]\n\n• fakta unik 1\n• fakta unik 2 (kalau bisa angka)\n• why it matters dalam 1 kalimat\n\nbookmark untuk later, share ke temen yang lagi rintis usaha 🚀\n\n———\nHumas Eksyar UIN SGD",
+      "UMKM yang patut disorot\n\n[Nama brand] — [tagline 1 baris]\n\n• fakta unik 1\n• fakta unik 2 (kalau bisa angka)\n• why it matters dalam 1 kalimat\n\nSimpan dan share ke teman yang lagi rintis usaha.\n\n———\nHumas Eksyar UIN SGD",
     hashtags: `${HASHTAG_BLOCK} #BISNISHALAL`,
   },
   {
