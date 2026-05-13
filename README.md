@@ -13,8 +13,10 @@ Pusat ekosistem organisasi & content management untuk **Humas Eksyar** (Ekonomi 
 - **next-themes** untuk dark/light/system mode
 - **Lucide** icons (stroke 1.75)
 - **Inter / Inter Tight / Fraunces / Geist** typography
-- **Supabase** (Postgres + Auth + Storage + Realtime) — *Phase 1+*
-- **Google Gemini 2.0 Flash** untuk AI Caption Generator — *Phase 2+*
+- **Neon Postgres** (serverless) + **Drizzle ORM** — persistent data layer
+- **Auth.js v5** (NextAuth) dengan **Google OAuth** — sign-in
+- **Vercel Blob** — image / file storage
+- **Google Gemini 2.0 Flash** untuk AI Caption Generator
 
 ## Design Language
 
@@ -51,6 +53,37 @@ pnpm build        # production build (Turbopack)
 pnpm start        # serve production build
 pnpm lint         # ESLint
 ```
+
+### Database (Neon Postgres + Drizzle)
+
+```bash
+pnpm db:push      # push schema to Neon
+pnpm db:seed      # seed mock fixtures into DB
+pnpm db:studio    # open Drizzle Studio at https://local.drizzle.studio
+pnpm db:generate  # generate SQL migration files
+```
+
+## Environment Variables
+
+Create `.env.local` (gitignored) with:
+
+```bash
+# Database
+DATABASE_URL="postgresql://user:pass@ep-xxx-pooler.region.aws.neon.tech/neondb?sslmode=require"
+
+# Auth.js
+AUTH_SECRET="<openssl rand -base64 32>"
+GOOGLE_CLIENT_ID="<from Google Cloud Console>"
+GOOGLE_CLIENT_SECRET="<from Google Cloud Console>"
+
+# AI
+GEMINI_API_KEY="<from https://aistudio.google.com/apikey>"
+
+# Storage (auto-injected by Vercel Blob integration)
+BLOB_READ_WRITE_TOKEN="<from Vercel project Storage tab>"
+```
+
+> Without `DATABASE_URL`, the app falls back to static fixture data so previews still work. Auth then runs in JWT-only mode and login won't persist sessions to the DB.
 
 > **Catatan Next.js 16:** Turbopack adalah default untuk dev dan build. Async Request APIs (`cookies()`, `headers()`, `params`, `searchParams`) wajib di-`await`. Lihat `AGENTS.md`.
 
