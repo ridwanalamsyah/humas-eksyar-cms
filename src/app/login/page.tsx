@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { ArrowLeft, ShieldCheck, Sparkles } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { ArrowLeft, ShieldCheck, Sparkles, Loader2 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -21,6 +23,17 @@ function GoogleMark({ className }: { className?: string }) {
 }
 
 export default function LoginPage() {
+  const [busy, setBusy] = useState(false);
+
+  const handleGoogle = async () => {
+    setBusy(true);
+    try {
+      await signIn("google", { redirectTo: "/" });
+    } catch {
+      setBusy(false);
+    }
+  };
+
   return (
     <main className="relative flex min-h-dvh items-center justify-center px-4 py-10 sm:py-16">
       {/* Top nav */}
@@ -119,11 +132,23 @@ export default function LoginPage() {
                 size="lg"
                 variant="secondary"
                 className="w-full justify-center gap-3 text-base"
+                onClick={handleGoogle}
+                disabled={busy}
               >
-                <GoogleMark className="size-5" />
-                Masuk dengan Google
+                {busy ? (
+                  <Loader2 className="size-5 animate-spin" />
+                ) : (
+                  <GoogleMark className="size-5" />
+                )}
+                {busy ? "Mengarahkan…" : "Masuk dengan Google"}
               </Button>
-              <Button size="lg" variant="ghost" className="w-full justify-center text-base">
+              <Button
+                size="lg"
+                variant="ghost"
+                className="w-full justify-center text-base"
+                disabled
+                title="Email kampus magic link — segera tersedia"
+              >
                 Masuk dengan email kampus
               </Button>
             </div>
