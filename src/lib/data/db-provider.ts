@@ -102,7 +102,7 @@ export async function getCurrentMember(): Promise<Member> {
   const rows = await client()
     .select()
     .from(schema.members)
-    .where(eq(schema.members.id, "mbr-aulia"))
+    .where(eq(schema.members.id, "mbr-aditya"))
     .limit(1);
   if (rows[0]) return row<Member>(rows[0]);
   return fixtures.getCurrentMember();

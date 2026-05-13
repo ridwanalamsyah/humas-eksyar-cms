@@ -3,7 +3,7 @@ import type { NotificationItem, WeeklyDigest, XPLog } from "@/lib/data/types";
 export const notifications: NotificationItem[] = [
   {
     id: "ntf-1",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     title: "Tasya menugaskan review konten",
     body: "Selamat Hari Kartini menunggu review divisi.",
     kind: "approval",
@@ -13,7 +13,7 @@ export const notifications: NotificationItem[] = [
   },
   {
     id: "ntf-2",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     title: "AI menyelesaikan caption baru",
     body: "Teaser Eksphoria — versi cinematic siap di-review.",
     kind: "ai",
@@ -23,7 +23,7 @@ export const notifications: NotificationItem[] = [
   },
   {
     id: "ntf-3",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     title: "Streak 21 hari!",
     body: "Lanjutkan momentum — 9 hari lagi menuju badge Istiqomah 30 Hari.",
     kind: "badge",
@@ -33,7 +33,7 @@ export const notifications: NotificationItem[] = [
   },
   {
     id: "ntf-4",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     title: "Reminder: Rapat Pleno Mei 2026",
     body: "Tgl 15 Mei 19.00 di Sekretariat. RSVP-mu sudah confirmed.",
     kind: "event",
@@ -43,7 +43,7 @@ export const notifications: NotificationItem[] = [
   },
   {
     id: "ntf-5",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     title: "Bagus mention kamu di komentar",
     body: "“Caption Bisnis Halal-nya Aulia bantu banget…”",
     kind: "mention",
@@ -74,7 +74,7 @@ export const weeklyDigest: WeeklyDigest = {
 export const xpLogs: XPLog[] = [
   {
     id: "xp-1",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     amount: 80,
     reason: "Publish Dies Natalis (engagement bonus)",
     source: "content",
@@ -83,7 +83,7 @@ export const xpLogs: XPLog[] = [
   },
   {
     id: "xp-2",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     amount: 30,
     reason: "Approve Selamat Hari Kartini",
     source: "approval",
@@ -92,7 +92,7 @@ export const xpLogs: XPLog[] = [
   },
   {
     id: "xp-3",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     amount: 60,
     reason: "Quest mingguan: Asisten AI Sigap",
     source: "quest",
@@ -101,7 +101,7 @@ export const xpLogs: XPLog[] = [
   },
   {
     id: "xp-4",
-    memberId: "mbr-aulia",
+    memberId: "mbr-aditya",
     amount: 20,
     reason: "Streak 21 hari",
     source: "streak",

@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { ChevronRight, Search, Bell } from "lucide-react";
+import { ChevronRight, Search, Bell, LogOut } from "lucide-react";
 import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -20,6 +21,8 @@ interface AppHeaderProps {
 
 export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
   const [openSearch, setOpenSearch] = useState(false);
+  const { status } = useSession();
+  const isAuthed = status === "authenticated";
 
   return (
     <motion.header
@@ -68,15 +71,28 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
         </Link>
         <ThemeToggle />
         {member ? (
-          <Link
-            href="/profile"
-            className="ml-1 flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1 pr-3 pl-1 text-foreground/85 transition-colors hover:bg-foreground/[0.07] dark:border-white/10 dark:bg-white/[0.04]"
-          >
-            <Avatar member={member} size={30} ring={false} />
-            <span className="hidden text-sm font-medium md:block">
-              {member.name.split(" ")[0]}
-            </span>
-          </Link>
+          <div className="ml-1 flex items-center gap-1">
+            <Link
+              href="/profile"
+              className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1 pr-3 pl-1 text-foreground/85 transition-colors hover:bg-foreground/[0.07] dark:border-white/10 dark:bg-white/[0.04]"
+            >
+              <Avatar member={member} size={30} ring={false} />
+              <span className="hidden text-sm font-medium md:block">
+                {member.name.split(" ")[0]}
+              </span>
+            </Link>
+            {isAuthed && (
+              <button
+                type="button"
+                onClick={() => signOut({ redirectTo: "/login" })}
+                aria-label="Keluar"
+                title="Keluar"
+                className="grid size-10 place-items-center rounded-full border border-foreground/10 bg-foreground/[0.04] text-foreground/65 transition-colors hover:bg-foreground/[0.07] hover:text-foreground/90 dark:border-white/10 dark:bg-white/[0.04]"
+              >
+                <LogOut className="size-4" strokeWidth={1.75} />
+              </button>
+            )}
+          </div>
         ) : (
           <Button asChild variant="ghost" size="sm">
             <Link href="/login" aria-label="Masuk">

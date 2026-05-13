@@ -34,7 +34,7 @@ export default async function HomePage() {
       listDivisions(),
       listLeaderboard(),
       listQuests(),
-      listNotifications("mbr-aulia"),
+      listNotifications("mbr-aditya"),
       listMedia(),
     ]);
 
