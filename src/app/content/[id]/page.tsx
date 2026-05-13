@@ -8,6 +8,7 @@ import { StatusPill, Pill } from "@/components/common/pill";
 import { Avatar } from "@/components/common/avatar";
 import { Button } from "@/components/ui/button";
 import { ApprovalChain } from "@/components/content/approval-chain";
+import { CaptionHistory } from "@/components/content/caption-history";
 import { findDivision } from "@/lib/fixtures/divisions";
 import { findMember } from "@/lib/fixtures/members";
 import { findMedia } from "@/lib/fixtures/media";
@@ -177,6 +178,13 @@ export default async function ContentDetail({ params }: Props) {
               ))}
             </ul>
           </GlassCard>
+
+          <CaptionHistory
+            contentId={content.id}
+            currentCaption={content.caption}
+            currentHashtags={content.hashtags}
+            currentStyle={content.captionStyle}
+          />
 
           {relatedMedia.length > 0 && (
             <GlassCard variant="thin" className="p-5">

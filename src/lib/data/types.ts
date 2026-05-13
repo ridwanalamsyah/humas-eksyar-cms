@@ -280,6 +280,23 @@ export interface CaptionTemplate {
   hashtags: string;
 }
 
+/** Snapshot of a content's caption at a point in time. */
+export type CaptionVersionSource = "manual" | "ai" | "imported" | "restore";
+
+export interface CaptionVersion {
+  id: ID;
+  contentId: ID;
+  caption: string;
+  hashtags: string;
+  captionStyle?: CaptionStyle | null;
+  source: CaptionVersionSource;
+  /** Optional note (e.g. "Polished by Aditya", "AI v1") */
+  note: string;
+  /** Member who created this snapshot (null if system) */
+  authorId: ID | null;
+  createdAt: ISODateTime;
+}
+
 /** Persisted weekly digest (AI summary) */
 export interface WeeklyDigest {
   id: ID;
