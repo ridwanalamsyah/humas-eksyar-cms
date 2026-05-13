@@ -30,7 +30,7 @@ export default async function LeaderboardPage() {
       <SectionHeader
         eyebrow="Hall of Recognition"
         title="Leaderboard"
-        description="Yang aktif terlihat. Yang konsisten dapat reward."
+        description="Peringkat berdasarkan kontribusi."
       />
 
       <div className="mt-2 grid gap-4 sm:grid-cols-3">

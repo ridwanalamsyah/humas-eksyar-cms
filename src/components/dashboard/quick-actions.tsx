@@ -57,7 +57,7 @@ const actions = [
     href: "/members",
     icon: Users,
     title: "Anggota",
-    desc: "Direktori 6 divisi",
+    desc: "Direktori anggota tim",
     accent: "from-emerald-300/40 to-emerald-500/20",
     iconColor: "text-emerald-600 dark:text-emerald-300",
   },

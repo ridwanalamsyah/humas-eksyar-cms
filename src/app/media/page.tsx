@@ -16,7 +16,7 @@ export default async function MediaPage() {
       <SectionHeader
         eyebrow="Aset Visual"
         title="Media Library"
-        description={`${media.length} aset siap dipakai. Drag-drop untuk upload (mock di phase ini).`}
+        description={`${media.length} aset tersedia.`}
       />
       <MediaLibrary media={media} />
     </AppShell>

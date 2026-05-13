@@ -9,8 +9,8 @@ export const badges: Badge[] = [
     tier: "bronze",
     icon: "feather",
     xpReward: 50,
-    unlockedCount: 47,
-    totalMembers: 57,
+    unlockedCount: 9,
+    totalMembers: 10,
   },
   {
     id: "bdg-streak-7",
@@ -20,8 +20,8 @@ export const badges: Badge[] = [
     tier: "bronze",
     icon: "flame",
     xpReward: 80,
-    unlockedCount: 32,
-    totalMembers: 57,
+    unlockedCount: 6,
+    totalMembers: 10,
   },
   {
     id: "bdg-streak-30",
@@ -32,7 +32,7 @@ export const badges: Badge[] = [
     icon: "flame",
     xpReward: 250,
     unlockedCount: 9,
-    totalMembers: 57,
+    totalMembers: 10,
   },
   {
     id: "bdg-streak-100",
@@ -43,7 +43,7 @@ export const badges: Badge[] = [
     icon: "flame",
     xpReward: 800,
     unlockedCount: 1,
-    totalMembers: 57,
+    totalMembers: 10,
   },
   {
     id: "bdg-ai-pioneer",
@@ -53,8 +53,8 @@ export const badges: Badge[] = [
     tier: "silver",
     icon: "sparkles",
     xpReward: 200,
-    unlockedCount: 11,
-    totalMembers: 57,
+    unlockedCount: 2,
+    totalMembers: 10,
   },
   {
     id: "bdg-mentor-3",
@@ -65,7 +65,7 @@ export const badges: Badge[] = [
     icon: "users",
     xpReward: 180,
     unlockedCount: 8,
-    totalMembers: 57,
+    totalMembers: 10,
   },
   {
     id: "bdg-leader",
@@ -76,7 +76,7 @@ export const badges: Badge[] = [
     icon: "crown",
     xpReward: 400,
     unlockedCount: 4,
-    totalMembers: 57,
+    totalMembers: 10,
   },
   {
     id: "bdg-explorer",
@@ -87,7 +87,7 @@ export const badges: Badge[] = [
     icon: "compass",
     xpReward: 220,
     unlockedCount: 6,
-    totalMembers: 57,
+    totalMembers: 10,
   },
   {
     id: "bdg-hijriah-keeper",
@@ -98,7 +98,7 @@ export const badges: Badge[] = [
     icon: "moon-star",
     xpReward: 350,
     unlockedCount: 3,
-    totalMembers: 57,
+    totalMembers: 10,
   },
   {
     id: "bdg-engagement-king",
@@ -109,7 +109,7 @@ export const badges: Badge[] = [
     icon: "trending-up",
     xpReward: 500,
     unlockedCount: 2,
-    totalMembers: 57,
+    totalMembers: 10,
   },
   {
     id: "bdg-victory-harmony",
@@ -120,7 +120,7 @@ export const badges: Badge[] = [
     icon: "trophy",
     xpReward: 1200,
     unlockedCount: 0,
-    totalMembers: 57,
+    totalMembers: 10,
   },
 ];
 

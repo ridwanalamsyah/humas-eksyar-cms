@@ -16,7 +16,7 @@ export default async function SettingsPage() {
       <SectionHeader
         eyebrow="Akun"
         title="Pengaturan"
-        description="Atur preferensi pribadi Anda — perubahan disimpan otomatis ke device ini."
+        description="Preferensi akun."
       />
       <SettingsPanels member={me} />
     </AppShell>

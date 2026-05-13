@@ -6,8 +6,7 @@ import { CaptionPlayground } from "@/components/ai/caption-playground";
 
 export const metadata: Metadata = {
   title: "AI Caption Generator",
-  description:
-    "Generate caption Instagram / Twitter / Facebook bergaya Eksyar — 7 gaya tone, multi-variant.",
+  description: "Generate caption untuk konten Humas Eksyar.",
 };
 
 export default async function CaptionsPlaygroundPage() {
@@ -18,9 +17,9 @@ export default async function CaptionsPlaygroundPage() {
   return (
     <AppShell width="wide">
       <SectionHeader
-        eyebrow="AI · Gemini 2.0 Flash"
+        eyebrow="AI"
         title="Caption Generator"
-        description="Tuangkan ide, pilih gaya tone, biarkan AI menjahit caption + hashtag tetap Eksyar. Atau pakai template sebagai starting point."
+        description="Generate caption untuk Instagram, Twitter, dan Facebook."
       />
       <CaptionPlayground divisions={divisions} templates={templates} />
     </AppShell>
