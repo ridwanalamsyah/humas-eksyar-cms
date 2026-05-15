@@ -496,3 +496,46 @@ export async function deleteMember(id: ID): Promise<boolean> {
 export async function findMemberByEmail(email: string): Promise<Member | null> {
   return membersStore.find((m) => m.email.toLowerCase() === email.toLowerCase()) ?? null;
 }
+
+/* ------------------------------------------------------------------ */
+/* Holidays / calendar dates                                           */
+/* ------------------------------------------------------------------ */
+
+import { holidays as holidaysFixture, type Holiday } from "@/lib/fixtures/holidays";
+
+export async function listHolidays(opts?: {
+  from?: Date;
+  to?: Date;
+  kind?: Holiday["kind"][];
+}): Promise<Holiday[]> {
+  let list: Holiday[] = [...holidaysFixture];
+  if (opts?.from) {
+    const fromISO = opts.from.toISOString().slice(0, 10);
+    list = list.filter((h) => h.date >= fromISO);
+  }
+  if (opts?.to) {
+    const toISO = opts.to.toISOString().slice(0, 10);
+    list = list.filter((h) => h.date <= toISO);
+  }
+  if (opts?.kind && opts.kind.length > 0) {
+    list = list.filter((h) => opts.kind!.includes(h.kind));
+  }
+  return list.sort((a, b) => a.date.localeCompare(b.date));
+}
+
+/* ------------------------------------------------------------------ */
+/* Site settings / bio config                                          */
+/* ------------------------------------------------------------------ */
+
+import { type BioConfig, defaultBioConfig } from "@/lib/fixtures/bio";
+
+let bioConfigStore: BioConfig = { ...defaultBioConfig };
+
+export async function getBioConfig(): Promise<BioConfig> {
+  return bioConfigStore;
+}
+
+export async function setBioConfig(value: BioConfig): Promise<BioConfig> {
+  bioConfigStore = value;
+  return value;
+}

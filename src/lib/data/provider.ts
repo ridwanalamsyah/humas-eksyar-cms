@@ -59,4 +59,9 @@ export const updateMember = impl.updateMember;
 export const deleteMember = impl.deleteMember;
 export const findMemberByEmail = impl.findMemberByEmail;
 
+export const listHolidays = impl.listHolidays;
+
+export const getBioConfig = impl.getBioConfig;
+export const setBioConfig = impl.setBioConfig;
+
 export { HASHTAG_BLOCK };

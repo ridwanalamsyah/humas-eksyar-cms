@@ -674,3 +674,75 @@ export async function findMemberByEmail(email: string): Promise<Member | null> {
     .limit(1);
   return rows[0] ? row<Member>(rows[0]) : null;
 }
+
+/* ------------------------------------------------------------------ */
+/* Holidays / calendar dates                                           */
+/* ------------------------------------------------------------------ */
+
+import type { Holiday } from "@/lib/fixtures/holidays";
+
+export async function listHolidays(opts?: {
+  from?: Date;
+  to?: Date;
+  kind?: Holiday["kind"][];
+}): Promise<Holiday[]> {
+  const conditions = [];
+  if (opts?.from) {
+    conditions.push(
+      drizzleSql`${schema.holidays.date} >= ${opts.from.toISOString().slice(0, 10)}`,
+    );
+  }
+  if (opts?.to) {
+    conditions.push(
+      drizzleSql`${schema.holidays.date} <= ${opts.to.toISOString().slice(0, 10)}`,
+    );
+  }
+  if (opts?.kind && opts.kind.length > 0) {
+    conditions.push(inArray(schema.holidays.kind, opts.kind));
+  }
+
+  const rows = await client()
+    .select()
+    .from(schema.holidays)
+    .where(conditions.length ? and(...conditions) : undefined)
+    .orderBy(asc(schema.holidays.date));
+
+  return rows.map((r) => ({
+    id: r.id,
+    slug: r.slug,
+    name: r.name,
+    date: r.date,
+    kind: r.kind as Holiday["kind"],
+    description: r.description,
+    hijriahLabel: r.hijriahLabel ?? undefined,
+    emoji: r.emoji ?? undefined,
+  }));
+}
+
+/* ------------------------------------------------------------------ */
+/* Site settings / bio config                                          */
+/* ------------------------------------------------------------------ */
+
+import { type BioConfig, defaultBioConfig } from "@/lib/fixtures/bio";
+
+export async function getBioConfig(): Promise<BioConfig> {
+  const rows = await client()
+    .select()
+    .from(schema.siteSettings)
+    .where(eq(schema.siteSettings.key, "bio"))
+    .limit(1);
+  if (!rows[0]) return defaultBioConfig;
+  return rows[0].value as BioConfig;
+}
+
+export async function setBioConfig(value: BioConfig): Promise<BioConfig> {
+  const now = new Date().toISOString();
+  await client()
+    .insert(schema.siteSettings)
+    .values({ key: "bio", value, updatedAt: now })
+    .onConflictDoUpdate({
+      target: schema.siteSettings.key,
+      set: { value, updatedAt: now },
+    });
+  return value;
+}
