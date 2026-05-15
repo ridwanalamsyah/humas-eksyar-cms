@@ -13,11 +13,38 @@ import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db, isDbEnabled } from "@/lib/db";
 
+/**
+ * Read an OAuth credential. Accepts Auth.js v5 convention (`AUTH_GOOGLE_ID`)
+ * and falls back to the older `GOOGLE_CLIENT_ID`. Treats placeholder values
+ * (the literal string of any candidate name) as missing — guards against the
+ * common mistake of pasting the variable name as its own value in Vercel.
+ */
+function readEnv(...names: string[]): string | undefined {
+  for (const n of names) {
+    const v = process.env[n];
+    if (!v) continue;
+    if (names.includes(v)) continue; // placeholder echo of the name itself
+    return v;
+  }
+  return undefined;
+}
+
+const googleClientId = readEnv("AUTH_GOOGLE_ID", "GOOGLE_CLIENT_ID");
+const googleClientSecret = readEnv("AUTH_GOOGLE_SECRET", "GOOGLE_CLIENT_SECRET");
+
+if (process.env.NODE_ENV === "production" && (!googleClientId || !googleClientSecret)) {
+  // Don't crash boot — Auth.js will still expose /api/auth/* with no provider.
+  // Logged so it shows up in Vercel runtime logs for quick diagnosis.
+  console.warn(
+    "[auth] Google OAuth credentials missing — set AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET",
+  );
+}
+
 const baseConfig: NextAuthConfig = {
   providers: [
     Google({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientId: googleClientId,
+      clientSecret: googleClientSecret,
       allowDangerousEmailAccountLinking: true,
     }),
   ],
