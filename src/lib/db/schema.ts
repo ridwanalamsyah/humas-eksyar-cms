@@ -243,6 +243,38 @@ export const captionVersions = pgTable("captionVersions", {
   createdAt: text("createdAt").notNull(),
 });
 
+/**
+ * Annual calendar dates that aren't org events — Indonesia national holidays
+ * (kind="nasional"), Islamic / Hijriah dates (kind="hijriah"), and notable
+ * international observances (kind="internasional"). Used by `/calendar` and
+ * `eksyar.bio` to surface upcoming dates and by the AI weekly planner to
+ * pre-fill caption ideas (e.g. Tausiyah Senin tied to nearest Islamic date).
+ */
+/**
+ * Singleton key/value store for editable site-wide settings: bio link list,
+ * primary CTA, tagline, social handles. Keyed by short scope strings so
+ * different "pages" can share the table (e.g. "bio", "footer").
+ */
+export const siteSettings = pgTable("siteSettings", {
+  key: text("key").primaryKey(),
+  value: jsonb("value").notNull(),
+  updatedAt: text("updatedAt").notNull(),
+});
+
+export const holidays = pgTable("holidays", {
+  id: text("id").primaryKey(),
+  slug: text("slug").notNull().unique(),
+  name: text("name").notNull(),
+  /** ISO date (yyyy-mm-dd) — Gregorian even for Hijriah events */
+  date: text("date").notNull(),
+  kind: text("kind").notNull(),
+  description: text("description").notNull().default(""),
+  /** Optional Hijriah label, e.g. "1 Muharram 1447 H" */
+  hijriahLabel: text("hijriahLabel"),
+  /** Optional emoji for quick visual scanning */
+  emoji: text("emoji"),
+});
+
 export const captionTemplates = pgTable("captionTemplates", {
   id: text("id").primaryKey(),
   rubric: text("rubric").notNull(),

@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Calendar as CalendarIcon, ImageIcon, Sparkles, Hash, Eye, Heart, Share2, MessageSquare, Bookmark, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, Calendar as CalendarIcon, Sparkles, Eye, Heart, Share2, MessageSquare, Bookmark, ShieldCheck, ArrowUpRight } from "lucide-react";
 import { getContent, getMember, listMedia } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { GlassCard } from "@/components/ui/glass-card";
 import { StatusPill, Pill } from "@/components/common/pill";
 import { Avatar } from "@/components/common/avatar";
-import { Button } from "@/components/ui/button";
 import { ApprovalChain } from "@/components/content/approval-chain";
 import { CaptionHistory } from "@/components/content/caption-history";
+import { ContentInlineEditor } from "@/components/content/content-inline-editor";
+import { auth } from "@/auth";
+import { findMemberByEmail } from "@/lib/data/provider";
 import { findDivision } from "@/lib/fixtures/divisions";
-import { findMember } from "@/lib/fixtures/members";
 import { findMedia } from "@/lib/fixtures/media";
 import { humanNumber, percent, formatDateTime, formatLongDate } from "@/lib/format/dates";
 
@@ -20,6 +21,13 @@ export default async function ContentDetail({ params }: Props) {
   const { id } = await params;
   const content = await getContent(id);
   if (!content) notFound();
+
+  const session = await auth();
+  const me = session?.user?.email
+    ? await findMemberByEmail(session.user.email)
+    : null;
+  const canEdit = !!me;
+  const canDelete = me?.role === "admin" || me?.role === "ketua_divisi";
 
   const author = await getMember(content.authorId);
   const division = findDivision(content.divisionId);
@@ -116,20 +124,17 @@ export default async function ContentDetail({ params }: Props) {
             </GlassCard>
           )}
 
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button>
-              <Sparkles className="size-4" strokeWidth={1.75} />
-              Edit dengan AI
-            </Button>
-            <Button variant="secondary">
-              <ImageIcon className="size-4" strokeWidth={1.75} />
-              Ganti media
-            </Button>
-            <Button variant="ghost">
-              <Hash className="size-4" strokeWidth={1.75} />
-              Optimize hashtag
-            </Button>
-          </div>
+          {canEdit && (
+            <ContentInlineEditor
+              contentId={content.id}
+              initialTitle={content.title}
+              initialCaption={content.caption}
+              initialHashtags={content.hashtags}
+              initialBody={content.body}
+              initialStatus={content.status}
+              canDelete={canDelete}
+            />
+          )}
         </article>
 
         <aside className="flex flex-col gap-4">

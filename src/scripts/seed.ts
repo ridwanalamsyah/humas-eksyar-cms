@@ -24,6 +24,7 @@ import {
   weeklyDigest,
   xpLogs,
 } from "../lib/fixtures/notifications";
+import { holidays } from "../lib/fixtures/holidays";
 
 async function main() {
   const url = process.env.DATABASE_URL;
@@ -39,7 +40,7 @@ async function main() {
   // Auth tables (users, accounts, sessions, verificationTokens) are untouched.
   if (process.argv.includes("--reset")) {
     console.log("seed: --reset flag detected, truncating domain tables…");
-    await sql`TRUNCATE "notifications", "xpLogs", "weeklyDigests", "quests", "badges", "events", "media", "captionTemplates", "captionVersions", "contents", "members", "divisions" CASCADE`;
+    await sql`TRUNCATE "holidays", "notifications", "xpLogs", "weeklyDigests", "quests", "badges", "events", "media", "captionTemplates", "captionVersions", "contents", "members", "divisions" CASCADE`;
   }
 
   console.log("seed: divisions");
@@ -84,6 +85,9 @@ async function main() {
     .values([weeklyDigest])
     .onConflictDoNothing();
 
+  console.log("seed: holidays");
+  await db.insert(schema.holidays).values(holidays).onConflictDoNothing();
+
   const counts = {
     divisions: (await db.select().from(schema.divisions)).length,
     members: (await db.select().from(schema.members)).length,
@@ -94,6 +98,7 @@ async function main() {
     quests: (await db.select().from(schema.quests)).length,
     xpLogs: (await db.select().from(schema.xpLogs)).length,
     notifications: (await db.select().from(schema.notifications)).length,
+    holidays: (await db.select().from(schema.holidays)).length,
   };
   console.log("\nseed complete:", counts);
 }

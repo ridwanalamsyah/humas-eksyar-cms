@@ -49,4 +49,19 @@ export const listCaptionVersions = impl.listCaptionVersions;
 export const createCaptionVersion = impl.createCaptionVersion;
 export const restoreCaptionVersion = impl.restoreCaptionVersion;
 
+// Mutations
+export const createContent = impl.createContent;
+export const updateContent = impl.updateContent;
+export const deleteContent = impl.deleteContent;
+
+export const createMember = impl.createMember;
+export const updateMember = impl.updateMember;
+export const deleteMember = impl.deleteMember;
+export const findMemberByEmail = impl.findMemberByEmail;
+
+export const listHolidays = impl.listHolidays;
+
+export const getBioConfig = impl.getBioConfig;
+export const setBioConfig = impl.setBioConfig;
+
 export { HASHTAG_BLOCK };
