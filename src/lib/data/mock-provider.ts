@@ -322,3 +322,177 @@ export async function listDivisionLeaderboard(): Promise<
   });
   return result.sort((a, b) => b.totalXP - a.totalXP);
 }
+
+/* ------------------------------------------------------------------ */
+/* Mutations (in-memory; reset on server restart)                      */
+/* ------------------------------------------------------------------ */
+
+const contentsStore: ContentItem[] = [...contents];
+const membersStore: Member[] = [...members];
+
+function slugifyMock(s: string): string {
+  return s.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, "-").replace(/(^-|-$)/g, "").slice(0, 80);
+}
+
+export interface ContentInput {
+  title: string;
+  rubric: ContentItem["rubric"];
+  status?: ContentStatus;
+  divisionId: ID;
+  authorId: ID;
+  body?: string;
+  caption?: string;
+  hashtags?: string;
+  channels?: ContentItem["channels"];
+  mediaIds?: ID[];
+  scheduledFor?: string | null;
+  captionStyle?: ContentItem["captionStyle"] | null;
+}
+
+export async function createContent(input: ContentInput): Promise<ContentItem> {
+  const now = new Date().toISOString();
+  const id = `cnt-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+  const item: ContentItem = {
+    id,
+    title: input.title,
+    slug: slugifyMock(input.title) || id,
+    rubric: input.rubric,
+    status: input.status ?? "draft",
+    divisionId: input.divisionId,
+    authorId: input.authorId,
+    body: input.body ?? "",
+    caption: input.caption ?? "",
+    hashtags: input.hashtags ?? "",
+    channels: input.channels ?? ["instagram"],
+    mediaIds: input.mediaIds ?? [],
+    scheduledFor: input.scheduledFor ?? undefined,
+    publishedAt: undefined,
+    approvers: [],
+    waitingOn: [],
+    metrics: undefined,
+    captionStyle: input.captionStyle ?? undefined,
+    createdAt: now,
+    updatedAt: now,
+  };
+  contentsStore.unshift(item);
+  return item;
+}
+
+export interface ContentUpdate {
+  title?: string;
+  rubric?: ContentItem["rubric"];
+  status?: ContentStatus;
+  body?: string;
+  caption?: string;
+  hashtags?: string;
+  channels?: ContentItem["channels"];
+  mediaIds?: ID[];
+  scheduledFor?: string | null;
+  publishedAt?: string | null;
+  captionStyle?: ContentItem["captionStyle"] | null;
+}
+
+export async function updateContent(id: ID, patch: ContentUpdate): Promise<ContentItem | null> {
+  const idx = contentsStore.findIndex((c) => c.id === id);
+  if (idx === -1) return null;
+  const cur = contentsStore[idx];
+  const next: ContentItem = {
+    ...cur,
+    ...patch,
+    slug: patch.title !== undefined ? slugifyMock(patch.title) || cur.slug : cur.slug,
+    scheduledFor: patch.scheduledFor ?? cur.scheduledFor,
+    publishedAt: patch.publishedAt ?? cur.publishedAt,
+    captionStyle: patch.captionStyle ?? cur.captionStyle,
+    updatedAt: new Date().toISOString(),
+  };
+  contentsStore[idx] = next;
+  return next;
+}
+
+export async function deleteContent(id: ID): Promise<boolean> {
+  const idx = contentsStore.findIndex((c) => c.id === id);
+  if (idx === -1) return false;
+  contentsStore.splice(idx, 1);
+  return true;
+}
+
+export interface MemberInput {
+  name: string;
+  email: string;
+  role?: Member["role"];
+  divisionId: ID;
+  position?: string;
+  bio?: string;
+  angkatan: number;
+  nimSuffix: string;
+  avatarEmoji?: string;
+  accentHue?: number;
+}
+
+export async function createMember(input: MemberInput): Promise<Member> {
+  const id = `mbr-${slugifyMock(input.name) || Date.now().toString(36)}`;
+  const initials = input.name.split(/\s+/).slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "").join("");
+  const m: Member = {
+    id,
+    name: input.name,
+    initials,
+    email: input.email,
+    role: input.role ?? "anggota",
+    divisionId: input.divisionId,
+    position: input.position ?? "Anggota",
+    joinedAt: new Date().toISOString(),
+    bio: input.bio,
+    xp: 0,
+    streak: 0,
+    badges: [],
+    angkatan: input.angkatan,
+    nimSuffix: input.nimSuffix,
+    avatarEmoji: input.avatarEmoji ?? "👤",
+    accentHue: input.accentHue ?? 180,
+  };
+  membersStore.push(m);
+  return m;
+}
+
+export interface MemberUpdate {
+  name?: string;
+  email?: string;
+  role?: Member["role"];
+  divisionId?: ID;
+  position?: string;
+  bio?: string | null;
+  angkatan?: number;
+  nimSuffix?: string;
+  avatarEmoji?: string;
+  accentHue?: number;
+  xp?: number;
+  streak?: number;
+  userId?: string | null;
+}
+
+export async function updateMember(id: ID, patch: MemberUpdate): Promise<Member | null> {
+  const idx = membersStore.findIndex((m) => m.id === id);
+  if (idx === -1) return null;
+  const cur = membersStore[idx];
+  const next: Member = {
+    ...cur,
+    ...patch,
+    initials: patch.name !== undefined
+      ? patch.name.split(/\s+/).slice(0, 2).map((p) => p[0]?.toUpperCase() ?? "").join("")
+      : cur.initials,
+    bio: patch.bio !== undefined ? (patch.bio ?? undefined) : cur.bio,
+  };
+  membersStore[idx] = next;
+  return next;
+}
+
+export async function deleteMember(id: ID): Promise<boolean> {
+  const idx = membersStore.findIndex((m) => m.id === id);
+  if (idx === -1) return false;
+  membersStore.splice(idx, 1);
+  return true;
+}
+
+export async function findMemberByEmail(email: string): Promise<Member | null> {
+  return membersStore.find((m) => m.email.toLowerCase() === email.toLowerCase()) ?? null;
+}
