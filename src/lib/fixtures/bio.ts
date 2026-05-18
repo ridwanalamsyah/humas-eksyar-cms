@@ -42,7 +42,7 @@ export const defaultBioConfig: BioConfig = {
   tagline: "Dewan Hubungan Masyarakat — HMJ Ekonomi Syariah UIN SGD",
   intro:
     "Pusat informasi resmi Humas Ekonomi Syariah UIN Sunan Gunung Djati Bandung. Kabar kegiatan, kajian mingguan, dan agenda kampus.",
-  avatar: "🌱",
+  avatar: "/eksyar-logo.png",
   showEvents: true,
   showLatestContent: true,
   showHolidays: true,
