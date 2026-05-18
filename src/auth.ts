@@ -12,6 +12,7 @@ import NextAuth, { type NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db, isDbEnabled } from "@/lib/db";
+import { recordAuthError } from "@/lib/auth-debug";
 
 /**
  * Read an OAuth credential. Accepts Auth.js v5 convention (`AUTH_GOOGLE_ID`)
@@ -50,6 +51,17 @@ const baseConfig: NextAuthConfig = {
   ],
   pages: {
     signIn: "/login",
+  },
+  trustHost: true,
+  debug: true,
+  logger: {
+    error(error) {
+      recordAuthError(error);
+      console.error("[auth][error]", error);
+    },
+    warn(code) {
+      console.warn("[auth][warn]", code);
+    },
   },
   callbacks: {
     async session({ session, user }) {
