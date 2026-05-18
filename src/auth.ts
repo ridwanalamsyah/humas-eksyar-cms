@@ -11,7 +11,7 @@
 import NextAuth, { type NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
-import { db, isDbEnabled } from "@/lib/db";
+import { db, isDbEnabled, schema } from "@/lib/db";
 import { recordAuthError } from "@/lib/auth-debug";
 
 /**
@@ -77,7 +77,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ...baseConfig,
   ...(isDbEnabled && db
     ? {
-        adapter: DrizzleAdapter(db),
+        // The adapter defaults to singular table names (`user`, `account`,
+        // `session`, `verificationToken`). Our schema exports the
+        // conventional Drizzle plural names so we wire them up explicitly —
+        // otherwise the adapter writes into tables that don't exist and the
+        // OAuth callback bails with `?error=Configuration`.
+        adapter: DrizzleAdapter(db, {
+          usersTable: schema.users,
+          accountsTable: schema.accounts,
+          sessionsTable: schema.sessions,
+          verificationTokensTable: schema.verificationTokens,
+        }),
         session: { strategy: "database" },
       }
     : {
