@@ -72,11 +72,10 @@ export function DashboardHero({ member, digest, unreadCount }: Props) {
       <GlassCard variant="thick" className="overflow-hidden p-6 sm:p-10">
         <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <div>
-            <div className="flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-foreground/55">
-              <span className="size-2 rounded-full bg-brand-500 animate-glow" />
-              <span>Live · Eksyar Satu, Victory in Harmony</span>
-            </div>
-            <h1 className="mt-4 font-display text-[clamp(2rem,1.4rem+2.8vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-balance">
+            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+              Beranda
+            </p>
+            <h1 className="mt-2 font-display text-[clamp(2rem,1.4rem+2.8vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-balance">
               {salam},{" "}
               <span className="text-brand-600 dark:text-brand-300">
                 {member.name.split(" ")[0]}
@@ -84,12 +83,15 @@ export function DashboardHero({ member, digest, unreadCount }: Props) {
               .
             </h1>
             <p className="mt-3 max-w-[44ch] text-pretty text-foreground/70">
-              Hari ini kamu punya {unreadCount > 0 ? `${unreadCount} notifikasi baru` : "feed bersih"}, streak{" "}
-              <span className="inline-flex items-center gap-1 font-semibold text-foreground/85">
-                <Flame className="size-4 text-gold-500" strokeWidth={2} />
-                {member.streak} hari
-              </span>
-              , dan AI siap bantu rancang caption.
+              {unreadCount > 0
+                ? `${unreadCount} notifikasi menunggu.`
+                : "Tidak ada notifikasi baru."}{" "}
+              {member.streak > 0 && (
+                <span className="inline-flex items-center gap-1 font-medium text-foreground/85">
+                  <Flame className="size-4 text-gold-500" strokeWidth={2} />
+                  Streak {member.streak} hari.
+                </span>
+              )}
             </p>
             <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-foreground/60">
               <span>{greg || "—"}</span>

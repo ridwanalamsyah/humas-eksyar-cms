@@ -4,6 +4,7 @@ import { useState, useSyncExternalStore } from "react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
+import { signOut } from "next-auth/react";
 import {
   Sun,
   Moon,
@@ -150,11 +151,12 @@ export function SettingsPanels({ member }: Props) {
         icon={<ShieldCheck className="size-4" strokeWidth={1.75} />}
         title="Privasi &amp; akun"
       >
-        <Button variant="secondary" size="sm">
-          Unduh data saya
-        </Button>
-        <Button variant="ghost" size="sm">
-          <LogOut className="size-3.5" strokeWidth={1.75} /> Keluar
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => signOut({ redirectTo: "/login" })}
+        >
+          <LogOut className="size-3.5" strokeWidth={1.75} /> Keluar dari akun
         </Button>
       </Panel>
     </div>
