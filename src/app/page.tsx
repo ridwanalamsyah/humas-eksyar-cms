@@ -8,6 +8,7 @@ import {
   listQuests,
   listNotifications,
   listMedia,
+  listHolidays,
 } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { DashboardHero } from "@/components/dashboard/dashboard-hero";
@@ -17,6 +18,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { StatRow } from "@/components/dashboard/stat-row";
 import { QuickActions } from "@/components/dashboard/quick-actions";
 import { UpcomingEvents } from "@/components/dashboard/upcoming-events";
+import { UpcomingHolidays } from "@/components/dashboard/upcoming-holidays";
 import { LeaderboardSnippet } from "@/components/dashboard/leaderboard-snippet";
 import { QuestProgress } from "@/components/dashboard/quest-progress";
 import { findDivision } from "@/lib/fixtures/divisions";
@@ -25,7 +27,7 @@ import { findMedia } from "@/lib/fixtures/media";
 import { Sparkles } from "lucide-react";
 
 export default async function HomePage() {
-  const [member, contents, events, digest, divisions, leaderboard, quests, notifs, media] =
+  const [member, contents, events, digest, divisions, leaderboard, quests, notifs, media, allHolidays] =
     await Promise.all([
       getCurrentMember(),
       listContents(),
@@ -36,7 +38,13 @@ export default async function HomePage() {
       listQuests(),
       listNotifications("mbr-aditya"),
       listMedia(),
+      listHolidays({
+        from: new Date(),
+        kind: ["hijriah", "nasional", "internasional"],
+      }),
     ]);
+
+  const upcomingHolidays = allHolidays.slice(0, 5);
 
   const recent = contents.slice(0, 6);
   const featured =
@@ -104,6 +112,7 @@ export default async function HomePage() {
         </section>
 
         <aside className="flex flex-col gap-6">
+          <UpcomingHolidays holidays={upcomingHolidays} />
           <UpcomingEvents events={events.slice(0, 4)} />
           <LeaderboardSnippet members={leaderboard.slice(0, 5)} />
           <QuestProgress quests={quests.filter((q) => !q.completed).slice(0, 3)} />
@@ -187,11 +196,8 @@ export default async function HomePage() {
       )}
 
       <footer className="mt-16 text-center">
-        <p className="font-serif text-2xl italic tracking-tight text-foreground/65">
-          Eksyar Satu, Victory in Harmony.
-        </p>
-        <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-foreground/45">
-          Humas Eksyar UIN SGD · Phase 0–6 · 2026
+        <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground/45">
+          Program Studi Ekonomi Syariah · FEBI UIN Sunan Gunung Djati Bandung
         </p>
       </footer>
     </AppShell>

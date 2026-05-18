@@ -2,7 +2,7 @@
 
 import { motion } from "motion/react";
 import { Avatar } from "@/components/common/avatar";
-import { findMember } from "@/lib/fixtures/members";
+import { findMember, members as roster } from "@/lib/fixtures/members";
 import { findDivision } from "@/lib/fixtures/divisions";
 import { CheckCircle2, Clock4, Send, Sparkles } from "lucide-react";
 import type { ContentItem } from "@/lib/data/types";
@@ -10,11 +10,26 @@ import type { ContentItem } from "@/lib/data/types";
 const STAGE_ORDER = ["draft", "review_divisi", "review_sekjen", "scheduled", "published"] as const;
 const STAGE_LABEL: Record<(typeof STAGE_ORDER)[number], string> = {
   draft: "Draft",
-  review_divisi: "Review Divisi",
-  review_sekjen: "Review Sekjen",
+  review_divisi: "Review Koordinator",
+  review_sekjen: "Review Admin",
   scheduled: "Scheduled",
   published: "Published",
 };
+
+/**
+ * First admin / koordinator who can act as the final reviewer.
+ * Falls back to division lead if no admin exists. Monitoring roles
+ * (pembina) tidak ikut approval — mereka hanya pengawas.
+ */
+function resolveFinalReviewer(divisionLeadId: string): string | null {
+  const admin = roster.find((m) => m.role === "admin");
+  if (admin) return admin.id;
+  const koordinator = roster.find(
+    (m) => m.role === "ketua_divisi" && m.id !== divisionLeadId,
+  );
+  if (koordinator) return koordinator.id;
+  return null;
+}
 
 export function ApprovalChain({ content }: { content: ContentItem }) {
   const division = findDivision(content.divisionId);
@@ -31,7 +46,7 @@ export function ApprovalChain({ content }: { content: ContentItem }) {
           stage === "review_divisi"
             ? division.leadId
             : stage === "review_sekjen"
-              ? "mbr-evi"
+              ? resolveFinalReviewer(division.leadId)
               : stage === "draft"
                 ? content.authorId
                 : null;

@@ -41,6 +41,13 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       { status: 403 },
     );
   }
+  // Monitoring roles (pembina) are view-only — cannot edit content.
+  if (member.role === "monitoring") {
+    return NextResponse.json(
+      { error: "Akun pembina hanya untuk monitoring, tidak bisa edit konten." },
+      { status: 403 },
+    );
+  }
   const { id } = await params;
   const prev = await getContent(id);
   if (!prev) {

@@ -61,39 +61,43 @@ const STYLE_LABELS: Record<CaptionStyle, string> = {
   campaign: "Campaign Communication (mobilisasi massa, hashtag-driven)",
 };
 
+/**
+ * Rubric labels are intentionally generic. Program-specific labels
+ * (e.g. "Tausiyah Senin", "Eksphoria") are no longer hardcoded — tim isi
+ * sendiri lewat UI / API.
+ */
 const RUBRIC_LABELS: Record<ContentRubric, string> = {
-  tausiyah_senin: "Tausiyah Senin (kajian singkat, ayat/hadits, refleksi pagi)",
-  eksyar_talks: "Eksyar Talks (talkshow / kuliah umum / podcast)",
-  bisnis_halal: "Bisnis Halal (spotlight UMKM, sertifikasi halal)",
-  eksphoria_update: "Eksphoria Update (festival tahunan)",
-  selamat_sukses: "Selamat & Sukses (ucapan hari besar / pencapaian)",
+  tausiyah_senin: "Rubrik harian (refleksi / kutipan pagi)",
+  eksyar_talks: "Diskusi / Talkshow",
+  bisnis_halal: "Spotlight UMKM / Bisnis Halal",
+  eksphoria_update: "Update Program / Festival",
+  selamat_sukses: "Ucapan Selamat & Hari Besar",
   kajian: "Kajian Akademik",
   pengumuman: "Pengumuman Resmi",
   dokumentasi: "Dokumentasi Kegiatan (recap)",
   campaign: "Campaign / Mobilisasi",
 };
 
-const FOOTER =
-  "———\nHumas Eksyar UIN SGD\nEksyar Satu, Victory in Harmony!";
+export const CAPTION_FOOTER = "———\nAtas nama Program Studi Ekonomi Syariah";
 
 function ensureFooter(text: string): string {
-  if (text.includes("Eksyar Satu, Victory in Harmony")) return text;
-  return `${text.trimEnd()}\n\n${FOOTER}`;
+  if (text.includes("Atas nama Program Studi Ekonomi Syariah")) return text;
+  return `${text.trimEnd()}\n\n${CAPTION_FOOTER}`;
 }
 
 function buildPrompt(req: CaptionRequest): string {
   return [
-    "Kamu copywriter Humas Eksyar (Ekonomi Syariah UIN SGD Bandung).",
+    "Kamu copywriter resmi Program Studi Ekonomi Syariah — FEBI UIN Sunan Gunung Djati Bandung.",
     "",
     "ATURAN WAJIB:",
     "- Caption pendek: maksimal 80 kata (kurang lebih 4–6 kalimat).",
     "- Bahasa Indonesia santai-profesional. Tidak kaku, tidak berbelit.",
-    "- JANGAN buka dengan 'Assalamualaikum', 'Alhamdulillah', atau salam panjang — kecuali rubrik Tausiyah Senin atau pengumuman wafat/ucapan duka.",
-    "- JANGAN basa-basi seperti 'Dengan bangga kami sampaikan…' atau 'Segenap pengurus Humas Eksyar UIN SGD…'.",
+    "- JANGAN buka dengan 'Assalamualaikum', 'Alhamdulillah', atau salam panjang — kecuali konten rubrik refleksi / kajian atau ucapan duka.",
+    "- JANGAN basa-basi seperti 'Dengan bangga kami sampaikan…' atau menyebut nama internal divisi/program.",
     "- Langsung ke pesan utama di kalimat pertama. Beri 1 detail konkret (waktu, tempat, atau angka kalau ada).",
     "- Hindari kata kosong: 'unleash', 'elevate', 'leverage', 'sinergi', 'kolaboratif', emoji berderet (✨🌟💫), hashtag di tengah caption.",
     "- Hormati nilai Islam. Tidak bahasa flirty, tidak hyperbole.",
-    "- Tutup dengan baris kosong + '———\\nHumas Eksyar UIN SGD\\nEksyar Satu, Victory in Harmony!'. Footer ini sudah dihitung sebagai bagian dari 80 kata kalau diperlukan — singkat aja konten utamanya.",
+    "- Tutup dengan baris kosong + '———\\nAtas nama Program Studi Ekonomi Syariah'. Footer ini sudah dihitung sebagai bagian dari 80 kata kalau diperlukan — singkat aja konten utamanya.",
     "",
     `Rubrik: ${RUBRIC_LABELS[req.rubric] ?? req.rubric}`,
     `Gaya: ${STYLE_LABELS[req.style] ?? req.style}`,
@@ -149,11 +153,11 @@ function mockCompose(req: CaptionRequest): CaptionResult {
         return [
           `${headline} — RILIS RESMI`,
           "",
-          `Divisi ${divisionName} dengan ini menyampaikan informasi berikut:`,
+          `Atas nama Program Studi Ekonomi Syariah${divisionName ? ` (tim ${divisionName})` : ""}, kami menyampaikan informasi berikut:`,
           "",
           details || "Detail menyusul melalui kanal resmi.",
           "",
-          "Mohon perhatian dan dukungan dari seluruh keluarga Eksyar.",
+          "Mohon perhatian dan dukungan dari seluruh sivitas akademika.",
         ].join("\n");
       case "persuasif":
         return [
@@ -174,8 +178,6 @@ function mockCompose(req: CaptionRequest): CaptionResult {
           details || "Kami pun pernah ragu. Tapi kami terus berjalan, dan ternyata jalan itu memimpin pulang.",
           "",
           "Selamat datang di rumah yang sama.",
-          "",
-          "🌟 Eksyar Satu.",
         ].join("\n");
       case "campaign":
         return [
@@ -195,14 +197,12 @@ function mockCompose(req: CaptionRequest): CaptionResult {
         return [
           headline,
           "",
-          "Assalamualaikum warahmatullahi wabarakatuh",
-          "",
-          `Segenap pengurus Humas Eksyar UIN SGD menyampaikan ${rubric === "selamat_sukses" ? "ucapan selamat" : "informasi resmi"} berikut.`,
+          `Atas nama Program Studi Ekonomi Syariah, kami menyampaikan ${rubric === "selamat_sukses" ? "ucapan selamat" : "informasi resmi"} berikut.`,
           "",
           details ||
             "Detail informasi akan diumumkan melalui kanal resmi organisasi.",
           "",
-          "Mohon perhatian, dukungan, dan doa dari seluruh keluarga Eksyar 🌟",
+          "Mohon perhatian dan dukungan dari seluruh sivitas akademika.",
         ].join("\n");
     }
   })();

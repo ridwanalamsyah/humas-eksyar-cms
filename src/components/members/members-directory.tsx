@@ -17,9 +17,10 @@ interface Props {
 }
 
 const ROLE_LABEL: Record<Role, string> = {
+  monitoring: "Pembina",
   anggota: "Anggota",
   pengurus: "Pengurus",
-  ketua_divisi: "Ketua Divisi",
+  ketua_divisi: "Koordinator",
   sekjen: "Sekjen",
   admin: "Admin",
 };

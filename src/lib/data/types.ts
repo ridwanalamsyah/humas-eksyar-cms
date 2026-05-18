@@ -11,7 +11,18 @@ export type ID = string;
 export type ISODate = string; // YYYY-MM-DD
 export type ISODateTime = string; // YYYY-MM-DDTHH:mm:ssZ
 
+/**
+ * Roles in the system:
+ * - `monitoring`  : view-only oversight (dosen pembina). No submit/approve.
+ * - `anggota`     : creator. Submit konten & ikut quest.
+ * - `pengurus`    : senior member.
+ * - `ketua_divisi`: koordinator divisi (reviewer tahap pertama).
+ * - `sekjen`      : legacy stage (kept for backward compatibility — di
+ *                   tim flat seperti Humas Eksyar boleh dikosongkan).
+ * - `admin`       : full access (ubah pengaturan, manage roster).
+ */
 export type Role =
+  | "monitoring"
   | "anggota"
   | "pengurus"
   | "ketua_divisi"
