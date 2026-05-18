@@ -38,7 +38,7 @@ export default async function BioPage() {
     .slice(0, 3);
   const upcomingHolidays = holidays.slice(0, 4);
 
-  const isAvatarUrl = /^https?:\/\//.test(config.avatar);
+  const isAvatarUrl = /^https?:\/\//.test(config.avatar) || config.avatar.startsWith("/");
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col items-center px-5 py-12 sm:py-16">
