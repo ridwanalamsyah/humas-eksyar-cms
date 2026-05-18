@@ -99,33 +99,132 @@ export async function getMember(id: ID): Promise<Member | null> {
   return rows[0] ? row<Member>(rows[0]) : null;
 }
 
+/**
+ * Resolve the currently signed-in Google user into a roster `Member` row.
+ *
+ * Lookup order:
+ *   1. By `members.userId` (fastest — set once the link is established).
+ *   2. By `members.email` (matches when a roster entry was seeded with the
+ *      same address the person uses to log in).
+ *   3. By case-insensitive `members.name` (one-shot reconciliation step:
+ *      when a person logs in for the first time with a personal Gmail that
+ *      differs from the institutional address we seeded, we use the name
+ *      from the OAuth profile to find the existing roster entry, then link
+ *      `userId` + overwrite `email` so subsequent requests use the fast
+ *      path).
+ *
+ * If nothing matches we **do not** fall back to a hard-coded seed member —
+ * that's how Ridwan briefly appeared as Aditya. Instead we synthesise a
+ * non-persistent ghost member from the OAuth claims so headers/profile
+ * surfaces still render the right name and avatar; the admin can promote
+ * the ghost to a real roster entry through the members UI.
+ */
 export async function getCurrentMember(): Promise<Member> {
-  // Resolve the signed-in Google user → matching member record by email.
-  // Falls back to the seed lead so unauthenticated pages still have a "self".
-  // Imported dynamically to avoid Auth.js bootstrapping during build-time
-  // type checks of this module.
   try {
     const { auth } = await import("@/auth");
     const session = await auth();
-    const email = session?.user?.email;
+    if (!session?.user) return fixtures.getCurrentMember();
+
+    const userId = (session.user as { id?: string }).id ?? undefined;
+    const email = session.user.email ?? undefined;
+    const name = session.user.name ?? undefined;
+    const image = session.user.image ?? undefined;
+
+    // 1. userId match — fast path, no writes needed.
+    if (userId) {
+      const rows = await client()
+        .select()
+        .from(schema.members)
+        .where(eq(schema.members.userId, userId))
+        .limit(1);
+      if (rows[0]) return row<Member>(rows[0]);
+    }
+
+    // 2. email match — link userId on the way out so step 1 catches it next
+    //    request.
     if (email) {
       const rows = await client()
         .select()
         .from(schema.members)
         .where(eq(schema.members.email, email))
         .limit(1);
-      if (rows[0]) return row<Member>(rows[0]);
+      if (rows[0]) {
+        if (userId && !rows[0].userId) {
+          await client()
+            .update(schema.members)
+            .set({ userId })
+            .where(eq(schema.members.id, rows[0].id));
+          return row<Member>({ ...rows[0], userId });
+        }
+        return row<Member>(rows[0]);
+      }
     }
+
+    // 3. Name match — reconcile institutional roster with personal Gmail.
+    //    Only takes effect when the roster row is unclaimed (`userId` null);
+    //    that guard means we never overwrite a link that already points at
+    //    a different user.
+    if (name) {
+      const rows = await client()
+        .select()
+        .from(schema.members)
+        .where(
+          and(
+            drizzleSql`LOWER(${schema.members.name}) = LOWER(${name})`,
+            drizzleSql`${schema.members.userId} IS NULL`,
+          ),
+        )
+        .limit(1);
+      if (rows[0]) {
+        const updates: { userId?: string; email?: string } = {};
+        if (userId) updates.userId = userId;
+        if (email && email !== rows[0].email) updates.email = email;
+        if (Object.keys(updates).length > 0) {
+          await client()
+            .update(schema.members)
+            .set(updates)
+            .where(eq(schema.members.id, rows[0].id));
+        }
+        return row<Member>({ ...rows[0], ...updates });
+      }
+    }
+
+    // Nothing matched — return a non-persistent ghost so the UI still
+    // renders the signed-in identity. The ghost intentionally lacks a
+    // division so admins notice and assign one through the members UI.
+    return {
+      id: userId ?? `ghost-${email ?? "anon"}`,
+      userId: userId ?? null,
+      name: name ?? email ?? "Belum bergabung",
+      initials: initialsFromName(name ?? email ?? "?"),
+      email: email ?? "",
+      role: "anggota",
+      divisionId: "",
+      position: "Belum bergabung",
+      joinedAt: new Date().toISOString().slice(0, 10),
+      bio: null,
+      xp: 0,
+      streak: 0,
+      badges: [],
+      angkatan: new Date().getFullYear(),
+      nimSuffix: "",
+      avatarEmoji: image ? "" : "👤",
+      accentHue: 180,
+    } as unknown as Member;
   } catch {
-    // Auth not configured or called outside a request scope — fall through.
+    // Auth not configured or called outside a request scope.
+    return fixtures.getCurrentMember();
   }
-  const rows = await client()
-    .select()
-    .from(schema.members)
-    .where(eq(schema.members.id, "mbr-aditya"))
-    .limit(1);
-  if (rows[0]) return row<Member>(rows[0]);
-  return fixtures.getCurrentMember();
+}
+
+function initialsFromName(name: string): string {
+  const parts = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((p) => p[0]?.toUpperCase() ?? "");
+  const out = parts.join("");
+  return out || name.slice(0, 2).toUpperCase();
 }
 
 /* ------------------------------------------------------------------ */
