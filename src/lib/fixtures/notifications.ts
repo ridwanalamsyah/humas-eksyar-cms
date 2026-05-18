@@ -1,110 +1,21 @@
 import type { NotificationItem, WeeklyDigest, XPLog } from "@/lib/data/types";
 
-export const notifications: NotificationItem[] = [
-  {
-    id: "ntf-1",
-    memberId: "mbr-aditya",
-    title: "Tasya menugaskan review konten",
-    body: "Selamat Hari Kartini menunggu review divisi.",
-    kind: "approval",
-    href: "/content/cnt-selamat-kartini",
-    read: false,
-    at: "2026-05-09T11:25:00+07:00",
-  },
-  {
-    id: "ntf-2",
-    memberId: "mbr-aditya",
-    title: "AI menyelesaikan caption baru",
-    body: "Teaser Eksphoria — versi cinematic siap di-review.",
-    kind: "ai",
-    href: "/content/cnt-eksphoria-2026-teaser",
-    read: false,
-    at: "2026-05-09T16:42:00+07:00",
-  },
-  {
-    id: "ntf-3",
-    memberId: "mbr-aditya",
-    title: "Streak 21 hari!",
-    body: "Lanjutkan momentum — 9 hari lagi menuju badge Istiqomah 30 Hari.",
-    kind: "badge",
-    href: "/badges",
-    read: true,
-    at: "2026-05-09T07:00:00+07:00",
-  },
-  {
-    id: "ntf-4",
-    memberId: "mbr-aditya",
-    title: "Reminder: Rapat Pleno Mei 2026",
-    body: "Tgl 15 Mei 19.00 di Sekretariat. RSVP-mu sudah confirmed.",
-    kind: "event",
-    href: "/events/evt-rapat-pleno-mei",
-    read: true,
-    at: "2026-05-08T20:30:00+07:00",
-  },
-  {
-    id: "ntf-5",
-    memberId: "mbr-aditya",
-    title: "Bagus mention kamu di komentar",
-    body: "“Caption Bisnis Halal-nya Aulia bantu banget…”",
-    kind: "mention",
-    href: "/content/cnt-spotlight-rama-parfum",
-    read: false,
-    at: "2026-05-08T15:14:00+07:00",
-  },
-];
+/**
+ * Seeds for notifications, weekly digest, and XP logs are intentionally
+ * empty. The CMS starts on a blank slate; these surfaces fill up as the team
+ * uses the app (notifications are written by mutations, the digest is
+ * regenerated weekly by a job, and XP is awarded by various actions).
+ */
+export const notifications: NotificationItem[] = [];
 
 export const weeklyDigest: WeeklyDigest = {
-  id: "dg-2026-W19",
-  isoWeek: "2026-W19",
-  generatedAt: "2026-05-09T07:00:00+07:00",
-  highlights: [
-    "Engagement rata-rata naik dari 4.2% ke 4.8% (+0.6 poin).",
-    "Konten Dies Natalis menembus 1.000 views — sentimen 78% positif.",
-    "Divisi Akademik konsisten 2 konten/minggu — pertahankan.",
-  ],
-  recommendations: [
-    "Geser jadwal posting Tausiyah Senin ke 05.30 — jangkauan +14% berdasar tren historis.",
-    "Tambah hook 3-detik di reel Eksphoria untuk dorong save rate.",
-    "Bulan depan masuk Dzulqa'dah — siapkan rubrik kajian halal travel & haji.",
-  ],
-  totalReach: 4980,
-  topContentId: "cnt-dies-natalis-58",
+  id: "dg-current",
+  isoWeek: new Date().toISOString().slice(0, 4) + "-W00",
+  generatedAt: new Date().toISOString(),
+  highlights: ["Belum ada digest minggu ini."],
+  recommendations: [],
+  totalReach: 0,
+  topContentId: "",
 };
 
-export const xpLogs: XPLog[] = [
-  {
-    id: "xp-1",
-    memberId: "mbr-aditya",
-    amount: 80,
-    reason: "Publish Dies Natalis (engagement bonus)",
-    source: "content",
-    refId: "cnt-dies-natalis-58",
-    at: "2026-05-04T08:30:00+07:00",
-  },
-  {
-    id: "xp-2",
-    memberId: "mbr-aditya",
-    amount: 30,
-    reason: "Approve Selamat Hari Kartini",
-    source: "approval",
-    refId: "cnt-selamat-kartini",
-    at: "2026-05-09T13:00:00+07:00",
-  },
-  {
-    id: "xp-3",
-    memberId: "mbr-aditya",
-    amount: 60,
-    reason: "Quest mingguan: Asisten AI Sigap",
-    source: "quest",
-    refId: "qst-weekly-1-ai",
-    at: "2026-05-09T16:50:00+07:00",
-  },
-  {
-    id: "xp-4",
-    memberId: "mbr-aditya",
-    amount: 20,
-    reason: "Streak 21 hari",
-    source: "streak",
-    at: "2026-05-09T07:00:00+07:00",
-  },
-];
+export const xpLogs: XPLog[] = [];

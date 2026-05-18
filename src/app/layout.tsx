@@ -84,8 +84,8 @@ export default function RootLayout({
         <SessionProvider>
         <ThemeProvider>
           <LenisProvider>
-            {/* mesh gradient background, fixed behind content */}
-            <div className="bg-mesh fixed inset-0 -z-10 animate-mesh" aria-hidden />
+            {/* Soft mesh gradient background, fixed behind content. */}
+            <div className="bg-mesh fixed inset-0 -z-10" aria-hidden />
             <div className="bg-noise fixed inset-0 -z-10" aria-hidden />
             {children}
             <Toaster

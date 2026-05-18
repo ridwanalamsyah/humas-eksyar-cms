@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
-import { ArrowLeft, ShieldCheck, Sparkles, Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { ShieldCheck, Sparkles, Loader2 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
@@ -23,27 +24,40 @@ function GoogleMark({ className }: { className?: string }) {
 }
 
 export default function LoginPage() {
+  return (
+    <Suspense fallback={<LoginShell busy={false} handleGoogle={() => {}} />}>
+      <LoginInner />
+    </Suspense>
+  );
+}
+
+function LoginInner() {
   const [busy, setBusy] = useState(false);
+  const params = useSearchParams();
+  const callbackUrl = params.get("callbackUrl") || "/";
 
   const handleGoogle = async () => {
     setBusy(true);
     try {
-      await signIn("google", { redirectTo: "/" });
+      await signIn("google", { redirectTo: callbackUrl });
     } catch {
       setBusy(false);
     }
   };
+  return <LoginShell busy={busy} handleGoogle={handleGoogle} />;
+}
+
+function LoginShell({
+  busy,
+  handleGoogle,
+}: {
+  busy: boolean;
+  handleGoogle: () => void;
+}) {
 
   return (
     <main className="relative flex min-h-dvh items-center justify-center px-4 py-10 sm:py-16">
-      {/* Top nav */}
-      <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-between px-4 py-5 sm:px-8">
-        <Button asChild variant="ghost" size="sm">
-          <Link href="/">
-            <ArrowLeft className="size-4" strokeWidth={1.75} />
-            Kembali
-          </Link>
-        </Button>
+      <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-end px-4 py-5 sm:px-8">
         <ThemeToggle />
       </div>
 
@@ -90,10 +104,10 @@ export default function LoginPage() {
             <GlassCard variant="thin" className="p-4">
               <div className="flex items-center gap-2 text-foreground/55">
                 <ShieldCheck className="size-4 text-brand-500" strokeWidth={1.75} />
-                <span className="text-[11px] uppercase tracking-wider">RBAC</span>
+                <span className="text-[11px] uppercase tracking-wider">Akses</span>
               </div>
               <p className="mt-1.5 font-display text-sm font-semibold leading-snug">
-                Akses sesuai peran &amp; divisi
+                Hak akses menyesuaikan peran pengurus
               </p>
             </GlassCard>
           </div>
@@ -130,7 +144,7 @@ export default function LoginPage() {
             <div className="mt-7 space-y-3">
               <Button
                 size="lg"
-                variant="secondary"
+                variant="primary"
                 className="w-full justify-center gap-3 text-base"
                 onClick={handleGoogle}
                 disabled={busy}
@@ -142,33 +156,7 @@ export default function LoginPage() {
                 )}
                 {busy ? "Mengarahkan…" : "Masuk dengan Google"}
               </Button>
-              <Button
-                size="lg"
-                variant="ghost"
-                className="w-full justify-center text-base"
-                disabled
-                title="Email kampus magic link — segera tersedia"
-              >
-                Masuk dengan email kampus
-              </Button>
             </div>
-
-            <div className="my-7 flex items-center gap-3">
-              <span className="h-px flex-1 bg-[var(--border)]" />
-              <span className="text-[11px] uppercase tracking-[0.18em] text-foreground/45">
-                atau
-              </span>
-              <span className="h-px flex-1 bg-[var(--border)]" />
-            </div>
-
-            <Button
-              variant="primary"
-              size="lg"
-              className="w-full justify-center text-base"
-              asChild
-            >
-              <Link href="/">Lihat demo dashboard</Link>
-            </Button>
 
             <p className="mt-6 text-center text-[12px] leading-relaxed text-foreground/55">
               Dengan masuk, Anda setuju dengan{" "}
@@ -185,8 +173,11 @@ export default function LoginPage() {
 
           <p className="mt-4 text-center text-[12px] text-foreground/45">
             Bukan anggota Eksyar?{" "}
-            <Link href="/" className="text-foreground/65 underline-offset-2 hover:underline">
-              Pelajari organisasi kami
+            <Link
+              href="/bio"
+              className="text-foreground/65 underline-offset-2 hover:underline"
+            >
+              Lihat profil publik
             </Link>
           </p>
         </motion.div>
