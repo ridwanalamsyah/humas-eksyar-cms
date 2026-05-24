@@ -38,6 +38,13 @@ export async function POST(req: NextRequest) {
       { status: 403 },
     );
   }
+  // Monitoring roles (pembina) are view-only — cannot submit content.
+  if (member.role === "monitoring") {
+    return NextResponse.json(
+      { error: "Akun pembina hanya untuk monitoring, tidak bisa submit konten." },
+      { status: 403 },
+    );
+  }
   const body = await req.json().catch(() => ({}));
   if (!body.title || !body.rubric) {
     return NextResponse.json(

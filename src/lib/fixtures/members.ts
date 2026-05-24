@@ -4,7 +4,8 @@ import type { Member } from "@/lib/data/types";
  * Roster Humas Eksyar periode 2025-2026 sesuai SK Dekan FEBI UIN SGD
  * Nomor B-1623/Un.05/III.9/PP.00.9/11/2025 tanggal 10 November 2025.
  *
- * 2 Penanggung Jawab (dosen) → role "admin"
+ * 2 Penanggung Jawab (dosen) → role "monitoring" (view-only, tidak ikut
+ *                              approval/submit — hanya mengawasi)
  * 1 Koordinator              → role "ketua_divisi"
  * 7 Anggota                  → role "anggota"
  *
@@ -20,7 +21,7 @@ export const members: Member[] = [
     name: "Dr. Evi Sopiah, M.Ag.",
     initials: "ES",
     email: "evi.sopiah@uinsgd.ac.id",
-    role: "admin",
+    role: "monitoring",
     divisionId: "div-humas-eksyar",
     position: "Dosen Pembina",
     joinedAt: "2025-11-10",
@@ -38,7 +39,7 @@ export const members: Member[] = [
     name: "Anisa Ilmia, M.E.",
     initials: "AI",
     email: "anisa.ilmia@uinsgd.ac.id",
-    role: "admin",
+    role: "monitoring",
     divisionId: "div-humas-eksyar",
     position: "Dosen Pembina",
     joinedAt: "2025-11-10",

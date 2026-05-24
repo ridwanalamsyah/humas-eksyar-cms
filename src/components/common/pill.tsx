@@ -27,13 +27,13 @@ const STATUS_META: Record<
     Icon: PencilLine,
   },
   review_divisi: {
-    label: "Review Divisi",
+    label: "Review Koordinator",
     classes:
       "border-amber-400/40 bg-amber-400/15 text-amber-700 dark:text-amber-300",
     Icon: Eye,
   },
   review_sekjen: {
-    label: "Review Sekjen",
+    label: "Review Admin",
     classes:
       "border-violet-400/40 bg-violet-400/15 text-violet-700 dark:text-violet-300",
     Icon: ShieldCheck,
