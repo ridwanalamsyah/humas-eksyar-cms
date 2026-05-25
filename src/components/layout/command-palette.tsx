@@ -15,6 +15,8 @@ import {
   Moon,
   Sun,
   Hash,
+  ListChecks,
+  ClipboardList,
 } from "lucide-react";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
@@ -120,6 +122,8 @@ function CommandPalette({ open, setOpen }: Props) {
                   <CmdItem onSelect={() => go("/")} icon={<Zap className="size-4" />} label="Dashboard" />
                   <CmdItem onSelect={() => go("/content")} icon={<PenLine className="size-4" />} label="Konten" />
                   <CmdItem onSelect={() => go("/calendar")} icon={<CalendarDays className="size-4" />} label="Kalender" />
+                  <CmdItem onSelect={() => go("/schedule")} icon={<ClipboardList className="size-4" />} label="Schedule" hint="Timeline & week view" />
+                  <CmdItem onSelect={() => go("/tasks")} icon={<ListChecks className="size-4" />} label="Task List" hint="To-do pribadi" />
                   <CmdItem onSelect={() => go("/members")} icon={<Users className="size-4" />} label="Anggota" />
                   <CmdItem onSelect={() => go("/badges")} icon={<Trophy className="size-4" />} label="Badge & Quest" />
                   <CmdItem onSelect={() => go("/leaderboard")} icon={<Trophy className="size-4" />} label="Leaderboard" />

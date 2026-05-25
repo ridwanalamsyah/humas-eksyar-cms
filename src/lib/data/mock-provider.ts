@@ -709,3 +709,84 @@ export async function saveContentDraft(input: {
 export async function clearContentDraft(contentId: ID): Promise<boolean> {
   return draftsStore.delete(contentId);
 }
+
+/* ------------------------------------------------------------------ */
+/* Personal tasks (mock store)                                          */
+/* ------------------------------------------------------------------ */
+
+import type { MemberTask, TaskStatus } from "./types";
+
+const tasksStore: MemberTask[] = [];
+
+export async function listMemberTasks(opts: {
+  memberId: ID;
+  status?: TaskStatus[];
+}): Promise<MemberTask[]> {
+  return tasksStore
+    .filter((t) => t.memberId === opts.memberId)
+    .filter((t) => !opts.status || opts.status.includes(t.status))
+    .sort((a, b) => {
+      const ad = a.dueDate ?? "9999-99-99";
+      const bd = b.dueDate ?? "9999-99-99";
+      if (ad !== bd) return ad.localeCompare(bd);
+      return b.createdAt.localeCompare(a.createdAt);
+    });
+}
+
+export async function createMemberTask(input: {
+  memberId: ID;
+  title: string;
+  description?: string;
+  contentId?: ID | null;
+  eventId?: ID | null;
+  holidayId?: ID | null;
+  dueDate?: string | null;
+}): Promise<MemberTask> {
+  const t: MemberTask = {
+    id: `tsk-${Math.random().toString(36).slice(2, 10)}`,
+    memberId: input.memberId,
+    title: input.title,
+    description: input.description ?? "",
+    contentId: input.contentId ?? null,
+    eventId: input.eventId ?? null,
+    holidayId: input.holidayId ?? null,
+    dueDate: input.dueDate ?? null,
+    status: "pending",
+    createdAt: new Date().toISOString(),
+    completedAt: null,
+  };
+  tasksStore.push(t);
+  return t;
+}
+
+export async function updateMemberTask(
+  id: ID,
+  patch: {
+    title?: string;
+    description?: string;
+    dueDate?: string | null;
+    status?: TaskStatus;
+  },
+): Promise<MemberTask | null> {
+  const t = tasksStore.find((x) => x.id === id);
+  if (!t) return null;
+  if (patch.title !== undefined) t.title = patch.title;
+  if (patch.description !== undefined) t.description = patch.description;
+  if (patch.dueDate !== undefined) t.dueDate = patch.dueDate;
+  if (patch.status !== undefined) {
+    t.status = patch.status;
+    t.completedAt = patch.status === "done" ? new Date().toISOString() : null;
+  }
+  return t;
+}
+
+export async function deleteMemberTask(id: ID): Promise<boolean> {
+  const i = tasksStore.findIndex((x) => x.id === id);
+  if (i === -1) return false;
+  tasksStore.splice(i, 1);
+  return true;
+}
+
+export async function getMemberTask(id: ID): Promise<MemberTask | null> {
+  return tasksStore.find((x) => x.id === id) ?? null;
+}

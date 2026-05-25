@@ -329,6 +329,30 @@ export const contentDrafts = pgTable("contentDrafts", {
   savedAt: text("savedAt").notNull(),
 });
 
+/**
+ * Personal task list per member. Tasks may be free-form to-dos or linked
+ * to a content/event/holiday record for editorial accountability
+ * ("Bikin caption Maulid sebelum 23 Sep").
+ */
+export const memberTasks = pgTable("memberTasks", {
+  id: text("id").primaryKey(),
+  memberId: text("memberId")
+    .notNull()
+    .references(() => members.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  description: text("description").notNull().default(""),
+  /** Optional link to content/event/holiday so the task sits in context. */
+  contentId: text("contentId"),
+  eventId: text("eventId"),
+  holidayId: text("holidayId"),
+  /** ISO date — when the task is due. Null = no deadline. */
+  dueDate: text("dueDate"),
+  /** "pending" | "in_progress" | "done" | "cancelled" */
+  status: text("status").notNull().default("pending"),
+  createdAt: text("createdAt").notNull(),
+  completedAt: text("completedAt"),
+});
+
 export const captionTemplates = pgTable("captionTemplates", {
   id: text("id").primaryKey(),
   rubric: text("rubric").notNull(),
