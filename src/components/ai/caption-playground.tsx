@@ -16,16 +16,18 @@ import {
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/common/pill";
-import { STYLE_LIST, RUBRIC_LIST } from "@/lib/ai/captions";
+import { STYLE_LIST } from "@/lib/ai/captions";
 import type {
   CaptionStyle,
   ContentRubric,
   CaptionTemplate,
+  Rubric,
 } from "@/lib/data/types";
 import { HASHTAG_BLOCK } from "@/lib/fixtures/contents";
 
 interface Props {
   templates: CaptionTemplate[];
+  rubrics: Rubric[];
 }
 
 interface AiResult {
@@ -38,11 +40,13 @@ interface AiResult {
   generatedAt: string;
 }
 
-export function CaptionPlayground({ templates }: Props) {
+export function CaptionPlayground({ templates, rubrics }: Props) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [style, setStyle] = useState<CaptionStyle>("formal_organisasi");
-  const [rubric, setRubric] = useState<ContentRubric>("dokumentasi");
+  const [rubric, setRubric] = useState<ContentRubric>(
+    (rubrics[0]?.slug ?? "dokumentasi") as ContentRubric,
+  );
   const [includeHook, setIncludeHook] = useState(false);
   const [result, setResult] = useState<AiResult | null>(null);
   const [loading, setLoading] = useState(false);
@@ -131,9 +135,9 @@ export function CaptionPlayground({ templates }: Props) {
               onChange={(e) => setRubric(e.target.value as ContentRubric)}
               className="w-full bg-transparent text-[14px] outline-none"
             >
-              {RUBRIC_LIST.map((r) => (
-                <option key={r.value} value={r.value}>
-                  {r.emoji} {r.label}
+              {rubrics.map((r) => (
+                <option key={r.id} value={r.slug}>
+                  {r.emoji ? `${r.emoji} ` : ""}{r.label}
                 </option>
               ))}
             </select>

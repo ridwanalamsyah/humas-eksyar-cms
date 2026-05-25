@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { listCaptionTemplates } from "@/lib/data/provider";
+import { listCaptionTemplates, listRubrics } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/common/section-header";
 import { CaptionPlayground } from "@/components/ai/caption-playground";
@@ -10,7 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default async function CaptionsPlaygroundPage() {
-  const templates = await listCaptionTemplates();
+  const [templates, rubrics] = await Promise.all([
+    listCaptionTemplates(),
+    listRubrics(),
+  ]);
   return (
     <AppShell width="wide">
       <SectionHeader
@@ -18,7 +21,7 @@ export default async function CaptionsPlaygroundPage() {
         title="Caption Generator"
         description="Generate caption untuk Instagram, Twitter, dan Facebook."
       />
-      <CaptionPlayground templates={templates} />
+      <CaptionPlayground templates={templates} rubrics={rubrics} />
     </AppShell>
   );
 }

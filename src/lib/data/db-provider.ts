@@ -12,6 +12,7 @@ import { db, schema } from "@/lib/db";
 import * as fixtures from "./mock-provider";
 import type {
   Badge,
+  BrandingConfig,
   CaptionTemplate,
   CaptionVersion,
   CaptionVersionSource,
@@ -24,9 +25,11 @@ import type {
   Member,
   NotificationItem,
   Quest,
+  Rubric,
   WeeklyDigest,
   XPLog,
 } from "./types";
+import { defaultBrandingConfig } from "./types";
 
 function client() {
   if (!db) throw new Error("DATABASE_URL not configured");
@@ -729,6 +732,7 @@ export interface MemberUpdate {
   nimSuffix?: string;
   avatarEmoji?: string;
   accentHue?: number;
+  avatarUrl?: string | null;
   xp?: number;
   streak?: number;
   userId?: string | null;
@@ -844,4 +848,125 @@ export async function setBioConfig(value: BioConfig): Promise<BioConfig> {
       set: { value, updatedAt: now },
     });
   return value;
+}
+
+export async function getBrandingConfig(): Promise<BrandingConfig> {
+  const rows = await client()
+    .select()
+    .from(schema.siteSettings)
+    .where(eq(schema.siteSettings.key, "branding"))
+    .limit(1);
+  if (!rows[0]) return defaultBrandingConfig;
+  return { ...defaultBrandingConfig, ...(rows[0].value as Partial<BrandingConfig>) };
+}
+
+export async function setBrandingConfig(value: BrandingConfig): Promise<BrandingConfig> {
+  const now = new Date().toISOString();
+  await client()
+    .insert(schema.siteSettings)
+    .values({ key: "branding", value, updatedAt: now })
+    .onConflictDoUpdate({
+      target: schema.siteSettings.key,
+      set: { value, updatedAt: now },
+    });
+  return value;
+}
+
+/* ------------------------------------------------------------------ */
+/* Rubrics                                                             */
+/* ------------------------------------------------------------------ */
+
+function toRubric(r: typeof schema.rubrics.$inferSelect): Rubric {
+  return {
+    id: r.id,
+    slug: r.slug,
+    label: r.label,
+    description: r.description,
+    emoji: r.emoji,
+    isActive: r.isActive,
+    sortOrder: r.sortOrder,
+    createdAt: r.createdAt,
+    updatedAt: r.updatedAt,
+  };
+}
+
+export async function listRubrics({
+  includeInactive = false,
+}: { includeInactive?: boolean } = {}): Promise<Rubric[]> {
+  const rows = includeInactive
+    ? await client().select().from(schema.rubrics).orderBy(asc(schema.rubrics.sortOrder))
+    : await client()
+        .select()
+        .from(schema.rubrics)
+        .where(eq(schema.rubrics.isActive, true))
+        .orderBy(asc(schema.rubrics.sortOrder));
+  return rows.map(toRubric);
+}
+
+export async function getRubric(idOrSlug: ID): Promise<Rubric | null> {
+  const rows = await client()
+    .select()
+    .from(schema.rubrics)
+    .where(or(eq(schema.rubrics.id, idOrSlug), eq(schema.rubrics.slug, idOrSlug)))
+    .limit(1);
+  return rows[0] ? toRubric(rows[0]) : null;
+}
+
+export interface RubricInput {
+  slug: string;
+  label: string;
+  description?: string;
+  emoji?: string | null;
+  sortOrder?: number;
+  isActive?: boolean;
+}
+
+export async function createRubric(input: RubricInput): Promise<Rubric> {
+  const now = new Date().toISOString();
+  const id = `rub-${input.slug.replace(/[^a-z0-9-]+/gi, "-").toLowerCase()}-${Date.now().toString(36)}`;
+  const inserted = await client()
+    .insert(schema.rubrics)
+    .values({
+      id,
+      slug: input.slug,
+      label: input.label,
+      description: input.description ?? "",
+      emoji: input.emoji ?? null,
+      sortOrder: input.sortOrder ?? 99,
+      isActive: input.isActive ?? true,
+      createdAt: now,
+      updatedAt: now,
+    })
+    .returning();
+  return toRubric(inserted[0]);
+}
+
+export interface RubricUpdate {
+  slug?: string;
+  label?: string;
+  description?: string;
+  emoji?: string | null;
+  sortOrder?: number;
+  isActive?: boolean;
+}
+
+export async function updateRubric(id: ID, patch: RubricUpdate): Promise<Rubric | null> {
+  const set: Record<string, unknown> = { updatedAt: new Date().toISOString() };
+  for (const [k, v] of Object.entries(patch)) {
+    if (v !== undefined) set[k] = v;
+  }
+  const updated = await client()
+    .update(schema.rubrics)
+    .set(set)
+    .where(eq(schema.rubrics.id, id))
+    .returning();
+  return updated[0] ? toRubric(updated[0]) : null;
+}
+
+export async function deleteRubric(id: ID): Promise<boolean> {
+  const deleted = await client()
+    .delete(schema.rubrics)
+    .where(eq(schema.rubrics.id, id))
+    .returning({ id: schema.rubrics.id });
+  return deleted.length > 0;
 }

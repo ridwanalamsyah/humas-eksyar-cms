@@ -9,6 +9,7 @@ import {
   listMedia,
   listHolidays,
   listMembers,
+  getBrandingConfig,
 } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { DashboardHero } from "@/components/dashboard/dashboard-hero";
@@ -26,7 +27,7 @@ import { findMedia } from "@/lib/fixtures/media";
 import { Sparkles } from "lucide-react";
 
 export default async function HomePage() {
-  const [member, contents, events, digest, members, leaderboard, quests, notifs, media, allHolidays] =
+  const [member, contents, events, digest, members, leaderboard, quests, notifs, media, allHolidays, branding] =
     await Promise.all([
       getCurrentMember(),
       listContents(),
@@ -41,6 +42,7 @@ export default async function HomePage() {
         from: new Date(),
         kind: ["hijriah", "nasional", "internasional"],
       }),
+      getBrandingConfig(),
     ]);
 
   const upcomingHolidays = allHolidays.slice(0, 5);
@@ -190,7 +192,8 @@ export default async function HomePage() {
 
       <footer className="mt-16 text-center">
         <p className="font-mono text-[11px] uppercase tracking-[0.2em] text-foreground/45">
-          Program Studi Ekonomi Syariah · FEBI UIN Sunan Gunung Djati Bandung
+          {branding.orgName}
+          {branding.tagline ? ` · ${branding.tagline}` : ""}
         </p>
       </footer>
     </AppShell>

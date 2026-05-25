@@ -26,6 +26,15 @@ export async function GET(_req: NextRequest, { params }: Params) {
   return NextResponse.json({ member });
 }
 
+const ALLOWED_ROLES = new Set([
+  "monitoring",
+  "anggota",
+  "pengurus",
+  "ketua_divisi",
+  "sekjen",
+  "admin",
+]);
+
 export async function PATCH(req: NextRequest, { params }: Params) {
   const session = await auth();
   if (!session?.user?.email) {
@@ -49,6 +58,21 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     delete patch.xp;
     delete patch.streak;
     delete patch.userId;
+  }
+  // Validate role transitions when admin sends one.
+  if (typeof patch.role === "string") {
+    if (!ALLOWED_ROLES.has(patch.role)) {
+      return NextResponse.json(
+        { error: `Role tidak dikenal: ${patch.role}` },
+        { status: 400 },
+      );
+    }
+    if (isSelf && patch.role !== "admin") {
+      return NextResponse.json(
+        { error: "Admin tidak boleh menurunkan rolenya sendiri." },
+        { status: 400 },
+      );
+    }
   }
   const member = await updateMember(id, patch);
   if (!member) {

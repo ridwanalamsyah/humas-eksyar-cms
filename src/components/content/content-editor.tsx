@@ -8,13 +8,15 @@ import { Sparkles, Save, Send, ImageIcon, X, ChevronDown, Wand2, Hash, Calendar 
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/common/pill";
-import { RUBRIC_LIST, STYLE_LIST } from "@/lib/ai/captions";
-import type { MediaAsset, Member, ContentChannel, CaptionStyle, ContentRubric } from "@/lib/data/types";
+import { STYLE_LIST } from "@/lib/ai/captions";
+import type { MediaAsset, Member, ContentChannel, CaptionStyle, ContentRubric, Rubric } from "@/lib/data/types";
 import { HASHTAG_BLOCK } from "@/lib/fixtures/contents";
 
 interface Props {
   media: MediaAsset[];
   author: Member;
+  rubrics: Rubric[];
+  defaultHashtags?: string;
 }
 
 const CHANNELS: { value: ContentChannel; label: string }[] = [
@@ -25,7 +27,7 @@ const CHANNELS: { value: ContentChannel; label: string }[] = [
   { value: "linktree", label: "Linktree" },
 ];
 
-export function ContentEditor({ media, author }: Props) {
+export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props) {
   void author;
   const router = useRouter();
   const [pending, startTransition] = useTransition();
@@ -34,8 +36,9 @@ export function ContentEditor({ media, author }: Props) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [caption, setCaption] = useState("");
-  const [hashtags, setHashtags] = useState(HASHTAG_BLOCK);
-  const [rubric, setRubric] = useState<ContentRubric>("dokumentasi");
+  const [hashtags, setHashtags] = useState(defaultHashtags ?? HASHTAG_BLOCK);
+  const initialRubric = (rubrics[0]?.slug ?? "dokumentasi") as ContentRubric;
+  const [rubric, setRubric] = useState<ContentRubric>(initialRubric);
   const [style, setStyle] = useState<CaptionStyle>("formal_organisasi");
   const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
   const [channels, setChannels] = useState<ContentChannel[]>(["instagram"]);
@@ -98,8 +101,10 @@ export function ContentEditor({ media, author }: Props) {
               onChange={(e) => setRubric(e.target.value as ContentRubric)}
               className="bg-transparent text-[12px] outline-none"
             >
-              {RUBRIC_LIST.map((r) => (
-                <option key={r.value} value={r.value}>{r.emoji} {r.label}</option>
+              {rubrics.map((r) => (
+                <option key={r.id} value={r.slug}>
+                  {r.emoji ? `${r.emoji} ` : ""}{r.label}
+                </option>
               ))}
             </select>
           </SelectField>

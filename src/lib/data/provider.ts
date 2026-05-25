@@ -64,4 +64,13 @@ export const listHolidays = impl.listHolidays;
 export const getBioConfig = impl.getBioConfig;
 export const setBioConfig = impl.setBioConfig;
 
+export const getBrandingConfig = impl.getBrandingConfig;
+export const setBrandingConfig = impl.setBrandingConfig;
+
+export const listRubrics = impl.listRubrics;
+export const getRubric = impl.getRubric;
+export const createRubric = impl.createRubric;
+export const updateRubric = impl.updateRubric;
+export const deleteRubric = impl.deleteRubric;
+
 export { HASHTAG_BLOCK };

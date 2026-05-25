@@ -14,6 +14,7 @@
 
 import { HASHTAG_BLOCK } from "@/lib/fixtures/contents";
 import type { CaptionStyle, ContentRubric } from "@/lib/data/types";
+import { defaultBrandingConfig } from "@/lib/data/types";
 
 export interface CaptionRequest {
   /** What the post is about — short title or vibe */
@@ -78,16 +79,28 @@ const RUBRIC_LABELS: Record<ContentRubric, string> = {
   campaign: "Campaign / Mobilisasi",
 };
 
-export const CAPTION_FOOTER = "———\nAtas nama Program Studi Ekonomi Syariah";
+/**
+ * Backward-compat constant. Prefer reading from BrandingConfig at runtime.
+ */
+export const CAPTION_FOOTER = `———\n${defaultBrandingConfig.signature}`;
 
-function ensureFooter(text: string): string {
-  if (text.includes("Atas nama Program Studi Ekonomi Syariah")) return text;
-  return `${text.trimEnd()}\n\n${CAPTION_FOOTER}`;
+function buildFooter(signature: string): string {
+  return `———\n${signature}`;
 }
 
-function buildPrompt(req: CaptionRequest): string {
+function ensureFooter(text: string, signature: string): string {
+  if (text.includes(signature)) return text;
+  return `${text.trimEnd()}\n\n${buildFooter(signature)}`;
+}
+
+interface PromptOpts {
+  signature: string;
+  orgName: string;
+}
+
+function buildPrompt(req: CaptionRequest, opts: PromptOpts): string {
   return [
-    "Kamu copywriter resmi Program Studi Ekonomi Syariah — FEBI UIN Sunan Gunung Djati Bandung.",
+    `Kamu copywriter resmi ${opts.orgName}.`,
     "",
     "ATURAN WAJIB:",
     "- Caption pendek: maksimal 80 kata (kurang lebih 4–6 kalimat).",
@@ -97,11 +110,10 @@ function buildPrompt(req: CaptionRequest): string {
     "- Langsung ke pesan utama di kalimat pertama. Beri 1 detail konkret (waktu, tempat, atau angka kalau ada).",
     "- Hindari kata kosong: 'unleash', 'elevate', 'leverage', 'sinergi', 'kolaboratif', emoji berderet (✨🌟💫), hashtag di tengah caption.",
     "- Hormati nilai Islam. Tidak bahasa flirty, tidak hyperbole.",
-    "- Tutup dengan baris kosong + '———\\nAtas nama Program Studi Ekonomi Syariah'. Footer ini sudah dihitung sebagai bagian dari 80 kata kalau diperlukan — singkat aja konten utamanya.",
+    `- Tutup dengan baris kosong + '———\\n${opts.signature}'. Footer ini sudah dihitung sebagai bagian dari 80 kata kalau diperlukan — singkat aja konten utamanya.`,
     "",
     `Rubrik: ${RUBRIC_LABELS[req.rubric] ?? req.rubric}`,
     `Gaya: ${STYLE_LABELS[req.style] ?? req.style}`,
-    `Tim: ${req.divisionName}`,
     `Topik: ${req.title}`,
     `Detail: ${req.details || "—"}`,
     "",
@@ -119,8 +131,14 @@ function buildPrompt(req: CaptionRequest): string {
  * Mock generator that produces a believable, on-brand caption without
  * requiring a Gemini API key. Used both as fallback and for offline dev.
  */
-function mockCompose(req: CaptionRequest): CaptionResult {
-  const { title, details, divisionName, rubric, style } = req;
+interface ComposeOpts {
+  signature: string;
+  hashtags: string;
+  orgName: string;
+}
+
+function mockCompose(req: CaptionRequest, opts: ComposeOpts): CaptionResult {
+  const { title, details, rubric, style } = req;
   const headline = title.toUpperCase();
 
   const styled = (() => {
@@ -153,7 +171,7 @@ function mockCompose(req: CaptionRequest): CaptionResult {
         return [
           `${headline} — RILIS RESMI`,
           "",
-          `Atas nama Program Studi Ekonomi Syariah${divisionName ? ` (tim ${divisionName})` : ""}, kami menyampaikan informasi berikut:`,
+          `${opts.signature}, kami menyampaikan informasi berikut:`,
           "",
           details || "Detail menyusul melalui kanal resmi.",
           "",
@@ -197,7 +215,7 @@ function mockCompose(req: CaptionRequest): CaptionResult {
         return [
           headline,
           "",
-          `Atas nama Program Studi Ekonomi Syariah, kami menyampaikan ${rubric === "selamat_sukses" ? "ucapan selamat" : "informasi resmi"} berikut.`,
+          `${opts.signature}, kami menyampaikan ${rubric === "selamat_sukses" ? "ucapan selamat" : "informasi resmi"} berikut.`,
           "",
           details ||
             "Detail informasi akan diumumkan melalui kanal resmi organisasi.",
@@ -207,17 +225,19 @@ function mockCompose(req: CaptionRequest): CaptionResult {
     }
   })();
 
-  const caption = ensureFooter(styled);
+  const caption = ensureFooter(styled, opts.signature);
 
   // Simple alternative variants — bend tone slightly
   const altA = ensureFooter(
     `${title}.\n\n${details || "Detail kegiatan akan kami sampaikan via channel resmi."}\n\nSampai jumpa di sana — semoga harinya berkah.`,
+    opts.signature,
   );
   const altB = ensureFooter(
     `${title.toLowerCase()}.\n\n${details ? details : "tema kali ini terasa personal — semoga bisa beresonansi."}\n\nbaca sampai habis. tag yang perlu lihat. terima kasih sudah hadir di sini.`,
+    opts.signature,
   );
 
-  const hashtags = `${HASHTAG_BLOCK}${req.extraHashtags ? ` ${req.extraHashtags}` : ""}`;
+  const hashtags = `${opts.hashtags}${req.extraHashtags ? ` ${req.extraHashtags}` : ""}`;
 
   return {
     caption,
@@ -236,7 +256,10 @@ function mockCompose(req: CaptionRequest): CaptionResult {
  * Try calling Gemini 2.0 Flash via @google/genai. Returns null on
  * any error (network, quota, parse failure) so the caller can fall back.
  */
-async function callGemini(req: CaptionRequest): Promise<CaptionResult | null> {
+async function callGemini(
+  req: CaptionRequest,
+  opts: ComposeOpts,
+): Promise<CaptionResult | null> {
   const key = process.env.GEMINI_API_KEY;
   if (!key) return null;
 
@@ -245,7 +268,7 @@ async function callGemini(req: CaptionRequest): Promise<CaptionResult | null> {
     const ai = new GoogleGenAI({ apiKey: key });
     const result = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: buildPrompt(req),
+      contents: buildPrompt(req, { signature: opts.signature, orgName: opts.orgName }),
       config: {
         responseMimeType: "application/json",
       },
@@ -259,11 +282,13 @@ async function callGemini(req: CaptionRequest): Promise<CaptionResult | null> {
     };
     if (!parsed.caption) return null;
     return {
-      caption: ensureFooter(parsed.caption),
-      alternatives: (parsed.alternatives ?? []).map((c) => ensureFooter(c)),
+      caption: ensureFooter(parsed.caption, opts.signature),
+      alternatives: (parsed.alternatives ?? []).map((c) =>
+        ensureFooter(c, opts.signature),
+      ),
       hook: req.includeHook ? parsed.hook : undefined,
       cta: parsed.cta,
-      hashtags: `${HASHTAG_BLOCK}${req.extraHashtags ? ` ${req.extraHashtags}` : ""}`,
+      hashtags: `${opts.hashtags}${req.extraHashtags ? ` ${req.extraHashtags}` : ""}`,
       provider: "gemini",
       generatedAt: new Date().toISOString(),
     };
@@ -272,9 +297,28 @@ async function callGemini(req: CaptionRequest): Promise<CaptionResult | null> {
   }
 }
 
+async function loadBrandingOpts(): Promise<ComposeOpts> {
+  try {
+    const { getBrandingConfig } = await import("@/lib/data/provider");
+    const cfg = await getBrandingConfig();
+    return {
+      signature: cfg.signature,
+      hashtags: cfg.defaultHashtags || HASHTAG_BLOCK,
+      orgName: cfg.orgName,
+    };
+  } catch {
+    return {
+      signature: defaultBrandingConfig.signature,
+      hashtags: HASHTAG_BLOCK,
+      orgName: defaultBrandingConfig.orgName,
+    };
+  }
+}
+
 export async function generateCaption(req: CaptionRequest): Promise<CaptionResult> {
-  const gemini = await callGemini(req);
-  return gemini ?? mockCompose(req);
+  const opts = await loadBrandingOpts();
+  const gemini = await callGemini(req, opts);
+  return gemini ?? mockCompose(req, opts);
 }
 
 export const STYLE_LIST: Array<{ value: CaptionStyle; label: string; emoji: string; hint: string }> = [
@@ -322,14 +366,15 @@ export const STYLE_LIST: Array<{ value: CaptionStyle; label: string; emoji: stri
   },
 ];
 
+/**
+ * @deprecated Rubric list is now read from the DB (`/api/rubrics`). Kept only
+ * as a fallback for tooling that runs before the DB is reachable.
+ */
 export const RUBRIC_LIST: Array<{ value: ContentRubric; label: string; emoji: string }> = [
-  { value: "tausiyah_senin", label: "Tausiyah Senin", emoji: "🌙" },
-  { value: "eksyar_talks", label: "Eksyar Talks", emoji: "🎙️" },
-  { value: "bisnis_halal", label: "Bisnis Halal", emoji: "🛍️" },
-  { value: "eksphoria_update", label: "Eksphoria Update", emoji: "🎉" },
-  { value: "selamat_sukses", label: "Selamat & Sukses", emoji: "🌟" },
-  { value: "kajian", label: "Kajian Akademik", emoji: "📚" },
-  { value: "pengumuman", label: "Pengumuman", emoji: "📢" },
-  { value: "dokumentasi", label: "Dokumentasi Kegiatan", emoji: "📷" },
-  { value: "campaign", label: "Campaign", emoji: "📣" },
+  { value: "refleksi_harian" as ContentRubric, label: "Refleksi harian", emoji: "🌅" },
+  { value: "pengumuman" as ContentRubric, label: "Pengumuman resmi", emoji: "📣" },
+  { value: "kajian" as ContentRubric, label: "Kajian akademik", emoji: "📖" },
+  { value: "selamat_sukses" as ContentRubric, label: "Ucapan & Hari Besar", emoji: "🌷" },
+  { value: "dokumentasi" as ContentRubric, label: "Dokumentasi kegiatan", emoji: "📸" },
+  { value: "campaign" as ContentRubric, label: "Campaign / mobilisasi", emoji: "📢" },
 ];

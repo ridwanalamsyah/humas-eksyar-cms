@@ -1,15 +1,22 @@
 import { AppShell } from "@/components/layout/app-shell";
 import { ContentEditor } from "@/components/content/content-editor";
-import { listMedia, getCurrentMember } from "@/lib/data/provider";
+import {
+  listMedia,
+  getCurrentMember,
+  listRubrics,
+  getBrandingConfig,
+} from "@/lib/data/provider";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata = { title: "Konten Baru" };
 
 export default async function NewContentPage() {
-  const [media, member] = await Promise.all([
+  const [media, member, rubrics, branding] = await Promise.all([
     listMedia(),
     getCurrentMember(),
+    listRubrics(),
+    getBrandingConfig(),
   ]);
 
   return (
@@ -29,7 +36,12 @@ export default async function NewContentPage() {
           siap bantu polish.
         </p>
       </header>
-      <ContentEditor media={media} author={member} />
+      <ContentEditor
+        media={media}
+        author={member}
+        rubrics={rubrics}
+        defaultHashtags={branding.defaultHashtags}
+      />
     </AppShell>
   );
 }

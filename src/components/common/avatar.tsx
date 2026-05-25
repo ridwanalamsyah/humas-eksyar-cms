@@ -2,17 +2,22 @@ import { cn } from "@/lib/utils";
 import type { Member } from "@/lib/data/types";
 
 interface AvatarProps {
-  member: Pick<Member, "name" | "initials" | "avatarEmoji" | "accentHue">;
+  member: Pick<Member, "name" | "initials" | "avatarEmoji" | "accentHue"> & {
+    avatarUrl?: string | null;
+  };
   size?: number;
   ring?: boolean;
   className?: string;
 }
 
 export function Avatar({ member, size = 36, ring = true, className }: AvatarProps) {
+  const hasPhoto = !!member.avatarUrl;
   const style = {
     width: size,
     height: size,
-    background: `conic-gradient(from 220deg at 50% 50%, hsl(${member.accentHue} 70% 70% / 0.85), hsl(${member.accentHue + 30} 80% 60% / 0.85), hsl(${member.accentHue} 70% 70% / 0.85))`,
+    background: hasPhoto
+      ? undefined
+      : `conic-gradient(from 220deg at 50% 50%, hsl(${member.accentHue} 70% 70% / 0.85), hsl(${member.accentHue + 30} 80% 60% / 0.85), hsl(${member.accentHue} 70% 70% / 0.85))`,
     fontSize: size * 0.45,
   };
   return (
@@ -25,10 +30,22 @@ export function Avatar({ member, size = 36, ring = true, className }: AvatarProp
       style={style}
       aria-label={member.name}
     >
-      <span className="relative z-[1] select-none drop-shadow-sm">
-        {member.avatarEmoji ?? member.initials}
-      </span>
-      {ring && (
+      {hasPhoto ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={member.avatarUrl ?? ""}
+          alt={member.name}
+          width={size}
+          height={size}
+          className="absolute inset-0 size-full object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <span className="relative z-[1] select-none drop-shadow-sm">
+          {member.avatarEmoji ?? member.initials}
+        </span>
+      )}
+      {ring && !hasPhoto && (
         <span
           aria-hidden
           className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-br from-white/40 via-transparent to-black/20 mix-blend-overlay"
