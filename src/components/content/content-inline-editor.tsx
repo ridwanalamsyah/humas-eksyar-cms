@@ -6,9 +6,9 @@
  * /content/new which handles fresh drafts.
  */
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { Pencil, Save, X, Trash2, Loader2 } from "lucide-react";
+import { Pencil, Save, X, Trash2, Loader2, Cloud, CloudOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 
@@ -50,6 +50,66 @@ export function ContentInlineEditor({
   const [status, setStatus] = useState(initialStatus);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [autosaveState, setAutosaveState] = useState<
+    "idle" | "saving" | "saved" | "error"
+  >("idle");
+  const [autosaveAt, setAutosaveAt] = useState<string | null>(null);
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const lastSentRef = useRef<string>("");
+  const restoredRef = useRef<boolean>(false);
+
+  // Restore autosave draft once editing opens.
+  useEffect(() => {
+    if (!editing || restoredRef.current) return;
+    restoredRef.current = true;
+    fetch(`/api/contents/${contentId}/draft`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        const d = data?.draft;
+        if (!d) return;
+        // Only restore if newer than the loaded server state.
+        const serverModified = initialCaption + initialBody;
+        const draftModified = (d.caption ?? "") + (d.body ?? "");
+        if (draftModified === serverModified) return;
+        const ok =
+          typeof window !== "undefined" &&
+          window.confirm(
+            "Ada draft autosave belum tersimpan dari sesi terakhir. Pulihkan?",
+          );
+        if (!ok) return;
+        if (d.caption !== undefined) setCaption(d.caption ?? "");
+        if (d.body !== undefined) setBody(d.body ?? "");
+        if (d.hashtags !== undefined) setHashtags(d.hashtags ?? "");
+      })
+      .catch(() => undefined);
+  }, [editing, contentId, initialCaption, initialBody]);
+
+  // Debounced autosave whenever editable fields change.
+  useEffect(() => {
+    if (!editing) return;
+    const payload = JSON.stringify({ caption, hashtags, body });
+    if (payload === lastSentRef.current) return;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    setAutosaveState("saving");
+    debounceRef.current = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/contents/${contentId}/draft`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: payload,
+        });
+        if (!res.ok) throw new Error(`autosave ${res.status}`);
+        lastSentRef.current = payload;
+        setAutosaveState("saved");
+        setAutosaveAt(new Date().toISOString());
+      } catch {
+        setAutosaveState("error");
+      }
+    }, 1500);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
+  }, [editing, contentId, caption, hashtags, body]);
 
   const handleSave = () => {
     setError(null);
@@ -64,6 +124,12 @@ export function ContentInlineEditor({
         setError(data.error ?? `Save failed (${res.status})`);
         return;
       }
+      // Clear autosave draft since the change is now persisted.
+      fetch(`/api/contents/${contentId}/draft`, { method: "DELETE" }).catch(
+        () => undefined,
+      );
+      lastSentRef.current = JSON.stringify({ caption, hashtags, body });
+      setAutosaveState("idle");
       setEditing(false);
       router.refresh();
     });
@@ -118,9 +184,12 @@ export function ContentInlineEditor({
         <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/55">
           Edit konten
         </h3>
-        <Button variant="ghost" size="sm" onClick={cancel} disabled={isPending}>
-          <X className="size-4" strokeWidth={1.75} />
-        </Button>
+        <div className="flex items-center gap-2">
+          <AutosaveBadge state={autosaveState} at={autosaveAt} />
+          <Button variant="ghost" size="sm" onClick={cancel} disabled={isPending}>
+            <X className="size-4" strokeWidth={1.75} />
+          </Button>
+        </div>
       </div>
 
       <div className="mt-4 grid gap-4">
@@ -193,6 +262,39 @@ export function ContentInlineEditor({
         </div>
       </div>
     </GlassCard>
+  );
+}
+
+function AutosaveBadge({
+  state,
+  at,
+}: {
+  state: "idle" | "saving" | "saved" | "error";
+  at: string | null;
+}) {
+  if (state === "idle") return null;
+  if (state === "saving")
+    return (
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-foreground/[0.06] px-2 py-0.5 text-[10px] text-foreground/55">
+        <Loader2 className="size-3 animate-spin" /> Autosave…
+      </span>
+    );
+  if (state === "error")
+    return (
+      <span
+        className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] text-rose-500"
+        title="Autosave gagal"
+      >
+        <CloudOff className="size-3" /> Offline
+      </span>
+    );
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-600"
+      title={at ?? undefined}
+    >
+      <Cloud className="size-3" /> Tersimpan
+    </span>
   );
 }
 

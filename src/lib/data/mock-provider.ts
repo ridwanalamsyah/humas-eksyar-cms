@@ -631,3 +631,81 @@ export async function deleteRubric(id: ID): Promise<boolean> {
   rubricsStore.splice(idx, 1);
   return true;
 }
+
+/* ------------------------------------------------------------------ */
+/* Content comments + drafts (Tier 2) — in-memory                     */
+/* ------------------------------------------------------------------ */
+
+import type { ContentComment, ContentDraft } from "./types";
+
+const commentsStore: ContentComment[] = [];
+const draftsStore = new Map<string, ContentDraft>();
+
+export async function listContentComments(contentId: ID): Promise<ContentComment[]> {
+  return commentsStore
+    .filter((c) => c.contentId === contentId)
+    .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+}
+
+export async function createContentComment(input: {
+  contentId: ID;
+  authorId: ID;
+  body: string;
+}): Promise<ContentComment> {
+  const now = new Date().toISOString();
+  const c: ContentComment = {
+    id: `cmt-${Math.random().toString(36).slice(2, 10)}`,
+    contentId: input.contentId,
+    authorId: input.authorId,
+    body: input.body,
+    resolvedAt: null,
+    createdAt: now,
+  };
+  commentsStore.push(c);
+  return c;
+}
+
+export async function updateContentComment(
+  id: ID,
+  patch: Partial<Pick<ContentComment, "body" | "resolvedAt">>,
+): Promise<ContentComment | null> {
+  const c = commentsStore.find((x) => x.id === id);
+  if (!c) return null;
+  if (patch.body !== undefined) c.body = patch.body;
+  if (patch.resolvedAt !== undefined) c.resolvedAt = patch.resolvedAt;
+  return c;
+}
+
+export async function deleteContentComment(id: ID): Promise<boolean> {
+  const idx = commentsStore.findIndex((c) => c.id === id);
+  if (idx === -1) return false;
+  commentsStore.splice(idx, 1);
+  return true;
+}
+
+export async function getContentDraft(contentId: ID): Promise<ContentDraft | null> {
+  return draftsStore.get(contentId) ?? null;
+}
+
+export async function saveContentDraft(input: {
+  contentId: ID;
+  body: string;
+  caption: string;
+  hashtags: string;
+  authorId: ID | null;
+}): Promise<ContentDraft> {
+  const d: ContentDraft = {
+    contentId: input.contentId,
+    body: input.body,
+    caption: input.caption,
+    hashtags: input.hashtags,
+    authorId: input.authorId,
+    savedAt: new Date().toISOString(),
+  };
+  draftsStore.set(input.contentId, d);
+  return d;
+}
+
+export async function clearContentDraft(contentId: ID): Promise<boolean> {
+  return draftsStore.delete(contentId);
+}
