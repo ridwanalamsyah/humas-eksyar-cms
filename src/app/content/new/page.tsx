@@ -1,14 +1,13 @@
 import { AppShell } from "@/components/layout/app-shell";
 import { ContentEditor } from "@/components/content/content-editor";
-import { listDivisions, listMedia, getCurrentMember } from "@/lib/data/provider";
+import { listMedia, getCurrentMember } from "@/lib/data/provider";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata = { title: "Konten Baru" };
 
 export default async function NewContentPage() {
-  const [divisions, media, member] = await Promise.all([
-    listDivisions(),
+  const [media, member] = await Promise.all([
     listMedia(),
     getCurrentMember(),
   ]);
@@ -30,7 +29,7 @@ export default async function NewContentPage() {
           siap bantu polish.
         </p>
       </header>
-      <ContentEditor divisions={divisions} media={media} author={member} />
+      <ContentEditor media={media} author={member} />
     </AppShell>
   );
 }

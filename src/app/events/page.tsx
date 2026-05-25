@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { listEvents, listDivisions } from "@/lib/data/provider";
+import { listEvents } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/common/section-header";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Pill } from "@/components/common/pill";
 import { formatLongDate, formatTime } from "@/lib/format/dates";
-import { findDivision } from "@/lib/fixtures/divisions";
 import { MapPin, Users } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -15,7 +14,6 @@ export const metadata: Metadata = {
 
 export default async function EventsListPage() {
   const events = await listEvents();
-  void (await listDivisions());
   const upcoming = events
     .filter((e) => new Date(e.startsAt) >= new Date())
     .sort((a, b) => a.startsAt.localeCompare(b.startsAt));
@@ -55,20 +53,14 @@ function Section({
       </h2>
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {events.map((e) => {
-          const div = findDivision(e.divisionId);
           return (
             <Link key={e.id} href={`/events/${e.id}`}>
               <GlassCard
                 hover
                 className={`p-5 ${dim ? "opacity-75" : ""}`}
-                style={{
-                  background: `linear-gradient(135deg, color-mix(in oklab, ${div.color} 16%, transparent), transparent 70%)`,
-                }}
               >
                 <div className="flex flex-wrap items-center gap-1.5 text-[11px] uppercase tracking-[0.16em] text-foreground/55">
-                  <Pill tone="brand">{div.shortName}</Pill>
-                  <span>·</span>
-                  <span>{e.category.replace("_", " ")}</span>
+                  <Pill tone="brand">{e.category.replace("_", " ")}</Pill>
                 </div>
                 <h3 className="mt-2 font-display text-[15px] font-semibold leading-tight tracking-tight">
                   {e.title}

@@ -17,6 +17,27 @@ export interface BioLink {
   featured?: boolean;
 }
 
+/**
+ * Edisi majalah bulanan yang tampil di /bio. Setiap entry merepresentasikan
+ * satu edisi — admin upload PDF + cover lewat /settings/bio (atau PATCH
+ * /api/bio dengan tambahan field magazineIssues).
+ */
+export interface MagazineIssue {
+  id: string;
+  /** Judul edisi, mis. "Edisi Oktober 2026" atau "Volume 03". */
+  title: string;
+  /** Periode singkat, mis. "Oktober 2026" untuk subtitle. */
+  period: string;
+  /** ISO date YYYY-MM-DD untuk sorting. */
+  publishedAt: string;
+  /** URL gambar cover (rekomendasi 4:5 atau 3:4). */
+  coverUrl: string;
+  /** Link ke PDF/Issuu/Drive — tempat baca majalahnya. */
+  readUrl: string;
+  /** Highlight singkat 1 kalimat untuk tampilan card (opsional). */
+  blurb?: string;
+}
+
 export interface BioConfig {
   /** Display name in the hero. */
   name: string;
@@ -29,12 +50,16 @@ export interface BioConfig {
   /** Brand accent color override (CSS color). Optional. */
   accent?: string;
   links: BioLink[];
+  /** Edisi majalah bulanan (terbaru di paling atas). */
+  magazineIssues?: MagazineIssue[];
   /** Whether the page surfaces upcoming events from the events table. */
   showEvents?: boolean;
   /** Whether the page surfaces the latest published content. */
   showLatestContent?: boolean;
   /** Whether the page surfaces upcoming Hijriah / national holidays. */
   showHolidays?: boolean;
+  /** Whether the page surfaces monthly magazine issues. */
+  showMagazine?: boolean;
 }
 
 export const defaultBioConfig: BioConfig = {
@@ -46,6 +71,8 @@ export const defaultBioConfig: BioConfig = {
   showEvents: true,
   showLatestContent: true,
   showHolidays: true,
+  showMagazine: true,
+  magazineIssues: [],
   links: [
     {
       id: "instagram",

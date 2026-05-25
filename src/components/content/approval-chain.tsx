@@ -3,7 +3,6 @@
 import { motion } from "motion/react";
 import { Avatar } from "@/components/common/avatar";
 import { findMember, members as roster } from "@/lib/fixtures/members";
-import { findDivision } from "@/lib/fixtures/divisions";
 import { CheckCircle2, Clock4, Send, Sparkles } from "lucide-react";
 import type { ContentItem } from "@/lib/data/types";
 
@@ -18,21 +17,26 @@ const STAGE_LABEL: Record<(typeof STAGE_ORDER)[number], string> = {
 
 /**
  * First admin / koordinator who can act as the final reviewer.
- * Falls back to division lead if no admin exists. Monitoring roles
- * (pembina) tidak ikut approval — mereka hanya pengawas.
+ * Monitoring roles (pembina) tidak ikut approval — mereka hanya pengawas.
  */
-function resolveFinalReviewer(divisionLeadId: string): string | null {
+function resolveFinalReviewer(): string | null {
   const admin = roster.find((m) => m.role === "admin");
   if (admin) return admin.id;
-  const koordinator = roster.find(
-    (m) => m.role === "ketua_divisi" && m.id !== divisionLeadId,
-  );
+  const koordinator = roster.find((m) => m.role === "ketua_divisi");
+  if (koordinator) return koordinator.id;
+  return null;
+}
+
+/**
+ * First koordinator (ketua_divisi) who can run the initial review.
+ */
+function resolveKoordinator(): string | null {
+  const koordinator = roster.find((m) => m.role === "ketua_divisi");
   if (koordinator) return koordinator.id;
   return null;
 }
 
 export function ApprovalChain({ content }: { content: ContentItem }) {
-  const division = findDivision(content.divisionId);
   const reachedIndex = STAGE_ORDER.indexOf(
     (content.status === "idea" ? "draft" : content.status) as (typeof STAGE_ORDER)[number],
   );
@@ -44,9 +48,9 @@ export function ApprovalChain({ content }: { content: ContentItem }) {
         const isCurrent = i === reachedIndex;
         const responsibleId =
           stage === "review_divisi"
-            ? division.leadId
+            ? resolveKoordinator()
             : stage === "review_sekjen"
-              ? resolveFinalReviewer(division.leadId)
+              ? resolveFinalReviewer()
               : stage === "draft"
                 ? content.authorId
                 : null;

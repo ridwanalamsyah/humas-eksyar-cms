@@ -1,27 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  listLeaderboard,
-  listDivisionLeaderboard,
-} from "@/lib/data/provider";
+import { listLeaderboard } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/common/section-header";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
 import { Trophy, Flame, Award } from "lucide-react";
-import { findDivision } from "@/lib/fixtures/divisions";
-import { percent } from "@/lib/format/dates";
 
 export const metadata: Metadata = {
   title: "Leaderboard",
-  description: "Peringkat anggota dan divisi berdasarkan kontribusi.",
+  description: "Peringkat anggota berdasarkan kontribusi.",
 };
 
 export default async function LeaderboardPage() {
-  const [members, divisions] = await Promise.all([
-    listLeaderboard(),
-    listDivisionLeaderboard(),
-  ]);
+  const members = await listLeaderboard();
   const top3 = members.slice(0, 3);
   const rest = members.slice(3, 20);
 
@@ -35,7 +27,6 @@ export default async function LeaderboardPage() {
 
       <div className="mt-2 grid gap-4 sm:grid-cols-3">
         {top3.map((m, i) => {
-          const division = findDivision(m.divisionId);
           const ranks: Array<{
             color: string;
             label: string;
@@ -79,7 +70,7 @@ export default async function LeaderboardPage() {
                       {m.name}
                     </p>
                     <p className="text-[11px] text-foreground/55">
-                      {division.shortName}
+                      {m.position}
                     </p>
                   </div>
                 </div>
@@ -109,7 +100,6 @@ export default async function LeaderboardPage() {
           </div>
           <ul className="divide-y divide-foreground/10 dark:divide-white/10">
             {rest.map((m, i) => {
-              const division = findDivision(m.divisionId);
               return (
                 <li key={m.id}>
                   <Link
@@ -123,7 +113,7 @@ export default async function LeaderboardPage() {
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-[14px] font-medium">{m.name}</p>
                       <p className="truncate text-[11px] text-foreground/55">
-                        {division.shortName} · {m.position}
+                        {m.position}
                       </p>
                     </div>
                     <span className="hidden items-center gap-1 text-[11px] text-foreground/60 sm:inline-flex">
@@ -145,39 +135,6 @@ export default async function LeaderboardPage() {
         </GlassCard>
 
         <aside className="space-y-4">
-          <GlassCard className="p-5">
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
-              Leaderboard divisi
-            </p>
-            <ul className="mt-3 space-y-2">
-              {divisions.map((d, i) => (
-                <li
-                  key={d.division.id}
-                  className="flex items-center justify-between gap-2 rounded-xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 text-[12px] dark:border-white/10 dark:bg-white/[0.03]"
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="font-mono text-[10px] text-foreground/55">
-                      #{i + 1}
-                    </span>
-                    <span
-                      className="size-2 rounded-full"
-                      style={{ background: d.division.color }}
-                    />
-                    <span className="font-medium">{d.division.shortName}</span>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-mono text-[12px] font-semibold">
-                      {d.totalXP.toLocaleString()} XP
-                    </p>
-                    <p className="text-[10px] text-foreground/55">
-                      {d.postCount} post · ER {percent(d.engagementRate, 1)}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </GlassCard>
-
           <GlassCard variant="thin" className="p-5">
             <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
               Aturan ringkas

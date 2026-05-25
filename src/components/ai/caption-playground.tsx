@@ -18,7 +18,6 @@ import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/common/pill";
 import { STYLE_LIST, RUBRIC_LIST } from "@/lib/ai/captions";
 import type {
-  Division,
   CaptionStyle,
   ContentRubric,
   CaptionTemplate,
@@ -26,7 +25,6 @@ import type {
 import { HASHTAG_BLOCK } from "@/lib/fixtures/contents";
 
 interface Props {
-  divisions: Division[];
   templates: CaptionTemplate[];
 }
 
@@ -40,16 +38,14 @@ interface AiResult {
   generatedAt: string;
 }
 
-export function CaptionPlayground({ divisions, templates }: Props) {
+export function CaptionPlayground({ templates }: Props) {
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
   const [style, setStyle] = useState<CaptionStyle>("formal_organisasi");
   const [rubric, setRubric] = useState<ContentRubric>("dokumentasi");
-  const [divisionId, setDivisionId] = useState(divisions[0].id);
   const [includeHook, setIncludeHook] = useState(false);
   const [result, setResult] = useState<AiResult | null>(null);
   const [loading, setLoading] = useState(false);
-  const division = divisions.find((d) => d.id === divisionId) ?? divisions[0];
 
   async function generate() {
     if (!title.trim()) {
@@ -64,7 +60,6 @@ export function CaptionPlayground({ divisions, templates }: Props) {
         body: JSON.stringify({
           title,
           details,
-          divisionName: division.name,
           rubric,
           style,
           variants: 2,
@@ -112,7 +107,7 @@ export function CaptionPlayground({ divisions, templates }: Props) {
             <input
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              placeholder="Contoh: Tausiyah Senin — Etika Bermuamalah"
+              placeholder="Contoh: Refleksi pekanan — Etika Bermuamalah"
               className="w-full bg-transparent text-[14px] outline-none placeholder:text-foreground/40"
             />
           </Field>
@@ -130,34 +125,19 @@ export function CaptionPlayground({ divisions, templates }: Props) {
             />
           </Field>
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            <Field label="Rubrik">
-              <select
-                value={rubric}
-                onChange={(e) => setRubric(e.target.value as ContentRubric)}
-                className="w-full bg-transparent text-[14px] outline-none"
-              >
-                {RUBRIC_LIST.map((r) => (
-                  <option key={r.value} value={r.value}>
-                    {r.emoji} {r.label}
-                  </option>
-                ))}
-              </select>
-            </Field>
-            <Field label="Divisi penulis">
-              <select
-                value={divisionId}
-                onChange={(e) => setDivisionId(e.target.value)}
-                className="w-full bg-transparent text-[14px] outline-none"
-              >
-                {divisions.map((d) => (
-                  <option key={d.id} value={d.id}>
-                    {d.shortName}
-                  </option>
-                ))}
-              </select>
-            </Field>
-          </div>
+          <Field label="Rubrik">
+            <select
+              value={rubric}
+              onChange={(e) => setRubric(e.target.value as ContentRubric)}
+              className="w-full bg-transparent text-[14px] outline-none"
+            >
+              {RUBRIC_LIST.map((r) => (
+                <option key={r.value} value={r.value}>
+                  {r.emoji} {r.label}
+                </option>
+              ))}
+            </select>
+          </Field>
 
           <div>
             <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { listEvents, listDivisions, listHolidays } from "@/lib/data/provider";
+import { listEvents, listHolidays } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/common/section-header";
 import { CalendarView } from "@/components/calendar/calendar-view";
@@ -12,9 +12,8 @@ export const metadata: Metadata = {
 };
 
 export default async function CalendarPage() {
-  const [events, divisions, holidays] = await Promise.all([
+  const [events, holidays] = await Promise.all([
     listEvents(),
-    listDivisions(),
     listHolidays({
       from: new Date(),
       kind: ["hijriah", "nasional", "internasional", "cuti_bersama"],
@@ -28,7 +27,7 @@ export default async function CalendarPage() {
         description="Jadwal kegiatan bulanan + pengingat hari besar untuk konten ucapan."
       />
       <div className="mt-2 grid gap-6 lg:grid-cols-[2fr_1fr]">
-        <CalendarView events={events} divisions={divisions} />
+        <CalendarView events={events} />
         <UpcomingHolidays holidays={holidays.slice(0, 10)} />
       </div>
     </AppShell>

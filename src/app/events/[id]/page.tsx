@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   getEvent,
-  getDivision,
   getMember,
   getMedia,
   getCurrentMember,
@@ -40,8 +39,7 @@ export default async function EventDetail({ params }: PageProps) {
   const event = await getEvent(id);
   if (!event) notFound();
 
-  const [division, coordinator, cover, me] = await Promise.all([
-    getDivision(event.divisionId),
+  const [coordinator, cover, me] = await Promise.all([
     getMember(event.coordinatorId),
     event.coverMediaId ? getMedia(event.coverMediaId) : Promise.resolve(null),
     getCurrentMember(),
@@ -73,8 +71,7 @@ export default async function EventDetail({ params }: PageProps) {
         )}
         <div className="p-7">
           <div className="flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-foreground/55">
-            {division && <Pill tone="brand">{division.shortName}</Pill>}
-            <Pill>{event.category.replace("_", " ")}</Pill>
+            <Pill tone="brand">{event.category.replace("_", " ")}</Pill>
             {event.isOnline && <Pill tone="info">Online</Pill>}
           </div>
           <h1 className="mt-3 font-display text-[clamp(1.7rem,1.2rem+1.6vw,2.4rem)] font-semibold leading-tight tracking-tight">

@@ -8,11 +8,10 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
 import { Pill } from "@/components/common/pill";
 import { EmptyState } from "@/components/common/empty-state";
-import type { Member, Division, Role } from "@/lib/data/types";
+import type { Member, Role } from "@/lib/data/types";
 
 interface Props {
   members: Member[];
-  divisions: Division[];
   topXP: string[];
 }
 
@@ -25,14 +24,12 @@ const ROLE_LABEL: Record<Role, string> = {
   admin: "Admin",
 };
 
-export function MembersDirectory({ members, divisions, topXP }: Props) {
+export function MembersDirectory({ members, topXP }: Props) {
   const [query, setQuery] = useState("");
-  const [divFilter, setDivFilter] = useState<string>("all");
   const [roleFilter, setRoleFilter] = useState<Role | "all">("all");
 
   const filtered = useMemo(() => {
     return members.filter((m) => {
-      if (divFilter !== "all" && m.divisionId !== divFilter) return false;
       if (roleFilter !== "all" && m.role !== roleFilter) return false;
       if (query) {
         const q = query.toLowerCase();
@@ -45,7 +42,7 @@ export function MembersDirectory({ members, divisions, topXP }: Props) {
       }
       return true;
     });
-  }, [members, divFilter, roleFilter, query]);
+  }, [members, roleFilter, query]);
 
   return (
     <div className="mt-2 space-y-5">
@@ -60,18 +57,6 @@ export function MembersDirectory({ members, divisions, topXP }: Props) {
               className="w-full bg-transparent text-[13px] outline-none placeholder:text-foreground/45"
             />
           </label>
-          <select
-            value={divFilter}
-            onChange={(e) => setDivFilter(e.target.value)}
-            className="h-10 rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 text-[13px] dark:border-white/10 dark:bg-white/5"
-          >
-            <option value="all">Semua divisi</option>
-            {divisions.map((d) => (
-              <option key={d.id} value={d.id}>
-                {d.shortName}
-              </option>
-            ))}
-          </select>
           <select
             value={roleFilter}
             onChange={(e) => setRoleFilter(e.target.value as Role | "all")}
@@ -107,7 +92,6 @@ export function MembersDirectory({ members, divisions, topXP }: Props) {
             className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
             {filtered.map((m) => {
-              const division = divisions.find((d) => d.id === m.divisionId);
               const isTop = topXP.includes(m.id);
               return (
                 <motion.div
@@ -136,9 +120,6 @@ export function MembersDirectory({ members, divisions, topXP }: Props) {
                           </p>
                           <div className="mt-2 flex flex-wrap items-center gap-1.5">
                             <Pill tone="brand">{ROLE_LABEL[m.role]}</Pill>
-                            {division && (
-                              <Pill>{division.shortName}</Pill>
-                            )}
                           </div>
                         </div>
                       </div>

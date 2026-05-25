@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import {
   listContents,
-  listDivisions,
   getWeeklyDigest,
-  listDivisionLeaderboard,
 } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/common/section-header";
@@ -19,11 +17,9 @@ export const metadata: Metadata = {
 };
 
 export default async function AnalyticsPage() {
-  const [contents, divisions, digest, divBoard] = await Promise.all([
+  const [contents, digest] = await Promise.all([
     listContents({ status: "published" }),
-    listDivisions(),
     getWeeklyDigest(),
-    listDivisionLeaderboard(),
   ]);
 
   const totals = contents.reduce(
@@ -68,16 +64,6 @@ export default async function AnalyticsPage() {
       sentiment: Math.round(c.metrics!.sentiment * 100),
     }));
 
-  const byDivision = divisions.map((d) => {
-    const ds = contents.filter((c) => c.divisionId === d.id);
-    const reach = ds.reduce((sum, c) => sum + (c.metrics?.reach ?? 0), 0);
-    return {
-      name: d.shortName,
-      value: reach,
-      color: d.color,
-    };
-  });
-
   return (
     <AppShell width="wide">
       <SectionHeader
@@ -112,7 +98,7 @@ export default async function AnalyticsPage() {
       </div>
 
       <div className="mt-8">
-        <AnalyticsCharts series={series} byDivision={byDivision} />
+        <AnalyticsCharts series={series} />
       </div>
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[2fr_1fr]">
@@ -184,27 +170,7 @@ export default async function AnalyticsPage() {
             </div>
           </GlassCard>
 
-          <GlassCard className="p-5">
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
-              Performa divisi
-            </p>
-            <ul className="mt-3 space-y-2 text-[12px]">
-              {divBoard.map((d) => (
-                <li key={d.division.id} className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-1.5">
-                    <span
-                      className="size-2 rounded-full"
-                      style={{ background: d.division.color }}
-                    />
-                    {d.division.shortName}
-                  </span>
-                  <span className="font-mono text-foreground/65">
-                    {d.postCount} · {percent(d.engagementRate, 1)}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </GlassCard>
+
         </aside>
       </div>
     </AppShell>
