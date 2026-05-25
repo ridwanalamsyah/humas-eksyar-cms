@@ -25,9 +25,11 @@ import type {
   ID,
   MediaAsset,
   Member,
+  MemberTask,
   NotificationItem,
   Quest,
   Rubric,
+  TaskStatus,
   WeeklyDigest,
   XPLog,
 } from "./types";
@@ -1095,4 +1097,98 @@ export async function clearContentDraft(contentId: ID): Promise<boolean> {
     .where(eq(schema.contentDrafts.contentId, contentId))
     .returning({ contentId: schema.contentDrafts.contentId });
   return deleted.length > 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Personal tasks                                                      */
+/* ------------------------------------------------------------------ */
+
+export async function listMemberTasks(opts: {
+  memberId: ID;
+  status?: TaskStatus[];
+}): Promise<MemberTask[]> {
+  const conds = [eq(schema.memberTasks.memberId, opts.memberId)];
+  if (opts.status && opts.status.length > 0) {
+    conds.push(inArray(schema.memberTasks.status, opts.status));
+  }
+  const rows = await client()
+    .select()
+    .from(schema.memberTasks)
+    .where(and(...conds))
+    .orderBy(asc(schema.memberTasks.dueDate), desc(schema.memberTasks.createdAt));
+  return rows.map((r) => row<MemberTask>(r));
+}
+
+export async function createMemberTask(input: {
+  memberId: ID;
+  title: string;
+  description?: string;
+  contentId?: ID | null;
+  eventId?: ID | null;
+  holidayId?: ID | null;
+  dueDate?: string | null;
+}): Promise<MemberTask> {
+  const now = new Date().toISOString();
+  const id = `tsk-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+  const inserted = await client()
+    .insert(schema.memberTasks)
+    .values({
+      id,
+      memberId: input.memberId,
+      title: input.title,
+      description: input.description ?? "",
+      contentId: input.contentId ?? null,
+      eventId: input.eventId ?? null,
+      holidayId: input.holidayId ?? null,
+      dueDate: input.dueDate ?? null,
+      status: "pending",
+      createdAt: now,
+      completedAt: null,
+    })
+    .returning();
+  return row<MemberTask>(inserted[0]);
+}
+
+export async function updateMemberTask(
+  id: ID,
+  patch: {
+    title?: string;
+    description?: string;
+    dueDate?: string | null;
+    status?: TaskStatus;
+  },
+): Promise<MemberTask | null> {
+  const set: Record<string, unknown> = {};
+  if (patch.title !== undefined) set.title = patch.title;
+  if (patch.description !== undefined) set.description = patch.description;
+  if (patch.dueDate !== undefined) set.dueDate = patch.dueDate;
+  if (patch.status !== undefined) {
+    set.status = patch.status;
+    set.completedAt =
+      patch.status === "done" ? new Date().toISOString() : null;
+  }
+  if (Object.keys(set).length === 0) return null;
+  const updated = await client()
+    .update(schema.memberTasks)
+    .set(set)
+    .where(eq(schema.memberTasks.id, id))
+    .returning();
+  return updated[0] ? row<MemberTask>(updated[0]) : null;
+}
+
+export async function deleteMemberTask(id: ID): Promise<boolean> {
+  const deleted = await client()
+    .delete(schema.memberTasks)
+    .where(eq(schema.memberTasks.id, id))
+    .returning({ id: schema.memberTasks.id });
+  return deleted.length > 0;
+}
+
+export async function getMemberTask(id: ID): Promise<MemberTask | null> {
+  const rows = await client()
+    .select()
+    .from(schema.memberTasks)
+    .where(eq(schema.memberTasks.id, id))
+    .limit(1);
+  return rows[0] ? row<MemberTask>(rows[0]) : null;
 }

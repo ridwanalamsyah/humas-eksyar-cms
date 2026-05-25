@@ -82,4 +82,10 @@ export const getContentDraft = impl.getContentDraft;
 export const saveContentDraft = impl.saveContentDraft;
 export const clearContentDraft = impl.clearContentDraft;
 
+export const listMemberTasks = impl.listMemberTasks;
+export const createMemberTask = impl.createMemberTask;
+export const updateMemberTask = impl.updateMemberTask;
+export const deleteMemberTask = impl.deleteMemberTask;
+export const getMemberTask = impl.getMemberTask;
+
 export { HASHTAG_BLOCK };

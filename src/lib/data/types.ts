@@ -373,6 +373,26 @@ export interface ContentDraft {
   savedAt: ISODateTime;
 }
 
+/**
+ * Personal task list per member. May be free-form to-dos or linked to a
+ * content/event/holiday for editorial accountability.
+ */
+export type TaskStatus = "pending" | "in_progress" | "done" | "cancelled";
+
+export interface MemberTask {
+  id: ID;
+  memberId: ID;
+  title: string;
+  description: string;
+  contentId: ID | null;
+  eventId: ID | null;
+  holidayId: ID | null;
+  dueDate: ISODate | null;
+  status: TaskStatus;
+  createdAt: ISODateTime;
+  completedAt: ISODateTime | null;
+}
+
 /** Persisted weekly digest (AI summary) */
 export interface WeeklyDigest {
   id: ID;
