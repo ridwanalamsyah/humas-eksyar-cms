@@ -19,15 +19,14 @@ import { ChevronLeft, ChevronRight, CalendarDays, MapPin, Users } from "lucide-r
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { formatHijri, formatTime } from "@/lib/format/dates";
-import type { Event, Division } from "@/lib/data/types";
+import type { Event } from "@/lib/data/types";
 import { cn } from "@/lib/utils";
 
 interface Props {
   events: Event[];
-  divisions: Division[];
 }
 
-export function CalendarView({ events, divisions }: Props) {
+export function CalendarView({ events }: Props) {
   const [cursor, setCursor] = useState(new Date());
   const [selected, setSelected] = useState<Date>(new Date());
 
@@ -60,8 +59,7 @@ export function CalendarView({ events, divisions }: Props) {
   const selectedKey = format(selected, "yyyy-MM-dd");
   const selectedEvents = eventsByDay.get(selectedKey) ?? [];
 
-  const findDiv = (id: string) =>
-    divisions.find((d) => d.id === id) ?? divisions[0];
+
 
   return (
     <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_minmax(280px,360px)]">
@@ -135,17 +133,13 @@ export function CalendarView({ events, divisions }: Props) {
                   {format(d, "d")}
                 </span>
                 <div className="flex flex-wrap items-end gap-0.5">
-                  {dayEvents.slice(0, 3).map((e) => {
-                    const div = findDiv(e.divisionId);
-                    return (
-                      <span
-                        key={e.id}
-                        className="size-1.5 rounded-full"
-                        style={{ background: div.color }}
-                        title={e.title}
-                      />
-                    );
-                  })}
+                  {dayEvents.slice(0, 3).map((e) => (
+                    <span
+                      key={e.id}
+                      className="size-1.5 rounded-full bg-brand-500"
+                      title={e.title}
+                    />
+                  ))}
                   {dayEvents.length > 3 && (
                     <span className="text-[9px] text-foreground/55">
                       +{dayEvents.length - 3}
@@ -157,18 +151,7 @@ export function CalendarView({ events, divisions }: Props) {
           })}
         </div>
 
-        <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-foreground/10 pt-3 text-[11px] text-foreground/55 dark:border-white/10">
-          <span>Legenda:</span>
-          {divisions.map((d) => (
-            <span key={d.id} className="inline-flex items-center gap-1">
-              <span
-                className="size-1.5 rounded-full"
-                style={{ background: d.color }}
-              />
-              {d.shortName}
-            </span>
-          ))}
-        </div>
+
       </GlassCard>
 
       <aside className="space-y-4">
@@ -209,7 +192,6 @@ export function CalendarView({ events, divisions }: Props) {
               className="space-y-3"
             >
               {selectedEvents.map((e) => {
-                const div = findDiv(e.divisionId);
                 return (
                   <motion.div
                     key={e.id}
@@ -220,17 +202,7 @@ export function CalendarView({ events, divisions }: Props) {
                   >
                     <Link href={`/events/${e.id}`}>
                       <GlassCard hover className="p-4">
-                        <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.16em] text-foreground/55">
-                          <span
-                            className="inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-[10px] font-medium"
-                            style={{
-                              background: `color-mix(in oklab, ${div.color} 18%, transparent)`,
-                              borderColor: `color-mix(in oklab, ${div.color} 45%, transparent)`,
-                              color: div.color,
-                            }}
-                          >
-                            {div.shortName}
-                          </span>
+                        <div className="flex items-center justify-end text-[10px] uppercase tracking-[0.16em] text-foreground/55">
                           <span>{formatTime(e.startsAt)}</span>
                         </div>
                         <h4 className="mt-2 font-display text-[15px] font-semibold leading-tight tracking-tight">

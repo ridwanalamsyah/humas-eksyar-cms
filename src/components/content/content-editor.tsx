@@ -9,11 +9,10 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/common/pill";
 import { RUBRIC_LIST, STYLE_LIST } from "@/lib/ai/captions";
-import type { Division, MediaAsset, Member, ContentChannel, CaptionStyle, ContentRubric } from "@/lib/data/types";
+import type { MediaAsset, Member, ContentChannel, CaptionStyle, ContentRubric } from "@/lib/data/types";
 import { HASHTAG_BLOCK } from "@/lib/fixtures/contents";
 
 interface Props {
-  divisions: Division[];
   media: MediaAsset[];
   author: Member;
 }
@@ -26,7 +25,8 @@ const CHANNELS: { value: ContentChannel; label: string }[] = [
   { value: "linktree", label: "Linktree" },
 ];
 
-export function ContentEditor({ divisions, media, author }: Props) {
+export function ContentEditor({ media, author }: Props) {
+  void author;
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [generating, setGenerating] = useState(false);
@@ -37,12 +37,9 @@ export function ContentEditor({ divisions, media, author }: Props) {
   const [hashtags, setHashtags] = useState(HASHTAG_BLOCK);
   const [rubric, setRubric] = useState<ContentRubric>("dokumentasi");
   const [style, setStyle] = useState<CaptionStyle>("formal_organisasi");
-  const [divisionId, setDivisionId] = useState<string>(author.divisionId);
   const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
   const [channels, setChannels] = useState<ContentChannel[]>(["instagram"]);
   const [scheduledFor, setScheduledFor] = useState("");
-
-  const division = divisions.find((d) => d.id === divisionId) ?? divisions[0];
 
   async function generate() {
     if (!title.trim()) {
@@ -57,7 +54,6 @@ export function ContentEditor({ divisions, media, author }: Props) {
         body: JSON.stringify({
           title,
           details,
-          divisionName: division.name,
           rubric,
           style,
           variants: 2,
@@ -79,7 +75,7 @@ export function ContentEditor({ divisions, media, author }: Props) {
 
   function submit(action: "draft" | "submit") {
     startTransition(() => {
-      const word = action === "draft" ? "Draft tersimpan" : "Konten dikirim ke review divisi";
+      const word = action === "draft" ? "Draft tersimpan" : "Konten dikirim ke review koordinator";
       toast.success(word);
       router.push("/content");
     });
@@ -104,17 +100,6 @@ export function ContentEditor({ divisions, media, author }: Props) {
             >
               {RUBRIC_LIST.map((r) => (
                 <option key={r.value} value={r.value}>{r.emoji} {r.label}</option>
-              ))}
-            </select>
-          </SelectField>
-          <SelectField label="Divisi">
-            <select
-              value={divisionId}
-              onChange={(e) => setDivisionId(e.target.value)}
-              className="bg-transparent text-[12px] outline-none"
-            >
-              {divisions.map((d) => (
-                <option key={d.id} value={d.id}>{d.shortName}</option>
               ))}
             </select>
           </SelectField>
@@ -271,14 +256,13 @@ export function ContentEditor({ divisions, media, author }: Props) {
         <GlassCard variant="thin" className="p-5">
           <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">Preview status</h3>
           <div className="mt-3 flex flex-wrap gap-2">
-            <Pill tone="brand">{division.shortName}</Pill>
-            <Pill>{rubric.replace(/_/g, " ")}</Pill>
+            <Pill tone="brand">{rubric.replace(/_/g, " ")}</Pill>
             <Pill tone="gold">
               <Sparkles className="size-3" strokeWidth={2} /> {style.replace(/_/g, " ")}
             </Pill>
           </div>
           <p className="mt-3 text-[12px] text-foreground/65">
-            {scheduledFor ? "Akan masuk antrian terjadwal." : "Akan masuk antrian Review Divisi setelah dikirim."}
+            {scheduledFor ? "Akan masuk antrian terjadwal." : "Akan masuk antrian Review Koordinator setelah dikirim."}
           </p>
         </GlassCard>
       </aside>

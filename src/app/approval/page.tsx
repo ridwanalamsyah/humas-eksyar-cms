@@ -11,14 +11,13 @@ import { ApprovalChain } from "@/components/content/approval-chain";
 import { StatusPill } from "@/components/common/pill";
 import { Avatar } from "@/components/common/avatar";
 import { findMember } from "@/lib/fixtures/members";
-import { findDivision } from "@/lib/fixtures/divisions";
 import { formatLongDate } from "@/lib/format/dates";
 import { ApprovalActions } from "@/components/content/approval-actions";
 import { Inbox } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Approval Queue",
-  description: "Konten yang menunggu review divisi atau sekjen.",
+  description: "Konten yang menunggu review koordinator atau admin.",
 };
 
 export default async function ApprovalPage() {
@@ -45,7 +44,6 @@ export default async function ApprovalPage() {
           ) : (
             inMyQueue.map((c) => {
               const author = findMember(c.authorId);
-              const division = findDivision(c.divisionId);
               if (!author) return null;
               return (
                 <GlassCard variant="thick" key={c.id} className="p-5">
@@ -53,8 +51,6 @@ export default async function ApprovalPage() {
                     <div className="min-w-0 flex-1">
                       <div className="flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-foreground/55">
                         <StatusPill status={c.status} />
-                        <span>{division.shortName}</span>
-                        <span>·</span>
                         <span>{formatLongDate(c.updatedAt)}</span>
                       </div>
                       <h3 className="mt-2 font-display text-lg font-semibold leading-tight tracking-tight">
@@ -93,14 +89,12 @@ export default async function ApprovalPage() {
             <div className="grid gap-3 sm:grid-cols-2">
               {others.map((c) => {
                 const author = findMember(c.authorId);
-                const division = findDivision(c.divisionId);
                 if (!author) return null;
                 return (
                   <Link key={c.id} href={`/content/${c.id}`}>
                     <GlassCard className="p-4">
                       <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.16em] text-foreground/55">
                         <StatusPill status={c.status} />
-                        <span>{division.shortName}</span>
                       </div>
                       <h4 className="mt-2 font-display text-[14px] font-semibold leading-tight tracking-tight">
                         {c.title}

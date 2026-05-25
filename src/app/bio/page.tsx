@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ExternalLink, ArrowUpRight, CalendarDays, Moon, Newspaper, Flag } from "lucide-react";
+import { ExternalLink, ArrowUpRight, CalendarDays, Moon, Newspaper, Flag, BookOpen } from "lucide-react";
 import {
   getBioConfig,
   listContents,
@@ -8,6 +8,7 @@ import {
   listHolidays,
 } from "@/lib/data/provider";
 import type { Holiday } from "@/lib/fixtures/holidays";
+import type { MagazineIssue } from "@/lib/fixtures/bio";
 import { formatLongDate } from "@/lib/format/dates";
 
 export const metadata: Metadata = {
@@ -37,6 +38,10 @@ export default async function BioPage() {
     .sort((a, b) => a.startsAt.localeCompare(b.startsAt))
     .slice(0, 3);
   const upcomingHolidays = holidays.slice(0, 4);
+  const magazineIssues = (config.showMagazine && config.magazineIssues
+    ? [...config.magazineIssues]
+    : []
+  ).sort((a, b) => b.publishedAt.localeCompare(a.publishedAt));
 
   const isAvatarUrl = /^https?:\/\//.test(config.avatar) || config.avatar.startsWith("/");
 
@@ -77,6 +82,20 @@ export default async function BioPage() {
           <BioLinkButton key={link.id} link={link} />
         ))}
       </section>
+
+      {/* ─── Majalah Bulanan ─────────────────────────────── */}
+      {magazineIssues.length > 0 && (
+        <section aria-labelledby="bio-magazine" className="mt-10 w-full">
+          <BioSectionTitle id="bio-magazine" icon={<BookOpen className="size-3.5" strokeWidth={1.75} />}>
+            Majalah Bulanan
+          </BioSectionTitle>
+          <ul className="mt-3 grid grid-cols-2 gap-3">
+            {magazineIssues.map((issue) => (
+              <MagazineCard key={issue.id} issue={issue} />
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* ─── Latest content ──────────────────────────────── */}
       {latestContent.length > 0 && (
@@ -204,6 +223,49 @@ function BioSectionTitle({
       {icon}
       {children}
     </h2>
+  );
+}
+
+function MagazineCard({ issue }: { issue: MagazineIssue }) {
+  const external = /^https?:\/\//.test(issue.readUrl);
+  return (
+    <li>
+      <a
+        href={issue.readUrl}
+        target={external ? "_blank" : undefined}
+        rel={external ? "noopener noreferrer" : undefined}
+        className="group block overflow-hidden rounded-2xl border border-foreground/10 bg-background/40 transition hover:border-brand-500/45 hover:bg-background/70 dark:border-white/10"
+      >
+        <div className="relative aspect-[3/4] w-full overflow-hidden bg-foreground/5">
+          {issue.coverUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={issue.coverUrl}
+              alt={`Cover ${issue.title}`}
+              loading="lazy"
+              className="absolute inset-0 size-full object-cover transition-transform group-hover:scale-105"
+            />
+          ) : (
+            <div className="absolute inset-0 grid place-items-center text-foreground/30">
+              <BookOpen className="size-8" strokeWidth={1.5} />
+            </div>
+          )}
+        </div>
+        <div className="px-3 py-2.5">
+          <p className="text-[12.5px] font-semibold leading-snug text-foreground/90 line-clamp-2">
+            {issue.title}
+          </p>
+          <p className="mt-0.5 text-[10.5px] uppercase tracking-[0.14em] text-foreground/55">
+            {issue.period}
+          </p>
+          {issue.blurb && (
+            <p className="mt-1 text-[11px] text-foreground/65 line-clamp-2">
+              {issue.blurb}
+            </p>
+          )}
+        </div>
+      </a>
+    </li>
   );
 }
 

@@ -121,7 +121,6 @@ function CommandPalette({ open, setOpen }: Props) {
                   <CmdItem onSelect={() => go("/content")} icon={<PenLine className="size-4" />} label="Konten" />
                   <CmdItem onSelect={() => go("/calendar")} icon={<CalendarDays className="size-4" />} label="Kalender" />
                   <CmdItem onSelect={() => go("/members")} icon={<Users className="size-4" />} label="Anggota" />
-                  <CmdItem onSelect={() => go("/divisions")} icon={<Hash className="size-4" />} label="Divisi" />
                   <CmdItem onSelect={() => go("/badges")} icon={<Trophy className="size-4" />} label="Badge & Quest" />
                   <CmdItem onSelect={() => go("/leaderboard")} icon={<Trophy className="size-4" />} label="Leaderboard" />
                   <CmdItem onSelect={() => go("/approval")} icon={<ShieldCheck className="size-4" />} label="Approval Queue" />

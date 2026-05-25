@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import {
   getMember,
-  getDivision,
   listContents,
   listBadges,
   listXPLogs,
@@ -15,7 +14,6 @@ import { Pill } from "@/components/common/pill";
 import { ProgressBar } from "@/components/common/progress-bar";
 import { ContentCard } from "@/components/content/content-card";
 import { Flame, Award, Mail, Calendar as CalIcon } from "lucide-react";
-import { findDivision } from "@/lib/fixtures/divisions";
 import { findMember } from "@/lib/fixtures/members";
 import { findMedia } from "@/lib/fixtures/media";
 import { formatLongDate } from "@/lib/format/dates";
@@ -39,8 +37,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
   const member = await getMember(id);
   if (!member) notFound();
 
-  const [division, allContents, allBadges, xpLogs] = await Promise.all([
-    getDivision(member.divisionId),
+  const [allContents, allBadges, xpLogs] = await Promise.all([
     listContents({ authorId: id }),
     listBadges(),
     listXPLogs(id),
@@ -68,7 +65,6 @@ export default async function MemberDetailPage({ params }: PageProps) {
               {member.position}
             </p>
             <div className="mt-3 flex flex-wrap items-center justify-center gap-1.5">
-              <Pill tone="brand">{division?.shortName ?? "—"}</Pill>
               <Pill>Angkatan {member.angkatan}</Pill>
             </div>
             {member.bio && (
@@ -188,14 +184,12 @@ export default async function MemberDetailPage({ params }: PageProps) {
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               {allContents.slice(0, 6).map((c) => {
                 const author = findMember(c.authorId);
-                const divis = findDivision(c.divisionId);
                 const cover = c.mediaIds[0] ? findMedia(c.mediaIds[0]) : null;
                 if (!author) return null;
                 return (
                   <ContentCard
                     key={c.id}
                     content={c}
-                    division={divis}
                     author={author}
                     cover={cover}
                   />

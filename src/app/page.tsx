@@ -3,12 +3,12 @@ import {
   listContents,
   listEvents,
   getWeeklyDigest,
-  listDivisions,
   listLeaderboard,
   listQuests,
   listNotifications,
   listMedia,
   listHolidays,
+  listMembers,
 } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { DashboardHero } from "@/components/dashboard/dashboard-hero";
@@ -21,19 +21,18 @@ import { UpcomingEvents } from "@/components/dashboard/upcoming-events";
 import { UpcomingHolidays } from "@/components/dashboard/upcoming-holidays";
 import { LeaderboardSnippet } from "@/components/dashboard/leaderboard-snippet";
 import { QuestProgress } from "@/components/dashboard/quest-progress";
-import { findDivision } from "@/lib/fixtures/divisions";
 import { findMember } from "@/lib/fixtures/members";
 import { findMedia } from "@/lib/fixtures/media";
 import { Sparkles } from "lucide-react";
 
 export default async function HomePage() {
-  const [member, contents, events, digest, divisions, leaderboard, quests, notifs, media, allHolidays] =
+  const [member, contents, events, digest, members, leaderboard, quests, notifs, media, allHolidays] =
     await Promise.all([
       getCurrentMember(),
       listContents(),
       listEvents({ fromDate: new Date().toISOString() }),
       getWeeklyDigest(),
-      listDivisions(),
+      listMembers(),
       listLeaderboard(),
       listQuests(),
       listNotifications("mbr-aditya"),
@@ -50,7 +49,6 @@ export default async function HomePage() {
   const featured =
     contents.find((c) => c.id === digest.topContentId) ?? contents[0] ?? null;
   const featuredAuthor = featured ? findMember(featured.authorId) : null;
-  const featuredDivision = featured ? findDivision(featured.divisionId) : null;
   const featuredCover =
     featured && featured.mediaIds[0] ? findMedia(featured.mediaIds[0]) : null;
 
@@ -71,7 +69,7 @@ export default async function HomePage() {
             return c.updatedAt >= w.toISOString();
           }).length}
           mediaCount={media.length}
-          divisionsActive={divisions.length}
+          membersActive={members.length}
         />
       </div>
 
@@ -95,14 +93,12 @@ export default async function HomePage() {
           <div className="grid gap-4 sm:grid-cols-2">
             {recent.map((c) => {
               const author = findMember(c.authorId);
-              const division = findDivision(c.divisionId);
               const cover = c.mediaIds[0] ? findMedia(c.mediaIds[0]) : null;
               if (!author) return null;
               return (
                 <ContentCard
                   key={c.id}
                   content={c}
-                  division={division}
                   author={author}
                   cover={cover}
                 />
@@ -158,7 +154,7 @@ export default async function HomePage() {
                 </div>
               )}
             </div>
-            {featuredCover && featuredDivision && featuredAuthor && (
+            {featuredCover && featuredAuthor && (
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
                 <span aria-hidden className="absolute inset-0" style={{ background: featuredCover.averageColor }} />
                 <img
@@ -167,11 +163,8 @@ export default async function HomePage() {
                   className="absolute inset-0 size-full object-cover"
                 />
                 <span aria-hidden className="absolute inset-0 bg-gradient-to-tr from-black/40 via-transparent to-brand-500/15" />
-                <span
-                  className="absolute bottom-3 left-3 rounded-full px-2 py-0.5 text-[11px] font-semibold backdrop-blur"
-                  style={{ background: `${featuredDivision.color}33`, color: featuredDivision.color, border: `1px solid ${featuredDivision.color}66` }}
-                >
-                  {featuredDivision.shortName} · {featuredAuthor.name.split(" ")[0]}
+                <span className="absolute bottom-3 left-3 rounded-full bg-foreground/70 px-2 py-0.5 text-[11px] font-semibold text-background backdrop-blur">
+                  {featuredAuthor.name.split(" ")[0]}
                 </span>
               </div>
             )}

@@ -5,9 +5,6 @@ import {
   Area,
   BarChart,
   Bar,
-  PieChart,
-  Pie,
-  Cell,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -25,12 +22,11 @@ interface Props {
     engagement: number;
     sentiment: number;
   }>;
-  byDivision: Array<{ name: string; value: number; color: string }>;
 }
 
-export function AnalyticsCharts({ series, byDivision }: Props) {
+export function AnalyticsCharts({ series }: Props) {
   return (
-    <div className="grid gap-6 lg:grid-cols-[2fr_1fr]">
+    <div className="grid gap-6">
       <GlassCard className="p-5">
         <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
           Performa publish — views &amp; likes
@@ -97,53 +93,6 @@ export function AnalyticsCharts({ series, byDivision }: Props) {
       </GlassCard>
 
       <GlassCard className="p-5">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
-          Reach per divisi
-        </p>
-        <div className="mt-4 h-64 w-full">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={byDivision}
-                dataKey="value"
-                cx="50%"
-                cy="50%"
-                outerRadius={92}
-                innerRadius={48}
-                paddingAngle={2}
-                strokeWidth={0}
-              >
-                {byDivision.map((d, i) => (
-                  <Cell key={i} fill={d.color} />
-                ))}
-              </Pie>
-              <Tooltip
-                contentStyle={{
-                  background: "var(--glass-thick-bg)",
-                  borderRadius: 16,
-                  border: "1px solid var(--glass-border)",
-                  fontSize: 12,
-                  backdropFilter: "blur(24px) saturate(180%)",
-                  color: "var(--foreground)",
-                }}
-              />
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="mt-2 grid grid-cols-2 gap-1 text-[11px]">
-          {byDivision.map((d) => (
-            <div key={d.name} className="flex items-center gap-1.5">
-              <span
-                className="size-2 rounded-full"
-                style={{ background: d.color }}
-              />
-              <span className="truncate text-foreground/70">{d.name}</span>
-            </div>
-          ))}
-        </div>
-      </GlassCard>
-
-      <GlassCard className="p-5 lg:col-span-2">
         <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
           Sentiment per konten (-100 buruk → +100 positif)
         </p>

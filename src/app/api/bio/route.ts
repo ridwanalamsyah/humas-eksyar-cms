@@ -40,6 +40,9 @@ export async function PUT(req: NextRequest) {
     ...current,
     ...body,
     links: Array.isArray(body.links) ? body.links : current.links,
+    magazineIssues: Array.isArray(body.magazineIssues)
+      ? body.magazineIssues
+      : current.magazineIssues,
   };
 
   if (!next.name || !next.tagline) {

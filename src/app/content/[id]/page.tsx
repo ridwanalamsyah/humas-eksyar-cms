@@ -11,7 +11,6 @@ import { CaptionHistory } from "@/components/content/caption-history";
 import { ContentInlineEditor } from "@/components/content/content-inline-editor";
 import { auth } from "@/auth";
 import { findMemberByEmail } from "@/lib/data/provider";
-import { findDivision } from "@/lib/fixtures/divisions";
 import { findMedia } from "@/lib/fixtures/media";
 import { humanNumber, percent, formatDateTime, formatLongDate } from "@/lib/format/dates";
 
@@ -30,7 +29,6 @@ export default async function ContentDetail({ params }: Props) {
   const canDelete = me?.role === "admin" || me?.role === "ketua_divisi";
 
   const author = await getMember(content.authorId);
-  const division = findDivision(content.divisionId);
   const media = content.mediaIds.map((m) => findMedia(m)).filter(Boolean);
   const allMedia = await listMedia();
   const relatedMedia = allMedia
@@ -53,10 +51,6 @@ export default async function ContentDetail({ params }: Props) {
               </Pill>
             )}
             <Pill tone="brand">{content.rubric.replace(/_/g, " ")}</Pill>
-            <Pill>
-              <span className="size-2 rounded-full" style={{ background: division.color }} aria-hidden />
-              {division.name}
-            </Pill>
           </div>
 
           <h1 className="mt-3 font-display text-[clamp(1.8rem,1.4rem+1.5vw,2.4rem)] font-semibold leading-[1.05] tracking-tight">

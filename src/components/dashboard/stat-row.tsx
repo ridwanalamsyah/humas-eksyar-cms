@@ -13,14 +13,14 @@ interface Props {
   totalPublished: number;
   weeklyContent: number;
   mediaCount: number;
-  divisionsActive: number;
+  membersActive: number;
 }
 
 export function StatRow({
   totalPublished,
   weeklyContent,
   mediaCount,
-  divisionsActive,
+  membersActive,
 }: Props) {
   const items = [
     {
@@ -38,10 +38,10 @@ export function StatRow({
       color: "text-violet-500",
     },
     {
-      label: "Divisi aktif",
-      value: divisionsActive,
+      label: "Anggota aktif",
+      value: membersActive,
       icon: Users2,
-      hint: "Tersinkron di leaderboard",
+      hint: "Pengurus terdaftar",
       color: "text-gold-500",
     },
     {

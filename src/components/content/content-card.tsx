@@ -15,16 +15,15 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { StatusPill } from "@/components/common/pill";
 import { Avatar } from "@/components/common/avatar";
 import { humanNumber, percent, relativeFromNow, formatDateTime } from "@/lib/format/dates";
-import type { ContentItem, Division, Member, MediaAsset } from "@/lib/data/types";
+import type { ContentItem, Member, MediaAsset } from "@/lib/data/types";
 
 interface ContentCardProps {
   content: ContentItem;
-  division: Division;
   author: Member;
   cover?: MediaAsset | null;
 }
 
-export function ContentCard({ content, division, author, cover }: ContentCardProps) {
+export function ContentCard({ content, author, cover }: ContentCardProps) {
   const aiGenerated = !!content.captionStyle;
   const headline = content.title;
 
@@ -62,20 +61,7 @@ export function ContentCard({ content, division, author, cover }: ContentCardPro
                 </span>
               )}
             </div>
-            <div className="absolute right-3 top-3">
-              <span
-                className="inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[10px] font-semibold backdrop-blur"
-                style={{
-                  background: `${division.color}33`,
-                  color: division.color,
-                  borderColor: `${division.color}66`,
-                  borderWidth: 1,
-                  borderStyle: "solid",
-                }}
-              >
-                {division.shortName}
-              </span>
-            </div>
+
           </div>
         )}
 
@@ -88,15 +74,6 @@ export function ContentCard({ content, division, author, cover }: ContentCardPro
                 AI
               </span>
             )}
-            <span
-              className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[10px] font-semibold"
-              style={{
-                background: `${division.color}1f`,
-                color: division.color,
-              }}
-            >
-              {division.shortName}
-            </span>
           </div>
         )}
 
