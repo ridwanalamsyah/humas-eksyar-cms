@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useSyncExternalStore } from "react";
+import Link from "next/link";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
@@ -14,6 +15,10 @@ import {
   Languages,
   LogOut,
   ShieldCheck,
+  ChevronRight,
+  Palette,
+  Tag,
+  Users as UsersIcon,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
@@ -55,11 +60,40 @@ export function SettingsPanels({ member }: Props) {
               <Pill>Angkatan {member.angkatan}</Pill>
             </div>
           </div>
-          <Button variant="ghost" size="sm">
-            Edit profil
+          <Button variant="ghost" size="sm" asChild>
+            <Link href="/profile/edit">Edit profil</Link>
           </Button>
         </div>
       </GlassCard>
+
+      {member.role === "admin" && (
+        <Panel
+          icon={<ShieldCheck className="size-4" strokeWidth={1.75} />}
+          title="Admin"
+          hint="Atur branding, rubrik, dan role anggota."
+        >
+          <div className="flex w-full flex-col gap-2">
+            <AdminLink
+              href="/settings/branding"
+              icon={<Palette className="size-4" strokeWidth={1.75} />}
+              title="Branding"
+              desc="Footer caption, hashtag default, nama organisasi."
+            />
+            <AdminLink
+              href="/settings/rubrics"
+              icon={<Tag className="size-4" strokeWidth={1.75} />}
+              title="Rubrik konten"
+              desc="Tambah / edit kategori rubrik editorial."
+            />
+            <AdminLink
+              href="/settings/members"
+              icon={<UsersIcon className="size-4" strokeWidth={1.75} />}
+              title="Anggota & role"
+              desc="Promote / demote role anggota."
+            />
+          </div>
+        </Panel>
+      )}
 
       <Panel
         icon={<Sun className="size-4" strokeWidth={1.75} />}
@@ -185,6 +219,34 @@ function Panel({
       )}
       <div className="mt-3 flex flex-wrap items-center gap-2">{children}</div>
     </GlassCard>
+  );
+}
+
+function AdminLink({
+  href,
+  icon,
+  title,
+  desc,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  title: string;
+  desc: string;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group flex w-full items-center gap-3 rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2.5 text-left transition-colors hover:border-brand-500/30 hover:bg-brand-500/5 dark:border-white/10 dark:bg-white/[0.03]"
+    >
+      <span className="inline-flex size-8 items-center justify-center rounded-full bg-brand-500/10 text-brand-600 dark:text-brand-300">
+        {icon}
+      </span>
+      <span className="min-w-0 flex-1">
+        <span className="block text-[13px] font-medium leading-tight">{title}</span>
+        <span className="block text-[11px] text-foreground/55">{desc}</span>
+      </span>
+      <ChevronRight className="size-4 text-foreground/40 transition-transform group-hover:translate-x-0.5" strokeWidth={1.75} />
+    </Link>
   );
 }
 

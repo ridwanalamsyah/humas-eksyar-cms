@@ -112,6 +112,24 @@ export const members = pgTable("members", {
   nimSuffix: text("nimSuffix").notNull(),
   avatarEmoji: text("avatarEmoji").notNull().default("👤"),
   accentHue: integer("accentHue").notNull().default(180),
+  /** Vercel Blob URL of uploaded profile photo. When set, takes priority over emoji/initials. */
+  avatarUrl: text("avatarUrl"),
+});
+
+/**
+ * User-editable editorial rubrics. Seeded with a small set of generic
+ * defaults; the team can add/edit/disable any rubric via /settings/rubrics.
+ */
+export const rubrics = pgTable("rubrics", {
+  id: text("id").primaryKey(),
+  slug: text("slug").notNull().unique(),
+  label: text("label").notNull(),
+  description: text("description").notNull().default(""),
+  emoji: text("emoji"),
+  isActive: boolean("isActive").notNull().default(true),
+  sortOrder: integer("sortOrder").notNull().default(0),
+  createdAt: text("createdAt").notNull(),
+  updatedAt: text("updatedAt").notNull(),
 });
 
 export const contents = pgTable("contents", {

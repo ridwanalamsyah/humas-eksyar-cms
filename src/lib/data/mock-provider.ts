@@ -465,6 +465,7 @@ export interface MemberUpdate {
   nimSuffix?: string;
   avatarEmoji?: string;
   accentHue?: number;
+  avatarUrl?: string | null;
   xp?: number;
   streak?: number;
   userId?: string | null;
@@ -538,4 +539,95 @@ export async function getBioConfig(): Promise<BioConfig> {
 export async function setBioConfig(value: BioConfig): Promise<BioConfig> {
   bioConfigStore = value;
   return value;
+}
+
+/* ------------------------------------------------------------------ */
+/* Branding config                                                     */
+/* ------------------------------------------------------------------ */
+
+import { defaultBrandingConfig, type BrandingConfig, type Rubric } from "./types";
+
+let brandingStore: BrandingConfig = { ...defaultBrandingConfig };
+
+export async function getBrandingConfig(): Promise<BrandingConfig> {
+  return brandingStore;
+}
+
+export async function setBrandingConfig(value: BrandingConfig): Promise<BrandingConfig> {
+  brandingStore = value;
+  return value;
+}
+
+/* ------------------------------------------------------------------ */
+/* Rubrics (in-memory)                                                  */
+/* ------------------------------------------------------------------ */
+
+const nowIso = new Date().toISOString();
+const rubricsStore: Rubric[] = [
+  { id: "rub-refleksi-harian", slug: "refleksi_harian", label: "Refleksi harian", description: "Kutipan / refleksi pagi singkat.", emoji: "\u{1F305}", isActive: true, sortOrder: 1, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-pengumuman", slug: "pengumuman", label: "Pengumuman resmi", description: "Announcement resmi prodi.", emoji: "\u{1F4E3}", isActive: true, sortOrder: 2, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-kajian", slug: "kajian", label: "Kajian akademik", description: "Tema diskusi / kajian / seminar.", emoji: "\u{1F4D6}", isActive: true, sortOrder: 3, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-ucapan", slug: "selamat_sukses", label: "Ucapan & Hari Besar", description: "Ucapan selamat / hari besar / kondolensi.", emoji: "\u{1F337}", isActive: true, sortOrder: 4, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-dokumentasi", slug: "dokumentasi", label: "Dokumentasi kegiatan", description: "Recap kegiatan yang sudah berlangsung.", emoji: "\u{1F4F8}", isActive: true, sortOrder: 5, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-campaign", slug: "campaign", label: "Campaign / mobilisasi", description: "Ajakan, gerakan, atau open call.", emoji: "\u{1F4E2}", isActive: true, sortOrder: 6, createdAt: nowIso, updatedAt: nowIso },
+];
+
+export async function listRubrics(opts: { includeInactive?: boolean } = {}): Promise<Rubric[]> {
+  const items = opts.includeInactive ? rubricsStore : rubricsStore.filter((r) => r.isActive);
+  return items.slice().sort((a, b) => a.sortOrder - b.sortOrder);
+}
+
+export async function getRubric(idOrSlug: ID): Promise<Rubric | null> {
+  return rubricsStore.find((r) => r.id === idOrSlug || r.slug === idOrSlug) ?? null;
+}
+
+export interface RubricInput {
+  slug: string;
+  label: string;
+  description?: string;
+  emoji?: string | null;
+  sortOrder?: number;
+  isActive?: boolean;
+}
+
+export async function createRubric(input: RubricInput): Promise<Rubric> {
+  const now = new Date().toISOString();
+  const id = `rub-${input.slug.replace(/[^a-z0-9-]+/gi, "-").toLowerCase()}-${Date.now().toString(36)}`;
+  const rubric: Rubric = {
+    id,
+    slug: input.slug,
+    label: input.label,
+    description: input.description ?? "",
+    emoji: input.emoji ?? null,
+    isActive: input.isActive ?? true,
+    sortOrder: input.sortOrder ?? 99,
+    createdAt: now,
+    updatedAt: now,
+  };
+  rubricsStore.push(rubric);
+  return rubric;
+}
+
+export interface RubricUpdate {
+  slug?: string;
+  label?: string;
+  description?: string;
+  emoji?: string | null;
+  sortOrder?: number;
+  isActive?: boolean;
+}
+
+export async function updateRubric(id: ID, patch: RubricUpdate): Promise<Rubric | null> {
+  const idx = rubricsStore.findIndex((r) => r.id === id);
+  if (idx === -1) return null;
+  const next = { ...rubricsStore[idx], ...patch, updatedAt: new Date().toISOString() } as Rubric;
+  rubricsStore[idx] = next;
+  return next;
+}
+
+export async function deleteRubric(id: ID): Promise<boolean> {
+  const idx = rubricsStore.findIndex((r) => r.id === id);
+  if (idx === -1) return false;
+  rubricsStore.splice(idx, 1);
+  return true;
 }

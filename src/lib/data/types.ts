@@ -99,7 +99,47 @@ export interface Member {
   avatarEmoji: string;
   /** Soft "vibe" colors for personalization */
   accentHue: number;
+  /** Uploaded profile photo URL (Vercel Blob). When set, supersedes emoji/initials. */
+  avatarUrl?: string | null;
 }
+
+/**
+ * Editorial rubric. Stored in DB so the team can add/rename/disable rubrics
+ * via /settings/rubrics — no hardcoded program names.
+ */
+export interface Rubric {
+  id: ID;
+  slug: string;
+  label: string;
+  description: string;
+  emoji: string | null;
+  isActive: boolean;
+  sortOrder: number;
+  createdAt: ISODateTime;
+  updatedAt: ISODateTime;
+}
+
+/**
+ * Editable brand settings used by AI caption generator + content footer.
+ * Lives in `siteSettings` table keyed by "branding".
+ */
+export interface BrandingConfig {
+  /** Sign-off line appended to captions, e.g. "Atas nama Program Studi Ekonomi Syariah" */
+  signature: string;
+  /** Default hashtag block (space-separated, each starting with #) */
+  defaultHashtags: string;
+  /** Organization display name shown in dashboard footer and meta tags */
+  orgName: string;
+  /** Optional tagline */
+  tagline: string;
+}
+
+export const defaultBrandingConfig: BrandingConfig = {
+  signature: "Atas nama Program Studi Ekonomi Syariah",
+  defaultHashtags: "#EkonomiSyariah #FEBIUINBandung #UINSunanGunungDjati",
+  orgName: "Program Studi Ekonomi Syariah",
+  tagline: "FEBI UIN Sunan Gunung Djati Bandung",
+};
 
 export interface ContentItem {
   id: ID;
