@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { listMedia } from "@/lib/data/provider";
+import {
+  listMedia,
+  getBrandingConfig,
+  findMemberByEmail,
+} from "@/lib/data/provider";
+import { auth } from "@/auth";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/common/section-header";
 import { MediaLibrary } from "@/components/media/media-library";
@@ -10,7 +15,14 @@ export const metadata: Metadata = {
 };
 
 export default async function MediaPage() {
-  const media = await listMedia();
+  const [media, branding, session] = await Promise.all([
+    listMedia(),
+    getBrandingConfig(),
+    auth(),
+  ]);
+  const me = session?.user?.email
+    ? await findMemberByEmail(session.user.email)
+    : null;
   return (
     <AppShell width="wide">
       <SectionHeader
@@ -18,7 +30,12 @@ export default async function MediaPage() {
         title="Media Library"
         description={`${media.length} aset tersedia.`}
       />
-      <MediaLibrary media={media} />
+      <MediaLibrary
+        media={media}
+        branding={branding}
+        currentMemberId={me?.id ?? null}
+        currentMemberRole={me?.role ?? null}
+      />
     </AppShell>
   );
 }

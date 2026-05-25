@@ -82,6 +82,10 @@ export const getContentDraft = impl.getContentDraft;
 export const saveContentDraft = impl.saveContentDraft;
 export const clearContentDraft = impl.clearContentDraft;
 
+export const createMedia = impl.createMedia;
+export const updateMedia = impl.updateMedia;
+export const deleteMedia = impl.deleteMedia;
+
 export const listMemberTasks = impl.listMemberTasks;
 export const createMemberTask = impl.createMemberTask;
 export const updateMemberTask = impl.updateMemberTask;

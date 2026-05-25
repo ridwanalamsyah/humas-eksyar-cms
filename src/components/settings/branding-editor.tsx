@@ -19,13 +19,50 @@ export function BrandingEditor({ initial }: Props) {
   const [defaultHashtags, setDefaultHashtags] = useState(initial.defaultHashtags);
   const [orgName, setOrgName] = useState(initial.orgName);
   const [tagline, setTagline] = useState(initial.tagline);
+  const [watermarkUrl, setWatermarkUrl] = useState(initial.watermarkUrl ?? "");
+  const [watermarkEnabled, setWatermarkEnabled] = useState(
+    initial.watermarkEnabled ?? false,
+  );
+  const [watermarkPosition, setWatermarkPosition] = useState<
+    "br" | "bl" | "tr" | "tl"
+  >(initial.watermarkPosition ?? "br");
+  const [uploadingMark, setUploadingMark] = useState(false);
+
+  async function uploadMark(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingMark(true);
+    try {
+      const fd = new FormData();
+      fd.set("file", file);
+      const res = await fetch("/api/upload/avatar", { method: "POST", body: fd });
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        toast.error(j.error ?? "Upload gagal");
+        return;
+      }
+      const data = await res.json();
+      setWatermarkUrl(data.url);
+      toast.success("Watermark di-upload. Klik Simpan untuk aktifkan.");
+    } finally {
+      setUploadingMark(false);
+    }
+  }
 
   function save() {
     startTransition(async () => {
       const res = await fetch("/api/branding", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ signature, defaultHashtags, orgName, tagline }),
+        body: JSON.stringify({
+          signature,
+          defaultHashtags,
+          orgName,
+          tagline,
+          watermarkUrl,
+          watermarkEnabled,
+          watermarkPosition,
+        }),
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
@@ -86,6 +123,64 @@ export function BrandingEditor({ initial }: Props) {
               className="w-full bg-transparent text-[14px] outline-none"
             />
           </Field>
+
+          <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] p-4 dark:border-white/10 dark:bg-white/[0.03]">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+                  Watermark media
+                </p>
+                <p className="mt-1 text-[12px] text-foreground/65">
+                  Logo prodi otomatis ditempel di pojok foto saat upload.
+                </p>
+              </div>
+              <label className="inline-flex cursor-pointer items-center gap-2 text-[12px]">
+                <input
+                  type="checkbox"
+                  checked={watermarkEnabled}
+                  onChange={(e) => setWatermarkEnabled(e.target.checked)}
+                />
+                Aktifkan
+              </label>
+            </div>
+            <div className="mt-3 flex flex-wrap items-center gap-3">
+              {watermarkUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={watermarkUrl}
+                  alt="Watermark"
+                  className="h-14 w-14 rounded-xl border border-foreground/10 bg-background/40 object-contain p-1 dark:border-white/10"
+                />
+              ) : (
+                <div className="grid h-14 w-14 place-items-center rounded-xl border border-dashed border-foreground/20 text-[10px] text-foreground/55">
+                  Belum ada
+                </div>
+              )}
+              <label className="inline-flex cursor-pointer items-center rounded-xl border border-foreground/15 px-3 py-1.5 text-[12px] hover:bg-foreground/[0.05]">
+                <input
+                  type="file"
+                  accept="image/png,image/webp"
+                  className="hidden"
+                  onChange={uploadMark}
+                />
+                {uploadingMark ? "Mengupload…" : "Upload PNG"}
+              </label>
+              <select
+                value={watermarkPosition}
+                onChange={(e) =>
+                  setWatermarkPosition(
+                    e.target.value as "br" | "bl" | "tr" | "tl",
+                  )
+                }
+                className="h-9 rounded-xl border border-foreground/10 bg-background px-2 text-[12px]"
+              >
+                <option value="br">Pojok kanan bawah</option>
+                <option value="bl">Pojok kiri bawah</option>
+                <option value="tr">Pojok kanan atas</option>
+                <option value="tl">Pojok kiri atas</option>
+              </select>
+            </div>
+          </div>
 
           <div className="flex justify-end gap-2 pt-2">
             <Button disabled={pending} onClick={save}>

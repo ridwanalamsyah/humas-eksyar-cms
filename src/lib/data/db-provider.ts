@@ -1192,3 +1192,68 @@ export async function getMemberTask(id: ID): Promise<MemberTask | null> {
     .limit(1);
   return rows[0] ? row<MemberTask>(rows[0]) : null;
 }
+
+/* ------------------------------------------------------------------ */
+/* Media — writes                                                      */
+/* ------------------------------------------------------------------ */
+
+export async function createMedia(input: {
+  url: string;
+  width: number;
+  height: number;
+  type?: MediaAsset["type"];
+  alt?: string;
+  tags?: string[];
+  uploaderId: ID;
+}): Promise<MediaAsset> {
+  const aspect: MediaAsset["aspect"] = (() => {
+    const ratio = input.width / Math.max(input.height, 1);
+    if (ratio > 1.7) return "wide";
+    if (ratio > 1.15) return "landscape";
+    if (ratio < 0.85) return "portrait";
+    return "square";
+  })();
+  const id = `med-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+  const inserted = await client()
+    .insert(schema.media)
+    .values({
+      id,
+      url: input.url,
+      width: input.width,
+      height: input.height,
+      type: input.type ?? "image",
+      alt: input.alt ?? "",
+      tags: input.tags ?? [],
+      usedIn: [],
+      uploaderId: input.uploaderId,
+      uploadedAt: new Date().toISOString(),
+      aspect,
+      averageColor: "#888888",
+    })
+    .returning();
+  return row<MediaAsset>(inserted[0]);
+}
+
+export async function updateMedia(
+  id: ID,
+  patch: { alt?: string; tags?: string[] },
+): Promise<MediaAsset | null> {
+  const set: Record<string, unknown> = {};
+  if (patch.alt !== undefined) set.alt = patch.alt;
+  if (patch.tags !== undefined) set.tags = patch.tags;
+  if (Object.keys(set).length === 0) return null;
+  const updated = await client()
+    .update(schema.media)
+    .set(set)
+    .where(eq(schema.media.id, id))
+    .returning();
+  return updated[0] ? row<MediaAsset>(updated[0]) : null;
+}
+
+export async function deleteMedia(id: ID): Promise<boolean> {
+  const deleted = await client()
+    .delete(schema.media)
+    .where(eq(schema.media.id, id))
+    .returning({ id: schema.media.id });
+  return deleted.length > 0;
+}
