@@ -348,6 +348,31 @@ export interface CaptionVersion {
   createdAt: ISODateTime;
 }
 
+/**
+ * Internal feedback comment on a content draft (reviewer ↔ author thread).
+ */
+export interface ContentComment {
+  id: ID;
+  contentId: ID;
+  authorId: ID;
+  body: string;
+  resolvedAt: ISODateTime | null;
+  createdAt: ISODateTime;
+}
+
+/**
+ * In-progress unsaved keystrokes for a content. One row per content. Updated
+ * frequently while the editor is open, then deleted on hard save / publish.
+ */
+export interface ContentDraft {
+  contentId: ID;
+  body: string;
+  caption: string;
+  hashtags: string;
+  authorId: ID | null;
+  savedAt: ISODateTime;
+}
+
 /** Persisted weekly digest (AI summary) */
 export interface WeeklyDigest {
   id: ID;

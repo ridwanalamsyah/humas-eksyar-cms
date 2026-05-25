@@ -293,6 +293,42 @@ export const holidays = pgTable("holidays", {
   emoji: text("emoji"),
 });
 
+/**
+ * Internal discussion thread per content. Reviewers / authors leave
+ * feedback on a draft like Google Docs comments. Used by /content/:id
+ * to show inline conversation history.
+ */
+export const contentComments = pgTable("contentComments", {
+  id: text("id").primaryKey(),
+  contentId: text("contentId")
+    .notNull()
+    .references(() => contents.id, { onDelete: "cascade" }),
+  authorId: text("authorId")
+    .notNull()
+    .references(() => members.id, { onDelete: "cascade" }),
+  body: text("body").notNull(),
+  resolvedAt: text("resolvedAt"),
+  createdAt: text("createdAt").notNull(),
+});
+
+/**
+ * Snapshot of an in-progress content edit. Saved every ~5s when the
+ * editor detects keystroke activity. Restored when the editor opens
+ * the same content so unsaved keystrokes survive page reloads.
+ */
+export const contentDrafts = pgTable("contentDrafts", {
+  contentId: text("contentId")
+    .primaryKey()
+    .references(() => contents.id, { onDelete: "cascade" }),
+  body: text("body").notNull().default(""),
+  caption: text("caption").notNull().default(""),
+  hashtags: text("hashtags").notNull().default(""),
+  authorId: text("authorId").references(() => members.id, {
+    onDelete: "set null",
+  }),
+  savedAt: text("savedAt").notNull(),
+});
+
 export const captionTemplates = pgTable("captionTemplates", {
   id: text("id").primaryKey(),
   rubric: text("rubric").notNull(),

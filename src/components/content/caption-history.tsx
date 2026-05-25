@@ -1,7 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
-import { History, RotateCcw, Save, Loader2 } from "lucide-react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { History, RotateCcw, Save, Loader2, Diff, X, Check } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/common/pill";
@@ -51,6 +51,18 @@ export function CaptionHistory({
   const [saving, setSaving] = useState(false);
   const [restoring, setRestoring] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
+  const [diffMode, setDiffMode] = useState(false);
+  const [diffPicks, setDiffPicks] = useState<string[]>([]);
+  const [showDiffModal, setShowDiffModal] = useState(false);
+
+  const diffPair = useMemo(() => {
+    if (diffPicks.length !== 2) return null;
+    const [a, b] = diffPicks;
+    const va = versions.find((v) => v.id === a);
+    const vb = versions.find((v) => v.id === b);
+    if (!va || !vb) return null;
+    return va.createdAt <= vb.createdAt ? { before: va, after: vb } : { before: vb, after: va };
+  }, [diffPicks, versions]);
 
   const fetchVersions = useCallback(async () => {
     try {
@@ -127,27 +139,61 @@ export function CaptionHistory({
     }
   };
 
+  const togglePick = (id: string) => {
+    setDiffPicks((prev) => {
+      if (prev.includes(id)) return prev.filter((p) => p !== id);
+      if (prev.length >= 2) return [prev[1], id];
+      return [...prev, id];
+    });
+  };
+
   return (
     <GlassCard variant="regular" className="p-5">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2">
         <h3 className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
           <History className="size-3" strokeWidth={1.75} />
           Riwayat Caption
         </h3>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleSave}
-          disabled={saving || !currentCaption}
-        >
-          {saving ? (
-            <Loader2 className="size-3.5 animate-spin" />
-          ) : (
-            <Save className="size-3.5" strokeWidth={1.75} />
+        <div className="flex flex-wrap items-center gap-1">
+          {versions.length >= 2 && (
+            <Button
+              variant={diffMode ? "secondary" : "ghost"}
+              size="sm"
+              onClick={() => {
+                setDiffMode((m) => !m);
+                setDiffPicks([]);
+              }}
+            >
+              <Diff className="size-3.5" strokeWidth={1.75} />
+              {diffMode ? "Selesai" : "Bandingkan"}
+            </Button>
           )}
-          Simpan versi
-        </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleSave}
+            disabled={saving || !currentCaption}
+          >
+            {saving ? (
+              <Loader2 className="size-3.5 animate-spin" />
+            ) : (
+              <Save className="size-3.5" strokeWidth={1.75} />
+            )}
+            Simpan versi
+          </Button>
+        </div>
       </div>
+
+      {diffMode && (
+        <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl border border-foreground/10 bg-foreground/[0.03] p-3 text-[11px] text-foreground/70 dark:border-white/10 dark:bg-white/[0.03]">
+          Pilih 2 versi ({diffPicks.length}/2)
+          {diffPicks.length === 2 && (
+            <Button size="sm" onClick={() => setShowDiffModal(true)}>
+              Lihat diff
+            </Button>
+          )}
+        </div>
+      )}
 
       {loading ? (
         <div className="mt-3 flex items-center gap-2 text-[12px] text-foreground/45">
@@ -167,14 +213,32 @@ export function CaptionHistory({
                 ? v.caption.slice(0, 80) + "..."
                 : v.caption;
 
+            const picked = diffPicks.includes(v.id);
             return (
               <li key={v.id}>
                 <button
                   type="button"
-                  onClick={() => setExpanded(isExpanded ? null : v.id)}
-                  className="w-full rounded-xl border border-foreground/8 p-3 text-left transition-colors hover:border-foreground/15 dark:border-white/8 dark:hover:border-white/15"
+                  onClick={() =>
+                    diffMode ? togglePick(v.id) : setExpanded(isExpanded ? null : v.id)
+                  }
+                  className={`w-full rounded-xl border p-3 text-left transition-colors ${
+                    diffMode && picked
+                      ? "border-brand-500/45 bg-brand-500/10"
+                      : "border-foreground/8 hover:border-foreground/15 dark:border-white/8 dark:hover:border-white/15"
+                  }`}
                 >
                   <div className="flex items-center gap-2">
+                    {diffMode && (
+                      <span
+                        className={`inline-flex size-4 items-center justify-center rounded-full border ${
+                          picked
+                            ? "border-brand-500 bg-brand-500 text-white"
+                            : "border-foreground/30"
+                        }`}
+                      >
+                        {picked && <Check className="size-3" strokeWidth={3} />}
+                      </span>
+                    )}
                     <Pill tone={SOURCE_TONES[v.source as CaptionVersionSource] ?? "neutral"}>
                       {SOURCE_LABELS[v.source as CaptionVersionSource] ?? v.source}
                     </Pill>
@@ -191,7 +255,7 @@ export function CaptionHistory({
                     {isExpanded ? v.caption : preview}
                   </p>
                 </button>
-                {isExpanded && (
+                {!diffMode && isExpanded && (
                   <div className="mt-1.5 flex justify-end gap-2 px-1">
                     <Button
                       variant="secondary"
@@ -213,6 +277,102 @@ export function CaptionHistory({
           })}
         </ul>
       )}
+
+      {showDiffModal && diffPair && (
+        <DiffModal
+          before={diffPair.before}
+          after={diffPair.after}
+          onClose={() => setShowDiffModal(false)}
+        />
+      )}
     </GlassCard>
+  );
+}
+
+function DiffModal({
+  before,
+  after,
+  onClose,
+}: {
+  before: CaptionVersion;
+  after: CaptionVersion;
+  onClose: () => void;
+}) {
+  const beforeLines = before.caption.split("\n");
+  const afterLines = after.caption.split("\n");
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div className="max-h-[85vh] w-full max-w-4xl overflow-hidden rounded-3xl border border-foreground/10 bg-background shadow-2xl dark:border-white/10">
+        <header className="flex items-center justify-between border-b border-foreground/10 px-5 py-3 dark:border-white/10">
+          <div>
+            <h4 className="font-display text-base font-semibold">
+              Bandingkan versi
+            </h4>
+            <p className="text-[11px] text-foreground/55">
+              {timeAgo(before.createdAt)} vs {timeAgo(after.createdAt)}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded-full p-1 text-foreground/55 hover:bg-foreground/5 hover:text-foreground"
+            aria-label="Tutup"
+          >
+            <X className="size-5" strokeWidth={1.75} />
+          </button>
+        </header>
+        <div className="grid max-h-[calc(85vh-3.5rem)] grid-cols-2 overflow-auto text-[13px]">
+          <div className="border-r border-foreground/10 dark:border-white/10">
+            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55 dark:bg-white/[0.05]">
+              Sebelum · {timeAgo(before.createdAt)}
+            </div>
+            <pre className="whitespace-pre-wrap break-words p-4 font-mono leading-relaxed text-foreground/85">
+              {beforeLines.map((line, i) => {
+                const matched = afterLines.includes(line);
+                return (
+                  <span
+                    key={i}
+                    className={
+                      matched
+                        ? "block"
+                        : "block -mx-1 my-px rounded bg-red-500/15 px-1 text-red-700 dark:text-red-300"
+                    }
+                  >
+                    {line || "\u00a0"}
+                  </span>
+                );
+              })}
+            </pre>
+          </div>
+          <div>
+            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55 dark:bg-white/[0.05]">
+              Sesudah · {timeAgo(after.createdAt)}
+            </div>
+            <pre className="whitespace-pre-wrap break-words p-4 font-mono leading-relaxed text-foreground/85">
+              {afterLines.map((line, i) => {
+                const matched = beforeLines.includes(line);
+                return (
+                  <span
+                    key={i}
+                    className={
+                      matched
+                        ? "block"
+                        : "block -mx-1 my-px rounded bg-green-500/15 px-1 text-green-700 dark:text-green-300"
+                    }
+                  >
+                    {line || "\u00a0"}
+                  </span>
+                );
+              })}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

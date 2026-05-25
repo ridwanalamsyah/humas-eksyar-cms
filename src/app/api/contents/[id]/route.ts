@@ -14,7 +14,9 @@ import {
   deleteContent,
   findMemberByEmail,
   createCaptionVersion,
+  listMembers,
 } from "@/lib/data/provider";
+import { sendEmail, htmlEmail } from "@/lib/email/send";
 
 interface Params {
   params: Promise<{ id: string }>;
@@ -73,7 +75,61 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       authorId: member.id,
     });
   }
+  // Email approval notification when status transitions into a review stage.
+  if (
+    patch.status !== undefined &&
+    prev.status !== content.status &&
+    (content.status === "review_divisi" || content.status === "review_sekjen")
+  ) {
+    notifyApprovers(content, member.name).catch((err) => {
+      console.warn("[approval-email] notify failed", err);
+    });
+  }
   return NextResponse.json({ content });
+}
+
+async function notifyApprovers(
+  content: NonNullable<Awaited<ReturnType<typeof getContent>>>,
+  triggeredBy: string,
+): Promise<void> {
+  const targetRole =
+    content.status === "review_divisi" ? "ketua_divisi" : "admin";
+  const all = await listMembers();
+  const recipients = all
+    .filter((m) => m.role === targetRole && m.email)
+    .map((m) => m.email);
+  if (recipients.length === 0) return;
+
+  const appUrl =
+    process.env.NEXT_PUBLIC_APP_URL ||
+    process.env.NEXTAUTH_URL ||
+    "https://humas-eksyar-cms.vercel.app";
+  const reviewUrl = `${appUrl.replace(/\/$/, "")}/approval`;
+  const stageLabel =
+    targetRole === "ketua_divisi" ? "Review Koordinator" : "Review Admin";
+
+  await sendEmail({
+    to: recipients,
+    subject: `[Humas Eksyar] ${stageLabel}: ${content.title}`,
+    text: `Konten baru menunggu persetujuan Anda.\n\nJudul: ${content.title}\nDikirim oleh: ${triggeredBy}\n\nBuka: ${reviewUrl}`,
+    html: htmlEmail({
+      preheader: `${stageLabel} diperlukan untuk ${content.title}`,
+      heading: `${stageLabel} diperlukan`,
+      body: `<p><strong>${escapeHtml(content.title)}</strong></p>
+<p>Dikirim oleh ${escapeHtml(triggeredBy)} dan menunggu persetujuan Anda.</p>`,
+      ctaLabel: "Buka antrian review",
+      ctaHref: reviewUrl,
+      footer: "Email otomatis · Humas Program Studi Ekonomi Syariah",
+    }),
+  });
+}
+
+function escapeHtml(s: string): string {
+  return s
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
 }
 
 export async function DELETE(_req: NextRequest, { params }: Params) {

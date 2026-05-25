@@ -73,4 +73,13 @@ export const createRubric = impl.createRubric;
 export const updateRubric = impl.updateRubric;
 export const deleteRubric = impl.deleteRubric;
 
+export const listContentComments = impl.listContentComments;
+export const createContentComment = impl.createContentComment;
+export const updateContentComment = impl.updateContentComment;
+export const deleteContentComment = impl.deleteContentComment;
+
+export const getContentDraft = impl.getContentDraft;
+export const saveContentDraft = impl.saveContentDraft;
+export const clearContentDraft = impl.clearContentDraft;
+
 export { HASHTAG_BLOCK };

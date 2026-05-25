@@ -16,6 +16,8 @@ import type {
   CaptionTemplate,
   CaptionVersion,
   CaptionVersionSource,
+  ContentComment,
+  ContentDraft,
   ContentItem,
   ContentStatus,
   Division,
@@ -968,5 +970,129 @@ export async function deleteRubric(id: ID): Promise<boolean> {
     .delete(schema.rubrics)
     .where(eq(schema.rubrics.id, id))
     .returning({ id: schema.rubrics.id });
+  return deleted.length > 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Content comments (Tier 2)                                          */
+/* ------------------------------------------------------------------ */
+
+export async function listContentComments(
+  contentId: ID,
+): Promise<ContentComment[]> {
+  const rows = await client()
+    .select()
+    .from(schema.contentComments)
+    .where(eq(schema.contentComments.contentId, contentId))
+    .orderBy(asc(schema.contentComments.createdAt));
+  return rows.map((r) => row<ContentComment>(r));
+}
+
+export async function createContentComment(input: {
+  contentId: ID;
+  authorId: ID;
+  body: string;
+}): Promise<ContentComment> {
+  const now = new Date().toISOString();
+  const newRow = {
+    id: `cmt-${crypto.randomUUID().slice(0, 8)}`,
+    contentId: input.contentId,
+    authorId: input.authorId,
+    body: input.body,
+    resolvedAt: null,
+    createdAt: now,
+  };
+  const inserted = await client()
+    .insert(schema.contentComments)
+    .values(newRow)
+    .returning();
+  return row<ContentComment>(inserted[0]);
+}
+
+export async function updateContentComment(
+  id: ID,
+  patch: Partial<Pick<ContentComment, "body" | "resolvedAt">>,
+): Promise<ContentComment | null> {
+  const set: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(patch)) {
+    if (v !== undefined) set[k] = v;
+  }
+  if (Object.keys(set).length === 0) {
+    const rows = await client()
+      .select()
+      .from(schema.contentComments)
+      .where(eq(schema.contentComments.id, id))
+      .limit(1);
+    return rows[0] ? row<ContentComment>(rows[0]) : null;
+  }
+  const updated = await client()
+    .update(schema.contentComments)
+    .set(set)
+    .where(eq(schema.contentComments.id, id))
+    .returning();
+  return updated[0] ? row<ContentComment>(updated[0]) : null;
+}
+
+export async function deleteContentComment(id: ID): Promise<boolean> {
+  const deleted = await client()
+    .delete(schema.contentComments)
+    .where(eq(schema.contentComments.id, id))
+    .returning({ id: schema.contentComments.id });
+  return deleted.length > 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Content autosave drafts (Tier 2)                                   */
+/* ------------------------------------------------------------------ */
+
+export async function getContentDraft(
+  contentId: ID,
+): Promise<ContentDraft | null> {
+  const rows = await client()
+    .select()
+    .from(schema.contentDrafts)
+    .where(eq(schema.contentDrafts.contentId, contentId))
+    .limit(1);
+  return rows[0] ? row<ContentDraft>(rows[0]) : null;
+}
+
+export async function saveContentDraft(input: {
+  contentId: ID;
+  body: string;
+  caption: string;
+  hashtags: string;
+  authorId: ID | null;
+}): Promise<ContentDraft> {
+  const now = new Date().toISOString();
+  const values = {
+    contentId: input.contentId,
+    body: input.body,
+    caption: input.caption,
+    hashtags: input.hashtags,
+    authorId: input.authorId,
+    savedAt: now,
+  };
+  const inserted = await client()
+    .insert(schema.contentDrafts)
+    .values(values)
+    .onConflictDoUpdate({
+      target: schema.contentDrafts.contentId,
+      set: {
+        body: values.body,
+        caption: values.caption,
+        hashtags: values.hashtags,
+        authorId: values.authorId,
+        savedAt: values.savedAt,
+      },
+    })
+    .returning();
+  return row<ContentDraft>(inserted[0]);
+}
+
+export async function clearContentDraft(contentId: ID): Promise<boolean> {
+  const deleted = await client()
+    .delete(schema.contentDrafts)
+    .where(eq(schema.contentDrafts.contentId, contentId))
+    .returning({ contentId: schema.contentDrafts.contentId });
   return deleted.length > 0;
 }
