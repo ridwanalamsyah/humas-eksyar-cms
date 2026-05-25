@@ -132,6 +132,12 @@ export interface BrandingConfig {
   orgName: string;
   /** Optional tagline */
   tagline: string;
+  /** Optional watermark image (PNG with transparency) overlaid on media uploads. */
+  watermarkUrl?: string;
+  /** When true, new media uploads get auto-watermarked. */
+  watermarkEnabled?: boolean;
+  /** "br" | "bl" | "tr" | "tl" — corner placement for the watermark */
+  watermarkPosition?: "br" | "bl" | "tr" | "tl";
 }
 
 export const defaultBrandingConfig: BrandingConfig = {
@@ -139,6 +145,9 @@ export const defaultBrandingConfig: BrandingConfig = {
   defaultHashtags: "#EkonomiSyariah #FEBIUINBandung #UINSunanGunungDjati",
   orgName: "Program Studi Ekonomi Syariah",
   tagline: "FEBI UIN Sunan Gunung Djati Bandung",
+  watermarkUrl: "",
+  watermarkEnabled: false,
+  watermarkPosition: "br",
 };
 
 export interface ContentItem {

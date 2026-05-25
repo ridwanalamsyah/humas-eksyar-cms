@@ -10,6 +10,7 @@ import { ApprovalChain } from "@/components/content/approval-chain";
 import { CaptionHistory } from "@/components/content/caption-history";
 import { ContentInlineEditor } from "@/components/content/content-inline-editor";
 import { CommentThread } from "@/components/content/comment-thread";
+import { SuggestMedia } from "@/components/media/suggest-media";
 import { auth } from "@/auth";
 import { findMemberByEmail } from "@/lib/data/provider";
 import { findMedia } from "@/lib/fixtures/media";
@@ -193,6 +194,8 @@ export default async function ContentDetail({ params }: Props) {
               canModerate={me.role === "admin" || me.role === "ketua_divisi"}
             />
           )}
+
+          {canEdit && <SuggestMedia contentId={content.id} />}
 
           {relatedMedia.length > 0 && (
             <GlassCard variant="thin" className="p-5">

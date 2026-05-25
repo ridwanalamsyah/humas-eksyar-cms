@@ -790,3 +790,59 @@ export async function deleteMemberTask(id: ID): Promise<boolean> {
 export async function getMemberTask(id: ID): Promise<MemberTask | null> {
   return tasksStore.find((x) => x.id === id) ?? null;
 }
+
+/* ------------------------------------------------------------------ */
+/* Media — writes (mock store)                                          */
+/* ------------------------------------------------------------------ */
+
+const mediaStore: MediaAsset[] = [];
+
+export async function createMedia(input: {
+  url: string;
+  width: number;
+  height: number;
+  type?: MediaAsset["type"];
+  alt?: string;
+  tags?: string[];
+  uploaderId: ID;
+}): Promise<MediaAsset> {
+  const ratio = input.width / Math.max(input.height, 1);
+  const aspect: MediaAsset["aspect"] =
+    ratio > 1.7 ? "wide" :
+    ratio > 1.15 ? "landscape" :
+    ratio < 0.85 ? "portrait" : "square";
+  const m: MediaAsset = {
+    id: `med-${Math.random().toString(36).slice(2, 10)}`,
+    url: input.url,
+    width: input.width,
+    height: input.height,
+    type: input.type ?? "image",
+    alt: input.alt ?? "",
+    tags: input.tags ?? [],
+    usedIn: [],
+    uploaderId: input.uploaderId,
+    uploadedAt: new Date().toISOString(),
+    aspect,
+    averageColor: "#888888",
+  };
+  mediaStore.push(m);
+  return m;
+}
+
+export async function updateMedia(
+  id: ID,
+  patch: { alt?: string; tags?: string[] },
+): Promise<MediaAsset | null> {
+  const m = mediaStore.find((x) => x.id === id);
+  if (!m) return null;
+  if (patch.alt !== undefined) m.alt = patch.alt;
+  if (patch.tags !== undefined) m.tags = patch.tags;
+  return m;
+}
+
+export async function deleteMedia(id: ID): Promise<boolean> {
+  const i = mediaStore.findIndex((x) => x.id === id);
+  if (i === -1) return false;
+  mediaStore.splice(i, 1);
+  return true;
+}

@@ -43,6 +43,21 @@ export async function PUT(req: NextRequest) {
         ? body.orgName
         : current.orgName,
     tagline: typeof body.tagline === "string" ? body.tagline : current.tagline,
+    watermarkUrl:
+      typeof body.watermarkUrl === "string"
+        ? body.watermarkUrl
+        : current.watermarkUrl ?? "",
+    watermarkEnabled:
+      typeof body.watermarkEnabled === "boolean"
+        ? body.watermarkEnabled
+        : current.watermarkEnabled ?? false,
+    watermarkPosition:
+      body.watermarkPosition === "br" ||
+      body.watermarkPosition === "bl" ||
+      body.watermarkPosition === "tr" ||
+      body.watermarkPosition === "tl"
+        ? body.watermarkPosition
+        : current.watermarkPosition ?? "br",
   };
   const saved = await setBrandingConfig(next);
   return NextResponse.json({ branding: saved });
