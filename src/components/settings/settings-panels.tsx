@@ -19,6 +19,7 @@ import {
   Palette,
   Tag,
   Users as UsersIcon,
+  Download,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
@@ -91,7 +92,28 @@ export function SettingsPanels({ member }: Props) {
               title="Anggota & role"
               desc="Promote / demote role anggota."
             />
+            <AdminLink
+              href="/settings/export"
+              icon={<Download className="size-4" strokeWidth={1.75} />}
+              title="Export & Laporan"
+              desc="CSV semua data + laporan bulanan/tahunan."
+            />
           </div>
+        </Panel>
+      )}
+
+      {(member.role === "ketua_divisi" || member.role === "sekjen") && (
+        <Panel
+          icon={<Download className="size-4" strokeWidth={1.75} />}
+          title="Export & Laporan"
+          hint="Download CSV + buka laporan untuk arsip."
+        >
+          <AdminLink
+            href="/settings/export"
+            icon={<Download className="size-4" strokeWidth={1.75} />}
+            title="Export & Laporan"
+            desc="CSV semua data + laporan periode."
+          />
         </Panel>
       )}
 
