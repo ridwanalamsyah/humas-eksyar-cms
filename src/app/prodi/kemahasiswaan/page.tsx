@@ -23,11 +23,7 @@ export default function KemahasiswaanPage() {
       {/* Eksphoria */}
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
         <Reveal className="mx-auto max-w-[1024px]">
-          <div className="relative overflow-hidden rounded-[32px] bg-label px-8 py-16 text-center text-white sm:px-16 sm:py-24">
-            <div
-              aria-hidden
-              className="absolute -top-32 left-1/2 size-[480px] -translate-x-1/2 rounded-full bg-accent-strong/40 blur-[120px]"
-            />
+          <div className="relative overflow-hidden rounded-[32px] bg-accent px-8 py-16 text-center text-white sm:px-16 sm:py-24">
             <p className="relative font-script text-[36px] leading-none text-amber">Program unggulan HMJ</p>
             <h2 className="relative mt-2 text-[clamp(3rem,2rem+4vw,5.5rem)] font-semibold leading-none tracking-[-0.04em]">
               {himpunan.flagship.name}
@@ -69,7 +65,7 @@ export default function KemahasiswaanPage() {
       </section>
 
       {/* Prestasi */}
-      <section className="eksyar-sky-soft px-4 py-24 sm:px-6 sm:py-32">
+      <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading eyebrow="Mengucapkan" title="Selamat & Sukses." />
         </Reveal>

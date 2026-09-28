@@ -147,7 +147,7 @@ export default function AkademikPage() {
               href={l.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-[20px] bg-canvas p-6 transition-shadow hover:shadow-[0_6px_28px_rgba(0,0,0,0.1)]"
+              className="group rounded-[20px] bg-canvas p-6 border border-hairline transition-colors duration-300 hover:border-accent/40"
             >
               <p className="text-[17px] font-semibold text-label">{l.title}</p>
               <p className="mt-1 text-[14px] text-label-2">{l.description}</p>

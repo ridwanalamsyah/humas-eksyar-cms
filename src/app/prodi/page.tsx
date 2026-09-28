@@ -38,56 +38,42 @@ export default async function ProdiHomePage() {
   return (
     <>
       {/* ─── Hero ─────────────────────────────────────────── */}
-      <section className="eksyar-sky relative overflow-hidden px-4 pb-20 pt-14 sm:px-6 sm:pb-28 sm:pt-20">
-        <div className="mx-auto grid max-w-[1100px] items-center gap-14 lg:grid-cols-[1.15fr_1fr]">
-          <Reveal className="text-center lg:text-left">
-            <div className="inline-flex items-center gap-3 rounded-full bg-white/70 py-1.5 pl-1.5 pr-4 backdrop-blur">
-              <ProdiLogo size={32} priority />
-              <span className="text-[13px] font-semibold text-label">
-                {prodi.facultyShort} · {prodi.university}
-              </span>
-            </div>
-            <p className="mt-8 font-script text-[clamp(2.2rem,1.7rem+1.8vw,3.4rem)] leading-none text-navy">{hero.greeting}</p>
-            <h1 className="mt-1 text-[clamp(3rem,1.8rem+5.4vw,6rem)] font-extrabold leading-[0.95] tracking-[-0.045em] text-label">
-              {hero.title}
-            </h1>
-            <p className="mx-auto mt-6 max-w-xl text-[clamp(1.05rem,1rem+0.35vw,1.3rem)] leading-[1.5] text-label/80 lg:mx-0">
-              {hero.description}
-            </p>
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4 lg:justify-start">
-              <a
-                href={kontak.pmbUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white shadow-[0_10px_24px_-10px_rgba(35,122,116,0.8)] transition-colors hover:bg-accent-strong"
-              >
-                Daftar sekarang
-              </a>
-              <Link href="/prodi/profil" className="text-[16px] font-semibold text-label hover:underline">
-                Kenali prodi ›
-              </Link>
-            </div>
-            <p className="mt-10 font-script text-[28px] leading-none text-accent">“{prodi.tagline}”</p>
-          </Reveal>
+      <section className="px-4 pb-20 pt-16 text-center sm:px-6 sm:pb-28 sm:pt-24">
+        <Reveal>
+          <ProdiLogo size={72} priority className="mx-auto" />
+          <p className="mt-6 font-script text-[clamp(2rem,1.6rem+1.6vw,3rem)] leading-none text-accent">{hero.greeting}</p>
+          <h1 className="mt-2 text-[clamp(3rem,1.8rem+5.4vw,6rem)] font-extrabold leading-[0.95] tracking-[-0.045em] text-label">
+            {hero.title}
+          </h1>
+          <p className="mt-4 text-[15px] font-semibold text-label-2">
+            {prodi.faculty} · {prodi.university}
+          </p>
+          <p className="mx-auto mt-6 max-w-2xl text-[clamp(1.05rem,1rem+0.35vw,1.3rem)] leading-[1.5] text-label-2">
+            {hero.description}
+          </p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+            <a
+              href={kontak.pmbUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-accent-strong"
+            >
+              Daftar sekarang
+            </a>
+            <Link href="/prodi/profil" className="text-[16px] font-semibold text-accent hover:underline">
+              Kenali prodi ›
+            </Link>
+          </div>
+        </Reveal>
 
-          <Reveal delay={0.12}>
-            {hero.image ? (
-              <div className="relative aspect-[4/5] overflow-hidden rounded-[32px] shadow-[0_30px_60px_-24px_rgba(22,58,69,0.5)]">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={hero.image} alt={hero.imageAlt} className="absolute inset-0 size-full object-cover" />
-              </div>
-            ) : (
-              <div className="relative mx-auto max-w-[420px]">
-                <div className="absolute -right-3 top-6 hidden w-[78%] rotate-[5deg] sm:block">
-                  <PrestasiCard item={prestasi[2]} />
-                </div>
-                <div className="relative mx-auto w-[82%] -rotate-[3deg] sm:mx-0">
-                  <PrestasiCard item={prestasi[0]} />
-                </div>
-              </div>
-            )}
+        {hero.image && (
+          <Reveal delay={0.12} className="mx-auto mt-14 max-w-[1024px]">
+            <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] bg-mist">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={hero.image} alt={hero.imageAlt} className="absolute inset-0 size-full object-cover" />
+            </div>
           </Reveal>
-        </div>
+        )}
       </section>
 
       {/* ─── Sekilas (bento) ──────────────────────────────── */}
@@ -132,7 +118,7 @@ export default async function ProdiHomePage() {
       </section>
 
       {/* ─── Selamat & Sukses ─────────────────────────────── */}
-      <section className="eksyar-sky-soft px-4 py-24 sm:px-6 sm:py-32">
+      <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading
             eyebrow="Mengucapkan"
@@ -268,7 +254,7 @@ function Tile({
       <div
         className={
           dark
-            ? "flex h-full flex-col justify-between rounded-[28px] bg-gradient-to-br from-accent-strong to-accent p-8 text-white sm:p-10"
+            ? "flex h-full flex-col justify-between rounded-[28px] bg-accent p-8 text-white sm:p-10"
             : "flex h-full flex-col justify-between rounded-[28px] bg-mist p-8 sm:p-10"
         }
       >

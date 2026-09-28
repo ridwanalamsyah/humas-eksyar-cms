@@ -31,7 +31,7 @@ export default function ProfilPage() {
       </section>
 
       {/* Visi */}
-      <section className="bg-gradient-to-br from-accent-strong to-accent px-4 py-24 text-center text-white sm:px-6 sm:py-32">
+      <section className="bg-accent px-4 py-24 text-center text-white sm:px-6 sm:py-32">
         <Reveal className="mx-auto max-w-4xl">
           <p className="font-script text-[40px] leading-none text-sand">Visi</p>
           <p className="mt-4 text-[clamp(1.6rem,1.1rem+1.8vw,2.6rem)] font-semibold leading-[1.2] tracking-[-0.02em] text-balance">
@@ -72,7 +72,7 @@ export default function ProfilPage() {
         <div className="mx-auto mt-14 grid max-w-[1024px] gap-10 sm:grid-cols-3">
           {pimpinan.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.06} className="text-center">
-              <span className="mx-auto grid size-28 place-items-center rounded-full bg-gradient-to-br from-accent-soft to-[#fdecd3] text-[32px] font-semibold tracking-[-0.02em] text-accent">
+              <span className="mx-auto grid size-28 place-items-center rounded-full bg-accent-soft text-[32px] font-semibold tracking-[-0.02em] text-accent">
                 {p.initials}
               </span>
               <p className="mt-5 text-[19px] font-semibold leading-snug tracking-[-0.01em] text-label">{p.name}</p>
@@ -93,7 +93,7 @@ export default function ProfilPage() {
         </Reveal>
         <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 md:grid-cols-3">
           <Reveal>
-            <div className="flex h-full flex-col rounded-[28px] bg-gradient-to-br from-accent-strong to-accent p-8 text-white">
+            <div className="flex h-full flex-col rounded-[28px] bg-accent p-8 text-white">
               <p className="text-[14px] font-bold text-sand">Akreditasi Institusi</p>
               <p className="mt-auto pt-10 text-[48px] font-semibold leading-none tracking-[-0.03em]">
                 {prodi.universityAccreditation}
