@@ -3,6 +3,7 @@ import type { ContentItem, MediaAsset } from "@/lib/data/types";
 import { formatLongDate } from "@/lib/format/dates";
 import { contentExcerpt, rubricLabel } from "@/lib/site/content";
 import { cn } from "@/lib/utils";
+import { prodi } from "@/lib/site/prodi";
 
 /** Kartu berita ala Apple Newsroom. `featured` = kartu lebar dengan gambar di kiri. */
 export function NewsCard({
@@ -44,7 +45,7 @@ export function NewsCard({
         <h3
           className={cn(
             "mt-2 font-semibold tracking-[-0.015em] text-label",
-            featured ? "text-[clamp(1.5rem,1.2rem+1vw,2rem)] leading-[1.15]" : "text-[19px] leading-[1.25]",
+            featured ? "text-[clamp(1.5rem,1.2rem+1vw,2rem)] font-bold leading-[1.15]" : "text-[19px] font-bold leading-[1.25]",
           )}
         >
           {item.title}
@@ -60,9 +61,9 @@ export function NewsCard({
 
 export function CoverFallback() {
   return (
-    <div className="absolute inset-0 bg-gradient-to-br from-[#e6f4f2] via-[#f5f5f7] to-[#fdf1e1]">
+    <div className="eksyar-card-sky absolute inset-0">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/eksyar-logo.png" alt="" className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2 opacity-80" />
+      <img src={prodi.logo} alt="" className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full shadow-lg" />
     </div>
   );
 }

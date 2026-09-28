@@ -31,9 +31,9 @@ export default function ProfilPage() {
       </section>
 
       {/* Visi */}
-      <section className="bg-label px-4 py-24 text-center text-white sm:px-6 sm:py-32">
+      <section className="bg-gradient-to-br from-accent-strong to-accent px-4 py-24 text-center text-white sm:px-6 sm:py-32">
         <Reveal className="mx-auto max-w-4xl">
-          <p className="text-[17px] font-semibold text-amber">Visi</p>
+          <p className="font-script text-[40px] leading-none text-sand">Visi</p>
           <p className="mt-4 text-[clamp(1.6rem,1.1rem+1.8vw,2.6rem)] font-semibold leading-[1.2] tracking-[-0.02em] text-balance">
             {visi}
           </p>
@@ -93,12 +93,12 @@ export default function ProfilPage() {
         </Reveal>
         <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 md:grid-cols-3">
           <Reveal>
-            <div className="flex h-full flex-col rounded-[28px] bg-label p-8 text-white">
-              <p className="text-[14px] font-semibold text-amber">Akreditasi Institusi</p>
+            <div className="flex h-full flex-col rounded-[28px] bg-gradient-to-br from-accent-strong to-accent p-8 text-white">
+              <p className="text-[14px] font-bold text-sand">Akreditasi Institusi</p>
               <p className="mt-auto pt-10 text-[48px] font-semibold leading-none tracking-[-0.03em]">
                 {prodi.universityAccreditation}
               </p>
-              <p className="mt-3 text-[15px] text-white/65">BAN-PT · {prodi.universityAccreditationPeriod}</p>
+              <p className="mt-3 text-[15px] text-white/80">BAN-PT · {prodi.universityAccreditationPeriod}</p>
             </div>
           </Reveal>
           <Reveal delay={0.06}>

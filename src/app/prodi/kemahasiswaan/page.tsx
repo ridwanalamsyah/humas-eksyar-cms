@@ -3,7 +3,8 @@ import { HighlightCard } from "@/components/site/highlight-card";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
-import { beasiswa, himpunan, kegiatanMahasiswa, prodi, sorotan } from "@/lib/site/prodi";
+import { beasiswa, himpunan, kegiatanMahasiswa, prestasi, prodi, sorotan } from "@/lib/site/prodi";
+import { PrestasiCard } from "@/components/site/prestasi-card";
 
 export const metadata: Metadata = {
   title: "Kemahasiswaan",
@@ -27,7 +28,7 @@ export default function KemahasiswaanPage() {
               aria-hidden
               className="absolute -top-32 left-1/2 size-[480px] -translate-x-1/2 rounded-full bg-accent-strong/40 blur-[120px]"
             />
-            <p className="relative text-[17px] font-semibold text-amber">Program Unggulan HMJ</p>
+            <p className="relative font-script text-[36px] leading-none text-amber">Program unggulan HMJ</p>
             <h2 className="relative mt-2 text-[clamp(3rem,2rem+4vw,5.5rem)] font-semibold leading-none tracking-[-0.04em]">
               {himpunan.flagship.name}
             </h2>
@@ -43,7 +44,10 @@ export default function KemahasiswaanPage() {
       <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading eyebrow={himpunan.cabinet} title={himpunan.name} description={himpunan.description} />
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+          <p className="mt-6 text-center text-[15px] text-label-2">
+            Ketua HMJ {himpunan.chairPeriod}: <span className="font-bold text-label">{himpunan.chair}</span>
+          </p>
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
             <a href={himpunan.instagram} target="_blank" rel="noopener noreferrer" className="text-[17px] text-accent hover:underline">
               Instagram ↗
             </a>
@@ -59,6 +63,20 @@ export default function KemahasiswaanPage() {
                 <h3 className="text-[21px] font-semibold tracking-[-0.01em] text-label">{k.title}</h3>
                 <p className="mt-2 text-[17px] leading-[1.45] text-label-2">{k.description}</p>
               </div>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Prestasi */}
+      <section className="eksyar-sky-soft px-4 py-24 sm:px-6 sm:py-32">
+        <Reveal>
+          <SectionHeading eyebrow="Mengucapkan" title="Selamat & Sukses." />
+        </Reveal>
+        <div className="mx-auto mt-14 grid max-w-[1024px] gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {prestasi.map((p, i) => (
+            <Reveal key={p.name} delay={(i % 3) * 0.06}>
+              <PrestasiCard item={p} />
             </Reveal>
           ))}
         </div>

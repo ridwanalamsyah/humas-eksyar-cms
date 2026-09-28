@@ -126,22 +126,30 @@
   --color-ink-soft: var(--ink-soft);
   --color-ink-deep: var(--ink-deep);
 
-  /* Website publik prodi (/prodi) — gaya Apple, tidak ikut dark mode CMS */
+  /* Website publik prodi (/prodi) — palet feed IG @eksyaruinsgd:
+     langit teal → krem → emas, teks biru-teal tua. Tidak ikut dark mode CMS. */
   --color-canvas: #ffffff;
-  --color-mist: #f5f5f7;
-  --color-label: #1d1d1f;
-  --color-label-2: #6e6e73;
-  --color-label-3: #86868b;
-  --color-hairline: #d2d2d7;
-  --color-accent: #0a7a70;
-  --color-accent-strong: #0d9488;
-  --color-accent-soft: #e6f4f2;
-  --color-amber: #e89422;
+  --color-mist: #eef7f8;
+  --color-sky: #daeff5;
+  --color-label: #163a45;
+  --color-label-2: #4f6b73;
+  --color-label-3: #7d9299;
+  --color-hairline: #d3e4e7;
+  --color-accent: #237a74;
+  --color-accent-strong: #42918b;
+  --color-accent-soft: #daeff5;
+  --color-teal-sky: #6ab5c7;
+  --color-amber: #eeb25f;
+  --color-amber-deep: #d98f3a;
+  --color-sand: #f6e3bd;
+  --color-navy: #1d3d55;
 
   --font-sans: var(--font-inter), var(--font-geist-sans), system-ui, sans-serif;
   --font-display: var(--font-inter-tight), var(--font-geist-sans), system-ui, sans-serif;
   --font-serif: var(--font-fraunces), Georgia, serif;
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-jakarta: var(--font-plus-jakarta), var(--font-inter), system-ui, sans-serif;
+  --font-script: var(--font-great-vibes), cursive;
 
   --radius-sm: 0.625rem;
   --radius-md: 1rem;
@@ -429,3 +437,14 @@ body {
 .site-prose a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
 .site-prose strong { font-weight: 600; }
 .site-prose blockquote { margin: 1.6em 0; padding: 0 0 0 1.25rem; border-left: 3px solid var(--color-accent-strong); font-size: 24px; line-height: 1.4; font-weight: 600; letter-spacing: -0.01em; }
+
+/* Gradasi khas feed IG Eksyar: langit teal di atas, emas di bawah */
+.eksyar-sky {
+  background: linear-gradient(180deg, #6ab5c7 0%, #a8d6df 38%, #e9f2ee 62%, #f6e3bd 84%, #eeb25f 100%);
+}
+.eksyar-sky-soft {
+  background: linear-gradient(180deg, #daeff5 0%, #eef7f8 45%, #fbf1dc 100%);
+}
+.eksyar-card-sky {
+  background: linear-gradient(180deg, #7fc3cf 0%, #b8dde3 55%, #f3dcae 100%);
+}

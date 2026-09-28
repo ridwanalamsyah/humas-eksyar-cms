@@ -102,8 +102,8 @@ export default function AkademikPage() {
       {/* CPL */}
       <section className="bg-label px-4 py-24 text-white sm:px-6 sm:py-32">
         <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="text-[17px] font-semibold text-amber">Capaian Pembelajaran</p>
-          <h2 className="mt-1 text-[clamp(2rem,1.4rem+2.4vw,3.5rem)] font-semibold leading-[1.07] tracking-[-0.025em]">
+          <p className="font-script text-[36px] leading-none text-amber">Capaian Pembelajaran</p>
+          <h2 className="mt-1 text-[clamp(2rem,1.4rem+2.4vw,3.5rem)] font-extrabold leading-[1.07] tracking-[-0.03em]">
             Kompetensi yang dibangun.
           </h2>
         </Reveal>

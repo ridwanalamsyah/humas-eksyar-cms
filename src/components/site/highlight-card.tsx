@@ -19,8 +19,17 @@ export function HighlightCard({ item }: { item: Highlight }) {
         <time dateTime={item.date} className="text-label-3">
           {formatLongDate(item.date)}
         </time>
-        <span className="text-accent group-hover:underline">uinsgd.ac.id ↗</span>
+        <span className="text-accent group-hover:underline">{sourceLabel(item.source)} ↗</span>
       </div>
     </a>
   );
+}
+
+function sourceLabel(url: string) {
+  if (url.includes("instagram.com")) return "Instagram";
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch {
+    return "Sumber";
+  }
 }

@@ -33,17 +33,18 @@ export const prodi = {
   universityAccreditation: "Unggul",
   universityAccreditationPeriod: "2024–2029",
   officialSite: "https://es.uinsgd.ac.id",
+  // TODO: ganti dengan file logo resmi beresolusi tinggi (saat ini diambil dari avatar IG).
+  logo: "/prodi/logo-eksyar.png",
 };
 
 export const hero = {
-  eyebrow: "Program Studi Ekonomi Syariah",
-  title: "Ekonomi yang adil.",
-  highlight: "Dimulai dari sini.",
+  greeting: "Selamat datang di",
+  title: "Ekonomi Syariah",
   description:
     "Belajar ilmu ekonomi modern berlandaskan prinsip muamalah Islam — untuk karir di keuangan syariah, industri halal, filantropi, dan riset kebijakan.",
   /**
    * Foto utama beranda (mis. "/prodi/hero.jpg" di folder public, atau URL
-   * dari Media Library CMS). Kosongkan untuk memakai panel logo.
+   * dari Media Library CMS). Kosongkan untuk memakai kartu sorotan.
    */
   image: null as string | null,
   imageAlt: "Mahasiswa Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
@@ -285,6 +286,22 @@ export const prospekKarir = [
  */
 export const sorotan = [
   {
+    date: "2026-09-24",
+    category: "Pengabdian",
+    title: "Literasi Digitalisasi Keuangan Syariah & Pengelolaan Aset Masjid",
+    summary:
+      "Program pengabdian kepada masyarakat menuju tata kelola aset masjid yang akuntabel, bekerja sama dengan Bank Indonesia dan Bank Muamalat.",
+    source: "https://www.instagram.com/eksyaruinsgd/",
+  },
+  {
+    date: "2026-06-19",
+    category: "Karir",
+    title: "Seminar Karir 2026",
+    summary:
+      "“Menjadi SDM Unggul dan Kompetitif dalam Industri Keuangan Syariah” — menghadirkan Dekan FEBI, Kaprodi, dan praktisi Bank Muamalat di Aula FEBI Kampus 2.",
+    source: "https://www.instagram.com/eksyaruinsgd/",
+  },
+  {
     date: "2026-04-15",
     category: "Akademik",
     title: "Kuliah Bersama Praktisi Bank Muamalat",
@@ -318,9 +335,52 @@ export const sorotan = [
   },
 ];
 
+/** Apresiasi "Selamat & Sukses" dari feed IG @eksyaruinsgd. */
+// TODO: cek ejaan nama & tambahkan foto (field `photo`) bila ada izin.
+export const prestasi = [
+  {
+    name: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
+    initials: "EJ",
+    achievement: "Artikel terbit di jurnal internasional terindeks Scopus Q2",
+    group: "Dosen",
+  },
+  {
+    name: "Hakiki Ramadhan",
+    initials: "HR",
+    achievement: "Tulisan dimuat di Islamic Finance News (IFN)",
+    group: "Eksyar Appreciation",
+  },
+  {
+    name: "Muhammad Azzam Abdillah",
+    initials: "MA",
+    achievement: "Juara 1 Bandung Open Tournament Pencak Silat",
+    group: "Mahasiswa",
+  },
+  {
+    name: "Muhamad Yudhi Saputra",
+    initials: "YS",
+    achievement: "Ketua HMJ Ekonomi Syariah 2026",
+    group: "Mahasiswa",
+  },
+  {
+    name: "Muhamad Halabi Muzaini",
+    initials: "HM",
+    achievement: "Ketua DEMA Fakultas Ekonomi dan Bisnis Islam 2026",
+    group: "Mahasiswa",
+  },
+  {
+    name: "Raditya Fitra",
+    initials: "RF",
+    achievement: "Wakil Ketua DEMA Universitas 2026",
+    group: "Mahasiswa",
+  },
+];
+
 export const himpunan = {
   name: "HMJ Ekonomi Syariah UIN Bandung",
   cabinet: "Kabinet Ekselensi",
+  chair: "Muhamad Yudhi Saputra",
+  chairPeriod: "2026",
   description:
     "Himpunan Mahasiswa Jurusan Ekonomi Syariah menjadi wadah pengembangan diri, kepemimpinan, dan kreativitas mahasiswa melalui kajian, kompetisi, pengabdian, dan kegiatan kolaboratif.",
   flagship: {
@@ -392,6 +452,8 @@ export const kontak = {
   hours: "Senin–Jumat, 08.00–16.00 WIB",
   instagram: "https://www.instagram.com/eksyaruinsgd/",
   instagramHandle: "@eksyaruinsgd",
+  linktree: "https://linktr.ee/eksyaruinsgd",
+  website: "es.uinsgd.ac.id",
   tiktok: "https://www.tiktok.com/@eksyaruinsgd",
   x: "https://x.com/eksyaruinsgd",
   febiInstagram: "https://www.instagram.com/febiuinsgdbdg/",

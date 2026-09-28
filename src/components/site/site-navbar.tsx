@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { EksyarLogo } from "@/components/brand/eksyar-logo";
+import { ProdiLogo } from "./prodi-logo";
 import { cn } from "@/lib/utils";
 import { kontak, navLinks, prodi } from "@/lib/site/prodi";
 
@@ -34,14 +34,17 @@ export function SiteNavbar() {
     <header className="sticky top-0 z-50">
       <div
         className={cn(
-          "border-b border-black/[0.06] backdrop-blur-xl backdrop-saturate-150 transition-colors",
+          "border-b border-accent/10 backdrop-blur-xl backdrop-saturate-150 transition-colors",
           open ? "bg-canvas" : "bg-canvas/80",
         )}
       >
-        <nav aria-label="Navigasi utama" className="mx-auto flex h-12 max-w-[1024px] items-center justify-between px-4 sm:px-6">
+        <nav aria-label="Navigasi utama" className="mx-auto flex h-14 max-w-[1024px] items-center justify-between px-4 sm:px-6">
           <Link href="/prodi" className="flex items-center gap-2" aria-label={`${prodi.fullName} — beranda`}>
-            <EksyarLogo size={26} alt="" />
-            <span className="text-[14px] font-semibold tracking-[-0.01em] text-label">Ekonomi Syariah</span>
+            <ProdiLogo size={30} priority />
+            <span className="leading-none">
+              <span className="block text-[14px] font-bold tracking-[-0.01em] text-label">Ekonomi Syariah</span>
+              <span className="block pt-0.5 text-[10.5px] font-medium text-label-2">UIN SGD Bandung</span>
+            </span>
           </Link>
 
           <ul className="hidden items-center gap-7 md:flex">
@@ -51,7 +54,7 @@ export function SiteNavbar() {
                   href={l.href}
                   aria-current={isActive(pathname, l.href) ? "page" : undefined}
                   className={cn(
-                    "text-[12.5px] transition-colors",
+                    "text-[13px] font-medium transition-colors",
                     isActive(pathname, l.href) ? "text-label" : "text-label/70 hover:text-label",
                   )}
                 >
@@ -66,7 +69,7 @@ export function SiteNavbar() {
               href={kontak.pmbUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden rounded-full bg-accent px-3.5 py-1 text-[12px] font-medium text-white transition-colors hover:bg-accent-strong sm:inline-block"
+              className="hidden rounded-full bg-accent px-4 py-1.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-accent-strong sm:inline-block"
             >
               Daftar
             </a>
@@ -103,7 +106,7 @@ export function SiteNavbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 bottom-0 top-12 overflow-y-auto bg-canvas md:hidden"
+            className="fixed inset-x-0 bottom-0 top-14 overflow-y-auto bg-canvas md:hidden"
           >
             <ul className="px-10 pt-6">
               {navLinks.map((l, i) => (
