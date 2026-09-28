@@ -268,13 +268,6 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
         fields: [...titled, { name: "image", label: "Foto (opsional, 16:9)", type: "image", wide: true }],
         empty: { title: "", description: "", image: null },
       },
-      { key: "layananAdministrasi", title: "Layanan administrasi", kind: "list", itemTitle: (i) => String(i.title || "Layanan baru"), fields: titled, empty: { title: "", description: "" } },
-      {
-        key: "layananFormUrl",
-        title: "Formulir layanan",
-        kind: "field",
-        field: { name: "layananFormUrl", label: "URL formulir pengajuan (opsional)", type: "url", wide: true, hint: "Misal Google Form. Jika diisi, tombol \"Ajukan layanan\" muncul di halaman Layanan." },
-      },
       { key: "jalurMasuk", title: "Jalur masuk", kind: "list", itemTitle: (i) => String(i.title || "Jalur baru"), fields: titled, empty: { title: "", description: "" } },
       {
         key: "faq",

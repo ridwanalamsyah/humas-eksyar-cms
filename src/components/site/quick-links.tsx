@@ -1,14 +1,14 @@
 import Link from "next/link";
-import { FileSearch, FolderDown, GraduationCap, ScanSearch, Send, UserPlus } from "lucide-react";
+import { BookOpen, FolderDown, GraduationCap, Library, ScanSearch, UserPlus } from "lucide-react";
 
-/** Tautan cepat ke layanan prodi & sistem kampus (seperti quicklink web fakultas). */
+/** Tautan cepat ke alat bantu prodi & sistem kampus. */
 export function QuickLinks({ pmbUrl }: { pmbUrl: string }) {
   const links = [
-    { href: "/prodi/layanan#ajukan", label: "Ajukan layanan", Icon: Send },
-    { href: "/prodi/layanan/status", label: "Cek status", Icon: FileSearch },
     { href: "/prodi/unduhan", label: "Unduhan", Icon: FolderDown },
     { href: "/prodi/skripsi", label: "Cek judul skripsi", Icon: ScanSearch },
     { href: "https://simak.uinsgd.ac.id/beranda/", label: "SALAM", Icon: GraduationCap, external: true },
+    { href: "https://eknows.uinsgd.ac.id", label: "e-Knows", Icon: BookOpen, external: true },
+    { href: "https://digilib.uinsgd.ac.id", label: "Digilib", Icon: Library, external: true },
     { href: pmbUrl, label: "PMB UIN SGD", Icon: UserPlus, external: true },
   ];
   const cls =

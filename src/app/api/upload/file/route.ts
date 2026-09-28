@@ -1,14 +1,17 @@
 /**
  * POST /api/upload/file   (pengurus/admin)
  *
- * Upload dokumen (PDF, Word, Excel, gambar) ke Vercel Blob — untuk surat
- * hasil layanan dan halaman Unduhan website prodi. Maks 10MB.
+ * Upload dokumen (PDF, Word, Excel, gambar) ke Vercel Blob — untuk
+ * halaman Unduhan website prodi. Maks 10MB.
  */
 import { NextRequest, NextResponse } from "next/server";
 import { put } from "@vercel/blob";
 import { auth } from "@/auth";
 import { findMemberByEmail } from "@/lib/data/provider";
-import { PROCESSOR_ROLES } from "@/lib/site/layanan";
+import type { Role } from "@/lib/data/types";
+
+/** Role CMS yang boleh mengunggah dokumen website. */
+const UPLOADER_ROLES: Role[] = ["admin", "sekjen", "ketua_divisi", "pengurus"];
 
 const MAX_BYTES = 10 * 1024 * 1024;
 const ALLOWED: Record<string, string> = {
@@ -26,7 +29,7 @@ export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   const me = await findMemberByEmail(session.user.email);
-  if (!me || !PROCESSOR_ROLES.includes(me.role)) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!me || !UPLOADER_ROLES.includes(me.role)) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
     return NextResponse.json(
       { error: "Vercel Blob belum di-setup (BLOB_READ_WRITE_TOKEN). Tempel tautan dokumen secara manual." },

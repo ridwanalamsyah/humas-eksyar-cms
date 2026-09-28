@@ -126,8 +126,6 @@ export const websiteConfigSchema = z.object({
   kegiatanMahasiswa: list(titledItemSchema, 12),
   beasiswa: list(text(120), 20),
   fasilitas: list(fasilitasSchema, 16),
-  layananAdministrasi: list(titledItemSchema, 16),
-  layananFormUrl: url,
   jalurMasuk: list(titledItemSchema, 8),
   unduhan: list(unduhanSchema, 100),
   faq: list(z.object({ q: text(300), a: longText(1200) }), 30),

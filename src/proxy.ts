@@ -7,7 +7,6 @@
  *   - `/login` itself
  *   - `/bio` (public Linktree-style page)
  *   - `/prodi` (public program-study website + berita)
- *   - `/api/public/*` (form layanan & cek status website prodi — validated + rate-limited)
  *   - `/api/auth/*` (NextAuth handlers + health probe)
  *   - `/api/bio` GET only (public read of bio config)
  *   - `/api/holidays` (public read of calendar)
@@ -24,7 +23,6 @@ const PUBLIC_PREFIXES = [
   "/login",
   "/bio",
   "/prodi",
-  "/api/public",
   "/api/auth",
   "/api/holidays",
   "/manifest",

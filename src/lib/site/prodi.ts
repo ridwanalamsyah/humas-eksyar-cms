@@ -467,16 +467,6 @@ export const fasilitas = [
   { title: "UINSGDnet", description: "Akses internet nirkabel di area kampus dengan akun resmi mahasiswa." },
 ];
 
-/** Layanan administrasi mahasiswa yang umum diajukan ke prodi/fakultas. */
-// TODO: sesuaikan dengan alur & formulir resmi (tautan Google Form / portal TU).
-export const layananAdministrasi = [
-  { title: "Surat Keterangan Aktif Kuliah", description: "Untuk keperluan tunjangan orang tua, beasiswa, dan keperluan umum." },
-  { title: "Rekomendasi Beasiswa", description: "Surat rekomendasi program studi untuk pendaftaran beasiswa." },
-  { title: "Izin Penelitian & Observasi", description: "Surat pengantar penelitian skripsi, observasi, dan wawancara." },
-  { title: "Konsultasi Akademik", description: "Perwalian, rencana studi, dan bimbingan tugas akhir." },
-  { title: "Pengaduan & Saran", description: "Sampaikan keluhan atau masukan terkait layanan dan perkuliahan." },
-];
-
 export const layananAkademik = [
   { title: "Portal Akademik SALAM", href: "https://simak.uinsgd.ac.id/beranda/", description: "KRS, nilai, dan administrasi akademik." },
   { title: "e-Knows (LMS)", href: "https://eknows.uinsgd.ac.id", description: "Pembelajaran daring dan materi kuliah." },

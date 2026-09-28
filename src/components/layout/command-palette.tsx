@@ -126,7 +126,6 @@ function CommandPalette({ open, setOpen }: Props) {
                   <CmdItem onSelect={() => go("/approval")} icon={<ShieldCheck className="size-4" />} label="Approval Queue" />
                   <CmdItem onSelect={() => go("/analytics")} icon={<Zap className="size-4" />} label="Insight" />
                   <CmdItem onSelect={() => go("/profile")} icon={<Users className="size-4" />} label="Profil saya" />
-                  <CmdItem onSelect={() => go("/layanan")} icon={<ShieldCheck className="size-4" />} label="Layanan Mahasiswa" hint="Pengajuan surat dari website prodi" />
                   <CmdItem onSelect={() => go("/settings/website")} icon={<Hash className="size-4" />} label="Website Prodi" hint="Atur konten /prodi" />
                   <CmdItem onSelect={() => go("/settings")} icon={<Hash className="size-4" />} label="Settings" />
                 </Command.Group>

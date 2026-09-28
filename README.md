@@ -70,10 +70,8 @@ Website publik Program Studi Ekonomi Syariah ada di `/prodi` (tanpa login).
 - **Konten diatur dari CMS:** Settings → **Website Prodi** (khusus admin) — profil, visi-misi, pimpinan, dosen, prestasi, kegiatan, kurikulum, layanan, FAQ, kontak. Disimpan di tabel `siteSettings` (key `website`) dan langsung tayang setelah disimpan.
 - **Berita, pengumuman & agenda** diambil otomatis dari Konten berstatus *published* (rubrik `pengumuman` → Pengumuman) dan Kegiatan publik.
 - **Foto** diunggah ke Vercel Blob (`BLOB_READ_WRITE_TOKEN`) atau tempel URL `https://`.
-- **Layanan online** (`/prodi/layanan`): mahasiswa mengajukan surat/pengaduan → dapat kode tiket (`ES-XXXXXX`) → cek status di `/prodi/layanan/status` dengan kode + NIM. Pengurus memproses di CMS **/layanan** (ubah status, catatan, unggah surat jadi); pemohon dikabari via email (Resend). Dilindungi validasi, honeypot, dan batas pengajuan per IP.
 - **Unduhan** (`/prodi/unduhan`): pedoman, kalender, jadwal, template, sertifikat — dikelola di Settings → Website Prodi → tab Unduhan (upload PDF/DOCX/XLSX).
 - **Cek judul skripsi** (`/prodi/skripsi`): skor kemiripan terhadap direktori judul yang diimpor admin di Settings → **Direktori Skripsi** (tempel dari Excel: Tahun | Judul | Nama).
-- **Migrasi:** tabel baru `serviceRequests` — jalankan `pnpm db:push` (atau `drizzle/0003_service_requests.sql`).
 - Data awal (sebelum admin menyimpan) ada di `src/lib/site/prodi.ts`; skema & validasi di `src/lib/site/schema.ts`.
 
 ## Environment Variables

@@ -12,7 +12,6 @@ import {
   kelompokMataKuliah,
   kontak,
   kurikulum,
-  layananAdministrasi,
   misi,
   pimpinan,
   prestasi,
@@ -67,8 +66,6 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   kegiatanMahasiswa,
   beasiswa,
   fasilitas: fasilitas.map((f) => ({ ...f, image: null })),
-  layananAdministrasi,
-  layananFormUrl: "",
   jalurMasuk,
   unduhan: [
     {

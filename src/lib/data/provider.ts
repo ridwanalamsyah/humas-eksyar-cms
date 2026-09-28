@@ -70,11 +70,6 @@ export const setBrandingConfig = impl.setBrandingConfig;
 export const getWebsiteContent = impl.getWebsiteContent;
 export const setWebsiteContent = impl.setWebsiteContent;
 
-export const createServiceRequest = impl.createServiceRequest;
-export const getServiceRequest = impl.getServiceRequest;
-export const getServiceRequestByCode = impl.getServiceRequestByCode;
-export const listServiceRequests = impl.listServiceRequests;
-export const updateServiceRequest = impl.updateServiceRequest;
 
 export const getSiteSetting = impl.getSiteSetting;
 export const setSiteSetting = impl.setSiteSetting;
