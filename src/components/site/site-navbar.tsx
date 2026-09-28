@@ -47,7 +47,7 @@ export function SiteNavbar() {
             </span>
           </Link>
 
-          <ul className="hidden items-center gap-7 md:flex">
+          <ul className="hidden items-center gap-6 lg:flex">
             {navLinks.slice(1).map((l) => (
               <li key={l.href}>
                 <Link
@@ -75,7 +75,7 @@ export function SiteNavbar() {
             </a>
             <button
               type="button"
-              className="relative -mr-2 grid size-10 place-items-center md:hidden"
+              className="relative -mr-2 grid size-10 place-items-center lg:hidden"
               aria-label={open ? "Tutup menu" : "Buka menu"}
               aria-expanded={open}
               aria-controls="menu-mobile"
@@ -106,7 +106,7 @@ export function SiteNavbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-x-0 bottom-0 top-14 overflow-y-auto bg-canvas md:hidden"
+            className="fixed inset-x-0 bottom-0 top-14 overflow-y-auto bg-canvas lg:hidden"
           >
             <ul className="px-10 pt-6">
               {navLinks.map((l, i) => (

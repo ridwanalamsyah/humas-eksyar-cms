@@ -12,6 +12,13 @@ export async function listPublishedNews(): Promise<ContentItem[]> {
   );
 }
 
+/** Rubrik CMS yang ditampilkan sebagai "Pengumuman", bukan berita. */
+export const ANNOUNCEMENT_RUBRIC = "pengumuman";
+
+export function isAnnouncement(item: ContentItem) {
+  return item.rubric === ANNOUNCEMENT_RUBRIC;
+}
+
 export async function findPublishedNews(slug: string): Promise<ContentItem | null> {
   const items = await listPublishedNews();
   return items.find((c) => c.slug === slug) ?? null;

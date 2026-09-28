@@ -408,6 +408,50 @@ export const beasiswa = [
   "Beasiswa pemerintah daerah",
 ];
 
+/**
+ * Dosen program studi. Baru berisi nama yang terverifikasi dari publikasi
+ * resmi prodi — lengkapi dari data SISTER/PDDikti.
+ */
+// TODO: lengkapi daftar dosen (nama, bidang keahlian, foto, tautan SINTA/Scholar).
+export const dosen = [
+  {
+    name: "Dr. Evi Sopiah, M.Ag., CIIQA, CIELP",
+    initials: "ES",
+    role: "Ketua Program Studi",
+    expertise: ["Ekonomi Islam", "Industri Halal"],
+  },
+  {
+    name: "Anisa Ilma, M.E.",
+    initials: "AI",
+    role: "Sekretaris Program Studi",
+    expertise: ["Ekonomi Syariah"],
+  },
+  {
+    name: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
+    initials: "EJ",
+    role: "Dosen",
+    expertise: ["Hukum Islam", "Akuntansi"],
+  },
+];
+
+/** Fasilitas yang dapat diakses mahasiswa. */
+// TODO: tambahkan fasilitas khusus FEBI (laboratorium, galeri investasi, dll.) bila ada.
+export const fasilitas = [
+  { title: "Gedung FEBI Kampus 2", description: "Ruang kuliah dan Aula FEBI untuk seminar, kuliah umum, dan kegiatan mahasiswa." },
+  { title: "Perpustakaan & Digital Library", description: "Koleksi cetak universitas dan repositori digital skripsi serta karya ilmiah." },
+  { title: "Pembelajaran Daring e-Knows", description: "Learning management system untuk materi, tugas, dan kuis perkuliahan." },
+  { title: "UINSGDnet", description: "Akses internet nirkabel di area kampus dengan akun resmi mahasiswa." },
+];
+
+/** Layanan administrasi mahasiswa yang umum diajukan ke prodi/fakultas. */
+// TODO: sesuaikan dengan alur & formulir resmi (tautan Google Form / portal TU).
+export const layananAdministrasi = [
+  { title: "Surat Keterangan Aktif Kuliah", description: "Untuk keperluan tunjangan orang tua, beasiswa, dan keperluan umum." },
+  { title: "Rekomendasi Beasiswa", description: "Surat rekomendasi program studi untuk pendaftaran beasiswa." },
+  { title: "Izin Penelitian & Observasi", description: "Surat pengantar penelitian skripsi, observasi, dan wawancara." },
+  { title: "Konsultasi Akademik", description: "Perwalian, rencana studi, dan bimbingan tugas akhir." },
+];
+
 export const layananAkademik = [
   { title: "Portal Akademik SALAM", href: "https://simak.uinsgd.ac.id/beranda/", description: "KRS, nilai, dan administrasi akademik." },
   { title: "e-Knows (LMS)", href: "https://eknows.uinsgd.ac.id", description: "Pembelajaran daring dan materi kuliah." },
@@ -466,8 +510,10 @@ export const navLinks = [
   { href: "/prodi", label: "Beranda" },
   { href: "/prodi/profil", label: "Profil" },
   { href: "/prodi/akademik", label: "Akademik" },
-  { href: "/prodi/kemahasiswaan", label: "Kemahasiswaan" },
+  { href: "/prodi/dosen", label: "Dosen" },
+  { href: "/prodi/kemahasiswaan", label: "Mahasiswa" },
   { href: "/prodi/berita", label: "Berita" },
+  { href: "/prodi/layanan", label: "Layanan" },
   { href: "/prodi/kontak", label: "Kontak" },
 ];
 

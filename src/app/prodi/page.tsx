@@ -2,11 +2,13 @@ import Link from "next/link";
 import { listEvents } from "@/lib/data/provider";
 import type { Event } from "@/lib/data/types";
 import { formatDateTime } from "@/lib/format/dates";
-import { coverFor, getMediaMap, listPublishedNews } from "@/lib/site/content";
+import { coverFor, getMediaMap, isAnnouncement, listPublishedNews } from "@/lib/site/content";
 import { bidangKajian, hero, kontak, prestasi, prodi, sambutan, sorotan } from "@/lib/site/prodi";
+import { AnnouncementList } from "@/components/site/announcement-list";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { NewsCard } from "@/components/site/news-card";
 import { PmbCta } from "@/components/site/pmb-cta";
+import { QuickLinks } from "@/components/site/quick-links";
 import { PrestasiCard } from "@/components/site/prestasi-card";
 import { ProdiLogo } from "@/components/site/prodi-logo";
 import { Reveal } from "@/components/site/reveal";
@@ -32,8 +34,9 @@ export default async function ProdiHomePage() {
     getMediaMap(),
   ]);
 
-  const [featuredNews, ...otherNews] = news;
-  const nextEvent = events.find((e) => PUBLIC_EVENT_CATEGORIES.includes(e.category));
+  const announcements = news.filter(isAnnouncement).slice(0, 4);
+  const [featuredNews, ...otherNews] = news.filter((n) => !isAnnouncement(n));
+  const upcoming = events.filter((e) => PUBLIC_EVENT_CATEGORIES.includes(e.category)).slice(0, 3);
 
   return (
     <>
@@ -74,6 +77,11 @@ export default async function ProdiHomePage() {
             </div>
           </Reveal>
         )}
+      </section>
+
+      {/* ─── Tautan cepat ─────────────────────────────────── */}
+      <section className="px-4 pb-8 sm:px-6">
+        <QuickLinks />
       </section>
 
       {/* ─── Sekilas (bento) ──────────────────────────────── */}
@@ -186,7 +194,7 @@ export default async function ProdiHomePage() {
         </Reveal>
       </section>
 
-      {/* ─── Berita ───────────────────────────────────────── */}
+      {/* ─── Berita, pengumuman & agenda ──────────────────── */}
       <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
         <div className="mx-auto max-w-[1024px]">
           <Reveal className="flex flex-wrap items-end justify-between gap-4">
@@ -196,40 +204,55 @@ export default async function ProdiHomePage() {
             </Link>
           </Reveal>
 
-          {featuredNews ? (
-            <div className="mt-10 grid gap-5 md:grid-cols-2">
-              <Reveal className="md:col-span-2">
-                <NewsCard item={featuredNews} cover={coverFor(featuredNews, media)} featured />
-              </Reveal>
-              {otherNews.slice(0, 2).map((n, i) => (
-                <Reveal key={n.id} delay={i * 0.06}>
-                  <NewsCard item={n} cover={coverFor(n, media)} />
+          <div className="mt-10 grid gap-5 lg:grid-cols-[2fr_1fr]">
+            {featuredNews ? (
+              <div className="grid gap-5 sm:grid-cols-2">
+                <Reveal className="sm:col-span-2">
+                  <NewsCard item={featuredNews} cover={coverFor(featuredNews, media)} />
                 </Reveal>
-              ))}
-            </div>
-          ) : (
-            <div className="mt-10 grid gap-5 md:grid-cols-3">
-              {sorotan.slice(0, 3).map((s, i) => (
-                <Reveal key={s.title} delay={i * 0.06}>
-                  <HighlightCard item={s} />
-                </Reveal>
-              ))}
-            </div>
-          )}
-
-          {nextEvent && (
-            <Reveal className="mt-5">
-              <div className="flex flex-col gap-2 rounded-[20px] bg-canvas px-7 py-5 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-[15px] text-label-2">
-                  <span className="font-semibold text-label">Agenda berikutnya · </span>
-                  {nextEvent.title}
-                </p>
-                <p className="text-[14px] text-label-3">
-                  {formatDateTime(nextEvent.startsAt)} · {nextEvent.isOnline ? "Daring" : nextEvent.location}
-                </p>
+                {otherNews.slice(0, 2).map((n, i) => (
+                  <Reveal key={n.id} delay={i * 0.06}>
+                    <NewsCard item={n} cover={coverFor(n, media)} />
+                  </Reveal>
+                ))}
               </div>
-            </Reveal>
-          )}
+            ) : (
+              <div className="grid gap-5 sm:grid-cols-2">
+                {sorotan.slice(0, 4).map((s, i) => (
+                  <Reveal key={s.title} delay={(i % 2) * 0.06}>
+                    <HighlightCard item={s} />
+                  </Reveal>
+                ))}
+              </div>
+            )}
+
+            <div className="flex flex-col gap-5">
+              <Reveal>
+                <div className="rounded-[20px] border border-hairline bg-canvas px-6 pt-6">
+                  <h3 className="text-[19px] font-bold tracking-[-0.01em] text-label">Pengumuman</h3>
+                  <AnnouncementList items={announcements} />
+                </div>
+              </Reveal>
+              <Reveal>
+                <div className="rounded-[20px] border border-hairline bg-canvas p-6">
+                  <h3 className="text-[19px] font-bold tracking-[-0.01em] text-label">Agenda</h3>
+                  {upcoming.length > 0 ? (
+                    <ul className="mt-2 divide-y divide-hairline">
+                      {upcoming.map((e) => (
+                        <li key={e.id} className="py-4">
+                          <p className="text-[13px] text-label-3">{formatDateTime(e.startsAt)}</p>
+                          <p className="mt-1 text-[16px] font-semibold leading-snug text-label">{e.title}</p>
+                          <p className="mt-0.5 text-[13px] text-label-2">{e.isOnline ? "Daring" : e.location}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="py-4 text-[15px] text-label-2">Belum ada agenda terjadwal.</p>
+                  )}
+                </div>
+              </Reveal>
+            </div>
+          </div>
         </div>
       </section>
 

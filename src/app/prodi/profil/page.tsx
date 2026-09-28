@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
-import { misi, pimpinan, prodi, sejarah, sorotan, tujuan, visi } from "@/lib/site/prodi";
+import { fasilitas, misi, pimpinan, prodi, sejarah, sorotan, tujuan, visi } from "@/lib/site/prodi";
+import { LocalNav } from "@/components/site/local-nav";
+import { PersonCard } from "@/components/site/person-card";
 import { HighlightCard } from "@/components/site/highlight-card";
 
 export const metadata: Metadata = {
@@ -21,9 +23,22 @@ export default function ProfilPage() {
         description={`${prodi.fullName} — ${prodi.faculty}, ${prodi.university}.`}
       />
 
+      <LocalNav
+        items={[
+          { id: "sejarah", label: "Sejarah" },
+          { id: "visi-misi", label: "Visi & Misi" },
+          { id: "pimpinan", label: "Pimpinan" },
+          { id: "fasilitas", label: "Fasilitas" },
+          { id: "akreditasi", label: "Akreditasi" },
+        ]}
+      />
+
       {/* Sejarah */}
-      <section className="px-4 pb-24 sm:px-6 sm:pb-32">
-        <Reveal className="mx-auto max-w-[692px] space-y-5 text-[19px] leading-[1.58] text-label">
+      <section id="sejarah" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32">
+        <Reveal>
+          <SectionHeading eyebrow="Sejarah" title="Dari rintisan 2003 hingga kini." />
+        </Reveal>
+        <Reveal className="mx-auto mt-10 max-w-[692px] space-y-5 text-[19px] leading-[1.58] text-label">
           {sejarah.map((p, i) => (
             <p key={i}>{p}</p>
           ))}
@@ -31,7 +46,7 @@ export default function ProfilPage() {
       </section>
 
       {/* Visi */}
-      <section className="bg-accent px-4 py-24 text-center text-white sm:px-6 sm:py-32">
+      <section id="visi-misi" className="scroll-mt-28 bg-accent px-4 py-24 text-center text-white sm:px-6 sm:py-32">
         <Reveal className="mx-auto max-w-4xl">
           <p className="font-script text-[40px] leading-none text-sand">Visi</p>
           <p className="mt-4 text-[clamp(1.6rem,1.1rem+1.8vw,2.6rem)] font-semibold leading-[1.2] tracking-[-0.02em] text-balance">
@@ -65,25 +80,38 @@ export default function ProfilPage() {
       </section>
 
       {/* Pimpinan */}
-      <section className="px-4 py-24 sm:px-6 sm:py-32">
+      <section id="pimpinan" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading eyebrow="Pimpinan" title="Orang-orang di balik prodi." />
         </Reveal>
-        <div className="mx-auto mt-14 grid max-w-[1024px] gap-10 sm:grid-cols-3">
+        <div className="mx-auto mt-14 grid max-w-[1024px] gap-5 sm:grid-cols-3">
           {pimpinan.map((p, i) => (
-            <Reveal key={p.name} delay={i * 0.06} className="text-center">
-              <span className="mx-auto grid size-28 place-items-center rounded-full bg-accent-soft text-[32px] font-semibold tracking-[-0.02em] text-accent">
-                {p.initials}
-              </span>
-              <p className="mt-5 text-[19px] font-semibold leading-snug tracking-[-0.01em] text-label">{p.name}</p>
-              <p className="mt-1 text-[15px] text-label-2">{p.role}</p>
+            <Reveal key={p.name} delay={i * 0.06}>
+              <PersonCard name={p.name} initials={p.initials} role={p.role} />
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Fasilitas */}
+      <section id="fasilitas" className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32">
+        <Reveal>
+          <SectionHeading eyebrow="Fasilitas" title="Mendukung belajar, di mana saja." />
+        </Reveal>
+        <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 sm:grid-cols-2">
+          {fasilitas.map((f) => (
+            <Reveal key={f.title}>
+              <div className="h-full rounded-[24px] bg-canvas p-8">
+                <h3 className="text-[21px] font-bold tracking-[-0.01em] text-label">{f.title}</h3>
+                <p className="mt-2 text-[16px] leading-[1.45] text-label-2">{f.description}</p>
+              </div>
             </Reveal>
           ))}
         </div>
       </section>
 
       {/* Akreditasi */}
-      <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
+      <section id="akreditasi" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading
             eyebrow="Akreditasi & Mutu"
@@ -102,7 +130,7 @@ export default function ProfilPage() {
             </div>
           </Reveal>
           <Reveal delay={0.06}>
-            <div className="flex h-full flex-col rounded-[28px] bg-canvas p-8">
+            <div className="flex h-full flex-col rounded-[28px] border border-hairline bg-canvas p-8">
               <p className="text-[14px] font-semibold text-accent">Akreditasi Program Studi</p>
               <p className="mt-auto pt-10 text-[36px] font-semibold leading-none tracking-[-0.03em] text-label">
                 {prodi.prodiAccreditation ?? "Terakreditasi"}

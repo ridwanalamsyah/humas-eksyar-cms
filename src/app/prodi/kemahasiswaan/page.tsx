@@ -3,7 +3,8 @@ import { HighlightCard } from "@/components/site/highlight-card";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
-import { beasiswa, himpunan, kegiatanMahasiswa, prestasi, prodi, sorotan } from "@/lib/site/prodi";
+import { beasiswa, himpunan, kegiatanMahasiswa, kontak, prestasi, prodi, prospekKarir, sorotan } from "@/lib/site/prodi";
+import { LocalNav } from "@/components/site/local-nav";
 import { PrestasiCard } from "@/components/site/prestasi-card";
 
 export const metadata: Metadata = {
@@ -20,8 +21,18 @@ export default function KemahasiswaanPage() {
         description="Berorganisasi, berkompetisi, dan mengabdi — bersama keluarga besar Ekonomi Syariah."
       />
 
+      <LocalNav
+        items={[
+          { id: "hmj", label: "HMJ" },
+          { id: "prestasi", label: "Prestasi" },
+          { id: "kegiatan", label: "Kegiatan" },
+          { id: "beasiswa", label: "Beasiswa" },
+          { id: "alumni", label: "Alumni" },
+        ]}
+      />
+
       {/* Eksphoria */}
-      <section className="px-4 pb-24 sm:px-6 sm:pb-32">
+      <section className="px-4 py-24 sm:px-6 sm:py-32">
         <Reveal className="mx-auto max-w-[1024px]">
           <div className="relative overflow-hidden rounded-[32px] bg-accent px-8 py-16 text-center text-white sm:px-16 sm:py-24">
             <p className="relative font-script text-[36px] leading-none text-amber">Program unggulan HMJ</p>
@@ -37,7 +48,7 @@ export default function KemahasiswaanPage() {
       </section>
 
       {/* HMJ */}
-      <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
+      <section id="hmj" className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading eyebrow={himpunan.cabinet} title={himpunan.name} description={himpunan.description} />
           <p className="mt-6 text-center text-[15px] text-label-2">
@@ -65,7 +76,7 @@ export default function KemahasiswaanPage() {
       </section>
 
       {/* Prestasi */}
-      <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
+      <section id="prestasi" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading eyebrow="Mengucapkan" title="Selamat & Sukses." />
         </Reveal>
@@ -79,7 +90,7 @@ export default function KemahasiswaanPage() {
       </section>
 
       {/* Sorotan */}
-      <section className="px-4 py-24 sm:px-6 sm:py-32">
+      <section id="kegiatan" className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading eyebrow="Sorotan" title="Yang terjadi belakangan ini." />
         </Reveal>
@@ -93,7 +104,7 @@ export default function KemahasiswaanPage() {
       </section>
 
       {/* Beasiswa */}
-      <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
+      <section id="beasiswa" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading
             eyebrow="Beasiswa"
@@ -103,11 +114,39 @@ export default function KemahasiswaanPage() {
         </Reveal>
         <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-3">
           {beasiswa.map((b) => (
-            <li key={b} className="rounded-full bg-canvas px-5 py-2.5 text-[15px] font-medium text-label">
+            <li key={b} className="rounded-full bg-mist px-5 py-2.5 text-[15px] font-medium text-label">
               {b}
             </li>
           ))}
         </ul>
+      </section>
+      {/* Alumni */}
+      <section id="alumni" className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32">
+        <Reveal>
+          <SectionHeading
+            eyebrow="Alumni"
+            title="Berkiprah di banyak sektor."
+            description="Alumni Ekonomi Syariah berkarya di lembaga keuangan syariah, pemerintahan, filantropi, dunia usaha, dan akademik."
+          />
+        </Reveal>
+        <ul className="mx-auto mt-12 flex max-w-3xl flex-wrap justify-center gap-3">
+          {prospekKarir.map((p) => (
+            <li key={p.title} className="rounded-full bg-canvas px-5 py-2.5 text-[15px] font-medium text-label">
+              {p.title}
+            </li>
+          ))}
+        </ul>
+        <p className="mt-10 text-center text-[15px] text-label-2">
+          Alumni? Bagikan kabarmu lewat{" "}
+          <a href={`mailto:${kontak.email}`} className="font-semibold text-accent hover:underline">
+            email
+          </a>{" "}
+          atau{" "}
+          <a href={kontak.instagram} target="_blank" rel="noopener noreferrer" className="font-semibold text-accent hover:underline">
+            {kontak.instagramHandle}
+          </a>
+          .
+        </p>
       </section>
     </>
   );
