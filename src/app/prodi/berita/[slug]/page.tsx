@@ -50,46 +50,54 @@ export default async function BeritaDetailPage({ params }: Props) {
   const related = all.filter((c) => c.id !== item.id).slice(0, 3);
 
   return (
-    <article className="px-5 pb-10 pt-32 sm:pt-40">
-      <div className="mx-auto max-w-3xl">
-        <Link
-          href="/prodi/berita"
-          className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand-600 hover:underline dark:text-brand-300"
-        >
-          <ArrowLeft className="size-4" />
-          Semua berita
-        </Link>
-        <time dateTime={date} className="mt-6 block text-sm text-foreground/55">
-          {formatLongDate(date)}
-        </time>
-        <h1 className="mt-3 font-display text-[length:var(--font-h1)] font-semibold leading-tight tracking-tight text-balance">
-          {item.title}
-        </h1>
+    <article>
+      <header className="site-pattern bg-pine-800">
+        <div className="bg-gradient-to-r from-pine-900 via-pine-900/90 to-pine-800/70">
+          <div className="mx-auto max-w-3xl px-6 py-16">
+            <Link
+              href="/prodi/berita"
+              className="inline-flex items-center gap-1.5 text-[13px] font-semibold uppercase tracking-[0.12em] text-saffron-300 hover:text-paper"
+            >
+              <ArrowLeft className="size-4" />
+              Semua berita
+            </Link>
+            <h1 className="mt-6 font-serif text-[clamp(1.9rem,1.4rem+2vw,3rem)] font-semibold leading-tight text-paper text-balance">
+              {item.title}
+            </h1>
+            <time dateTime={date} className="mt-5 block text-[14px] text-pine-100/75">
+              {formatLongDate(date)}
+            </time>
+          </div>
+        </div>
+      </header>
 
+      <div className="mx-auto max-w-3xl px-6 py-14">
         {cover && (
-          <div className="relative mt-8 aspect-[16/9] overflow-hidden rounded-3xl">
+          <div className="relative mb-10 aspect-[16/9] overflow-hidden">
             <span aria-hidden className="absolute inset-0" style={{ background: cover.averageColor }} />
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={cover.url} alt={cover.alt} className="absolute inset-0 size-full object-cover" />
           </div>
         )}
 
-        <div className="prose-editor mt-8 text-[16px] leading-[1.75]">
+        <div className="site-prose text-[17px] leading-[1.85] text-ink/80">
           <ArticleBody text={text} />
         </div>
 
         {item.hashtags && (
-          <p className="mt-8 text-sm text-brand-600 dark:text-brand-300">{item.hashtags}</p>
+          <p className="mt-10 border-t border-pine-800/15 pt-6 text-[14px] text-pine-700">{item.hashtags}</p>
         )}
       </div>
 
       {related.length > 0 && (
-        <div className="mx-auto mt-20 max-w-6xl">
-          <h2 className="font-display text-2xl font-semibold tracking-tight">Berita lainnya</h2>
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {related.map((n) => (
-              <NewsCard key={n.id} item={n} cover={coverFor(n, media)} />
-            ))}
+        <div className="border-t border-pine-800/10 bg-paper-2 px-6 py-16">
+          <div className="mx-auto max-w-7xl">
+            <h2 className="font-serif text-2xl font-semibold text-pine-800">Berita lainnya</h2>
+            <div className="mt-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((n) => (
+                <NewsCard key={n.id} item={n} cover={coverFor(n, media)} />
+              ))}
+            </div>
           </div>
         </div>
       )}
