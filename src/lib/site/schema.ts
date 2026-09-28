@@ -59,6 +59,17 @@ export const kegiatanSchema = z.object({
 
 export const fasilitasSchema = titledItemSchema.extend({ image });
 
+export const unduhanSchema = z.object({
+  title: text(160),
+  category: text(60),
+  description: text(300).optional(),
+  url: z
+    .string()
+    .trim()
+    .max(2000)
+    .refine((v) => SAFE_IMAGE.test(v), "Tautan dokumen harus https:// atau /"),
+});
+
 export const kurikulumYearSchema = z.object({
   label: text(40),
   semesters: list(
@@ -118,6 +129,7 @@ export const websiteConfigSchema = z.object({
   layananAdministrasi: list(titledItemSchema, 16),
   layananFormUrl: url,
   jalurMasuk: list(titledItemSchema, 8),
+  unduhan: list(unduhanSchema, 100),
   faq: list(z.object({ q: text(300), a: longText(1200) }), 30),
   kontak: z.object({
     address: text(200),
@@ -143,3 +155,4 @@ export type Kegiatan = z.infer<typeof kegiatanSchema>;
 export type TitledItem = z.infer<typeof titledItemSchema>;
 export type KurikulumYear = z.infer<typeof kurikulumYearSchema>;
 export type Fasilitas = z.infer<typeof fasilitasSchema>;
+export type Unduhan = z.infer<typeof unduhanSchema>;

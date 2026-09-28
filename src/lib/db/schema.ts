@@ -279,6 +279,30 @@ export const siteSettings = pgTable("siteSettings", {
   updatedAt: text("updatedAt").notNull(),
 });
 
+/**
+ * Pengajuan layanan mahasiswa dari website prodi (/prodi/layanan).
+ * `code` adalah kode tiket publik untuk cek status.
+ */
+export const serviceRequests = pgTable("serviceRequests", {
+  id: text("id").primaryKey(),
+  code: text("code").notNull().unique(),
+  type: text("type").notNull(),
+  name: text("name").notNull(),
+  nim: text("nim").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone").notNull().default(""),
+  purpose: text("purpose").notNull().default(""),
+  details: text("details").notNull().default(""),
+  attachmentUrl: text("attachmentUrl"),
+  status: text("status").notNull().default("diajukan"),
+  adminNote: text("adminNote").notNull().default(""),
+  resultUrl: text("resultUrl"),
+  handledBy: text("handledBy"),
+  history: jsonb("history").notNull().default(sql`'[]'::jsonb`),
+  createdAt: text("createdAt").notNull(),
+  updatedAt: text("updatedAt").notNull(),
+});
+
 export const holidays = pgTable("holidays", {
   id: text("id").primaryKey(),
   slug: text("slug").notNull().unique(),

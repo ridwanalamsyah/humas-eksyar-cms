@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { KurikulumTabs } from "@/components/site/kurikulum-tabs";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
@@ -130,6 +131,28 @@ export default async function AkademikPage() {
             </li>
           ))}
         </ul>
+      </section>
+
+      {/* Sumber belajar */}
+      <section className="px-4 pb-24 sm:px-6">
+        <div className="mx-auto grid max-w-[1024px] gap-4 sm:grid-cols-2">
+          {[
+            { href: "/prodi/unduhan", t: "Unduhan dokumen", d: "Pedoman akademik, kalender, jadwal kuliah, dan template." },
+            { href: "/prodi/skripsi", t: "Cek judul skripsi", d: "Periksa kemiripan judul sebelum mengajukan proposal." },
+          ].map((c) => (
+            <Link
+              key={c.href}
+              href={c.href}
+              className="group flex items-center justify-between gap-6 rounded-[24px] bg-accent p-8 text-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.5)]"
+            >
+              <span>
+                <span className="block text-[22px] font-extrabold tracking-[-0.02em]">{c.t}</span>
+                <span className="mt-1 block text-[15px] text-white/80">{c.d}</span>
+              </span>
+              <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white/15 text-[20px] transition-transform duration-300 group-hover:translate-x-1">→</span>
+            </Link>
+          ))}
+        </div>
       </section>
 
       {/* Layanan */}

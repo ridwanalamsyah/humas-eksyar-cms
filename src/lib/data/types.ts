@@ -383,3 +383,42 @@ export interface WeeklyDigest {
   totalReach: number;
   topContentId?: ID;
 }
+
+/* ------------------------------------------------------------------ */
+/* Layanan mahasiswa (website prodi)                                   */
+/* ------------------------------------------------------------------ */
+
+export type ServiceRequestStatus = "diajukan" | "diproses" | "selesai" | "ditolak";
+
+export interface ServiceRequestHistory {
+  status: ServiceRequestStatus;
+  at: ISODateTime;
+  note?: string;
+}
+
+/**
+ * Pengajuan layanan akademik/administrasi dari mahasiswa lewat website
+ * prodi (/prodi/layanan). Diproses pengurus dari CMS (/layanan).
+ */
+export interface ServiceRequest {
+  id: ID;
+  /** Kode tiket publik, mis. "ES-7K3F9Q" — dipakai mahasiswa untuk cek status. */
+  code: string;
+  type: string;
+  name: string;
+  nim: string;
+  email: string;
+  phone: string;
+  purpose: string;
+  details: string;
+  attachmentUrl: string | null;
+  status: ServiceRequestStatus;
+  /** Catatan untuk pemohon (tampil di halaman cek status). */
+  adminNote: string;
+  /** Tautan dokumen hasil (mis. surat PDF) yang bisa diunduh pemohon. */
+  resultUrl: string | null;
+  handledBy: ID | null;
+  history: ServiceRequestHistory[];
+  createdAt: ISODateTime;
+  updatedAt: ISODateTime;
+}

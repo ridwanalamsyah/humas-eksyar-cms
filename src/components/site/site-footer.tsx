@@ -39,8 +39,20 @@ export async function SiteFooter() {
               </li>
             ))}
           </Column>
-          <Column title="Layanan Akademik">
-            {layananAkademik.map((l) => (
+          <Column title="Layanan">
+            {[
+              { href: "/prodi/layanan#ajukan", label: "Ajukan layanan" },
+              { href: "/prodi/layanan/status", label: "Cek status layanan" },
+              { href: "/prodi/unduhan", label: "Unduhan dokumen" },
+              { href: "/prodi/skripsi", label: "Cek judul skripsi" },
+            ].map((l) => (
+              <li key={l.href}>
+                <Link href={l.href} className="hover:text-label hover:underline">
+                  {l.label}
+                </Link>
+              </li>
+            ))}
+            {layananAkademik.slice(0, 3).map((l) => (
               <li key={l.href}>
                 <a href={l.href} target="_blank" rel="noopener noreferrer" className="hover:text-label hover:underline">
                   {l.title}

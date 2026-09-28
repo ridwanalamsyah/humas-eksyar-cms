@@ -1121,3 +1121,64 @@ export async function clearContentDraft(contentId: ID): Promise<boolean> {
     .returning({ contentId: schema.contentDrafts.contentId });
   return deleted.length > 0;
 }
+
+/* ------------------------------------------------------------------ */
+/* Layanan mahasiswa (website prodi)                                   */
+/* ------------------------------------------------------------------ */
+
+import type { ServiceRequest, ServiceRequestStatus } from "./types";
+
+export async function createServiceRequest(req: ServiceRequest): Promise<ServiceRequest> {
+  await client().insert(schema.serviceRequests).values(req);
+  return req;
+}
+
+export async function getServiceRequest(id: string): Promise<ServiceRequest | null> {
+  const rows = await client().select().from(schema.serviceRequests).where(eq(schema.serviceRequests.id, id)).limit(1);
+  return rows[0] ? row<ServiceRequest>(rows[0]) : null;
+}
+
+export async function getServiceRequestByCode(code: string): Promise<ServiceRequest | null> {
+  const rows = await client()
+    .select()
+    .from(schema.serviceRequests)
+    .where(eq(schema.serviceRequests.code, code))
+    .limit(1);
+  return rows[0] ? row<ServiceRequest>(rows[0]) : null;
+}
+
+export async function listServiceRequests(opts?: { status?: ServiceRequestStatus }): Promise<ServiceRequest[]> {
+  const rows = await client()
+    .select()
+    .from(schema.serviceRequests)
+    .where(opts?.status ? eq(schema.serviceRequests.status, opts.status) : undefined)
+    .orderBy(desc(schema.serviceRequests.createdAt))
+    .limit(500);
+  return rows.map((r) => row<ServiceRequest>(r));
+}
+
+export async function updateServiceRequest(
+  id: string,
+  patch: Partial<Pick<ServiceRequest, "status" | "adminNote" | "resultUrl" | "handledBy" | "history" | "updatedAt">>,
+): Promise<ServiceRequest | null> {
+  await client().update(schema.serviceRequests).set(patch).where(eq(schema.serviceRequests.id, id));
+  return getServiceRequest(id);
+}
+
+/* ------------------------------------------------------------------ */
+/* Pengaturan generik (siteSettings)                                   */
+/* ------------------------------------------------------------------ */
+
+export async function getSiteSetting(key: string): Promise<unknown> {
+  const rows = await client().select().from(schema.siteSettings).where(eq(schema.siteSettings.key, key)).limit(1);
+  return rows[0]?.value ?? null;
+}
+
+export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
+  const now = new Date().toISOString();
+  await client()
+    .insert(schema.siteSettings)
+    .values({ key, value, updatedAt: now })
+    .onConflictDoUpdate({ target: schema.siteSettings.key, set: { value, updatedAt: now } });
+  return value;
+}

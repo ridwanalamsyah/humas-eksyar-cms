@@ -474,6 +474,7 @@ export const layananAdministrasi = [
   { title: "Rekomendasi Beasiswa", description: "Surat rekomendasi program studi untuk pendaftaran beasiswa." },
   { title: "Izin Penelitian & Observasi", description: "Surat pengantar penelitian skripsi, observasi, dan wawancara." },
   { title: "Konsultasi Akademik", description: "Perwalian, rencana studi, dan bimbingan tugas akhir." },
+  { title: "Pengaduan & Saran", description: "Sampaikan keluhan atau masukan terkait layanan dan perkuliahan." },
 ];
 
 export const layananAkademik = [

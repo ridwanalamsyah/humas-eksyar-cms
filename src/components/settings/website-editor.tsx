@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils";
 /* Spesifikasi field & bagian                                          */
 /* ------------------------------------------------------------------ */
 
-type FieldType = "text" | "textarea" | "url" | "image" | "date" | "number" | "lines" | "paragraphs";
+type FieldType = "text" | "textarea" | "url" | "image" | "file" | "date" | "number" | "lines" | "paragraphs";
 
 interface FieldSpec {
   name: string;
@@ -234,6 +234,26 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
       },
       { key: "kegiatanMahasiswa", title: "Kegiatan mahasiswa", kind: "list", itemTitle: (i) => String(i.title || "Kegiatan baru"), fields: titled, empty: { title: "", description: "" } },
       { key: "beasiswa", title: "Beasiswa", kind: "field", field: { name: "beasiswa", label: "Daftar beasiswa", type: "lines", wide: true, hint: "Satu beasiswa per baris." } },
+    ],
+  },
+  {
+    value: "unduhan",
+    label: "Unduhan",
+    sections: [
+      {
+        key: "unduhan",
+        title: "Dokumen unduhan",
+        hint: "Pedoman akademik, kalender, jadwal kuliah, template surat, panduan skripsi, sertifikat akreditasi, dll.",
+        kind: "list",
+        itemTitle: (i) => String(i.title || "Dokumen baru"),
+        fields: [
+          { name: "title", label: "Judul dokumen", type: "text", wide: true },
+          { name: "category", label: "Kategori", type: "text", placeholder: "Akademik / Skripsi / Akreditasi / Template" },
+          { name: "description", label: "Keterangan (opsional)", type: "text" },
+          { name: "url", label: "File", type: "file", wide: true },
+        ],
+        empty: { title: "", category: "Akademik", description: "", url: "" },
+      },
     ],
   },
   {
@@ -449,6 +469,8 @@ function FieldInput({ spec, value, onChange }: { spec: FieldSpec; value: unknown
       break;
     case "image":
       return <ImageInput label={spec.label} hint={spec.hint} value={(value as string | null) ?? ""} onChange={(v) => onChange(v || null)} />;
+    case "file":
+      return <FileInput label={spec.label} value={String(value ?? "")} onChange={onChange} />;
     default:
       control = (
         <input
@@ -509,6 +531,46 @@ function ImageInput({ label, hint, value, onChange }: { label: string; hint?: st
           <button type="button" aria-label="Hapus foto" onClick={() => onChange("")} className="text-foreground/45 hover:text-red-500">
             <Trash2 className="size-4" strokeWidth={1.75} />
           </button>
+        )}
+      </div>
+    </Field>
+  );
+}
+
+function FileInput({ label, value, onChange }: { label: string; value: string; onChange: (v: string) => void }) {
+  const [uploading, setUploading] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  async function upload(file: File) {
+    setUploading(true);
+    try {
+      const form = new FormData();
+      form.append("file", file);
+      const res = await fetch("/api/upload/file", { method: "POST", body: form });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(j.error ?? "Upload gagal");
+      onChange(j.url);
+      toast.success("File terunggah. Jangan lupa klik Simpan.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Upload gagal");
+    } finally {
+      setUploading(false);
+      if (fileRef.current) fileRef.current.value = "";
+    }
+  }
+
+  return (
+    <Field label={label} hint="Unggah PDF/DOCX/XLSX (maks 10MB) atau tempel tautan https:// (mis. Google Drive).">
+      <div className="flex items-center gap-3">
+        <input value={value} onChange={(e) => onChange(e.target.value)} placeholder="https://…" className={cn(inputCls, "min-w-0 flex-1")} />
+        <input ref={fileRef} type="file" hidden accept=".pdf,.docx,.xlsx" onChange={(e) => e.target.files?.[0] && upload(e.target.files[0])} />
+        <Button type="button" variant="secondary" size="sm" disabled={uploading} onClick={() => fileRef.current?.click()}>
+          {uploading ? "Mengunggah…" : "Unggah"}
+        </Button>
+        {value && (
+          <a href={value} target="_blank" rel="noopener noreferrer" aria-label="Buka file" className="text-foreground/55 hover:text-foreground">
+            <ExternalLink className="size-4" strokeWidth={1.75} />
+          </a>
         )}
       </div>
     </Field>

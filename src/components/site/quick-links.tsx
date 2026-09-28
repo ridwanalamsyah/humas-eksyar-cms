@@ -1,31 +1,41 @@
-import { BookOpen, GraduationCap, Library, MonitorPlay } from "lucide-react";
-import { layananAkademik } from "@/lib/site/prodi";
+import Link from "next/link";
+import { FileSearch, FolderDown, GraduationCap, ScanSearch, Send, UserPlus } from "lucide-react";
 
-const ICONS = [GraduationCap, MonitorPlay, Library, BookOpen];
-
-/** Baris tautan cepat ke sistem kampus (seperti quicklink di web fakultas). */
+/** Tautan cepat ke layanan prodi & sistem kampus (seperti quicklink web fakultas). */
 export function QuickLinks({ pmbUrl }: { pmbUrl: string }) {
   const links = [
-    ...layananAkademik.slice(0, 3).map((l) => ({ href: l.href, label: l.title.replace("Portal Akademik ", "") })),
-    { href: pmbUrl, label: "PMB UIN SGD" },
+    { href: "/prodi/layanan#ajukan", label: "Ajukan layanan", Icon: Send },
+    { href: "/prodi/layanan/status", label: "Cek status", Icon: FileSearch },
+    { href: "/prodi/unduhan", label: "Unduhan", Icon: FolderDown },
+    { href: "/prodi/skripsi", label: "Cek judul skripsi", Icon: ScanSearch },
+    { href: "https://simak.uinsgd.ac.id/beranda/", label: "SALAM", Icon: GraduationCap, external: true },
+    { href: pmbUrl, label: "PMB UIN SGD", Icon: UserPlus, external: true },
   ];
+  const cls =
+    "group flex items-center gap-3 rounded-[18px] border border-hairline bg-canvas px-4 py-3.5 transition duration-300 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[0_16px_32px_-20px_rgba(22,58,69,0.4)]";
+
   return (
-    <ul className="mx-auto grid max-w-[1024px] grid-cols-2 gap-3 md:grid-cols-4">
-      {links.map((l, i) => {
-        const Icon = ICONS[i];
+    <ul className="mx-auto grid max-w-[1024px] grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-6">
+      {links.map(({ href, label, Icon, external }) => {
+        const inner = (
+          <>
+            <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+              <Icon className="size-[18px]" strokeWidth={1.75} />
+            </span>
+            <span className="text-[14px] font-semibold leading-tight text-label">{label}</span>
+          </>
+        );
         return (
-          <li key={l.href}>
-            <a
-              href={l.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-center gap-3 rounded-[18px] border border-hairline bg-canvas px-5 py-4 transition duration-300 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[0_16px_32px_-20px_rgba(22,58,69,0.4)]"
-            >
-              <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
-                <Icon className="size-[18px]" strokeWidth={1.75} />
-              </span>
-              <span className="text-[15px] font-semibold text-label">{l.label}</span>
-            </a>
+          <li key={label}>
+            {external ? (
+              <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>
+                {inner}
+              </a>
+            ) : (
+              <Link href={href} className={cls}>
+                {inner}
+              </Link>
+            )}
           </li>
         );
       })}

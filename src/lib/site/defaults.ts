@@ -70,6 +70,14 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   layananAdministrasi,
   layananFormUrl: "",
   jalurMasuk,
+  unduhan: [
+    {
+      title: "Sertifikat Akreditasi UIN Sunan Gunung Djati Bandung 2024–2029",
+      category: "Akreditasi",
+      description: "Akreditasi institusi peringkat Unggul dari BAN-PT.",
+      url: "https://ppg.uinsgd.ac.id/wp-content/uploads/2024/11/Sertifikat-Akreditasi-UIN-Bandung-2024-2029.pdf",
+    },
+  ],
   faq,
   kontak: {
     address: kontak.address,

@@ -726,3 +726,53 @@ export async function saveContentDraft(input: {
 export async function clearContentDraft(contentId: ID): Promise<boolean> {
   return draftsStore.delete(contentId);
 }
+
+/* ------------------------------------------------------------------ */
+/* Layanan mahasiswa & pengaturan generik (in-memory, per proses)       */
+/* ------------------------------------------------------------------ */
+
+import type { ServiceRequest, ServiceRequestStatus } from "./types";
+
+// globalThis: dibagi antar-bundel route handler & halaman dalam satu proses.
+const store = globalThis as {
+  __serviceRequests?: ServiceRequest[];
+  __siteSettings?: Record<string, unknown>;
+};
+const requests = () => (store.__serviceRequests ??= []);
+const settings = () => (store.__siteSettings ??= {});
+
+export async function createServiceRequest(req: ServiceRequest): Promise<ServiceRequest> {
+  requests().unshift(req);
+  return req;
+}
+
+export async function getServiceRequest(id: string): Promise<ServiceRequest | null> {
+  return requests().find((r) => r.id === id) ?? null;
+}
+
+export async function getServiceRequestByCode(code: string): Promise<ServiceRequest | null> {
+  return requests().find((r) => r.code === code) ?? null;
+}
+
+export async function listServiceRequests(opts?: { status?: ServiceRequestStatus }): Promise<ServiceRequest[]> {
+  return requests().filter((r) => !opts?.status || r.status === opts.status);
+}
+
+export async function updateServiceRequest(
+  id: string,
+  patch: Partial<Pick<ServiceRequest, "status" | "adminNote" | "resultUrl" | "handledBy" | "history" | "updatedAt">>,
+): Promise<ServiceRequest | null> {
+  const r = requests().find((x) => x.id === id);
+  if (!r) return null;
+  Object.assign(r, patch);
+  return r;
+}
+
+export async function getSiteSetting(key: string): Promise<unknown> {
+  return settings()[key] ?? null;
+}
+
+export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
+  settings()[key] = value;
+  return value;
+}

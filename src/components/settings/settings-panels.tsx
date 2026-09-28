@@ -75,10 +75,22 @@ export function SettingsPanels({ member }: Props) {
         >
           <div className="flex w-full flex-col gap-2">
             <AdminLink
+              href="/layanan"
+              icon={<ShieldCheck className="size-4" strokeWidth={1.75} />}
+              title="Layanan Mahasiswa"
+              desc="Proses pengajuan surat & layanan dari website prodi."
+            />
+            <AdminLink
               href="/settings/website"
               icon={<Globe className="size-4" strokeWidth={1.75} />}
               title="Website Prodi"
               desc="Konten website publik: profil, dosen, prestasi, kegiatan, layanan."
+            />
+            <AdminLink
+              href="/settings/skripsi"
+              icon={<Tag className="size-4" strokeWidth={1.75} />}
+              title="Direktori Skripsi"
+              desc="Data untuk fitur Cek Judul di website prodi."
             />
             <AdminLink
               href="/settings/branding"
