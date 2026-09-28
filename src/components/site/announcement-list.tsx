@@ -3,7 +3,13 @@ import type { ContentItem } from "@/lib/data/types";
 import { formatLongDate } from "@/lib/format/dates";
 
 /** Daftar pengumuman teks (tanpa gambar), terbaru di atas. */
-export function AnnouncementList({ items, empty = "Belum ada pengumuman." }: { items: ContentItem[]; empty?: string }) {
+export function AnnouncementList({
+  items,
+  empty = "Belum ada pengumuman.",
+}: {
+  items: ContentItem[];
+  empty?: string;
+}) {
   if (items.length === 0) {
     return <p className="py-6 text-[15px] text-label-2">{empty}</p>;
   }
@@ -17,7 +23,9 @@ export function AnnouncementList({ items, empty = "Belum ada pengumuman." }: { i
               <time dateTime={date} className="text-[13px] text-label-3">
                 {formatLongDate(date)}
               </time>
-              <p className="mt-1 text-[16px] font-semibold leading-snug text-label group-hover:text-accent">{a.title}</p>
+              <p className="mt-1 text-[16px] font-semibold leading-snug text-label group-hover:text-accent">
+                {a.title}
+              </p>
             </Link>
           </li>
         );

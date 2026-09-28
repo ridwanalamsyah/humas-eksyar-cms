@@ -11,7 +11,10 @@ import { websiteConfigSchema, type WebsiteConfig } from "./schema";
 export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
   const result = { ...defaultWebsiteConfig } as Record<string, unknown>;
   if (!stored || typeof stored !== "object") return defaultWebsiteConfig;
-  const shape = websiteConfigSchema.shape as Record<string, { safeParse: (v: unknown) => { success: boolean; data?: unknown } }>;
+  const shape = websiteConfigSchema.shape as Record<
+    string,
+    { safeParse: (v: unknown) => { success: boolean; data?: unknown } }
+  >;
   for (const [key, schema] of Object.entries(shape)) {
     const value = (stored as Record<string, unknown>)[key];
     if (value === undefined) continue;

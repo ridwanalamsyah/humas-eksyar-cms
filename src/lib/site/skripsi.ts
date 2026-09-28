@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { getSiteSetting } from "@/lib/data/provider";
+import { defaultSkripsi } from "./skripsi-data";
 
 export const skripsiItemSchema = z.object({
   judul: z.string().trim().min(5).max(400),
@@ -9,18 +10,24 @@ export const skripsiItemSchema = z.object({
 export const skripsiListSchema = z.array(skripsiItemSchema).max(10000);
 export type SkripsiItem = z.infer<typeof skripsiItemSchema>;
 
-export const SKRIPSI_KEY = "skripsi";
+export { SKRIPSI_KEY } from "./skripsi-data";
+import { SKRIPSI_KEY } from "./skripsi-data";
 
 export async function getSkripsi(): Promise<SkripsiItem[]> {
-  const parsed = skripsiListSchema.safeParse(await getSiteSetting(SKRIPSI_KEY).catch(() => null));
-  return parsed.success ? parsed.data : [];
+  const stored = await getSiteSetting(SKRIPSI_KEY).catch(() => null);
+  if (stored == null) return defaultSkripsi;
+  const parsed = skripsiListSchema.safeParse(stored);
+  return parsed.success ? parsed.data : defaultSkripsi;
 }
 
 /**
  * Impor massal: satu judul per baris, kolom dipisah tab (salin dari Excel),
  * `|` atau `;` dengan urutan: Tahun, Judul, Nama.
  */
-export function parseBulk(text: string): { items: SkripsiItem[]; errors: string[] } {
+export function parseBulk(text: string): {
+  items: SkripsiItem[];
+  errors: string[];
+} {
   const items: SkripsiItem[] = [];
   const errors: string[] = [];
   text
@@ -29,17 +36,25 @@ export function parseBulk(text: string): { items: SkripsiItem[]; errors: string[
     .filter(Boolean)
     .forEach((line, i) => {
       const [tahun, judul, nama = ""] = line.split(/\t|\s*\|\s*|\s*;\s*/);
-      const parsed = skripsiItemSchema.safeParse({ tahun: Number(tahun), judul, nama });
+      const parsed = skripsiItemSchema.safeParse({
+        tahun: Number(tahun),
+        judul,
+        nama,
+      });
       if (parsed.success) items.push(parsed.data);
-      else errors.push(`Baris ${i + 1}: format "Tahun | Judul | Nama" tidak sesuai`);
+      else
+        errors.push(
+          `Baris ${i + 1}: format "Tahun | Judul | Nama" tidak sesuai`,
+        );
     });
   return { items, errors };
 }
 
 /** Kata umum di judul skripsi yang tidak membedakan topik. */
 const STOPWORDS = new Set(
-  "dan di ke dari yang pada terhadap dalam dengan untuk atau serta oleh sebagai studi kasus analisis pengaruh peran implementasi tinjauan strategi penerapan hubungan faktor faktor tentang melalui kota kabupaten bandung pt tbk tahun periode perspektif ekonomi islam syariah"
-    .split(" "),
+  "dan di ke dari yang pada terhadap dalam dengan untuk atau serta oleh sebagai studi kasus analisis pengaruh peran implementasi tinjauan strategi penerapan hubungan faktor faktor tentang melalui kota kabupaten bandung pt tbk tahun periode perspektif ekonomi islam syariah".split(
+    " ",
+  ),
 );
 
 export function tokens(s: string): Set<string> {
@@ -68,7 +83,11 @@ export function searchSkripsi(list: SkripsiItem[], q: string, limit = 30) {
   return list
     .map((item) => {
       let score = similarity(qt, tokens(item.judul));
-      if (item.judul.toLowerCase().includes(needle) || item.nama.toLowerCase().includes(needle)) score = Math.max(score, 0.5);
+      if (
+        item.judul.toLowerCase().includes(needle) ||
+        item.nama.toLowerCase().includes(needle)
+      )
+        score = Math.max(score, 0.5);
       return { item, score };
     })
     .filter((r) => r.score >= 0.15)

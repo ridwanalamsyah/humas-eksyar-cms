@@ -7,8 +7,13 @@ export default function ProdiNotFound() {
         <h1 className="text-[clamp(2.5rem,2rem+2vw,3.5rem)] font-semibold tracking-[-0.03em] text-label">
           Halaman tidak ditemukan.
         </h1>
-        <p className="mt-3 text-[19px] text-label-2">Mungkin sudah dipindahkan atau alamatnya salah.</p>
-        <Link href="/prodi" className="mt-6 inline-block text-[17px] text-accent hover:underline">
+        <p className="mt-3 text-[19px] text-label-2">
+          Mungkin sudah dipindahkan atau alamatnya salah.
+        </p>
+        <Link
+          href="/prodi"
+          className="mt-6 inline-block text-[17px] text-accent hover:underline"
+        >
           Kembali ke beranda ›
         </Link>
       </div>

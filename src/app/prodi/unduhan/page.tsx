@@ -13,7 +13,11 @@ export default async function UnduhanPage() {
   const { unduhan } = await getSite();
   return (
     <>
-      <PageHeader crumb="Unduhan" title="Dokumen resmi prodi." description="Pedoman, kalender akademik, jadwal kuliah, template, dan sertifikat — semua di satu tempat." />
+      <PageHeader
+        crumb="Unduhan"
+        title="Unduhan dokumen"
+        description="Pedoman akademik, kalender akademik, jadwal kuliah, template surat, dan sertifikat akreditasi."
+      />
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
         <div className="mx-auto max-w-[1024px]">
           <UnduhanList items={unduhan} />

@@ -20,20 +20,29 @@ export async function SiteFooter() {
           <div className="flex items-center gap-3">
             <ProdiLogo size={48} />
             <div>
-              <p className="text-[15px] font-bold text-label">{prodi.fullName}</p>
+              <p className="text-[15px] font-bold text-label">
+                {prodi.fullName}
+              </p>
               <p>
                 {prodi.faculty} · {prodi.university}
               </p>
             </div>
           </div>
-          {identity.tagline && <p className="text-[15px] font-semibold text-accent">{identity.tagline}</p>}
+          {identity.tagline && (
+            <p className="text-[15px] font-semibold text-accent">
+              {identity.tagline}
+            </p>
+          )}
         </div>
 
         <div className="grid grid-cols-2 gap-8 py-8 md:grid-cols-4">
           <Column title="Jelajahi">
             {navLinks.map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="hover:text-label hover:underline">
+                <Link
+                  href={l.href}
+                  className="hover:text-label hover:underline"
+                >
                   {l.label}
                 </Link>
               </li>
@@ -46,14 +55,22 @@ export async function SiteFooter() {
               { href: "/prodi/skripsi", label: "Cek judul skripsi" },
             ].map((l) => (
               <li key={l.href}>
-                <Link href={l.href} className="hover:text-label hover:underline">
+                <Link
+                  href={l.href}
+                  className="hover:text-label hover:underline"
+                >
                   {l.label}
                 </Link>
               </li>
             ))}
             {layananAkademik.slice(0, 3).map((l) => (
               <li key={l.href}>
-                <a href={l.href} target="_blank" rel="noopener noreferrer" className="hover:text-label hover:underline">
+                <a
+                  href={l.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-label hover:underline"
+                >
                   {l.title}
                 </a>
               </li>
@@ -62,7 +79,12 @@ export async function SiteFooter() {
           <Column title="Ikuti Kami">
             {sosial.map((s) => (
               <li key={s.href}>
-                <a href={s.href} target="_blank" rel="noopener noreferrer" className="hover:text-label hover:underline">
+                <a
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-label hover:underline"
+                >
                   {s.label}
                 </a>
               </li>
@@ -72,7 +94,10 @@ export async function SiteFooter() {
             <li>{kontak.address}</li>
             <li>{kontak.street}</li>
             <li>
-              <a href={`mailto:${kontak.email}`} className="hover:text-label hover:underline">
+              <a
+                href={`mailto:${kontak.email}`}
+                className="hover:text-label hover:underline"
+              >
                 {kontak.email}
               </a>
             </li>
@@ -80,7 +105,8 @@ export async function SiteFooter() {
         </div>
 
         <p className="border-t border-hairline py-4">
-          Hak Cipta © {year} {prodi.fullName} {prodi.universityShort}. {prodi.paradigm}.
+          Hak Cipta © {year} {prodi.fullName} {prodi.universityShort}.{" "}
+          {prodi.paradigm}.
         </p>
       </div>
 
@@ -94,7 +120,12 @@ export async function SiteFooter() {
           </li>
           {kontak.instagram && (
             <li>
-              <a href={kontak.instagram} target="_blank" rel="noopener noreferrer" className="hover:underline">
+              <a
+                href={kontak.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
                 {kontak.instagramHandle}
               </a>
             </li>
@@ -102,7 +133,12 @@ export async function SiteFooter() {
           {kontak.facebookName && <li>{kontak.facebookName}</li>}
           {kontak.website && (
             <li>
-              <a href={kontak.website} target="_blank" rel="noopener noreferrer" className="hover:underline">
+              <a
+                href={kontak.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
                 {kontak.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
               </a>
             </li>
@@ -113,7 +149,13 @@ export async function SiteFooter() {
   );
 }
 
-function Column({ title, children }: { title: string; children: React.ReactNode }) {
+function Column({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
     <div>
       <p className="font-semibold text-label">{title}</p>

@@ -16,6 +16,7 @@ import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "../lib/db/schema";
 import { defaultWebsiteConfig } from "../lib/site/defaults";
 import { websiteConfigSchema } from "../lib/site/schema";
+import { SKRIPSI_KEY, defaultSkripsi } from "../lib/site/skripsi-data";
 
 async function main() {
   const url = process.env.DATABASE_URL;
@@ -38,12 +39,35 @@ async function main() {
     await db
       .insert(schema.siteSettings)
       .values(row)
-      .onConflictDoUpdate({ target: schema.siteSettings.key, set: { value: parsed.data, updatedAt: now } });
+      .onConflictDoUpdate({
+        target: schema.siteSettings.key,
+        set: { value: parsed.data, updatedAt: now },
+      });
     console.log("✓ Konten website ditimpa dengan data awal.");
   } else {
-    const res = await db.insert(schema.siteSettings).values(row).onConflictDoNothing().returning();
-    console.log(res.length ? "✓ Konten website awal ditambahkan." : "• Konten website sudah ada — dilewati (pakai --force untuk menimpa).");
+    const res = await db
+      .insert(schema.siteSettings)
+      .values(row)
+      .onConflictDoNothing()
+      .returning();
+    console.log(
+      res.length
+        ? "✓ Konten website awal ditambahkan."
+        : "• Konten website sudah ada — dilewati (pakai --force untuk menimpa).",
+    );
   }
+
+  // Direktori skripsi: contoh judul dari Digilib, hanya jika belum ada.
+  const sk = await db
+    .insert(schema.siteSettings)
+    .values({ key: SKRIPSI_KEY, value: defaultSkripsi, updatedAt: now })
+    .onConflictDoNothing()
+    .returning();
+  console.log(
+    sk.length
+      ? "✓ Direktori skripsi awal ditambahkan."
+      : "• Direktori skripsi sudah ada — dilewati.",
+  );
 }
 
 main().catch((err) => {

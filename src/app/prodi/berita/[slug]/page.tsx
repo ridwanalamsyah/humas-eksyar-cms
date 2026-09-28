@@ -39,7 +39,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BeritaDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [item, all, media] = await Promise.all([findPublishedNews(slug), listPublishedNews(), getMediaMap()]);
+  const [item, all, media] = await Promise.all([
+    findPublishedNews(slug),
+    listPublishedNews(),
+    getMediaMap(),
+  ]);
   if (!item) notFound();
 
   const cover = coverFor(item, media);
@@ -58,7 +62,10 @@ export default async function BeritaDetailPage({ params }: Props) {
             <span className="mx-2 text-hairline">|</span>
             {rubricLabel(item.rubric)}
           </p>
-          <time dateTime={date} className="mt-4 block text-[14px] font-semibold text-label-2">
+          <time
+            dateTime={date}
+            className="mt-4 block text-[14px] font-semibold text-label-2"
+          >
             {formatLongDate(date)}
           </time>
           <h1 className="mt-2 text-[clamp(2rem,1.5rem+2.2vw,3rem)] font-bold leading-[1.1] tracking-[-0.025em] text-label text-balance">
@@ -72,12 +79,22 @@ export default async function BeritaDetailPage({ params }: Props) {
         {cover && (
           <figure className="mx-auto mt-10 max-w-[980px]">
             <div className="relative aspect-[16/9] overflow-hidden rounded-[20px] bg-mist">
-              <span aria-hidden className="absolute inset-0" style={{ background: cover.averageColor }} />
+              <span
+                aria-hidden
+                className="absolute inset-0"
+                style={{ background: cover.averageColor }}
+              />
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={cover.url} alt={cover.alt} className="absolute inset-0 size-full object-cover" />
+              <img
+                src={cover.url}
+                alt={cover.alt}
+                className="absolute inset-0 size-full object-cover"
+              />
             </div>
             {cover.alt && (
-              <figcaption className="mx-auto mt-3 max-w-[692px] text-[14px] text-label-2">{cover.alt}</figcaption>
+              <figcaption className="mx-auto mt-3 max-w-[692px] text-[14px] text-label-2">
+                {cover.alt}
+              </figcaption>
             )}
           </figure>
         )}
@@ -87,7 +104,9 @@ export default async function BeritaDetailPage({ params }: Props) {
         </div>
 
         <footer className="mx-auto mt-12 max-w-[692px] border-t border-hairline pt-6">
-          {item.hashtags && <p className="text-[14px] text-label-2">{item.hashtags}</p>}
+          {item.hashtags && (
+            <p className="text-[14px] text-label-2">{item.hashtags}</p>
+          )}
           <div className="mt-4">
             <ShareBar title={item.title} />
           </div>
@@ -97,7 +116,9 @@ export default async function BeritaDetailPage({ params }: Props) {
       {related.length > 0 && (
         <section className="bg-mist px-4 py-20 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
-            <h2 className="text-[28px] font-semibold tracking-[-0.02em] text-label">Berita lainnya</h2>
+            <h2 className="text-[28px] font-semibold tracking-[-0.02em] text-label">
+              Berita lainnya
+            </h2>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {related.map((n) => (
                 <NewsCard key={n.id} item={n} cover={coverFor(n, media)} />

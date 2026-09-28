@@ -1,28 +1,42 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Download, FileSpreadsheet, FileText, Link2, Search } from "lucide-react";
+import {
+  Download,
+  FileSpreadsheet,
+  FileText,
+  Link2,
+  Search,
+} from "lucide-react";
 import type { Unduhan } from "@/lib/site/schema";
 import { cn } from "@/lib/utils";
 
 function kindOf(url: string) {
   const path = url.split("?")[0].toLowerCase();
   if (path.endsWith(".pdf")) return { label: "PDF", Icon: FileText };
-  if (path.endsWith(".docx") || path.endsWith(".doc")) return { label: "DOCX", Icon: FileText };
-  if (path.endsWith(".xlsx") || path.endsWith(".xls")) return { label: "XLSX", Icon: FileSpreadsheet };
+  if (path.endsWith(".docx") || path.endsWith(".doc"))
+    return { label: "DOCX", Icon: FileText };
+  if (path.endsWith(".xlsx") || path.endsWith(".xls"))
+    return { label: "XLSX", Icon: FileSpreadsheet };
   return { label: "Tautan", Icon: Link2 };
 }
 
 /** Daftar dokumen dengan pencarian & filter kategori. */
 export function UnduhanList({ items }: { items: Unduhan[] }) {
-  const categories = useMemo(() => ["Semua", ...Array.from(new Set(items.map((i) => i.category)))], [items]);
+  const categories = useMemo(
+    () => ["Semua", ...Array.from(new Set(items.map((i) => i.category)))],
+    [items],
+  );
   const [cat, setCat] = useState("Semua");
   const [q, setQ] = useState("");
 
   const visible = items.filter(
     (i) =>
       (cat === "Semua" || i.category === cat) &&
-      (!q.trim() || `${i.title} ${i.description ?? ""}`.toLowerCase().includes(q.trim().toLowerCase())),
+      (!q.trim() ||
+        `${i.title} ${i.description ?? ""}`
+          .toLowerCase()
+          .includes(q.trim().toLowerCase())),
   );
 
   return (
@@ -37,7 +51,9 @@ export function UnduhanList({ items }: { items: Unduhan[] }) {
               aria-pressed={cat === c}
               className={cn(
                 "rounded-full px-4 py-2 text-[14px] font-semibold transition-colors",
-                cat === c ? "bg-accent text-white" : "bg-mist text-label-2 hover:text-label",
+                cat === c
+                  ? "bg-accent text-white"
+                  : "bg-mist text-label-2 hover:text-label",
               )}
             >
               {c}
@@ -56,7 +72,9 @@ export function UnduhanList({ items }: { items: Unduhan[] }) {
       </div>
 
       {visible.length === 0 ? (
-        <p className="mt-8 rounded-[24px] bg-mist p-10 text-center text-[16px] text-label-2">Belum ada dokumen di kategori ini.</p>
+        <p className="mt-8 rounded-[24px] bg-mist p-10 text-center text-[16px] text-label-2">
+          Belum ada dokumen di kategori ini.
+        </p>
       ) : (
         <ul className="mt-8 grid gap-3">
           {visible.map((d, i) => {
@@ -73,7 +91,9 @@ export function UnduhanList({ items }: { items: Unduhan[] }) {
                     <Icon className="size-6" strokeWidth={1.75} />
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[16px] font-bold leading-snug text-label">{d.title}</span>
+                    <span className="block text-[16px] font-bold leading-snug text-label">
+                      {d.title}
+                    </span>
                     <span className="mt-0.5 block truncate text-[14px] text-label-2">
                       {d.category} · {label}
                       {d.description ? ` · ${d.description}` : ""}

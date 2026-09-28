@@ -17,7 +17,7 @@ export default async function BeasiswaPage() {
     <>
       <PageHeader
         crumb="Beasiswa"
-        title="Biaya bukan penghalang."
+        title="Beasiswa"
         description="Beasiswa pemerintah, lembaga zakat, perbankan, dan kampus yang bisa diikuti mahasiswa Ekonomi Syariah."
       />
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
@@ -36,8 +36,12 @@ export default async function BeasiswaPage() {
             className="group flex items-center justify-between gap-4 rounded-[24px] bg-accent p-7 text-white transition duration-300 hover:-translate-y-1"
           >
             <span>
-              <span className="block text-[20px] font-bold">Portal Beasiswa UIN SGD</span>
-              <span className="mt-1 block text-[15px] text-white/80">Pendaftaran resmi — masuk dengan akun SUPERAPPS mahasiswa.</span>
+              <span className="block text-[20px] font-bold">
+                Portal Beasiswa UIN SGD
+              </span>
+              <span className="mt-1 block text-[15px] text-white/80">
+                Pendaftaran resmi, masuk dengan akun SUPERAPPS mahasiswa.
+              </span>
             </span>
             <ArrowUpRight className="size-6 shrink-0 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
           </a>

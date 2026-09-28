@@ -38,12 +38,23 @@ export function SiteNavbar({ pmbUrl }: { pmbUrl: string }) {
           open ? "bg-canvas" : "bg-canvas/80",
         )}
       >
-        <nav aria-label="Navigasi utama" className="mx-auto flex h-14 max-w-[1024px] items-center justify-between px-4 sm:px-6">
-          <Link href="/prodi" className="flex items-center gap-2" aria-label={`${prodi.fullName} — beranda`}>
+        <nav
+          aria-label="Navigasi utama"
+          className="mx-auto flex h-14 max-w-[1024px] items-center justify-between px-4 sm:px-6"
+        >
+          <Link
+            href="/prodi"
+            className="flex items-center gap-2"
+            aria-label={`${prodi.fullName} — beranda`}
+          >
             <ProdiLogo size={30} priority />
             <span className="leading-none">
-              <span className="block text-[14px] font-bold tracking-[-0.01em] text-label">Ekonomi Syariah</span>
-              <span className="block pt-0.5 text-[10.5px] font-medium text-label-2">UIN SGD Bandung</span>
+              <span className="block text-[14px] font-bold tracking-[-0.01em] text-label">
+                Ekonomi Syariah
+              </span>
+              <span className="block pt-0.5 text-[10.5px] font-medium text-label-2">
+                UIN SGD Bandung
+              </span>
             </span>
           </Link>
 
@@ -55,7 +66,9 @@ export function SiteNavbar({ pmbUrl }: { pmbUrl: string }) {
                   aria-current={isActive(pathname, l.href) ? "page" : undefined}
                   className={cn(
                     "text-[13px] font-medium transition-colors",
-                    isActive(pathname, l.href) ? "text-label" : "text-label/70 hover:text-label",
+                    isActive(pathname, l.href)
+                      ? "text-label"
+                      : "text-label/70 hover:text-label",
                   )}
                 >
                   {l.label}
@@ -116,7 +129,10 @@ export function SiteNavbar({ pmbUrl }: { pmbUrl: string }) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.03 * i, duration: 0.25 }}
                 >
-                  <Link href={l.href} className="block py-2.5 text-[28px] font-semibold tracking-[-0.02em] text-label">
+                  <Link
+                    href={l.href}
+                    className="block py-2.5 text-[28px] font-semibold tracking-[-0.02em] text-label"
+                  >
                     {l.label}
                   </Link>
                 </motion.li>

@@ -475,6 +475,30 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     ],
   },
   {
+    value: "mitra",
+    label: "Mitra",
+    sections: [
+      {
+        key: "mitra",
+        title: "Mitra kerja sama",
+        hint: "Tampil di beranda dan halaman Profil. Cantumkan hanya kerja sama yang sudah resmi.",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Mitra baru"),
+        fields: [
+          { name: "name", label: "Nama lembaga", type: "text" },
+          { name: "url", label: "Situs web", type: "url" },
+          {
+            name: "description",
+            label: "Bentuk kerja sama",
+            type: "textarea",
+            wide: true,
+          },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+    ],
+  },
+  {
     value: "unduhan",
     label: "Unduhan",
     sections: [

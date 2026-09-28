@@ -13,7 +13,11 @@ export function KurikulumTabs({ years }: { years: KurikulumYear[] }) {
   return (
     <div>
       <div className="flex justify-center">
-        <div role="tablist" aria-label="Tahun kurikulum" className="inline-flex rounded-full bg-[#e8e8ed] p-1">
+        <div
+          role="tablist"
+          aria-label="Tahun kurikulum"
+          className="inline-flex rounded-full bg-[#e8e8ed] p-1"
+        >
           {years.map((y, i) => (
             <button
               key={y.label}
@@ -32,7 +36,9 @@ export function KurikulumTabs({ years }: { years: KurikulumYear[] }) {
                   transition={{ type: "spring", stiffness: 500, damping: 38 }}
                 />
               )}
-              <span className={cn("relative", i !== active && "text-label-2")}>{y.label}</span>
+              <span className={cn("relative", i !== active && "text-label-2")}>
+                {y.label}
+              </span>
             </button>
           ))}
         </div>
@@ -46,10 +52,15 @@ export function KurikulumTabs({ years }: { years: KurikulumYear[] }) {
       >
         {year.semesters.map((s) => (
           <div key={s.name} className="rounded-[28px] bg-canvas p-8">
-            <p className="text-[21px] font-semibold tracking-[-0.01em] text-label">{s.name}</p>
+            <p className="text-[21px] font-semibold tracking-[-0.01em] text-label">
+              {s.name}
+            </p>
             <ul className="mt-4">
               {s.courses.map((c, i) => (
-                <li key={`${c}-${i}`} className="border-t border-black/[0.06] py-3 text-[16px] text-label/85 first:border-0">
+                <li
+                  key={`${c}-${i}`}
+                  className="border-t border-black/[0.06] py-3 text-[16px] text-label/85 first:border-0"
+                >
                   {c}
                 </li>
               ))}

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/site/page-header";
-import { PersonCard } from "@/components/site/person-card";
+import { DosenDirectory } from "@/components/site/dosen-directory";
 import { Reveal } from "@/components/site/reveal";
 import { getSite } from "@/lib/site/get-site";
 import { prodi } from "@/lib/site/prodi";
@@ -17,24 +17,23 @@ export default async function DosenPage() {
     <>
       <PageHeader
         crumb="Dosen"
-        title="Pengajar yang juga peneliti."
+        title="Dosen"
         description="Dosen Ekonomi Syariah aktif mengajar, meneliti, dan mengabdi di bidang ekonomi dan keuangan Islam."
       />
 
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
-        <div className="mx-auto grid max-w-[1024px] gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {dosen.map((d, i) => (
-            <Reveal key={`${d.name}-${i}`} delay={(i % 4) * 0.05}>
-              <PersonCard name={d.name} role={d.role} photo={d.photo} tags={d.expertise} />
-            </Reveal>
-          ))}
-        </div>
+        <DosenDirectory dosen={dosen} />
 
         <Reveal className="mx-auto mt-10 max-w-[1024px]">
           <div className="flex flex-col items-start justify-between gap-4 rounded-[24px] bg-mist p-7 sm:flex-row sm:items-center">
             <div>
-              <p className="text-[17px] font-bold text-label">Profil akademik dosen</p>
-              <p className="mt-1 text-[15px] text-label-2">Publikasi dan rekam jejak dosen dapat dilihat melalui PDDikti dan SINTA.</p>
+              <p className="text-[17px] font-bold text-label">
+                Profil akademik dosen
+              </p>
+              <p className="mt-1 text-[15px] text-label-2">
+                Publikasi dan rekam jejak dosen dapat dilihat melalui PDDikti
+                dan SINTA.
+              </p>
             </div>
             <a
               href="https://pddikti.kemdiktisaintek.go.id"

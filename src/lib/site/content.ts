@@ -19,7 +19,9 @@ export function isAnnouncement(item: ContentItem) {
   return item.rubric === ANNOUNCEMENT_RUBRIC;
 }
 
-export async function findPublishedNews(slug: string): Promise<ContentItem | null> {
+export async function findPublishedNews(
+  slug: string,
+): Promise<ContentItem | null> {
   const items = await listPublishedNews();
   return items.find((c) => c.slug === slug) ?? null;
 }
@@ -30,7 +32,10 @@ export async function getMediaMap(): Promise<Map<string, MediaAsset>> {
   return new Map(media.map((m) => [m.id, m]));
 }
 
-export function coverFor(item: ContentItem, media: Map<string, MediaAsset>): MediaAsset | null {
+export function coverFor(
+  item: ContentItem,
+  media: Map<string, MediaAsset>,
+): MediaAsset | null {
   const id = item.mediaIds[0];
   return id ? (media.get(id) ?? null) : null;
 }
@@ -63,5 +68,7 @@ const RUBRIC_LABELS: Record<string, string> = {
 export function rubricLabel(slug: string): string {
   if (RUBRIC_LABELS[slug]) return RUBRIC_LABELS[slug];
   const words = slug.split(/[_-]+/).filter(Boolean);
-  return words.length ? words.map((w) => w[0].toUpperCase() + w.slice(1)).join(" ") : "Berita";
+  return words.length
+    ? words.map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")
+    : "Berita";
 }

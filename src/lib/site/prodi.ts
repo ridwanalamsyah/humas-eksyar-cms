@@ -53,7 +53,8 @@ export const hero = {
    * dari Media Library CMS). Kosongkan untuk memakai kartu sorotan.
    */
   image: null as string | null,
-  imageAlt: "Mahasiswa Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
+  imageAlt:
+    "Mahasiswa Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
 };
 
 export const pimpinan = [
@@ -133,19 +134,23 @@ export const kelompokMataKuliah = [
 export const bidangKajian = [
   {
     title: "Perbankan & Keuangan Syariah",
-    description: "Operasional bank syariah, pasar modal syariah, asuransi syariah, manajemen risiko, dan fintech.",
+    description:
+      "Operasional bank syariah, pasar modal syariah, asuransi syariah, manajemen risiko, dan fintech.",
   },
   {
     title: "Ekonomi Sosial Islam (ZISWAF)",
-    description: "Zakat, infak, sedekah, dan wakaf produktif sebagai instrumen pemberdayaan dan pengentasan kemiskinan.",
+    description:
+      "Zakat, infak, sedekah, dan wakaf produktif sebagai instrumen pemberdayaan dan pengentasan kemiskinan.",
   },
   {
     title: "Industri & Bisnis Halal",
-    description: "Rantai pasok halal, sertifikasi halal UMK, kewirausahaan syariah, dan pemasaran produk halal.",
+    description:
+      "Rantai pasok halal, sertifikasi halal UMK, kewirausahaan syariah, dan pemasaran produk halal.",
   },
   {
     title: "Kebijakan & Pembangunan",
-    description: "Ekonomi pembangunan Islam, kebijakan fiskal & moneter, serta analisis data ekonomi.",
+    description:
+      "Ekonomi pembangunan Islam, kebijakan fiskal & moneter, serta analisis data ekonomi.",
   },
 ];
 
@@ -198,7 +203,13 @@ export const kurikulum: KurikulumYear[] = [
       },
       {
         name: "Semester 4",
-        courses: ["Ekonomi Makro Islam", "Ekonometrika", "Manajemen ZISWAF", "Pasar Modal Syariah", "Etika Bisnis Islam"],
+        courses: [
+          "Ekonomi Makro Islam",
+          "Ekonometrika",
+          "Manajemen ZISWAF",
+          "Pasar Modal Syariah",
+          "Etika Bisnis Islam",
+        ],
       },
     ],
   },
@@ -230,7 +241,14 @@ export const kurikulum: KurikulumYear[] = [
   {
     label: "Tahun IV",
     semesters: [
-      { name: "Semester 7", courses: ["Praktik Kerja Lapangan / Magang", "Kuliah Kerja Nyata", "Mata Kuliah Pilihan"] },
+      {
+        name: "Semester 7",
+        courses: [
+          "Praktik Kerja Lapangan / Magang",
+          "Kuliah Kerja Nyata",
+          "Mata Kuliah Pilihan",
+        ],
+      },
       { name: "Semester 8", courses: ["Skripsi", "Ujian Komprehensif"] },
     ],
   },
@@ -239,50 +257,84 @@ export const kurikulum: KurikulumYear[] = [
 export const profilLulusan = [
   {
     title: "Praktisi Keuangan Syariah",
-    description: "Mampu menjalankan operasional, analisis pembiayaan, dan pengembangan produk di lembaga keuangan syariah.",
+    description:
+      "Mampu menjalankan operasional, analisis pembiayaan, dan pengembangan produk di lembaga keuangan syariah.",
   },
   {
     title: "Pengelola Filantropi Islam",
-    description: "Mampu merancang dan mengelola program zakat, infak, sedekah, dan wakaf secara profesional dan akuntabel.",
+    description:
+      "Mampu merancang dan mengelola program zakat, infak, sedekah, dan wakaf secara profesional dan akuntabel.",
   },
   {
     title: "Wirausaha & Pelaku Industri Halal",
-    description: "Mampu membangun dan mengembangkan usaha berbasis prinsip syariah serta ekosistem halal.",
+    description:
+      "Mampu membangun dan mengembangkan usaha berbasis prinsip syariah serta ekosistem halal.",
   },
   {
     title: "Peneliti & Analis Ekonomi",
-    description: "Mampu melakukan riset dan analisis kebijakan ekonomi Islam berbasis data dan metodologi ilmiah.",
+    description:
+      "Mampu melakukan riset dan analisis kebijakan ekonomi Islam berbasis data dan metodologi ilmiah.",
   },
 ];
 
 export const capaianPembelajaran = [
   {
     title: "Sikap",
-    description: "Bertakwa, berakhlak karimah, jujur, dan menjunjung etika bisnis Islam dalam setiap aktivitas ekonomi.",
+    description:
+      "Bertakwa, berakhlak karimah, jujur, dan menjunjung etika bisnis Islam dalam setiap aktivitas ekonomi.",
   },
   {
     title: "Pengetahuan",
-    description: "Menguasai teori ekonomi konvensional dan Islam, fiqh muamalah, serta sistem keuangan syariah.",
+    description:
+      "Menguasai teori ekonomi konvensional dan Islam, fiqh muamalah, serta sistem keuangan syariah.",
   },
   {
     title: "Keterampilan Umum",
-    description: "Berpikir kritis, sistematis, dan inovatif; mampu berkomunikasi dan bekerja dalam tim lintas disiplin.",
+    description:
+      "Berpikir kritis, sistematis, dan inovatif; mampu berkomunikasi dan bekerja dalam tim lintas disiplin.",
   },
   {
     title: "Keterampilan Khusus",
-    description: "Mampu menganalisis masalah ekonomi dan keuangan dengan pendekatan syariah serta merumuskan solusi aplikatif.",
+    description:
+      "Mampu menganalisis masalah ekonomi dan keuangan dengan pendekatan syariah serta merumuskan solusi aplikatif.",
   },
 ];
 
 export const prospekKarir = [
-  { title: "Bankir Syariah", description: "Bank umum syariah, unit usaha syariah, dan BPR syariah." },
-  { title: "Analis Keuangan & Investasi", description: "Sekuritas, manajer investasi, dan pasar modal syariah." },
-  { title: "Auditor & Pengawas Syariah", description: "Kantor akuntan, dewan pengawas syariah, dan lembaga audit." },
-  { title: "Amil & Manajer Filantropi", description: "BAZNAS, LAZ, badan wakaf, dan program CSR korporasi." },
-  { title: "Regulator & ASN", description: "OJK, Bank Indonesia, Kementerian Agama, dan instansi ekonomi." },
-  { title: "Wirausaha & Konsultan Halal", description: "UMKM, startup, dan pendampingan sertifikasi halal." },
-  { title: "Peneliti & Akademisi", description: "Dosen, peneliti, dan analis kebijakan ekonomi Islam." },
-  { title: "Profesional Fintech Syariah", description: "Produk, kepatuhan syariah, dan riset di industri teknologi finansial." },
+  {
+    title: "Bankir Syariah",
+    description: "Bank umum syariah, unit usaha syariah, dan BPR syariah.",
+  },
+  {
+    title: "Analis Keuangan & Investasi",
+    description: "Sekuritas, manajer investasi, dan pasar modal syariah.",
+  },
+  {
+    title: "Auditor & Pengawas Syariah",
+    description: "Kantor akuntan, dewan pengawas syariah, dan lembaga audit.",
+  },
+  {
+    title: "Amil & Manajer Filantropi",
+    description: "BAZNAS, LAZ, badan wakaf, dan program CSR korporasi.",
+  },
+  {
+    title: "Regulator & ASN",
+    description:
+      "OJK, Bank Indonesia, Kementerian Agama, dan instansi ekonomi.",
+  },
+  {
+    title: "Wirausaha & Konsultan Halal",
+    description: "UMKM, startup, dan pendampingan sertifikasi halal.",
+  },
+  {
+    title: "Peneliti & Akademisi",
+    description: "Dosen, peneliti, dan analis kebijakan ekonomi Islam.",
+  },
+  {
+    title: "Profesional Fintech Syariah",
+    description:
+      "Produk, kepatuhan syariah, dan riset di industri teknologi finansial.",
+  },
 ];
 
 /**
@@ -297,7 +349,8 @@ export const sorotan = [
     title: "Keluarga Cerdas Lawan Judol & Pinjol lewat Investasi Syariah",
     summary:
       "Galeri Investasi Syariah BEI FEBI mengedukasi Tim Penggerak PKK Kelurahan Padasuka tentang bahaya judi online dan pinjol ilegal, perencanaan keuangan keluarga, serta investasi syariah.",
-    source: "https://uinsgd.ac.id/dorong-keluarga-lawan-judol-dan-pinjol-lewat-investasi-syariah-gis-uin-bandung-edukasi-pkk-padasuka/",
+    source:
+      "https://uinsgd.ac.id/dorong-keluarga-lawan-judol-dan-pinjol-lewat-investasi-syariah-gis-uin-bandung-edukasi-pkk-padasuka/",
   },
   {
     date: "2026-06-08",
@@ -305,7 +358,8 @@ export const sorotan = [
     title: "Sekolah Pasar Modal Syariah 2026 di IDX Jawa Barat",
     summary:
       "115 mahasiswa semester enam Ekonomi Syariah belajar konsep pasar modal syariah, instrumen investasi, hingga pengelolaan portofolio di Kantor Perwakilan BEI Jawa Barat.",
-    source: "https://uinsgd.ac.id/spms-2026-di-idx-jabar-mahasiswa-ekonomi-syariah-didorong-melek-investasi-islam/",
+    source:
+      "https://uinsgd.ac.id/spms-2026-di-idx-jabar-mahasiswa-ekonomi-syariah-didorong-melek-investasi-islam/",
   },
   {
     date: "2026-09-24",
@@ -329,15 +383,17 @@ export const sorotan = [
     title: "Kuliah Bersama Praktisi Bank Muamalat",
     summary:
       "120 mahasiswa semester enam belajar langsung dari praktisi Bank Muamalat Indonesia di KCP Buahbatu tentang operasional bank syariah, layanan nasabah, dan peluang industri keuangan syariah di era digital.",
-    source: "https://uinsgd.ac.id/tingkatkan-wawasan-prodi-ekonomi-syariah-uin-bandung-gelar-kuliah-bersama-praktisi-bank-muamalat/",
+    source:
+      "https://uinsgd.ac.id/tingkatkan-wawasan-prodi-ekonomi-syariah-uin-bandung-gelar-kuliah-bersama-praktisi-bank-muamalat/",
   },
   {
     date: "2026-04-08",
     category: "Pengabdian",
     title: "Sertifikasi Juru Sembelih Halal di Cibiru Wetan",
     summary:
-      "Prodi menyerahkan sertifikat Juru Sembelih Halal (Juleha) kepada warga Desa Cibiru Wetan sebagai bagian dari program pengabdian masyarakat untuk memperkuat ekosistem halal.",
-    source: "https://uinsgd.ac.id/prodi-ekonomi-syariah-uin-bandung-serahkan-sertifikat-juleha-di-cibiru-wetan/",
+      "Sertifikat Juru Sembelih Halal (Juleha) diserahkan kepada 15 warga Desa Cibiru Wetan yang mengikuti pelatihan berbasis SKKNI pada November 2025. Program pengabdian ini memperkuat ekosistem halal di tingkat desa.",
+    source:
+      "https://uinsgd.ac.id/prodi-ekonomi-syariah-uin-bandung-serahkan-sertifikat-juleha-di-cibiru-wetan/",
   },
   {
     date: "2026-04-04",
@@ -345,7 +401,8 @@ export const sorotan = [
     title: "Eksphoria 2026: Literasi & Kompetisi Ekonomi Syariah",
     summary:
       "HMJ Ekonomi Syariah Kabinet Ekselensi menggelar seminar bersama OJK, kompetisi business plan dan esai dengan 359 peserta dari berbagai kampus, serta bazar UMKM halal.",
-    source: "https://uinsgd.ac.id/tingkatkan-literasi-hmj-ekonomi-syariah-uin-bandung-gelar-eksphoria-2026/",
+    source:
+      "https://uinsgd.ac.id/tingkatkan-literasi-hmj-ekonomi-syariah-uin-bandung-gelar-eksphoria-2026/",
   },
   {
     date: "2024-04-25",
@@ -353,7 +410,8 @@ export const sorotan = [
     title: "FGD Penyusunan Visi Misi & Review Kurikulum",
     summary:
       "Prodi melibatkan asosiasi program studi, OJK, praktisi industri, alumni, dan mahasiswa untuk meninjau visi, misi, dan kurikulum menuju akreditasi unggul.",
-    source: "https://uinsgd.ac.id/tingkatkan-kualitas-prodi-ekonomi-syariah-gelar-fgd-penyusunan-visi-misi-dan-review-kurikulum/",
+    source:
+      "https://uinsgd.ac.id/tingkatkan-kualitas-prodi-ekonomi-syariah-gelar-fgd-penyusunan-visi-misi-dan-review-kurikulum/",
   },
 ];
 
@@ -398,11 +456,60 @@ export const prestasi = [
   },
 ];
 
+/**
+ * Mitra kerja sama prodi/fakultas yang tercatat di pemberitaan resmi UIN SGD
+ * dan akun Instagram prodi. Tambah atau ubah lewat CMS.
+ */
+export const mitra = [
+  {
+    name: "Bursa Efek Indonesia",
+    description:
+      "Galeri Investasi Syariah BEI FEBI (bersama MNC Sekuritas, 2021) dan Sekolah Pasar Modal Syariah.",
+    url: "https://www.idx.co.id/",
+  },
+  {
+    name: "Bank Muamalat Indonesia",
+    description:
+      "Kuliah praktisi, seminar karir, dan kesempatan magang di jaringan kantor cabang.",
+    url: "https://www.bankmuamalat.co.id/",
+  },
+  {
+    name: "Bank Indonesia Jawa Barat",
+    description:
+      "Kolaborasi edukasi ekonomi syariah dan program Beasiswa Bank Indonesia.",
+    url: "https://www.bi.go.id/",
+  },
+  {
+    name: "bank bjb syariah",
+    description:
+      "Perjanjian kerja sama Program Duta Maslahah dengan UIN SGD (Agustus 2025).",
+    url: "https://www.bjbsyariah.co.id/",
+  },
+  {
+    name: "Otoritas Jasa Keuangan",
+    description:
+      "Narasumber FGD kurikulum dan seminar literasi keuangan syariah.",
+    url: "https://www.ojk.go.id/",
+  },
+  {
+    name: "BAZNAS",
+    description: "UIN SGD termasuk kampus mitra Beasiswa Cendekia BAZNAS.",
+    url: "https://baznas.go.id/",
+  },
+  {
+    name: "Bank Tabungan Negara",
+    description: "Mitra kerja sama UIN Sunan Gunung Djati Bandung.",
+    url: "https://www.btn.co.id/",
+  },
+];
+
 export const himpunan = {
   name: "HMJ Ekonomi Syariah UIN Bandung",
-  cabinet: "Kabinet Ekselensi",
-  chair: "Muhamad Yudhi Saputra",
-  chairPeriod: "2026",
+  // Kepengurusan 2026–2027 (IG @hmjeksyaruinbdg). Nama ketua kabinet baru
+  // belum terverifikasi — isi lewat CMS. Kabinet sebelumnya: Ekselensi.
+  cabinet: "Kabinet Pijakan Bijak",
+  chair: "",
+  chairPeriod: "2026–2027",
   description:
     "Himpunan Mahasiswa Jurusan Ekonomi Syariah menjadi wadah pengembangan diri, kepemimpinan, dan kreativitas mahasiswa melalui kajian, kompetisi, pengabdian, dan kegiatan kolaboratif.",
   flagship: {
@@ -416,11 +523,31 @@ export const himpunan = {
 };
 
 export const kegiatanMahasiswa = [
-  { title: "Kajian & Diskusi Ekonomi Islam", description: "Forum rutin membedah isu ekonomi dan keuangan syariah terkini." },
-  { title: "Kompetisi Nasional", description: "Pendampingan lomba business plan, esai, debat, dan karya tulis ilmiah." },
-  { title: "KSEI & FoSSEI", description: "Kelompok Studi Ekonomi Islam UIN SGD aktif dalam jaringan Forum Silaturahmi Studi Ekonomi Islam (FoSSEI) Jawa Barat." },
-  { title: "Kuliah Praktisi & Kunjungan Industri", description: "Belajar langsung dari bank syariah, regulator, dan pelaku industri halal." },
-  { title: "Pengabdian Masyarakat", description: "Literasi keuangan syariah, pendampingan UMKM, dan program halal di desa binaan." },
+  {
+    title: "Kajian & Diskusi Ekonomi Islam",
+    description:
+      "Forum rutin membedah isu ekonomi dan keuangan syariah terkini.",
+  },
+  {
+    title: "Kompetisi Nasional",
+    description:
+      "Pendampingan lomba business plan, esai, debat, dan karya tulis ilmiah.",
+  },
+  {
+    title: "KSEI & FoSSEI",
+    description:
+      "Kelompok Studi Ekonomi Islam UIN SGD aktif dalam jaringan Forum Silaturahmi Studi Ekonomi Islam (FoSSEI) Jawa Barat.",
+  },
+  {
+    title: "Kuliah Praktisi & Kunjungan Industri",
+    description:
+      "Belajar langsung dari bank syariah, regulator, dan pelaku industri halal.",
+  },
+  {
+    title: "Pengabdian Masyarakat",
+    description:
+      "Literasi keuangan syariah, pendampingan UMKM, dan program halal di desa binaan.",
+  },
 ];
 
 /**
@@ -433,7 +560,8 @@ export const beasiswa = [
     name: "KIP Kuliah",
     provider: "Pemerintah (Kemenag)",
     period: "26 Agustus – 13 September 2026 (mahasiswa baru)",
-    description: "Bantuan biaya pendidikan dan biaya hidup bagi mahasiswa baru dari keluarga kurang mampu yang berprestasi.",
+    description:
+      "Bantuan biaya pendidikan dan biaya hidup bagi mahasiswa baru dari keluarga kurang mampu yang berprestasi.",
     requirements: [
       "Mahasiswa baru UIN SGD tahun akademik 2026/2027",
       "Kartu KIP / KKS / SKTM dan data desil",
@@ -446,15 +574,22 @@ export const beasiswa = [
     name: "Beasiswa Cendekia BAZNAS",
     provider: "BAZNAS RI",
     period: "9 – 27 September 2026",
-    description: "Beasiswa bagi mahasiswa S1 semester 5 kategori prestasi, aktivis, atau disabilitas; UIN SGD termasuk kampus mitra.",
-    requirements: ["Mahasiswa S1 semester 5", "IPK minimal 3,00", "Kategori prestasi, aktivis, atau disabilitas", "Esai & surat rekomendasi"],
+    description:
+      "Beasiswa bagi mahasiswa S1 semester 5 kategori prestasi, aktivis, atau disabilitas; UIN SGD termasuk kampus mitra.",
+    requirements: [
+      "Mahasiswa S1 semester 5",
+      "IPK minimal 3,00",
+      "Kategori prestasi, aktivis, atau disabilitas",
+      "Esai & surat rekomendasi",
+    ],
     url: "https://uinsgd.ac.id/beasiswa-cendekia-baznas-2026-telah-dibuka/",
   },
   {
     name: "Beasiswa Bank Indonesia (GenBI)",
     provider: "Bank Indonesia",
     period: "Mengikuti pengumuman kampus",
-    description: "Bantuan bulanan, pelatihan kepemimpinan, dan komunitas Generasi Baru Indonesia (GenBI) — relevan untuk mahasiswa ekonomi syariah.",
+    description:
+      "Bantuan bulanan, pelatihan kepemimpinan, dan komunitas Generasi Baru Indonesia (GenBI) — relevan untuk mahasiswa ekonomi syariah.",
     requirements: ["Diumumkan melalui portal beasiswa UIN SGD"],
     url: "https://beasiswa.uinsgd.ac.id",
   },
@@ -462,7 +597,8 @@ export const beasiswa = [
     name: "Djarum Beasiswa Plus",
     provider: "Djarum Foundation",
     period: "Pendaftaran daring (biasanya Maret – Mei)",
-    description: "Dana pendidikan bulanan selama satu tahun disertai pelatihan soft skill.",
+    description:
+      "Dana pendidikan bulanan selama satu tahun disertai pelatihan soft skill.",
     requirements: ["Diumumkan melalui portal beasiswa UIN SGD"],
     url: "https://beasiswa.uinsgd.ac.id",
   },
@@ -470,7 +606,8 @@ export const beasiswa = [
     name: "Beasiswa Prestasi & Tahfidz",
     provider: "UIN Sunan Gunung Djati Bandung",
     period: "Mengikuti pengumuman kampus",
-    description: "Untuk mahasiswa berprestasi akademik/non-akademik dan penghafal Al-Qur'an.",
+    description:
+      "Untuk mahasiswa berprestasi akademik/non-akademik dan penghafal Al-Qur'an.",
     requirements: ["Diumumkan melalui portal beasiswa UIN SGD"],
     url: "https://uinsgd.ac.id/beasiswa/",
   },
@@ -478,14 +615,43 @@ export const beasiswa = [
 
 /** Tonggak sejarah (sumber: uinsgd.ac.id/sejarah, febi.uinsgd.ac.id). */
 export const timeline = [
-  { year: "1968", title: "IAIN Sunan Gunung Djati berdiri", description: "8 April 1968 berdasarkan Keputusan Menteri Agama No. 56 Tahun 1968, diprakarsai tokoh umat Islam Jawa Barat." },
-  { year: "1993", title: "Perluasan fakultas", description: "Fakultas Dakwah dan Fakultas Adab didirikan, memperluas cakupan keilmuan kampus." },
-  { year: "2003", title: "Rintisan FEBI", description: "Rintisan pendirian Fakultas Ekonomi dan Bisnis Islam dimulai sebagai tindak lanjut kajian Konsorsium Keilmuan." },
-  { year: "2005", title: "Menjadi UIN", description: "10 Oktober 2005, IAIN berubah menjadi UIN Sunan Gunung Djati Bandung (Perpres No. 57 Tahun 2005)." },
-  { year: "2021", title: "Galeri Investasi Syariah BEI", description: "13 Oktober 2021, FEBI meresmikan Galeri Investasi Syariah BEI bersama MNC Sekuritas." },
-  { year: "2024", title: "UIN SGD terakreditasi Unggul", description: "Akreditasi institusi peringkat Unggul dari BAN-PT, berlaku 2024–2029." },
+  {
+    year: "1968",
+    title: "IAIN Sunan Gunung Djati berdiri",
+    description:
+      "8 April 1968 berdasarkan Keputusan Menteri Agama No. 56 Tahun 1968, diprakarsai tokoh umat Islam Jawa Barat.",
+  },
+  {
+    year: "1993",
+    title: "Perluasan fakultas",
+    description:
+      "Fakultas Dakwah dan Fakultas Adab didirikan, memperluas cakupan keilmuan kampus.",
+  },
+  {
+    year: "2003",
+    title: "Rintisan FEBI",
+    description:
+      "Rintisan pendirian Fakultas Ekonomi dan Bisnis Islam dimulai sebagai tindak lanjut kajian Konsorsium Keilmuan.",
+  },
+  {
+    year: "2005",
+    title: "Menjadi UIN",
+    description:
+      "10 Oktober 2005, IAIN berubah menjadi UIN Sunan Gunung Djati Bandung (Perpres No. 57 Tahun 2005).",
+  },
+  {
+    year: "2021",
+    title: "Galeri Investasi Syariah BEI",
+    description:
+      "13 Oktober 2021, FEBI meresmikan Galeri Investasi Syariah BEI bersama MNC Sekuritas.",
+  },
+  {
+    year: "2024",
+    title: "UIN SGD terakreditasi Unggul",
+    description:
+      "Akreditasi institusi peringkat Unggul dari BAN-PT, berlaku 2024–2029.",
+  },
 ];
-
 
 /**
  * Dosen program studi. Baru berisi nama yang terverifikasi dari publikasi
@@ -516,30 +682,86 @@ export const dosen = [
 /** Fasilitas yang dapat diakses mahasiswa. */
 // TODO: tambahkan fasilitas khusus FEBI (laboratorium, galeri investasi, dll.) bila ada.
 export const fasilitas = [
-  { title: "Galeri Investasi Syariah BEI", description: "Diresmikan 13 Oktober 2021 bersama MNC Sekuritas — pusat edukasi dan praktik investasi pasar modal syariah, termasuk Sekolah Pasar Modal Syariah." },
-  { title: "Gedung FEBI Kampus 2", description: "Ruang kuliah dan Aula FEBI untuk seminar, kuliah umum, dan kegiatan mahasiswa." },
-  { title: "Perpustakaan & Digital Library", description: "Koleksi cetak universitas dan repositori digital skripsi serta karya ilmiah." },
-  { title: "Pembelajaran Daring e-Knows", description: "Learning management system untuk materi, tugas, dan kuis perkuliahan." },
-  { title: "UINSGDnet", description: "Akses internet nirkabel di area kampus dengan akun resmi mahasiswa." },
+  {
+    title: "Galeri Investasi Syariah BEI",
+    description:
+      "Diresmikan 13 Oktober 2021 bersama MNC Sekuritas — pusat edukasi dan praktik investasi pasar modal syariah, termasuk Sekolah Pasar Modal Syariah.",
+  },
+  {
+    title: "Gedung FEBI Kampus 2",
+    description:
+      "Ruang kuliah dan Aula FEBI untuk seminar, kuliah umum, dan kegiatan mahasiswa.",
+  },
+  {
+    title: "Perpustakaan & Digital Library",
+    description:
+      "Koleksi cetak universitas dan repositori digital skripsi serta karya ilmiah.",
+  },
+  {
+    title: "Pembelajaran Daring e-Knows",
+    description:
+      "Learning management system untuk materi, tugas, dan kuis perkuliahan.",
+  },
+  {
+    title: "UINSGDnet",
+    description:
+      "Akses internet nirkabel di area kampus dengan akun resmi mahasiswa.",
+  },
 ];
 
 export const layananAkademik = [
-  { title: "Portal Akademik SALAM", href: "https://simak.uinsgd.ac.id/beranda/", description: "KRS, nilai, dan administrasi akademik." },
-  { title: "e-Knows (LMS)", href: "https://eknows.uinsgd.ac.id", description: "Pembelajaran daring dan materi kuliah." },
-  { title: "Digital Library", href: "https://digilib.uinsgd.ac.id", description: "Repositori skripsi & karya ilmiah." },
-  { title: "Website Resmi Prodi", href: "https://es.uinsgd.ac.id", description: "Dokumen & layanan resmi prodi." },
+  {
+    title: "Portal Akademik SALAM",
+    href: "https://simak.uinsgd.ac.id/beranda/",
+    description: "KRS, nilai, dan administrasi akademik.",
+  },
+  {
+    title: "e-Knows (LMS)",
+    href: "https://eknows.uinsgd.ac.id",
+    description: "Pembelajaran daring dan materi kuliah.",
+  },
+  {
+    title: "Digital Library",
+    href: "https://digilib.uinsgd.ac.id",
+    description: "Repositori skripsi & karya ilmiah.",
+  },
+  {
+    title: "Website Resmi Prodi",
+    href: "https://es.uinsgd.ac.id",
+    description: "Dokumen & layanan resmi prodi.",
+  },
 ];
 
 /** Jalur PMB UIN SGD 2026 (sumber: pmb.uinsgd.ac.id, uinsgd.ac.id). */
 export const jalurMasuk = [
-  { title: "SNBP", description: "Seleksi nasional berdasarkan prestasi akademik (rapor)." },
-  { title: "SPAN-PTKIN", description: "Seleksi nasional prestasi akademik khusus PTKIN, termasuk jalur portofolio." },
-  { title: "SNBT", description: "Seleksi nasional berdasarkan hasil Tes Terstandar (UTBK)." },
-  { title: "UM-PTKIN", description: "Ujian masuk bersama Perguruan Tinggi Keagamaan Islam Negeri." },
-  { title: "Mandiri (CBT)", description: "Ujian mandiri berbasis komputer UIN SGD, pendaftaran di damba.uinsgd.ac.id." },
-  { title: "Prestasi & Tahfidz", description: "Jalur mandiri untuk prestasi seni, olahraga, organisasi, serta hafalan Al-Qur'an minimal 10 juz / Qiro'atul Kutub." },
+  {
+    title: "SNBP",
+    description: "Seleksi nasional berdasarkan prestasi akademik (rapor).",
+  },
+  {
+    title: "SPAN-PTKIN",
+    description:
+      "Seleksi nasional prestasi akademik khusus PTKIN, termasuk jalur portofolio.",
+  },
+  {
+    title: "SNBT",
+    description: "Seleksi nasional berdasarkan hasil Tes Terstandar (UTBK).",
+  },
+  {
+    title: "UM-PTKIN",
+    description: "Ujian masuk bersama Perguruan Tinggi Keagamaan Islam Negeri.",
+  },
+  {
+    title: "Mandiri (CBT)",
+    description:
+      "Ujian mandiri berbasis komputer UIN SGD, pendaftaran di damba.uinsgd.ac.id.",
+  },
+  {
+    title: "Prestasi & Tahfidz",
+    description:
+      "Jalur mandiri untuk prestasi seni, olahraga, organisasi, serta hafalan Al-Qur'an minimal 10 juz / Qiro'atul Kutub.",
+  },
 ];
-
 
 export const faq = [
   {
@@ -570,7 +792,8 @@ export const faq = [
 
 export const kontak = {
   address: "Fakultas Ekonomi dan Bisnis Islam, UIN Sunan Gunung Djati Bandung",
-  street: "Jl. A.H. Nasution No. 105, Cipadung, Cibiru, Kota Bandung, Jawa Barat 40614",
+  street:
+    "Jl. A.H. Nasution No. 105, Cipadung, Cibiru, Kota Bandung, Jawa Barat 40614",
   email: "es.uinsgdbdg@gmail.com",
   hours: "Senin–Jumat, 08.00–16.00 WIB",
   instagram: "https://www.instagram.com/eksyaruinsgd/",
@@ -582,7 +805,8 @@ export const kontak = {
   febiInstagram: "https://www.instagram.com/febiuinsgdbdg/",
   pmbUrl: "https://pmb.uinsgd.ac.id",
   mapsUrl: "https://maps.google.com/?q=UIN+Sunan+Gunung+Djati+Bandung",
-  mapsEmbed: "https://www.google.com/maps?q=UIN+Sunan+Gunung+Djati+Bandung&output=embed",
+  mapsEmbed:
+    "https://www.google.com/maps?q=UIN+Sunan+Gunung+Djati+Bandung&output=embed",
 };
 
 export const navLinks = [

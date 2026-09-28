@@ -11,38 +11,57 @@ export const metadata: Metadata = {
   description: `Alamat, email, dan media sosial ${prodi.fullName} ${prodi.university}.`,
 };
 
-
 export default async function KontakPage() {
   const { faq, himpunan, kontak } = await getSite();
   const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(`${kontak.address}, ${kontak.street}`)}&output=embed`;
   const sosial = [
-    { label: "Instagram Prodi", handle: kontak.instagramHandle, href: kontak.instagram },
+    {
+      label: "Instagram Prodi",
+      handle: kontak.instagramHandle,
+      href: kontak.instagram,
+    },
     { label: "TikTok Prodi", handle: "TikTok", href: kontak.tiktok },
-    { label: "Instagram HMJ", handle: "HMJ Ekonomi Syariah", href: himpunan.instagram },
+    {
+      label: "Instagram HMJ",
+      handle: "HMJ Ekonomi Syariah",
+      href: himpunan.instagram,
+    },
     { label: "Linktree", handle: "Semua tautan", href: kontak.linktree },
   ].filter((s) => s.href);
   return (
     <>
       <PageHeader
         crumb="Kontak"
-        title="Ada pertanyaan? Kami siap membantu."
+        title="Kontak program studi"
         description="Seputar perkuliahan, pendaftaran, atau kerja sama."
       />
 
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
         <div className="mx-auto grid max-w-[1024px] gap-4 md:grid-cols-3">
           <Card label="Email">
-            <a href={`mailto:${kontak.email}`} className="break-all text-[21px] font-semibold tracking-[-0.01em] text-label hover:text-accent">
+            <a
+              href={`mailto:${kontak.email}`}
+              className="break-all text-[21px] font-semibold tracking-[-0.01em] text-label hover:text-accent"
+            >
               {kontak.email}
             </a>
           </Card>
           <Card label="Jam layanan">
-            <p className="text-[21px] font-semibold tracking-[-0.01em] text-label">{kontak.hours}</p>
+            <p className="text-[21px] font-semibold tracking-[-0.01em] text-label">
+              {kontak.hours}
+            </p>
           </Card>
           <Card label="Alamat">
-            <p className="text-[17px] font-semibold leading-snug text-label">{kontak.address}</p>
+            <p className="text-[17px] font-semibold leading-snug text-label">
+              {kontak.address}
+            </p>
             <p className="mt-1 text-[15px] text-label-2">{kontak.street}</p>
-            <a href={kontak.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-[15px] text-accent hover:underline">
+            <a
+              href={kontak.mapsUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-block text-[15px] text-accent hover:underline"
+            >
               Petunjuk arah ↗
             </a>
           </Card>
@@ -69,8 +88,12 @@ export default async function KontakPage() {
               rel="noopener noreferrer"
               className="group rounded-[20px] bg-mist p-6 transition duration-300 hover:-translate-y-1 hover:bg-accent hover:text-white"
             >
-              <p className="text-[13px] text-label-2 group-hover:text-white/75">{s.label}</p>
-              <p className="mt-1 text-[17px] font-semibold text-label group-hover:text-white">{s.handle}</p>
+              <p className="text-[13px] text-label-2 group-hover:text-white/75">
+                {s.label}
+              </p>
+              <p className="mt-1 text-[17px] font-semibold text-label group-hover:text-white">
+                {s.handle}
+              </p>
             </a>
           ))}
         </div>
@@ -78,7 +101,7 @@ export default async function KontakPage() {
 
       <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
         <Reveal>
-          <SectionHeading title="Pertanyaan umum." />
+          <SectionHeading title="Pertanyaan yang sering diajukan" />
         </Reveal>
         <Reveal className="mt-10">
           <FaqList items={faq} />
@@ -88,7 +111,13 @@ export default async function KontakPage() {
   );
 }
 
-function Card({ label, children }: { label: string; children: React.ReactNode }) {
+function Card({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <Reveal>
       <div className="flex h-full flex-col rounded-[28px] bg-mist p-8">

@@ -14,8 +14,12 @@ export function PrestasiCard({ item }: { item: Prestasi }) {
         </span>
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-[18px] font-bold leading-snug tracking-[-0.01em] text-label">{item.name}</h3>
-        <p className="mt-1.5 text-[15px] leading-snug text-label-2">{item.achievement}</p>
+        <h3 className="text-[18px] font-bold leading-snug tracking-[-0.01em] text-label">
+          {item.name}
+        </h3>
+        <p className="mt-1.5 text-[15px] leading-snug text-label-2">
+          {item.achievement}
+        </p>
       </div>
     </article>
   );

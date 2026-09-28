@@ -1,8 +1,18 @@
 /** Header halaman dalam: judul besar terpusat di atas kanvas putih. */
-export function PageHeader({ title, description, crumb }: { title: string; description?: string; crumb: string }) {
+export function PageHeader({
+  title,
+  description,
+  crumb,
+}: {
+  title: string;
+  description?: string;
+  crumb: string;
+}) {
   return (
     <section className="px-6 pb-16 pt-16 text-center sm:pb-24 sm:pt-24">
-      <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">{crumb}</p>
+      <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
+        {crumb}
+      </p>
       <h1 className="mx-auto mt-3 max-w-4xl text-[clamp(2.4rem,1.6rem+3.4vw,4.5rem)] font-extrabold leading-[1.05] tracking-[-0.035em] text-label text-balance">
         {title}
       </h1>

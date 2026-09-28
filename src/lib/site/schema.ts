@@ -17,15 +17,24 @@ const url = z
   .string()
   .trim()
   .max(2000)
-  .refine((v) => v === "" || SAFE_URL.test(v), "URL harus diawali https://, / atau mailto:");
+  .refine(
+    (v) => v === "" || SAFE_URL.test(v),
+    "URL harus diawali https://, / atau mailto:",
+  );
 const image = z
   .string()
   .trim()
   .max(2000)
-  .refine((v) => v === "" || SAFE_IMAGE.test(v), "URL gambar harus diawali https:// atau /")
+  .refine(
+    (v) => v === "" || SAFE_IMAGE.test(v),
+    "URL gambar harus diawali https:// atau /",
+  )
   .nullable()
   .optional();
-const isoDate = z.string().trim().regex(/^\d{4}-\d{2}-\d{2}$/, "Format tanggal YYYY-MM-DD");
+const isoDate = z
+  .string()
+  .trim()
+  .regex(/^\d{4}-\d{2}-\d{2}$/, "Format tanggal YYYY-MM-DD");
 
 const list = <T extends z.ZodType>(item: T, max = 60) => z.array(item).max(max);
 
@@ -79,6 +88,12 @@ export const beasiswaSchema = z.object({
   url: url,
 });
 
+export const mitraSchema = z.object({
+  name: text(120),
+  description: text(300),
+  url: url,
+});
+
 export const timelineSchema = z.object({
   year: text(10),
   title: text(160),
@@ -121,7 +136,10 @@ export const websiteConfigSchema = z.object({
   prestasi: list(prestasiSchema, 40),
   kegiatan: list(kegiatanSchema, 40),
   bidangKajian: list(titledItemSchema, 8),
-  kelompokMataKuliah: list(z.object({ code: text(10), title: text(120), description: longText(600) }), 6),
+  kelompokMataKuliah: list(
+    z.object({ code: text(10), title: text(120), description: longText(600) }),
+    6,
+  ),
   kurikulum: list(kurikulumYearSchema, 6),
   profilLulusan: list(titledItemSchema, 10),
   capaianPembelajaran: list(titledItemSchema, 10),
@@ -141,6 +159,7 @@ export const websiteConfigSchema = z.object({
   kegiatanMahasiswa: list(titledItemSchema, 12),
   beasiswa: list(beasiswaSchema, 30),
   timeline: list(timelineSchema, 30),
+  mitra: list(mitraSchema, 40),
   fasilitas: list(fasilitasSchema, 16),
   jalurMasuk: list(titledItemSchema, 8),
   unduhan: list(unduhanSchema, 100),
@@ -171,4 +190,5 @@ export type KurikulumYear = z.infer<typeof kurikulumYearSchema>;
 export type Fasilitas = z.infer<typeof fasilitasSchema>;
 export type Unduhan = z.infer<typeof unduhanSchema>;
 export type Beasiswa = z.infer<typeof beasiswaSchema>;
+export type Mitra = z.infer<typeof mitraSchema>;
 export type TimelineItem = z.infer<typeof timelineSchema>;

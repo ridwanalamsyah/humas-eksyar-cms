@@ -1,4 +1,13 @@
-import { ArrowUpRight, BookOpen, Briefcase, GraduationCap, HandHeart, Newspaper, ShieldCheck, Users } from "lucide-react";
+import {
+  ArrowUpRight,
+  BookOpen,
+  Briefcase,
+  GraduationCap,
+  HandHeart,
+  Newspaper,
+  ShieldCheck,
+  Users,
+} from "lucide-react";
 import { formatLongDate } from "@/lib/format/dates";
 import type { Kegiatan } from "@/lib/site/schema";
 
@@ -39,8 +48,12 @@ export function HighlightCard({ item }: { item: Kegiatan }) {
         <time dateTime={item.date} className="text-[13px] text-label-3">
           {formatLongDate(item.date)}
         </time>
-        <h3 className="mt-1.5 text-[19px] font-bold leading-[1.25] tracking-[-0.015em] text-label">{item.title}</h3>
-        <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-label-2">{item.summary}</p>
+        <h3 className="mt-1.5 text-[19px] font-bold leading-[1.25] tracking-[-0.015em] text-label">
+          {item.title}
+        </h3>
+        <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-label-2">
+          {item.summary}
+        </p>
         {item.source && (
           <span className="mt-auto flex items-center justify-between pt-5 text-[14px] font-semibold text-accent">
             Baca selengkapnya
@@ -57,7 +70,12 @@ export function HighlightCard({ item }: { item: Kegiatan }) {
     "group flex h-full flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]";
 
   return item.source ? (
-    <a href={item.source} target="_blank" rel="noopener noreferrer" className={cls}>
+    <a
+      href={item.source}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={cls}
+    >
       {body}
     </a>
   ) : (

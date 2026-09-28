@@ -16,16 +16,27 @@ export function ArticleBody({ text }: { text: string }) {
     <>
       {blocks.map((block, i) => {
         const lines = block.split("\n");
-        if (/^#{3,}\s/.test(block)) return <h3 key={i}>{inline(block.replace(/^#+\s/, ""))}</h3>;
-        if (/^#{1,2}\s/.test(block)) return <h2 key={i}>{inline(block.replace(/^#+\s/, ""))}</h2>;
+        if (/^#{3,}\s/.test(block))
+          return <h3 key={i}>{inline(block.replace(/^#+\s/, ""))}</h3>;
+        if (/^#{1,2}\s/.test(block))
+          return <h2 key={i}>{inline(block.replace(/^#+\s/, ""))}</h2>;
 
         const img = block.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
         if (img && isSafeUrl(img[2])) {
           return (
             <figure key={i} className="my-10">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={img[2]} alt={img[1]} loading="lazy" className="w-full rounded-[16px]" />
-              {img[1] && <figcaption className="mt-3 text-[14px] text-label-2">{img[1]}</figcaption>}
+              <img
+                src={img[2]}
+                alt={img[1]}
+                loading="lazy"
+                className="w-full rounded-[16px]"
+              />
+              {img[1] && (
+                <figcaption className="mt-3 text-[14px] text-label-2">
+                  {img[1]}
+                </figcaption>
+              )}
             </figure>
           );
         }
@@ -49,7 +60,11 @@ export function ArticleBody({ text }: { text: string }) {
           );
         }
         if (block.startsWith(">")) {
-          return <blockquote key={i}>{inline(lines.map((l) => l.replace(/^>\s?/, "")).join(" "))}</blockquote>;
+          return (
+            <blockquote key={i}>
+              {inline(lines.map((l) => l.replace(/^>\s?/, "")).join(" "))}
+            </blockquote>
+          );
         }
         return (
           <p key={i}>
@@ -82,7 +97,13 @@ function inline(text: string): ReactNode[] {
       if (!isSafeUrl(link[2])) return link[1];
       const external = /^https?:\/\//i.test(link[2]);
       return (
-        <a key={i} href={link[2]} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+        <a
+          key={i}
+          href={link[2]}
+          {...(external
+            ? { target: "_blank", rel: "noopener noreferrer" }
+            : {})}
+        >
           {link[1]}
         </a>
       );

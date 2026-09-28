@@ -39,7 +39,10 @@ export function Photo({
           aria-hidden
         >
           <circle cx="100" cy="92" r="44" fill="currentColor" />
-          <path d="M18 250c0-50 36.7-86 82-86s82 36 82 86z" fill="currentColor" />
+          <path
+            d="M18 250c0-50 36.7-86 82-86s82 36 82 86z"
+            fill="currentColor"
+          />
         </svg>
       )}
     </div>

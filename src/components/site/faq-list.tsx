@@ -9,7 +9,9 @@ export function FaqList({ items }: { items: { q: string; a: string }[] }) {
             {f.q}
             <ChevronDown className="size-5 shrink-0 text-label-2 transition-transform duration-300 group-open:rotate-180" />
           </summary>
-          <p className="-mt-2 pb-6 pr-10 text-[17px] leading-[1.5] text-label-2">{f.a}</p>
+          <p className="-mt-2 pb-6 pr-10 text-[17px] leading-[1.5] text-label-2">
+            {f.a}
+          </p>
         </details>
       ))}
     </div>
