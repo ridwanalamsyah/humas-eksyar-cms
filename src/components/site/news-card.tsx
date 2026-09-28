@@ -20,7 +20,7 @@ export function NewsCard({
     <Link
       href={`/prodi/berita/${item.slug}`}
       className={cn(
-        "group flex h-full overflow-hidden rounded-[20px] bg-canvas border border-hairline transition-colors duration-300 hover:border-accent/40",
+        "group flex h-full overflow-hidden rounded-[20px] bg-canvas border border-hairline transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]",
         featured ? "flex-col md:flex-row" : "flex-col",
       )}
     >
@@ -61,9 +61,9 @@ export function NewsCard({
 
 export function CoverFallback() {
   return (
-    <div className="absolute inset-0 bg-sky">
+    <div className="absolute inset-0 bg-[#e9f2f3]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={prodi.logo} alt="" className="absolute left-1/2 top-1/2 w-16 -translate-x-1/2 -translate-y-1/2 rounded-full" />
+      <img src={prodi.logo} alt="" className="absolute left-1/2 top-1/2 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-90" />
     </div>
   );
 }

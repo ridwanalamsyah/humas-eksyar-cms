@@ -1,16 +1,17 @@
 import Link from "next/link";
-import { kontak, layananAkademik, navLinks, prodi } from "@/lib/site/prodi";
+import { getSite } from "@/lib/site/get-site";
+import { layananAkademik, navLinks, prodi } from "@/lib/site/prodi";
 import { ProdiLogo } from "./prodi-logo";
 
-export function SiteFooter() {
+export async function SiteFooter() {
+  const { kontak, identity } = await getSite();
   const year = new Date().getFullYear();
   const sosial = [
     { href: kontak.instagram, label: "Instagram" },
     { href: kontak.tiktok, label: "TikTok" },
     { href: kontak.x, label: "X" },
     { href: kontak.linktree, label: "Linktree" },
-    { href: kontak.febiInstagram, label: "Instagram FEBI" },
-  ];
+  ].filter((s) => s.href);
 
   return (
     <footer className="bg-mist text-[12.5px] leading-relaxed text-label-2">
@@ -25,7 +26,7 @@ export function SiteFooter() {
               </p>
             </div>
           </div>
-          <p className="font-script text-[26px] leading-none text-accent">{prodi.tagline}</p>
+          {identity.tagline && <p className="text-[15px] font-semibold text-accent">{identity.tagline}</p>}
         </div>
 
         <div className="grid grid-cols-2 gap-8 py-8 md:grid-cols-4">
@@ -72,25 +73,29 @@ export function SiteFooter() {
         </p>
       </div>
 
-      {/* Strip kontak — sama seperti footer di setiap postingan IG Eksyar */}
-      <div className="bg-accent-strong text-white">
+      {/* Strip kontak — seperti footer di setiap postingan IG Eksyar */}
+      <div className="bg-accent text-white">
         <ul className="mx-auto flex max-w-[1024px] flex-wrap items-center justify-center gap-x-6 gap-y-1 px-4 py-2.5 text-[12px] font-semibold sm:justify-between">
           <li>
             <a href={`mailto:${kontak.email}`} className="hover:underline">
               {kontak.email}
             </a>
           </li>
-          <li>
-            <a href={kontak.instagram} target="_blank" rel="noopener noreferrer" className="hover:underline">
-              {kontak.instagramHandle}
-            </a>
-          </li>
-          <li>eksyar uin sgd</li>
-          <li>
-            <a href={prodi.officialSite} target="_blank" rel="noopener noreferrer" className="hover:underline">
-              {kontak.website}
-            </a>
-          </li>
+          {kontak.instagram && (
+            <li>
+              <a href={kontak.instagram} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                {kontak.instagramHandle}
+              </a>
+            </li>
+          )}
+          {kontak.facebookName && <li>{kontak.facebookName}</li>}
+          {kontak.website && (
+            <li>
+              <a href={kontak.website} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                {kontak.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}
+              </a>
+            </li>
+          )}
         </ul>
       </div>
     </footer>

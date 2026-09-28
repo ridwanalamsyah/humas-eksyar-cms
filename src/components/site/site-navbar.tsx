@@ -6,13 +6,13 @@ import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ProdiLogo } from "./prodi-logo";
 import { cn } from "@/lib/utils";
-import { kontak, navLinks, prodi } from "@/lib/site/prodi";
+import { navLinks, prodi } from "@/lib/site/prodi";
 
 function isActive(pathname: string, href: string) {
   return href === "/prodi" ? pathname === "/prodi" : pathname.startsWith(href);
 }
 
-export function SiteNavbar() {
+export function SiteNavbar({ pmbUrl }: { pmbUrl: string }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -66,7 +66,7 @@ export function SiteNavbar() {
 
           <div className="flex items-center gap-3">
             <a
-              href={kontak.pmbUrl}
+              href={pmbUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="hidden rounded-full bg-accent px-4 py-1.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-accent-strong sm:inline-block"
@@ -124,7 +124,7 @@ export function SiteNavbar() {
             </ul>
             <div className="px-10 pt-6">
               <a
-                href={kontak.pmbUrl}
+                href={pmbUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block rounded-full bg-accent px-6 py-3 text-[15px] font-medium text-white"

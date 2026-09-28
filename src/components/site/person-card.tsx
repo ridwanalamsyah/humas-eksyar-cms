@@ -1,31 +1,33 @@
-/** Kartu orang (dosen/pimpinan): inisial dalam lingkaran, nama, peran. */
+import { Photo } from "./photo";
+
+/** Kartu dosen/pimpinan: foto potret, nama, jabatan, bidang keahlian. */
 export function PersonCard({
   name,
-  initials,
   role,
+  photo,
   tags,
 }: {
   name: string;
-  initials: string;
   role: string;
+  photo?: string | null;
   tags?: string[];
 }) {
   return (
-    <div className="flex h-full flex-col items-center rounded-[24px] border border-hairline bg-canvas p-7 text-center">
-      <span className="grid size-24 place-items-center rounded-full bg-accent-soft text-[28px] font-bold tracking-[-0.02em] text-accent">
-        {initials}
-      </span>
-      <p className="mt-5 text-[18px] font-bold leading-snug tracking-[-0.01em] text-label">{name}</p>
-      <p className="mt-1 text-[14px] text-label-2">{role}</p>
-      {tags && tags.length > 0 && (
-        <ul className="mt-4 flex flex-wrap justify-center gap-1.5">
-          {tags.map((t) => (
-            <li key={t} className="rounded-full bg-mist px-3 py-1 text-[12px] font-medium text-label-2">
-              {t}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+    <article className="group flex h-full flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
+      <Photo src={photo} alt={name} />
+      <div className="flex flex-1 flex-col p-5">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.06em] text-accent">{role}</p>
+        <h3 className="mt-1.5 text-[17px] font-bold leading-snug tracking-[-0.01em] text-label">{name}</h3>
+        {tags && tags.length > 0 && (
+          <ul className="mt-auto flex flex-wrap gap-1.5 pt-4">
+            {tags.map((t) => (
+              <li key={t} className="rounded-full bg-mist px-2.5 py-1 text-[12px] font-medium text-label-2">
+                {t}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </article>
   );
 }

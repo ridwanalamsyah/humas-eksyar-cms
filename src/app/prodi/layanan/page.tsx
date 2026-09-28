@@ -3,14 +3,16 @@ import { FaqList } from "@/components/site/faq-list";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
-import { faq, kontak, layananAdministrasi, layananAkademik, prodi } from "@/lib/site/prodi";
+import { getSite } from "@/lib/site/get-site";
+import { layananAkademik, prodi } from "@/lib/site/prodi";
 
 export const metadata: Metadata = {
   title: "Layanan",
   description: `Layanan akademik dan administrasi mahasiswa ${prodi.fullName} ${prodi.university}.`,
 };
 
-export default function LayananPage() {
+export default async function LayananPage() {
+  const { faq, kontak, layananAdministrasi, layananFormUrl } = await getSite();
   return (
     <>
       <PageHeader
@@ -31,13 +33,13 @@ export default function LayananPage() {
               href={l.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start justify-between gap-6 rounded-[24px] border border-hairline bg-canvas p-7 transition-colors hover:border-accent/40"
+              className="group flex items-start justify-between gap-6 rounded-[24px] border border-hairline bg-canvas p-7 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]"
             >
               <span>
                 <span className="block text-[19px] font-bold tracking-[-0.01em] text-label">{l.title}</span>
                 <span className="mt-1 block text-[15px] text-label-2">{l.description}</span>
               </span>
-              <span className="text-[15px] font-semibold text-accent group-hover:underline">Buka ↗</span>
+              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-mist text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">↗</span>
             </a>
           ))}
         </div>
@@ -61,9 +63,23 @@ export default function LayananPage() {
           ))}
         </ul>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-center">
+          {layananFormUrl && (
+            <a
+              href={layananFormUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-accent-strong"
+            >
+              Ajukan layanan
+            </a>
+          )}
           <a
             href={`mailto:${kontak.email}`}
-            className="rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-accent-strong"
+            className={
+              layananFormUrl
+                ? "text-[16px] font-semibold text-accent hover:underline"
+                : "rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-accent-strong"
+            }
           >
             Kirim email
           </a>

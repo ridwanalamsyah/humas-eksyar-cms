@@ -67,6 +67,9 @@ export const setBioConfig = impl.setBioConfig;
 export const getBrandingConfig = impl.getBrandingConfig;
 export const setBrandingConfig = impl.setBrandingConfig;
 
+export const getWebsiteContent = impl.getWebsiteContent;
+export const setWebsiteContent = impl.setWebsiteContent;
+
 export const listRubrics = impl.listRubrics;
 export const getRubric = impl.getRubric;
 export const createRubric = impl.createRubric;

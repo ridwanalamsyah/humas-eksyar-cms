@@ -3,21 +3,24 @@ import { FaqList } from "@/components/site/faq-list";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
-import { faq, himpunan, kontak, prodi } from "@/lib/site/prodi";
+import { getSite } from "@/lib/site/get-site";
+import { prodi } from "@/lib/site/prodi";
 
 export const metadata: Metadata = {
   title: "Kontak",
   description: `Alamat, email, dan media sosial ${prodi.fullName} ${prodi.university}.`,
 };
 
-const sosial = [
-  { label: "Instagram Prodi", handle: kontak.instagramHandle, href: kontak.instagram },
-  { label: "TikTok Prodi", handle: "@eksyaruinsgd", href: kontak.tiktok },
-  { label: "Instagram HMJ", handle: "@hmjeksyaruinbdg", href: himpunan.instagram },
-  { label: "Instagram FEBI", handle: "@febiuinsgdbdg", href: kontak.febiInstagram },
-];
 
-export default function KontakPage() {
+export default async function KontakPage() {
+  const { faq, himpunan, kontak } = await getSite();
+  const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(`${kontak.address}, ${kontak.street}`)}&output=embed`;
+  const sosial = [
+    { label: "Instagram Prodi", handle: kontak.instagramHandle, href: kontak.instagram },
+    { label: "TikTok Prodi", handle: "TikTok", href: kontak.tiktok },
+    { label: "Instagram HMJ", handle: "HMJ Ekonomi Syariah", href: himpunan.instagram },
+    { label: "Linktree", handle: "Semua tautan", href: kontak.linktree },
+  ].filter((s) => s.href);
   return (
     <>
       <PageHeader
@@ -49,7 +52,7 @@ export default function KontakPage() {
           <div className="overflow-hidden rounded-[28px] bg-mist">
             <iframe
               title={`Peta lokasi ${prodi.university}`}
-              src={kontak.mapsEmbed}
+              src={mapsEmbed}
               className="h-[420px] w-full"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -64,10 +67,10 @@ export default function KontakPage() {
               href={s.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-[20px] bg-mist p-6 transition-colors hover:bg-[#ececf0]"
+              className="group rounded-[20px] bg-mist p-6 transition duration-300 hover:-translate-y-1 hover:bg-accent hover:text-white"
             >
-              <p className="text-[13px] text-label-2">{s.label}</p>
-              <p className="mt-1 text-[17px] font-semibold text-label">{s.handle}</p>
+              <p className="text-[13px] text-label-2 group-hover:text-white/75">{s.label}</p>
+              <p className="mt-1 text-[17px] font-semibold text-label group-hover:text-white">{s.handle}</p>
             </a>
           ))}
         </div>

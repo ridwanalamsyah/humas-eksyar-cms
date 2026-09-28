@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import type { KurikulumYear } from "@/lib/site/prodi";
+import type { KurikulumYear } from "@/lib/site/schema";
 
 /** Segmented control ala iOS + daftar mata kuliah per semester. */
 export function KurikulumTabs({ years }: { years: KurikulumYear[] }) {

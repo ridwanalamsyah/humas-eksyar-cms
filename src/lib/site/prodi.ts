@@ -1,4 +1,10 @@
 /**
+ * Identitas tetap + DATA AWAL (seed) website publik prodi (/prodi).
+ *
+ * Konten yang tampil di website diatur admin dari CMS (Settings → Website)
+ * dan disimpan di database. Data di file ini hanya dipakai sebagai isi awal
+ * sebelum admin menyimpan perubahan pertama — lihat `lib/site/defaults.ts`.
+ *
  * Profil Program Studi Ekonomi Syariah untuk website publik (/prodi).
  *
  * Konten dinamis (berita & agenda) diambil dari CMS lewat data provider.
@@ -286,6 +292,22 @@ export const prospekKarir = [
  */
 export const sorotan = [
   {
+    date: "2026-08-04",
+    category: "Pengabdian",
+    title: "Keluarga Cerdas Lawan Judol & Pinjol lewat Investasi Syariah",
+    summary:
+      "Galeri Investasi Syariah BEI FEBI mengedukasi Tim Penggerak PKK Kelurahan Padasuka tentang bahaya judi online dan pinjol ilegal, perencanaan keuangan keluarga, serta investasi syariah.",
+    source: "https://uinsgd.ac.id/dorong-keluarga-lawan-judol-dan-pinjol-lewat-investasi-syariah-gis-uin-bandung-edukasi-pkk-padasuka/",
+  },
+  {
+    date: "2026-06-08",
+    category: "Akademik",
+    title: "Sekolah Pasar Modal Syariah 2026 di IDX Jawa Barat",
+    summary:
+      "115 mahasiswa semester enam Ekonomi Syariah belajar konsep pasar modal syariah, instrumen investasi, hingga pengelolaan portofolio di Kantor Perwakilan BEI Jawa Barat.",
+    source: "https://uinsgd.ac.id/spms-2026-di-idx-jabar-mahasiswa-ekonomi-syariah-didorong-melek-investasi-islam/",
+  },
+  {
     date: "2026-09-24",
     category: "Pengabdian",
     title: "Literasi Digitalisasi Keuangan Syariah & Pengelolaan Aset Masjid",
@@ -396,6 +418,7 @@ export const himpunan = {
 export const kegiatanMahasiswa = [
   { title: "Kajian & Diskusi Ekonomi Islam", description: "Forum rutin membedah isu ekonomi dan keuangan syariah terkini." },
   { title: "Kompetisi Nasional", description: "Pendampingan lomba business plan, esai, debat, dan karya tulis ilmiah." },
+  { title: "KSEI & FoSSEI", description: "Kelompok Studi Ekonomi Islam UIN SGD aktif dalam jaringan Forum Silaturahmi Studi Ekonomi Islam (FoSSEI) Jawa Barat." },
   { title: "Kuliah Praktisi & Kunjungan Industri", description: "Belajar langsung dari bank syariah, regulator, dan pelaku industri halal." },
   { title: "Pengabdian Masyarakat", description: "Literasi keuangan syariah, pendampingan UMKM, dan program halal di desa binaan." },
 ];
@@ -437,6 +460,7 @@ export const dosen = [
 /** Fasilitas yang dapat diakses mahasiswa. */
 // TODO: tambahkan fasilitas khusus FEBI (laboratorium, galeri investasi, dll.) bila ada.
 export const fasilitas = [
+  { title: "Galeri Investasi Syariah BEI", description: "Diresmikan 13 Oktober 2021 bersama MNC Sekuritas — pusat edukasi dan praktik investasi pasar modal syariah, termasuk Sekolah Pasar Modal Syariah." },
   { title: "Gedung FEBI Kampus 2", description: "Ruang kuliah dan Aula FEBI untuk seminar, kuliah umum, dan kegiatan mahasiswa." },
   { title: "Perpustakaan & Digital Library", description: "Koleksi cetak universitas dan repositori digital skripsi serta karya ilmiah." },
   { title: "Pembelajaran Daring e-Knows", description: "Learning management system untuk materi, tugas, dan kuis perkuliahan." },

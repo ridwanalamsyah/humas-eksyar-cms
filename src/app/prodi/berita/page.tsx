@@ -6,7 +6,7 @@ import { NewsCard } from "@/components/site/news-card";
 import { Reveal } from "@/components/site/reveal";
 import { coverFor, getMediaMap, isAnnouncement, listPublishedNews } from "@/lib/site/content";
 import { cn } from "@/lib/utils";
-import { sorotan } from "@/lib/site/prodi";
+import { getSite } from "@/lib/site/get-site";
 
 export const metadata: Metadata = {
   title: "Berita",
@@ -26,7 +26,7 @@ type Props = { searchParams: Promise<{ kategori?: string }> };
 export default async function BeritaPage({ searchParams }: Props) {
   const { kategori } = await searchParams;
   const tab = TABS.find((t) => t.key === kategori)?.key ?? "semua";
-  const [all, media] = await Promise.all([listPublishedNews(), getMediaMap()]);
+  const [all, media, site] = await Promise.all([listPublishedNews(), getMediaMap(), getSite()]);
 
   const announcements = all.filter(isAnnouncement);
   const news = tab === "pengumuman" ? [] : all.filter((n) => tab === "semua" || !isAnnouncement(n));
@@ -83,10 +83,10 @@ export default async function BeritaPage({ searchParams }: Props) {
 
         {tab !== "pengumuman" && (
           <>
-        <h2 className="mt-20 text-[28px] font-semibold tracking-[-0.02em] text-label">Diberitakan di uinsgd.ac.id</h2>
+        <h2 className="mt-20 text-[28px] font-semibold tracking-[-0.02em] text-label">Sorotan kegiatan</h2>
         <div className="mt-6 grid gap-5 sm:grid-cols-2">
-          {sorotan.map((s) => (
-            <HighlightCard key={s.title} item={s} />
+          {site.kegiatan.map((s, i) => (
+            <HighlightCard key={`${s.title}-${i}`} item={s} />
           ))}
         </div>
           </>

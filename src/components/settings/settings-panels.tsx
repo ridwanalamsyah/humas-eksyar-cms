@@ -19,6 +19,7 @@ import {
   Palette,
   Tag,
   Users as UsersIcon,
+  Globe,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
@@ -73,6 +74,12 @@ export function SettingsPanels({ member }: Props) {
           hint="Atur branding, rubrik, dan role anggota."
         >
           <div className="flex w-full flex-col gap-2">
+            <AdminLink
+              href="/settings/website"
+              icon={<Globe className="size-4" strokeWidth={1.75} />}
+              title="Website Prodi"
+              desc="Konten website publik: profil, dosen, prestasi, kegiatan, layanan."
+            />
             <AdminLink
               href="/settings/branding"
               icon={<Palette className="size-4" strokeWidth={1.75} />}

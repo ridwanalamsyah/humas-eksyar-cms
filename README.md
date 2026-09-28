@@ -63,6 +63,15 @@ pnpm db:studio    # open Drizzle Studio at https://local.drizzle.studio
 pnpm db:generate  # generate SQL migration files
 ```
 
+## Website Publik Prodi (`/prodi`)
+
+Website publik Program Studi Ekonomi Syariah ada di `/prodi` (tanpa login).
+
+- **Konten diatur dari CMS:** Settings → **Website Prodi** (khusus admin) — profil, visi-misi, pimpinan, dosen, prestasi, kegiatan, kurikulum, layanan, FAQ, kontak. Disimpan di tabel `siteSettings` (key `website`) dan langsung tayang setelah disimpan.
+- **Berita, pengumuman & agenda** diambil otomatis dari Konten berstatus *published* (rubrik `pengumuman` → Pengumuman) dan Kegiatan publik.
+- **Foto** diunggah ke Vercel Blob (`BLOB_READ_WRITE_TOKEN`) atau tempel URL `https://`.
+- Data awal (sebelum admin menyimpan) ada di `src/lib/site/prodi.ts`; skema & validasi di `src/lib/site/schema.ts`.
+
 ## Environment Variables
 
 Create `.env.local` (gitignored) with:

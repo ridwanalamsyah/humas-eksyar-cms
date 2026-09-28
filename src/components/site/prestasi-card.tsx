@@ -1,21 +1,22 @@
-import type { prestasi } from "@/lib/site/prodi";
+import { Award } from "lucide-react";
+import type { Prestasi } from "@/lib/site/schema";
+import { Photo } from "./photo";
 
-type Prestasi = (typeof prestasi)[number];
-
-/** Kartu apresiasi bergaya postingan "Selamat & Sukses" di IG Eksyar. */
+/** Kartu apresiasi "Selamat & Sukses": foto potret + label kategori. */
 export function PrestasiCard({ item }: { item: Prestasi }) {
   return (
-    <article className="flex h-full flex-col rounded-[24px] border border-hairline bg-canvas">
-      <div className="flex flex-1 flex-col items-center px-5 pb-6 pt-7 text-center">
-        <p className="text-[22px] font-extrabold leading-none tracking-[-0.01em] text-accent">Selamat &amp; Sukses</p>
-        <p className="font-script text-[20px] leading-tight text-navy">atas prestasinya</p>
-        <span className="mt-4 grid size-20 place-items-center rounded-full bg-accent text-[24px] font-extrabold text-white">
-          {item.initials}
+    <article className="group relative flex h-full flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
+      <div className="relative">
+        <Photo src={item.photo} alt={item.name} />
+        <span className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-canvas/95 px-3 py-1 text-[12px] font-semibold text-label shadow-sm">
+          <Award className="size-3.5 text-amber-deep" strokeWidth={2} />
+          {item.group}
         </span>
-        <p className="mt-4 text-[17px] font-bold leading-snug text-label">{item.name}</p>
-        <p className="mt-1.5 text-[14px] leading-snug text-label-2">{item.achievement}</p>
       </div>
-      <p className="border-t border-hairline py-3 text-center text-[12px] font-semibold tracking-[0.08em] text-label-2">— Ekonomi Syariah —</p>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="text-[18px] font-bold leading-snug tracking-[-0.01em] text-label">{item.name}</h3>
+        <p className="mt-1.5 text-[15px] leading-snug text-label-2">{item.achievement}</p>
+      </div>
     </article>
   );
 }

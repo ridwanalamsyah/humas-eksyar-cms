@@ -3,27 +3,21 @@ import { KurikulumTabs } from "@/components/site/kurikulum-tabs";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
-import {
-  capaianPembelajaran,
-  kelompokMataKuliah,
-  kurikulum,
-  layananAkademik,
-  prodi,
-  profilLulusan,
-  prospekKarir,
-} from "@/lib/site/prodi";
+import { getSite } from "@/lib/site/get-site";
+import { layananAkademik, prodi } from "@/lib/site/prodi";
 
 export const metadata: Metadata = {
   title: "Akademik",
-  description: `Kurikulum ${prodi.totalCredits} SKS, profil lulusan, capaian pembelajaran, dan prospek karir ${prodi.fullName}.`,
+  description: `Kurikulum, profil lulusan, capaian pembelajaran, dan prospek karir ${prodi.fullName}.`,
 };
 
-export default function AkademikPage() {
+export default async function AkademikPage() {
+  const { identity, kelompokMataKuliah, kurikulum, profilLulusan, capaianPembelajaran, prospekKarir } = await getSite();
   const facts = [
-    { v: String(prodi.totalCredits), u: "SKS", k: "Beban studi" },
-    { v: "8", u: "semester", k: "Masa studi normal" },
-    { v: String(prodi.maxSemesters), u: "semester", k: "Batas maksimal" },
-    { v: "S.E.", u: "", k: "Gelar lulusan" },
+    { v: String(identity.totalCredits), u: "SKS", k: "Beban studi" },
+    { v: identity.normalDuration.replace(/\D+/g, "") || "8", u: "semester", k: "Masa studi normal" },
+    { v: String(identity.maxSemesters), u: "semester", k: "Batas maksimal" },
+    { v: identity.degree.match(/\(([^)]+)\)/)?.[1] ?? identity.degree, u: "", k: "Gelar lulusan" },
   ];
 
   return (
@@ -102,8 +96,8 @@ export default function AkademikPage() {
       {/* CPL */}
       <section className="bg-label px-4 py-24 text-white sm:px-6 sm:py-32">
         <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="font-script text-[36px] leading-none text-amber">Capaian Pembelajaran</p>
-          <h2 className="mt-1 text-[clamp(2rem,1.4rem+2.4vw,3.5rem)] font-extrabold leading-[1.07] tracking-[-0.03em]">
+          <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-amber">Capaian pembelajaran</p>
+          <h2 className="mt-3 text-[clamp(2rem,1.4rem+2.4vw,3.5rem)] font-extrabold leading-[1.07] tracking-[-0.03em]">
             Kompetensi yang dibangun.
           </h2>
         </Reveal>
@@ -147,7 +141,7 @@ export default function AkademikPage() {
               href={l.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-[20px] bg-canvas p-6 border border-hairline transition-colors duration-300 hover:border-accent/40"
+              className="group rounded-[20px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]"
             >
               <p className="text-[17px] font-semibold text-label">{l.title}</p>
               <p className="mt-1 text-[14px] text-label-2">{l.description}</p>
