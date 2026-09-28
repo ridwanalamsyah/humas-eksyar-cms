@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 export default async function KontakPage() {
-  const { faq, himpunan, kontak } = await getSite();
+  const { faq, kontak } = await getSite();
   const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(`${kontak.address}, ${kontak.street}`)}&output=embed`;
   const sosial = [
     {
@@ -21,11 +21,6 @@ export default async function KontakPage() {
       href: kontak.instagram,
     },
     { label: "TikTok Prodi", handle: "TikTok", href: kontak.tiktok },
-    {
-      label: "Instagram HMJ",
-      handle: "HMJ Ekonomi Syariah",
-      href: himpunan.instagram,
-    },
     { label: "Linktree", handle: "Semua tautan", href: kontak.linktree },
   ].filter((s) => s.href);
   return (

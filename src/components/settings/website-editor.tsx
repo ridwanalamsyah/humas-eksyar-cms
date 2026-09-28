@@ -394,33 +394,6 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     label: "Mahasiswa",
     sections: [
       {
-        key: "himpunan",
-        title: "HMJ & program unggulan",
-        kind: "object",
-        fields: [
-          { name: "name", label: "Nama himpunan", type: "text" },
-          { name: "cabinet", label: "Kabinet", type: "text" },
-          { name: "chair", label: "Ketua", type: "text" },
-          { name: "chairPeriod", label: "Periode", type: "text" },
-          {
-            name: "description",
-            label: "Deskripsi",
-            type: "textarea",
-            wide: true,
-          },
-          { name: "flagshipName", label: "Program unggulan", type: "text" },
-          { name: "flagshipFull", label: "Kepanjangan", type: "text" },
-          {
-            name: "flagshipDescription",
-            label: "Deskripsi program unggulan",
-            type: "textarea",
-            wide: true,
-          },
-          { name: "instagram", label: "URL Instagram HMJ", type: "url" },
-          { name: "youtube", label: "URL YouTube HMJ", type: "url" },
-        ],
-      },
-      {
         key: "kegiatanMahasiswa",
         title: "Kegiatan mahasiswa",
         kind: "list",

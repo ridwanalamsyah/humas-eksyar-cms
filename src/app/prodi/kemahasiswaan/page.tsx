@@ -12,12 +12,11 @@ import { prodi } from "@/lib/site/prodi";
 
 export const metadata: Metadata = {
   title: "Mahasiswa",
-  description: `Himpunan mahasiswa, prestasi, kegiatan, beasiswa, dan alumni ${prodi.fullName} ${prodi.university}.`,
+  description: `Prestasi, kegiatan, beasiswa, dan alumni ${prodi.fullName} ${prodi.university}.`,
 };
 
 export default async function KemahasiswaanPage() {
   const {
-    himpunan,
     prestasi,
     kegiatan,
     kegiatanMahasiswa,
@@ -31,12 +30,12 @@ export default async function KemahasiswaanPage() {
       <PageHeader
         crumb="Mahasiswa"
         title="Kemahasiswaan"
-        description="Himpunan mahasiswa, prestasi, kegiatan, beasiswa, dan alumni Program Studi Ekonomi Syariah."
+        description="Prestasi, kegiatan, beasiswa, dan alumni Program Studi Ekonomi Syariah."
       />
 
       <LocalNav
         items={[
-          { id: "hmj", label: "HMJ" },
+          { id: "organisasi", label: "Kegiatan" },
           { id: "prestasi", label: "Prestasi" },
           { id: "kegiatan", label: "Kegiatan" },
           { id: "beasiswa", label: "Beasiswa" },
@@ -44,65 +43,17 @@ export default async function KemahasiswaanPage() {
         ]}
       />
 
-      {/* Program unggulan */}
-      <section className="px-4 py-24 sm:px-6 sm:py-32">
-        <Reveal className="mx-auto max-w-[1024px]">
-          <div className="rounded-[32px] bg-accent px-8 py-16 text-center text-white sm:px-16 sm:py-24">
-            <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-sand">
-              Program unggulan HMJ
-            </p>
-            <h2 className="mt-3 text-[clamp(3rem,2rem+4vw,5.5rem)] font-extrabold leading-none tracking-[-0.04em]">
-              {himpunan.flagshipName}
-            </h2>
-            <p className="mt-3 text-[17px] text-white/70">
-              {himpunan.flagshipFull}
-            </p>
-            <p className="mx-auto mt-6 max-w-xl text-[19px] leading-[1.45] text-white/85">
-              {himpunan.flagshipDescription}
-            </p>
-          </div>
-        </Reveal>
-      </section>
-
-      {/* HMJ */}
+      {/* Kegiatan mahasiswa */}
       <section
-        id="hmj"
+        id="organisasi"
         className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32"
       >
         <Reveal>
           <SectionHeading
-            eyebrow={himpunan.cabinet}
-            title={himpunan.name}
-            description={himpunan.description}
+            eyebrow="Pengembangan diri"
+            title="Kegiatan mahasiswa"
+            description="Kegiatan akademik dan nonakademik yang dapat diikuti mahasiswa Ekonomi Syariah di luar perkuliahan."
           />
-          {himpunan.chair && (
-            <p className="mt-6 text-center text-[15px] text-label-2">
-              Ketua HMJ {himpunan.chairPeriod}:{" "}
-              <span className="font-bold text-label">{himpunan.chair}</span>
-            </p>
-          )}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-            {himpunan.instagram && (
-              <a
-                href={himpunan.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full bg-canvas px-5 py-2.5 text-[15px] font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
-              >
-                Instagram ↗
-              </a>
-            )}
-            {himpunan.youtube && (
-              <a
-                href={himpunan.youtube}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full bg-canvas px-5 py-2.5 text-[15px] font-semibold text-accent transition-colors hover:bg-accent hover:text-white"
-              >
-                YouTube ↗
-              </a>
-            )}
-          </div>
         </Reveal>
         <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 sm:grid-cols-2">
           {kegiatanMahasiswa.map((k, i) => (

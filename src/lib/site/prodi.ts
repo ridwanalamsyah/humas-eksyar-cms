@@ -396,15 +396,6 @@ export const sorotan = [
       "https://uinsgd.ac.id/prodi-ekonomi-syariah-uin-bandung-serahkan-sertifikat-juleha-di-cibiru-wetan/",
   },
   {
-    date: "2026-04-04",
-    category: "Kemahasiswaan",
-    title: "Eksphoria 2026: Literasi & Kompetisi Ekonomi Syariah",
-    summary:
-      "HMJ Ekonomi Syariah Kabinet Ekselensi menggelar seminar bersama OJK, kompetisi business plan dan esai dengan 359 peserta dari berbagai kampus, serta bazar UMKM halal.",
-    source:
-      "https://uinsgd.ac.id/tingkatkan-literasi-hmj-ekonomi-syariah-uin-bandung-gelar-eksphoria-2026/",
-  },
-  {
     date: "2024-04-25",
     category: "Penjaminan Mutu",
     title: "FGD Penyusunan Visi Misi & Review Kurikulum",
@@ -434,12 +425,6 @@ export const prestasi = [
     name: "Muhammad Azzam Abdillah",
     initials: "MA",
     achievement: "Juara 1 Bandung Open Tournament Pencak Silat",
-    group: "Mahasiswa",
-  },
-  {
-    name: "Muhamad Yudhi Saputra",
-    initials: "YS",
-    achievement: "Ketua HMJ Ekonomi Syariah 2026",
     group: "Mahasiswa",
   },
   {
@@ -502,25 +487,6 @@ export const mitra = [
     url: "https://www.btn.co.id/",
   },
 ];
-
-export const himpunan = {
-  name: "HMJ Ekonomi Syariah UIN Bandung",
-  // Kepengurusan 2026–2027 (IG @hmjeksyaruinbdg). Nama ketua kabinet baru
-  // belum terverifikasi — isi lewat CMS. Kabinet sebelumnya: Ekselensi.
-  cabinet: "Kabinet Pijakan Bijak",
-  chair: "",
-  chairPeriod: "2026–2027",
-  description:
-    "Himpunan Mahasiswa Jurusan Ekonomi Syariah menjadi wadah pengembangan diri, kepemimpinan, dan kreativitas mahasiswa melalui kajian, kompetisi, pengabdian, dan kegiatan kolaboratif.",
-  flagship: {
-    name: "Eksphoria",
-    full: "Ekonomi Syariah Euphoria",
-    description:
-      "Agenda tahunan HMJ yang memadukan edukasi, pemberdayaan ekonomi, dan apresiasi: seminar nasional, kompetisi business plan & esai tingkat nasional, serta bazar UMKM halal.",
-  },
-  instagram: "https://www.instagram.com/hmjeksyaruinbdg/",
-  youtube: "https://www.youtube.com/@hmjekonomisyariahuinbandun7767",
-};
 
 export const kegiatanMahasiswa = [
   {
