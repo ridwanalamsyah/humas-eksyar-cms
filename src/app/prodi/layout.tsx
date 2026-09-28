@@ -32,10 +32,10 @@ export const metadata: Metadata = {
 
 export default function ProdiLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative flex min-h-dvh flex-col bg-paper font-sans text-ink [color-scheme:light]">
+    <div className="relative flex min-h-dvh flex-col bg-canvas font-sans text-label antialiased [color-scheme:light]">
       <a
         href="#konten"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-sm focus:bg-pine-700 focus:px-4 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
       >
         Lewati ke konten
       </a>

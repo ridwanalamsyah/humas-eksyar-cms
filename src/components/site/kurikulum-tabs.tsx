@@ -1,52 +1,59 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import type { KurikulumYear } from "@/lib/site/prodi";
 
+/** Segmented control ala iOS + daftar mata kuliah per semester. */
 export function KurikulumTabs({ years }: { years: KurikulumYear[] }) {
   const [active, setActive] = useState(0);
   const year = years[active];
 
   return (
     <div>
-      <div role="tablist" aria-label="Tahun kurikulum" className="flex flex-wrap border-b border-pine-800/15">
-        {years.map((y, i) => (
-          <button
-            key={y.label}
-            role="tab"
-            type="button"
-            id={`kurikulum-tab-${i}`}
-            aria-selected={i === active}
-            aria-controls="kurikulum-panel"
-            onClick={() => setActive(i)}
-            className={cn(
-              "-mb-px border-b-[3px] px-5 py-3 font-serif text-[16px] font-semibold transition-colors",
-              i === active ? "border-saffron-500 text-pine-800" : "border-transparent text-ink/50 hover:text-pine-700",
-            )}
-          >
-            {y.label}
-          </button>
-        ))}
+      <div className="flex justify-center">
+        <div role="tablist" aria-label="Tahun kurikulum" className="inline-flex rounded-full bg-[#e8e8ed] p-1">
+          {years.map((y, i) => (
+            <button
+              key={y.label}
+              role="tab"
+              type="button"
+              id={`kurikulum-tab-${i}`}
+              aria-selected={i === active}
+              aria-controls="kurikulum-panel"
+              onClick={() => setActive(i)}
+              className="relative rounded-full px-4 py-1.5 text-[14px] font-medium text-label sm:px-5"
+            >
+              {i === active && (
+                <motion.span
+                  layoutId="kurikulum-seg"
+                  className="absolute inset-0 rounded-full bg-canvas shadow-[0_1px_3px_rgba(0,0,0,0.12)]"
+                  transition={{ type: "spring", stiffness: 500, damping: 38 }}
+                />
+              )}
+              <span className={cn("relative", i !== active && "text-label-2")}>{y.label}</span>
+            </button>
+          ))}
+        </div>
       </div>
 
       <div
         id="kurikulum-panel"
         role="tabpanel"
         aria-labelledby={`kurikulum-tab-${active}`}
-        className="grid gap-px bg-pine-800/10 md:grid-cols-2"
+        className="mt-10 grid gap-5 md:grid-cols-2"
       >
         {year.semesters.map((s) => (
-          <div key={s.name} className="bg-paper p-7">
-            <p className="text-[12px] font-semibold uppercase tracking-[0.18em] text-saffron-600">{s.name}</p>
-            <ol className="mt-4 grid gap-0">
+          <div key={s.name} className="rounded-[28px] bg-canvas p-8">
+            <p className="text-[21px] font-semibold tracking-[-0.01em] text-label">{s.name}</p>
+            <ul className="mt-4">
               {s.courses.map((c, i) => (
-                <li key={`${c}-${i}`} className="flex gap-4 border-b border-dashed border-pine-800/10 py-2.5 text-[15px] text-ink/80 last:border-0">
-                  <span className="w-5 font-mono text-[12px] leading-6 text-pine-500">{String(i + 1).padStart(2, "0")}</span>
+                <li key={`${c}-${i}`} className="border-t border-black/[0.06] py-3 text-[16px] text-label/85 first:border-0">
                   {c}
                 </li>
               ))}
-            </ol>
+            </ul>
           </div>
         ))}
       </div>

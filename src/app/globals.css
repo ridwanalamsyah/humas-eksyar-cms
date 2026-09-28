@@ -126,20 +126,17 @@
   --color-ink-soft: var(--ink-soft);
   --color-ink-deep: var(--ink-deep);
 
-  /* Website publik prodi (/prodi) — palet akademik, tidak ikut dark mode CMS */
-  --color-paper: #faf6ec;
-  --color-paper-2: #f2ecdc;
-  --color-ink: #16201c;
-  --color-pine-50: #eef5f1;
-  --color-pine-100: #d5e8de;
-  --color-pine-300: #7fb49b;
-  --color-pine-500: #1f6e57;
-  --color-pine-700: #0f4c3e;
-  --color-pine-800: #0b3a30;
-  --color-pine-900: #072720;
-  --color-saffron-300: #ecc877;
-  --color-saffron-500: #c9962b;
-  --color-saffron-600: #a87a1c;
+  /* Website publik prodi (/prodi) — gaya Apple, tidak ikut dark mode CMS */
+  --color-canvas: #ffffff;
+  --color-mist: #f5f5f7;
+  --color-label: #1d1d1f;
+  --color-label-2: #6e6e73;
+  --color-label-3: #86868b;
+  --color-hairline: #d2d2d7;
+  --color-accent: #0a7a70;
+  --color-accent-strong: #0d9488;
+  --color-accent-soft: #e6f4f2;
+  --color-amber: #e89422;
 
   --font-sans: var(--font-inter), var(--font-geist-sans), system-ui, sans-serif;
   --font-display: var(--font-inter-tight), var(--font-geist-sans), system-ui, sans-serif;
@@ -418,21 +415,17 @@ body {
 }
 
 /* ============================================================
-   WEBSITE PUBLIK PRODI — ornamen geometri Islam (bintang 8)
+   WEBSITE PUBLIK PRODI — tipografi artikel (gaya Apple Newsroom)
    ============================================================ */
 
-.site-pattern {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><g fill='none' stroke='%23c9962b' stroke-width='1' opacity='0.35'><path d='M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z'/><rect x='17' y='17' width='30' height='30' transform='rotate(45 32 32)'/><rect x='17' y='17' width='30' height='30'/></g></svg>");
-  background-size: 64px 64px;
-}
-
-.site-pattern-light {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'><g fill='none' stroke='%230f4c3e' stroke-width='1' opacity='0.08'><path d='M32 6l7.5 18.5L58 32l-18.5 7.5L32 58l-7.5-18.5L6 32l18.5-7.5z'/><rect x='17' y='17' width='30' height='30' transform='rotate(45 32 32)'/><rect x='17' y='17' width='30' height='30'/></g></svg>");
-  background-size: 64px 64px;
-}
-
-.site-prose p { margin: 0 0 1.1em; }
-.site-prose h2 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 600; margin: 1.6em 0 0.6em; }
-.site-prose ul { list-style: disc; padding-left: 1.25rem; margin: 0 0 1.1em; }
-.site-prose li { margin: 0.3em 0; }
-.site-prose blockquote { border-left: 3px solid var(--color-saffron-500); padding-left: 1rem; font-style: italic; margin: 1.2em 0; }
+.site-prose { color: var(--color-label); font-size: 19px; line-height: 1.58; letter-spacing: 0.012em; }
+.site-prose p { margin: 0 0 1.2em; }
+.site-prose h2 { font-size: 28px; line-height: 1.2; font-weight: 600; letter-spacing: -0.01em; margin: 1.8em 0 0.6em; }
+.site-prose h3 { font-size: 22px; line-height: 1.25; font-weight: 600; margin: 1.6em 0 0.5em; }
+.site-prose ul, .site-prose ol { padding-left: 1.3rem; margin: 0 0 1.2em; }
+.site-prose ul { list-style: disc; }
+.site-prose ol { list-style: decimal; }
+.site-prose li { margin: 0.4em 0; }
+.site-prose a { color: var(--color-accent); text-decoration: underline; text-underline-offset: 3px; }
+.site-prose strong { font-weight: 600; }
+.site-prose blockquote { margin: 1.6em 0; padding: 0 0 0 1.25rem; border-left: 3px solid var(--color-accent-strong); font-size: 24px; line-height: 1.4; font-weight: 600; letter-spacing: -0.01em; }

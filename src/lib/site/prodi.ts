@@ -36,11 +36,17 @@ export const prodi = {
 };
 
 export const hero = {
-  eyebrow: `${prodi.level} ${prodi.fullName} · ${prodi.facultyShort} ${prodi.universityShort}`,
-  title: "Mencetak ekonom Muslim yang",
-  highlight: "berilmu, amanah, dan siap berkiprah.",
+  eyebrow: "Program Studi Ekonomi Syariah",
+  title: "Ekonomi yang adil.",
+  highlight: "Dimulai dari sini.",
   description:
-    "Program Studi Ekonomi Syariah memadukan ilmu ekonomi modern dengan prinsip muamalah Islam untuk menyiapkan lulusan di perbankan dan keuangan syariah, industri halal, filantropi Islam, riset, dan kebijakan publik.",
+    "Belajar ilmu ekonomi modern berlandaskan prinsip muamalah Islam — untuk karir di keuangan syariah, industri halal, filantropi, dan riset kebijakan.",
+  /**
+   * Foto utama beranda (mis. "/prodi/hero.jpg" di folder public, atau URL
+   * dari Media Library CMS). Kosongkan untuk memakai panel logo.
+   */
+  image: null as string | null,
+  imageAlt: "Mahasiswa Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
 };
 
 export const pimpinan = [
@@ -64,12 +70,6 @@ export const pimpinan = [
 export const sambutan = {
   name: "Dr. Evi Sopiah, M.Ag.",
   role: "Ketua Program Studi Ekonomi Syariah",
-  // TODO: minta teks sambutan resmi dari Kaprodi.
-  paragraphs: [
-    "Assalamu'alaikum warahmatullahi wabarakatuh.",
-    "Selamat datang di Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung. Kami percaya ekonomi syariah bukan sekadar label, tetapi cara pandang yang menempatkan keadilan, keberkahan, dan kemaslahatan di pusat aktivitas ekonomi.",
-    "Kolaborasi dunia akademik dengan praktisi menjadi kunci. Karena itu mahasiswa kami tidak hanya belajar teori, tetapi juga melihat langsung praktiknya di lembaga keuangan syariah, industri halal, dan masyarakat.",
-  ],
 };
 
 // TODO: ganti dengan rumusan visi, misi, dan tujuan resmi hasil FGD prodi.
@@ -388,12 +388,12 @@ export const faq = [
 export const kontak = {
   address: "Fakultas Ekonomi dan Bisnis Islam, UIN Sunan Gunung Djati Bandung",
   street: "Jl. A.H. Nasution No. 105, Cipadung, Cibiru, Kota Bandung, Jawa Barat 40614",
-  // TODO: pastikan email resmi prodi.
-  email: "humas.eksyar@uinsgd.ac.id",
+  email: "es.uinsgdbdg@gmail.com",
   hours: "Senin–Jumat, 08.00–16.00 WIB",
   instagram: "https://www.instagram.com/eksyaruinsgd/",
   instagramHandle: "@eksyaruinsgd",
   tiktok: "https://www.tiktok.com/@eksyaruinsgd",
+  x: "https://x.com/eksyaruinsgd",
   febiInstagram: "https://www.instagram.com/febiuinsgdbdg/",
   pmbUrl: "https://pmb.uinsgd.ac.id",
   mapsUrl: "https://maps.google.com/?q=UIN+Sunan+Gunung+Djati+Bandung",

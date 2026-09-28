@@ -39,3 +39,22 @@ export function contentExcerpt(item: ContentItem, max = 180): string {
     .trim();
   return plain.length > max ? `${plain.slice(0, max).trimEnd()}…` : plain;
 }
+
+const RUBRIC_LABELS: Record<string, string> = {
+  pengumuman: "Pengumuman",
+  dokumentasi: "Kegiatan",
+  kajian: "Kajian",
+  campaign: "Kampanye",
+  selamat_sukses: "Prestasi",
+  bisnis_halal: "Bisnis Halal",
+  eksyar_talks: "Eksyar Talks",
+  tausiyah_senin: "Tausiyah",
+  eksphoria_update: "Eksphoria",
+};
+
+/** Label kategori berita untuk publik, dari slug rubrik CMS. */
+export function rubricLabel(slug: string): string {
+  if (RUBRIC_LABELS[slug]) return RUBRIC_LABELS[slug];
+  const words = slug.split(/[_-]+/).filter(Boolean);
+  return words.length ? words.map((w) => w[0].toUpperCase() + w.slice(1)).join(" ") : "Berita";
+}

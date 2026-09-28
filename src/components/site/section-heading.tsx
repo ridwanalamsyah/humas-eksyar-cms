@@ -1,46 +1,27 @@
 import { cn } from "@/lib/utils";
 
-/** Judul section bergaya editorial: nomor/eyebrow emas + judul serif. */
+/** Judul section gaya Apple: eyebrow kecil, headline besar rapat, deskripsi abu. */
 export function SectionHeading({
   eyebrow,
   title,
   description,
-  align = "left",
-  tone = "light",
+  align = "center",
   className,
 }: {
-  eyebrow: string;
+  eyebrow?: string;
   title: string;
   description?: string;
   align?: "left" | "center";
-  tone?: "light" | "dark";
   className?: string;
 }) {
-  const dark = tone === "dark";
   return (
-    <div className={cn("max-w-2xl", align === "center" && "mx-auto text-center", className)}>
-      <p
-        className={cn(
-          "flex items-center gap-3 text-[12px] font-semibold uppercase tracking-[0.22em]",
-          align === "center" && "justify-center",
-          dark ? "text-saffron-300" : "text-saffron-600",
-        )}
-      >
-        <span className={cn("h-px w-8", dark ? "bg-saffron-300" : "bg-saffron-500")} aria-hidden />
-        {eyebrow}
-      </p>
-      <h2
-        className={cn(
-          "mt-4 font-serif text-[clamp(1.75rem,1.3rem+1.6vw,2.6rem)] font-semibold leading-[1.15] text-balance",
-          dark ? "text-paper" : "text-pine-800",
-        )}
-      >
+    <div className={cn(align === "center" ? "mx-auto max-w-3xl text-center" : "max-w-2xl", className)}>
+      {eyebrow && <p className="text-[17px] font-semibold text-accent">{eyebrow}</p>}
+      <h2 className="mt-1 text-[clamp(2rem,1.4rem+2.4vw,3.5rem)] font-semibold leading-[1.07] tracking-[-0.025em] text-label text-balance">
         {title}
       </h2>
       {description && (
-        <p className={cn("mt-4 text-[16px] leading-relaxed text-pretty", dark ? "text-pine-100/75" : "text-ink/65")}>
-          {description}
-        </p>
+        <p className="mt-4 text-[clamp(1.05rem,1rem+0.3vw,1.3rem)] leading-[1.45] text-label-2 text-pretty">{description}</p>
       )}
     </div>
   );

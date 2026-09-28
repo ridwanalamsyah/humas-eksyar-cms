@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { cn } from "@/lib/utils";
-import { kontak, navLinks, prodi, utilityLinks } from "@/lib/site/prodi";
+import { kontak, navLinks, prodi } from "@/lib/site/prodi";
 
 function isActive(pathname: string, href: string) {
   return href === "/prodi" ? pathname === "/prodi" : pathname.startsWith(href);
@@ -15,135 +15,123 @@ function isActive(pathname: string, href: string) {
 export function SiteNavbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Tutup menu mobile saat pindah halaman.
+  // Tutup menu saat pindah halaman.
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 
+  // Kunci scroll saat menu mobile terbuka.
+  useEffect(() => {
+    document.documentElement.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.documentElement.style.overflow = "";
+    };
+  }, [open]);
+
   return (
     <header className="sticky top-0 z-50">
-      {/* Utility bar */}
-      <div className="hidden bg-pine-900 text-[12px] text-pine-100 md:block">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-2">
-          <p>
-            {prodi.faculty} · {prodi.university}
-          </p>
-          <ul className="flex items-center gap-5">
-            {utilityLinks.map((l) => (
+      <div
+        className={cn(
+          "border-b border-black/[0.06] backdrop-blur-xl backdrop-saturate-150 transition-colors",
+          open ? "bg-canvas" : "bg-canvas/80",
+        )}
+      >
+        <nav aria-label="Navigasi utama" className="mx-auto flex h-12 max-w-[1024px] items-center justify-between px-4 sm:px-6">
+          <Link href="/prodi" className="flex items-center gap-2" aria-label={`${prodi.fullName} — beranda`}>
+            <EksyarLogo size={26} alt="" />
+            <span className="text-[14px] font-semibold tracking-[-0.01em] text-label">Ekonomi Syariah</span>
+          </Link>
+
+          <ul className="hidden items-center gap-7 md:flex">
+            {navLinks.slice(1).map((l) => (
               <li key={l.href}>
-                <a href={l.href} target="_blank" rel="noopener noreferrer" className="hover:text-saffron-300">
+                <Link
+                  href={l.href}
+                  aria-current={isActive(pathname, l.href) ? "page" : undefined}
+                  className={cn(
+                    "text-[12.5px] transition-colors",
+                    isActive(pathname, l.href) ? "text-label" : "text-label/70 hover:text-label",
+                  )}
+                >
                   {l.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
-        </div>
-      </div>
 
-      {/* Main nav */}
-      <div
-        className={cn(
-          "border-b border-pine-800/10 bg-paper/95 backdrop-blur-sm transition-shadow",
-          scrolled && "shadow-[0_1px_0_rgba(0,0,0,0.04),0_8px_24px_-12px_rgba(7,39,32,0.25)]",
-        )}
-      >
-        <nav aria-label="Navigasi utama" className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-4 py-3 sm:px-6">
-          <Link href="/prodi" className="flex items-center gap-3">
-            <EksyarLogo size={44} alt="Logo Program Studi Ekonomi Syariah" />
-            <span className="leading-tight">
-              <span className="block font-serif text-[17px] font-semibold text-pine-800">
-                <span className="sm:hidden">{prodi.name}</span>
-                <span className="hidden sm:inline">{prodi.fullName}</span>
-              </span>
-              <span className="block text-[11.5px] uppercase tracking-[0.12em] text-ink/55">
-                {prodi.facultyShort} · {prodi.universityShort}
-              </span>
-            </span>
-          </Link>
-
-          <ul className="hidden items-center lg:flex">
-            {navLinks.map((l) => {
-              const active = isActive(pathname, l.href);
-              return (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    aria-current={active ? "page" : undefined}
-                    className={cn(
-                      "relative px-3.5 py-2 text-[14px] font-medium transition-colors",
-                      active ? "text-pine-700" : "text-ink/70 hover:text-pine-700",
-                    )}
-                  >
-                    {l.label}
-                    {active && <span className="absolute inset-x-3.5 -bottom-[13px] h-[3px] bg-saffron-500" aria-hidden />}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <a
               href={kontak.pmbUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden h-10 items-center rounded-sm bg-pine-700 px-5 text-[13px] font-semibold uppercase tracking-[0.08em] text-paper transition-colors hover:bg-pine-800 sm:inline-flex"
+              className="hidden rounded-full bg-accent px-3.5 py-1 text-[12px] font-medium text-white transition-colors hover:bg-accent-strong sm:inline-block"
             >
-              Daftar PMB
+              Daftar
             </a>
             <button
               type="button"
-              className="grid size-10 place-items-center rounded-sm text-pine-800 hover:bg-pine-50 lg:hidden"
+              className="relative -mr-2 grid size-10 place-items-center md:hidden"
               aria-label={open ? "Tutup menu" : "Buka menu"}
               aria-expanded={open}
               aria-controls="menu-mobile"
               onClick={() => setOpen((v) => !v)}
             >
-              {open ? <X className="size-5" /> : <Menu className="size-5" />}
+              <span
+                className={cn(
+                  "absolute h-[1.5px] w-[17px] rounded bg-label transition-transform duration-300",
+                  open ? "rotate-45" : "-translate-y-[4px]",
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute h-[1.5px] w-[17px] rounded bg-label transition-transform duration-300",
+                  open ? "-rotate-45" : "translate-y-[4px]",
+                )}
+              />
             </button>
           </div>
         </nav>
+      </div>
 
+      <AnimatePresence>
         {open && (
-          <div id="menu-mobile" className="border-t border-pine-800/10 bg-paper lg:hidden">
-            <ul className="mx-auto max-w-7xl px-4 py-2">
-              {navLinks.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className={cn(
-                      "block border-b border-pine-800/5 py-3 text-[15px] font-medium",
-                      isActive(pathname, l.href) ? "text-pine-700" : "text-ink/80",
-                    )}
-                  >
+          <motion.div
+            id="menu-mobile"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-x-0 bottom-0 top-12 overflow-y-auto bg-canvas md:hidden"
+          >
+            <ul className="px-10 pt-6">
+              {navLinks.map((l, i) => (
+                <motion.li
+                  key={l.href}
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.03 * i, duration: 0.25 }}
+                >
+                  <Link href={l.href} className="block py-2.5 text-[28px] font-semibold tracking-[-0.02em] text-label">
                     {l.label}
                   </Link>
-                </li>
+                </motion.li>
               ))}
             </ul>
-            <div className="mx-auto max-w-7xl px-4 pb-4">
+            <div className="px-10 pt-6">
               <a
                 href={kontak.pmbUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-11 items-center justify-center rounded-sm bg-pine-700 text-sm font-semibold uppercase tracking-[0.08em] text-paper"
+                className="inline-block rounded-full bg-accent px-6 py-3 text-[15px] font-medium text-white"
               >
-                Daftar PMB
+                Daftar Mahasiswa Baru
               </a>
             </div>
-          </div>
+          </motion.div>
         )}
-      </div>
+      </AnimatePresence>
     </header>
   );
 }
