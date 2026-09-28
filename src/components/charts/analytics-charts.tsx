@@ -28,7 +28,7 @@ export function AnalyticsCharts({ series }: Props) {
   return (
     <div className="grid gap-6">
       <GlassCard className="p-5">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Performa publish — views &amp; likes
         </p>
         <div className="mt-4 h-64 w-full">
@@ -93,7 +93,7 @@ export function AnalyticsCharts({ series }: Props) {
       </GlassCard>
 
       <GlassCard className="p-5">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Sentiment per konten (-100 buruk → +100 positif)
         </p>
         <div className="mt-4 h-56 w-full">

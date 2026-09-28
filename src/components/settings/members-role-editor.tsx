@@ -143,7 +143,7 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
       </GlassCard>
 
       <GlassCard className="p-5">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Penjelasan role
         </p>
         <ul className="mt-3 space-y-2 text-[12px]">

@@ -18,7 +18,7 @@ export function QRCheckIn({ eventId, eventTitle }: Props) {
 
   return (
     <div>
-      <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+      <p className="text-[12.5px] text-foreground/50">
         QR Check-in
       </p>
       <p className="mt-1 text-[12px] text-foreground/65">

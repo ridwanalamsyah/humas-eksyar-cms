@@ -150,7 +150,7 @@ export function CaptionHistory({
   return (
     <GlassCard variant="regular" className="p-5">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+        <h3 className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
           <History className="size-3" strokeWidth={1.75} />
           Riwayat Caption
         </h3>
@@ -328,7 +328,7 @@ function DiffModal({
         </header>
         <div className="grid max-h-[calc(85vh-3.5rem)] grid-cols-2 overflow-auto text-[13px]">
           <div className="border-r border-foreground/10 dark:border-white/10">
-            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55 dark:bg-white/[0.05]">
+            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[12.5px] text-foreground/50 dark:bg-white/[0.05]">
               Sebelum · {timeAgo(before.createdAt)}
             </div>
             <pre className="whitespace-pre-wrap break-words p-4 font-mono leading-relaxed text-foreground/85">
@@ -350,7 +350,7 @@ function DiffModal({
             </pre>
           </div>
           <div>
-            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55 dark:bg-white/[0.05]">
+            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[12.5px] text-foreground/50 dark:bg-white/[0.05]">
               Sesudah · {timeAgo(after.createdAt)}
             </div>
             <pre className="whitespace-pre-wrap break-words p-4 font-mono leading-relaxed text-foreground/85">

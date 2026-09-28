@@ -715,7 +715,7 @@ function IconBtn({ label, onClick, disabled, danger, children }: { label: string
 function Field({ label, hint, children }: { label: string; hint?: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">{label}</span>
+      <span className="mb-1 block text-[12.5px] text-foreground/50">{label}</span>
       <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">
         {children}
       </div>

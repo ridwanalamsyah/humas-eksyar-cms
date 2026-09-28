@@ -223,7 +223,7 @@ function Panel({
 }) {
   return (
     <GlassCard className="p-5">
-      <div className="flex items-center gap-2 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+      <div className="flex items-center gap-2 text-[12.5px] text-foreground/50">
         {icon}
         {title}
       </div>

@@ -144,7 +144,7 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
           </Field>
 
           <div>
-            <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+            <p className="mb-2 text-[12.5px] text-foreground/50">
               Gaya tone
             </p>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -242,7 +242,7 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
               className="space-y-4"
             >
               <GlassCard variant="thick" className="p-6">
-                <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-foreground/55">
+                <div className="flex items-center gap-2 text-[12.5px] text-foreground/50">
                   <Sparkles className="size-3.5 text-gold-500" strokeWidth={2} />
                   Caption Utama · {result.provider === "gemini" ? "Gemini" : "Mock"}
                 </div>
@@ -267,7 +267,7 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
 
               {result.alternatives.length > 0 && (
                 <GlassCard className="p-5">
-                  <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-foreground/55">
+                  <div className="flex items-center gap-2 text-[12.5px] text-foreground/50">
                     <Quote className="size-3.5" strokeWidth={2} /> Alternatif
                   </div>
                   <div className="mt-3 grid gap-3">
@@ -293,7 +293,7 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
               )}
 
               <GlassCard className="p-5">
-                <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-foreground/55">
+                <div className="flex items-center gap-2 text-[12.5px] text-foreground/50">
                   <Hash className="size-3.5" strokeWidth={2} /> Hashtag Tetap
                 </div>
                 <p className="mt-2 font-mono text-[12px] leading-relaxed text-foreground/75">
@@ -319,7 +319,7 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
 
               {result.cta && (
                 <GlassCard variant="thin" className="p-4">
-                  <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+                  <p className="text-[12.5px] text-foreground/50">
                     Call to Action
                   </p>
                   <p className="mt-1 text-[14px]">{result.cta}</p>

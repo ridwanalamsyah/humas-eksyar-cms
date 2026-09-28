@@ -12,7 +12,7 @@ export function QuestProgress({ quests }: { quests: Quest[] }) {
     <GlassCard variant="regular" className="p-5">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">Quests</p>
+          <p className="text-[12.5px] text-foreground/50">Quests</p>
           <h3 className="font-display text-base font-semibold tracking-tight">Misi minggu ini</h3>
         </div>
         <Link

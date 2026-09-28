@@ -1,5 +1,6 @@
 import { BottomDock } from "@/components/navigation/bottom-dock";
 import { AppHeader } from "@/components/layout/app-header";
+import { Sidebar } from "@/components/layout/sidebar";
 import { getCurrentMember, listNotifications } from "@/lib/data/provider";
 import { cn } from "@/lib/utils";
 
@@ -23,24 +24,22 @@ export async function AppShell({
   const notifs = await listNotifications(member.id);
   const unread = notifs.filter((n) => !n.read).length;
 
-  const widthClass =
-    width === "wide"
-      ? "max-w-7xl"
-      : width === "narrow"
-        ? "max-w-3xl"
-        : "max-w-6xl";
+  const widthClass = width === "wide" ? "max-w-7xl" : width === "narrow" ? "max-w-3xl" : "max-w-6xl";
 
   return (
-    <main
-      className={cn(
-        "mx-auto w-full px-4 pb-32 sm:px-6 sm:pb-40",
-        topGap === "default" ? "pt-6 sm:pt-10" : "pt-4 sm:pt-6",
-        widthClass,
-      )}
-    >
-      <AppHeader member={member} unread={unread} />
-      <div className="mt-8">{children}</div>
+    <div className="min-h-dvh lg:pl-60">
+      <Sidebar member={member} />
+      <main
+        className={cn(
+          "mx-auto w-full px-4 pb-28 sm:px-8 lg:pb-16",
+          topGap === "default" ? "pt-4 sm:pt-6" : "pt-3 sm:pt-4",
+          widthClass,
+        )}
+      >
+        <AppHeader member={member} unread={unread} />
+        <div className="mt-6 sm:mt-8">{children}</div>
+      </main>
       {!hideDock && <BottomDock />}
-    </main>
+    </div>
   );
 }

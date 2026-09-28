@@ -94,7 +94,7 @@ export default async function LeaderboardPage() {
       <div className="mt-8 grid gap-6 lg:grid-cols-[2fr_1fr]">
         <GlassCard className="overflow-hidden p-0">
           <div className="border-b border-foreground/10 px-5 py-3 dark:border-white/10">
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+            <p className="text-[12.5px] text-foreground/50">
               Peringkat 4–20
             </p>
           </div>
@@ -136,7 +136,7 @@ export default async function LeaderboardPage() {
 
         <aside className="space-y-4">
           <GlassCard variant="thin" className="p-5">
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+            <p className="text-[12.5px] text-foreground/50">
               Aturan ringkas
             </p>
             <ul className="mt-2 space-y-1.5 text-[12px] text-foreground/70">

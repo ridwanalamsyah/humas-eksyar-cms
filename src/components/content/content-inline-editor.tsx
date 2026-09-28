@@ -301,7 +301,7 @@ function AutosaveBadge({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+      <span className="mb-1.5 block text-[12.5px] text-foreground/50">
         {label}
       </span>
       {children}

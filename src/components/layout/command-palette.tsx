@@ -46,10 +46,10 @@ export function CommandPaletteTrigger({ open, setOpen }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="hidden h-10 items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] pl-3 pr-2 text-sm text-foreground/55 transition-colors hover:bg-foreground/[0.07] dark:border-white/10 dark:bg-white/[0.04] sm:flex"
+        className="hidden h-9 items-center gap-2 rounded-lg border border-foreground/10 bg-background pl-3 pr-2 text-[13px] text-foreground/50 transition-colors hover:border-foreground/20 dark:border-white/10 sm:flex"
       >
         <Search className="size-4" strokeWidth={1.75} />
-        <span className="pr-3">Cari konten, anggota, kegiatan…</span>
+        <span className="pr-6">Cari…</span>
         <kbd className="rounded-md border border-foreground/15 bg-foreground/5 px-1.5 py-0.5 font-mono text-[10px] font-medium tracking-wider text-foreground/65 dark:border-white/10 dark:bg-white/5">
           ⌘K
         </kbd>

@@ -112,7 +112,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
           </GlassCard>
 
           <GlassCard className="p-5">
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+            <p className="text-[12.5px] text-foreground/50">
               Badge dimiliki ({memberBadges.length})
             </p>
             <div className="mt-3 grid grid-cols-3 gap-2">

@@ -42,7 +42,7 @@
   --info: rgba(59, 130, 246, 0.85);
 
   /* Surface — light mode default */
-  --background: #f7f8f6;
+  --background: #f6f7f7;
   --foreground: var(--ink-soft);
   --muted: rgba(20, 32, 26, 0.56);
   --subtle: rgba(20, 32, 26, 0.08);
@@ -50,14 +50,16 @@
   --ring: rgba(13, 148, 136, 0.45);
 
   /* Glass — light */
-  --glass-regular-bg: rgba(255, 255, 255, 0.55);
-  --glass-thick-bg: rgba(255, 255, 255, 0.72);
-  --glass-thin-bg: rgba(255, 255, 255, 0.30);
-  --glass-border: rgba(255, 255, 255, 0.40);
-  --glass-inner-top: rgba(255, 255, 255, 0.60);
-  --glass-inner-bottom: rgba(255, 255, 255, 0.20);
-  --glass-shadow-ambient: 0 24px 48px -16px rgba(13, 148, 136, 0.18);
-  --glass-shadow-base: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
+  /* Permukaan CMS — minimalis: kartu putih polos bergaris tipis.
+     (Nama token "glass" dipertahankan agar komponen lama tetap jalan.) */
+  --glass-regular-bg: #ffffff;
+  --glass-thick-bg: #ffffff;
+  --glass-thin-bg: rgba(20, 32, 26, 0.03);
+  --glass-border: rgba(20, 32, 26, 0.09);
+  --glass-inner-top: transparent;
+  --glass-inner-bottom: transparent;
+  --glass-shadow-ambient: 0 0 0 0 transparent;
+  --glass-shadow-base: 0 1px 2px 0 rgba(20, 32, 26, 0.04);
 
   /* Type scale */
   --font-display: clamp(2.5rem, 1.8rem + 3vw, 4.5rem);
@@ -80,14 +82,14 @@
   --border: rgba(253, 251, 245, 0.10);
   --ring: rgba(69, 177, 136, 0.55);
 
-  --glass-regular-bg: rgba(20, 32, 26, 0.55);
-  --glass-thick-bg: rgba(20, 32, 26, 0.72);
-  --glass-thin-bg: rgba(20, 32, 26, 0.30);
-  --glass-border: rgba(255, 255, 255, 0.10);
-  --glass-inner-top: rgba(255, 255, 255, 0.18);
-  --glass-inner-bottom: rgba(255, 255, 255, 0.04);
-  --glass-shadow-ambient: 0 24px 48px -16px rgba(13, 148, 136, 0.30);
-  --glass-shadow-base: 0 4px 12px -2px rgba(0, 0, 0, 0.40);
+  --glass-regular-bg: #111a16;
+  --glass-thick-bg: #111a16;
+  --glass-thin-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-inner-top: transparent;
+  --glass-inner-bottom: transparent;
+  --glass-shadow-ambient: 0 0 0 0 transparent;
+  --glass-shadow-base: 0 0 0 0 transparent;
 }
 
 /* ============================================================
@@ -150,10 +152,10 @@
   --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
   --font-jakarta: var(--font-plus-jakarta), var(--font-inter), system-ui, sans-serif;
 
-  --radius-sm: 0.625rem;
-  --radius-md: 1rem;
-  --radius-lg: 1.25rem;
-  --radius-xl: 1.75rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.625rem;
+  --radius-xl: 0.75rem;
 
   --animate-shimmer: shimmer 2.4s ease-in-out infinite;
   --animate-float: float 6s ease-in-out infinite;
@@ -234,32 +236,18 @@ body {
 
 @utility glass-regular {
   background: var(--glass-regular-bg);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid var(--glass-border);
-  box-shadow:
-    0 1px 0 0 var(--glass-inner-top) inset,
-    0 -1px 0 0 var(--glass-inner-bottom) inset,
-    var(--glass-shadow-ambient),
-    var(--glass-shadow-base);
+  box-shadow: var(--glass-shadow-base);
 }
 
 @utility glass-thick {
   background: var(--glass-thick-bg);
-  backdrop-filter: blur(40px) saturate(200%);
-  -webkit-backdrop-filter: blur(40px) saturate(200%);
   border: 1px solid var(--glass-border);
-  box-shadow:
-    0 1px 0 0 var(--glass-inner-top) inset,
-    0 -1px 0 0 var(--glass-inner-bottom) inset,
-    0 32px 64px -24px rgba(13, 148, 136, 0.22),
-    0 6px 16px -4px rgba(0, 0, 0, 0.10);
+  box-shadow: var(--glass-shadow-base);
 }
 
 @utility glass-thin {
   background: var(--glass-thin-bg);
-  backdrop-filter: blur(16px) saturate(160%);
-  -webkit-backdrop-filter: blur(16px) saturate(160%);
   border: 1px solid var(--glass-border);
 }
 
@@ -275,72 +263,15 @@ body {
   text-wrap: pretty;
 }
 
-/* Specular highlight via pseudo-element */
-.specular-edge::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.85) 0%,
-    rgba(255, 255, 255, 0.10) 30%,
-    rgba(255, 255, 255, 0.04) 70%,
-    rgba(255, 255, 255, 0.50) 100%
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0.55;
-  transition: opacity 0.4s cubic-bezier(0.32, 0.72, 0, 1);
-  pointer-events: none;
-}
-
-.dark .specular-edge::before {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.30) 0%,
-    rgba(255, 255, 255, 0.04) 30%,
-    rgba(255, 255, 255, 0.02) 70%,
-    rgba(255, 255, 255, 0.20) 100%
-  );
-}
-
-.specular-edge:hover::before { opacity: 1; }
+/* Specular highlight dinonaktifkan untuk tampilan minimalis. */
 
 /* ============================================================
    BACKGROUND TEXTURE — subtle mesh gradient + noise
    Used on root for "alive" feel
    ============================================================ */
 
-.bg-mesh {
-  background-image:
-    radial-gradient(at 18% 22%, color-mix(in oklab, var(--brand-300) 35%, transparent) 0px, transparent 50%),
-    radial-gradient(at 82% 12%, color-mix(in oklab, var(--cream-200) 50%, transparent) 0px, transparent 50%),
-    radial-gradient(at 65% 85%, color-mix(in oklab, var(--brand-500) 22%, transparent) 0px, transparent 55%),
-    radial-gradient(at 12% 88%, color-mix(in oklab, var(--gold-300) 18%, transparent) 0px, transparent 50%);
-}
-
-.dark .bg-mesh {
-  background-image:
-    radial-gradient(at 18% 22%, color-mix(in oklab, var(--brand-700) 50%, transparent) 0px, transparent 50%),
-    radial-gradient(at 82% 12%, color-mix(in oklab, var(--brand-900) 60%, transparent) 0px, transparent 50%),
-    radial-gradient(at 65% 85%, color-mix(in oklab, var(--brand-500) 25%, transparent) 0px, transparent 55%),
-    radial-gradient(at 12% 88%, color-mix(in oklab, var(--gold-600) 18%, transparent) 0px, transparent 50%);
-}
-
-.bg-noise {
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/></svg>");
-  background-size: 160px 160px;
-  mix-blend-mode: overlay;
-  opacity: 0.025;
-  pointer-events: none;
-}
-
-.dark .bg-noise { opacity: 0.04; }
+/* Latar mesh & noise dinonaktifkan — latar CMS polos. */
+.bg-mesh, .bg-noise { display: none; }
 
 /* ============================================================
    COMMAND PALETTE (cmdk) — group headings + item states

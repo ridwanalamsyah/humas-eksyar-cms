@@ -17,34 +17,27 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary: [
-          "text-white",
-          "bg-gradient-to-b from-brand-500 to-brand-600",
-          "shadow-[0_8px_24px_-8px_rgba(13,148,136,0.5),inset_0_1px_0_0_rgba(255,255,255,0.4)]",
-          "hover:brightness-110 hover:shadow-[0_12px_32px_-10px_rgba(13,148,136,0.6),inset_0_1px_0_0_rgba(255,255,255,0.5)]",
-          "active:brightness-95",
-          "dark:from-brand-400 dark:to-brand-500",
+          "text-white bg-brand-600 hover:bg-brand-700",
+          "dark:bg-brand-500 dark:hover:bg-brand-400 dark:text-ink-deep",
         ].join(" "),
         secondary: [
-          "glass-regular text-foreground specular-edge",
-          "hover:bg-[color-mix(in_oklab,white_72%,transparent)]",
-          "dark:hover:bg-[color-mix(in_oklab,#14201a_72%,transparent)]",
+          "border border-foreground/10 bg-background text-foreground",
+          "hover:bg-foreground/[0.04] dark:border-white/10",
         ].join(" "),
         ghost: [
           "text-foreground bg-transparent",
-          "hover:glass-thin",
+          "hover:bg-foreground/[0.05]",
         ].join(" "),
         gold: [
           "text-ink-soft",
-          "bg-gradient-to-b from-gold-400 to-gold-500",
-          "shadow-[0_8px_24px_-8px_rgba(232,148,34,0.5),inset_0_1px_0_0_rgba(255,255,255,0.4)]",
-          "hover:brightness-110",
+          "bg-gold-400 hover:bg-gold-500",
         ].join(" "),
       },
       size: {
-        sm: "h-9 px-3 text-sm rounded-xl",
-        md: "h-11 px-5 text-sm rounded-2xl",
-        lg: "h-13 px-7 text-base rounded-2xl",
-        icon: "size-10 rounded-2xl",
+        sm: "h-8 px-3 text-[13px] rounded-lg",
+        md: "h-10 px-4 text-sm rounded-xl",
+        lg: "h-12 px-6 text-base rounded-xl",
+        icon: "size-9 rounded-xl",
       },
     },
     defaultVariants: {
