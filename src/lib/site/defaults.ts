@@ -1,6 +1,7 @@
 import {
   beasiswa,
   bidangKajian,
+  timeline,
   capaianPembelajaran,
   dosen,
   faq,
@@ -65,6 +66,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   },
   kegiatanMahasiswa,
   beasiswa,
+  timeline,
   fasilitas: fasilitas.map((f) => ({ ...f, image: null })),
   jalurMasuk,
   unduhan: [

@@ -15,7 +15,7 @@ export const metadata: Metadata = {
 };
 
 export default async function ProfilPage() {
-  const { profil, pimpinan, fasilitas, identity, kegiatan, kontak } = await getSite();
+  const { profil, pimpinan, fasilitas, identity, kegiatan, kontak, timeline } = await getSite();
   const mutu = kegiatan.find((s) => s.category.toLowerCase() === "penjaminan mutu");
 
   return (
@@ -45,6 +45,20 @@ export default async function ProfilPage() {
             <p key={i}>{p}</p>
           ))}
         </Reveal>
+        {timeline.length > 0 && (
+          <ol className="mx-auto mt-16 max-w-[820px] border-l-2 border-hairline pl-8">
+            {timeline.map((t, i) => (
+              <Reveal key={`${t.year}-${i}`} className="relative pb-10 last:pb-0">
+                <li>
+                  <span aria-hidden className="absolute -left-[41px] top-1.5 size-4 rounded-full border-[3px] border-canvas bg-accent ring-2 ring-accent/20" />
+                  <p className="text-[15px] font-bold text-accent">{t.year}</p>
+                  <h3 className="mt-1 text-[20px] font-bold tracking-[-0.01em] text-label">{t.title}</h3>
+                  <p className="mt-1.5 text-[16px] leading-[1.5] text-label-2">{t.description}</p>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+        )}
       </section>
 
       <section id="visi-misi" className="scroll-mt-28 bg-accent px-4 py-24 text-center text-white sm:px-6 sm:py-32">

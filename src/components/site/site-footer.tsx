@@ -41,6 +41,7 @@ export async function SiteFooter() {
           </Column>
           <Column title="Layanan">
             {[
+              { href: "/prodi/beasiswa", label: "Beasiswa" },
               { href: "/prodi/unduhan", label: "Unduhan dokumen" },
               { href: "/prodi/skripsi", label: "Cek judul skripsi" },
             ].map((l) => (

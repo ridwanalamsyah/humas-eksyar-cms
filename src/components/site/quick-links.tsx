@@ -7,7 +7,7 @@ export function QuickLinks({ pmbUrl }: { pmbUrl: string }) {
     { href: "/prodi/unduhan", label: "Unduhan", Icon: FolderDown },
     { href: "/prodi/skripsi", label: "Cek judul skripsi", Icon: ScanSearch },
     { href: "https://simak.uinsgd.ac.id/beranda/", label: "SALAM", Icon: GraduationCap, external: true },
-    { href: "https://eknows.uinsgd.ac.id", label: "e-Knows", Icon: BookOpen, external: true },
+    { href: "/prodi/beasiswa", label: "Beasiswa", Icon: BookOpen },
     { href: "https://digilib.uinsgd.ac.id", label: "Digilib", Icon: Library, external: true },
     { href: pmbUrl, label: "PMB UIN SGD", Icon: UserPlus, external: true },
   ];

@@ -72,6 +72,9 @@ Website publik Program Studi Ekonomi Syariah ada di `/prodi` (tanpa login).
 - **Foto** diunggah ke Vercel Blob (`BLOB_READ_WRITE_TOKEN`) atau tempel URL `https://`.
 - **Unduhan** (`/prodi/unduhan`): pedoman, kalender, jadwal, template, sertifikat — dikelola di Settings → Website Prodi → tab Unduhan (upload PDF/DOCX/XLSX).
 - **Cek judul skripsi** (`/prodi/skripsi`): skor kemiripan terhadap direktori judul yang diimpor admin di Settings → **Direktori Skripsi** (tempel dari Excel: Tahun | Judul | Nama).
+- **Beasiswa** (`/prodi/beasiswa`) & **timeline sejarah** di Profil — data riset dari sumber resmi UIN SGD, dikelola di tab Mahasiswa & Profil.
+- **AI Bantu** (butuh `GEMINI_API_KEY`): tombol "Bantu tulis dengan AI" di setiap kolom teks panjang (perbaiki, ringkas, lebih resmi/ramah, kembangkan — tanpa menambah fakta), dan "Isi dari caption IG" di tab Kegiatan.
+- **Database awal:** `pnpm db:seed:website` mengisi tabel `siteSettings` dengan konten awal (tidak menimpa data yang sudah diedit; `--force` untuk menimpa).
 - Data awal (sebelum admin menyimpan) ada di `src/lib/site/prodi.ts`; skema & validasi di `src/lib/site/schema.ts`.
 
 ## Environment Variables

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { BeasiswaCard } from "@/components/site/beasiswa-card";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { LocalNav } from "@/components/site/local-nav";
 import { PageHeader } from "@/components/site/page-header";
@@ -116,16 +118,21 @@ export default async function KemahasiswaanPage() {
           <SectionHeading
             eyebrow="Beasiswa"
             title="Biaya bukan penghalang."
-            description="Informasi pendaftaran beasiswa diumumkan melalui kanal resmi kampus, fakultas, dan prodi."
+            description="Beasiswa pemerintah, lembaga zakat, perbankan, dan kampus yang terbuka untuk mahasiswa."
           />
         </Reveal>
-        <ul className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-3">
-          {beasiswa.map((b) => (
-            <li key={b} className="rounded-full bg-mist px-5 py-2.5 text-[15px] font-medium text-label">
-              {b}
-            </li>
+        <div className="mx-auto mt-12 grid max-w-[1024px] gap-5 md:grid-cols-3">
+          {beasiswa.slice(0, 3).map((b, i) => (
+            <Reveal key={`${b.name}-${i}`} delay={i * 0.05}>
+              <BeasiswaCard item={b} compact />
+            </Reveal>
           ))}
-        </ul>
+        </div>
+        <p className="mt-10 text-center">
+          <Link href="/prodi/beasiswa" className="text-[16px] font-semibold text-accent hover:underline">
+            Lihat semua beasiswa ›
+          </Link>
+        </p>
       </section>
 
       {/* Alumni */}

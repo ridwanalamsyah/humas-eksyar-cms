@@ -70,6 +70,21 @@ export const unduhanSchema = z.object({
     .refine((v) => SAFE_IMAGE.test(v), "Tautan dokumen harus https:// atau /"),
 });
 
+export const beasiswaSchema = z.object({
+  name: text(120),
+  provider: text(120),
+  period: text(160),
+  description: longText(600),
+  requirements: list(text(200), 12),
+  url: url,
+});
+
+export const timelineSchema = z.object({
+  year: text(10),
+  title: text(160),
+  description: longText(600),
+});
+
 export const kurikulumYearSchema = z.object({
   label: text(40),
   semesters: list(
@@ -124,7 +139,8 @@ export const websiteConfigSchema = z.object({
     youtube: url,
   }),
   kegiatanMahasiswa: list(titledItemSchema, 12),
-  beasiswa: list(text(120), 20),
+  beasiswa: list(beasiswaSchema, 30),
+  timeline: list(timelineSchema, 30),
   fasilitas: list(fasilitasSchema, 16),
   jalurMasuk: list(titledItemSchema, 8),
   unduhan: list(unduhanSchema, 100),
@@ -154,3 +170,5 @@ export type TitledItem = z.infer<typeof titledItemSchema>;
 export type KurikulumYear = z.infer<typeof kurikulumYearSchema>;
 export type Fasilitas = z.infer<typeof fasilitasSchema>;
 export type Unduhan = z.infer<typeof unduhanSchema>;
+export type Beasiswa = z.infer<typeof beasiswaSchema>;
+export type TimelineItem = z.infer<typeof timelineSchema>;
