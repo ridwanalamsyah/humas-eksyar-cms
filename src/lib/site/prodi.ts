@@ -47,7 +47,7 @@ export const hero = {
   greeting: "Selamat datang di",
   title: "Ekonomi Syariah",
   description:
-    "Belajar ilmu ekonomi modern berlandaskan prinsip muamalah Islam — untuk karir di keuangan syariah, industri halal, filantropi, dan riset kebijakan.",
+    "Belajar ilmu ekonomi modern berlandaskan prinsip muamalah Islam, untuk karir di keuangan syariah, industri halal, filantropi, dan riset kebijakan.",
   /**
    * Foto utama beranda (mis. "/prodi/hero.jpg" di folder public, atau URL
    * dari Media Library CMS). Kosongkan untuk memakai kartu sorotan.
@@ -498,11 +498,6 @@ export const kegiatanMahasiswa = [
     title: "Kompetisi Nasional",
     description:
       "Pendampingan lomba business plan, esai, debat, dan karya tulis ilmiah.",
-  },
-  {
-    title: "KSEI & FoSSEI",
-    description:
-      "Kelompok Studi Ekonomi Islam UIN SGD aktif dalam jaringan Forum Silaturahmi Studi Ekonomi Islam (FoSSEI) Jawa Barat.",
   },
   {
     title: "Kuliah Praktisi & Kunjungan Industri",

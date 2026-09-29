@@ -32,6 +32,8 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     heroTitle: hero.title,
     heroDescription: hero.description,
     heroImage: hero.image,
+    statement:
+      "Program Studi Ekonomi Syariah mempelajari ekonomi dengan prinsip syariah: perbankan dan keuangan syariah, zakat dan wakaf, pasar modal syariah, hingga industri halal. Mahasiswa belajar langsung bersama bursa, perbankan, dan regulator mitra prodi.",
     tagline: prodi.tagline,
     degree: prodi.degree,
     totalCredits: prodi.totalCredits,

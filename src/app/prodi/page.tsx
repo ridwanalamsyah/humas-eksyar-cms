@@ -15,19 +15,24 @@ import {
   isAnnouncement,
   listPublishedNews,
 } from "@/lib/site/content";
+import { defaultWebsiteConfig } from "@/lib/site/defaults";
 import { getSite } from "@/lib/site/get-site";
 import { prodi } from "@/lib/site/prodi";
 import { AnnouncementList } from "@/components/site/announcement-list";
+import { Carousel } from "@/components/site/carousel";
 import { CountUp } from "@/components/site/count-up";
 import { HighlightCard } from "@/components/site/highlight-card";
-import { MitraList } from "@/components/site/mitra-list";
+import { Marquee } from "@/components/site/marquee";
 import { NewsCard } from "@/components/site/news-card";
+import { ParallaxHero } from "@/components/site/parallax-hero";
 import { PmbCta } from "@/components/site/pmb-cta";
 import { PrestasiCard } from "@/components/site/prestasi-card";
 import { ProdiLogo } from "@/components/site/prodi-logo";
 import { QuickLinks } from "@/components/site/quick-links";
 import { Reveal } from "@/components/site/reveal";
+import { ScrollWords } from "@/components/site/scroll-words";
 import { SectionHeading } from "@/components/site/section-heading";
+import { StickyStack } from "@/components/site/sticky-stack";
 
 // Halaman publik: render ulang paling lama tiap 5 menit agar berita & agenda
 // dari CMS ikut ter-update tanpa rebuild.
@@ -44,6 +49,34 @@ const PUBLIC_EVENT_CATEGORIES: Event["category"][] = [
 
 const BIDANG_ICONS = [Landmark, HandHeart, Building2, BookOpenCheck];
 
+/** Warna solid bergantian untuk kartu bidang kajian yang menumpuk. */
+const BIDANG_TONES = [
+  {
+    card: "bg-accent text-white",
+    icon: "bg-white/15 text-white",
+    body: "text-white/80",
+    num: "text-sand",
+  },
+  {
+    card: "bg-sand text-navy",
+    icon: "bg-navy/10 text-navy",
+    body: "text-navy/75",
+    num: "text-accent",
+  },
+  {
+    card: "bg-navy text-white",
+    icon: "bg-white/10 text-white",
+    body: "text-white/75",
+    num: "text-sand",
+  },
+  {
+    card: "bg-mist text-label border border-hairline",
+    icon: "bg-accent-soft text-accent",
+    body: "text-label-2",
+    num: "text-accent",
+  },
+];
+
 export default async function ProdiHomePage() {
   const [site, news, events, media] = await Promise.all([
     getSite(),
@@ -54,21 +87,30 @@ export default async function ProdiHomePage() {
   const { identity, kontak } = site;
 
   const announcements = news.filter(isAnnouncement).slice(0, 4);
-  const [featuredNews, ...otherNews] = news.filter((n) => !isAnnouncement(n));
+  const articles = news.filter((n) => !isAnnouncement(n)).slice(0, 3);
   const upcoming = events
     .filter((e) => PUBLIC_EVENT_CATEGORIES.includes(e.category))
     .slice(0, 3);
+  const kegiatan = [...site.kegiatan]
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, 8);
+  const keywords = [
+    ...site.bidangKajian.map((b) => b.title),
+    ...site.prospekKarir.map((p) => p.title),
+  ];
+  const statement =
+    identity.statement || defaultWebsiteConfig.identity.statement || "";
 
   return (
     <>
       {/* ─── Hero ─────────────────────────────────────────── */}
-      <section className="px-4 pb-16 pt-16 text-center sm:px-6 sm:pb-20 sm:pt-24">
+      <ParallaxHero keywords={keywords}>
         <Reveal>
           <ProdiLogo size={72} priority className="mx-auto" />
           <p className="mt-6 text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
             {prodi.level} · {prodi.faculty}
           </p>
-          <h1 className="mt-3 text-[clamp(3rem,1.8rem+5.4vw,6rem)] font-extrabold leading-[0.95] tracking-[-0.045em] text-label">
+          <h1 className="mt-3 text-[clamp(3rem,1.8rem+5.4vw,6.5rem)] font-extrabold leading-[0.95] tracking-[-0.045em] text-label">
             {identity.heroTitle}
           </h1>
           <p className="mt-4 text-[15px] font-semibold text-label-2">
@@ -82,7 +124,7 @@ export default async function ProdiHomePage() {
               href={kontak.pmbUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-accent-strong"
+              className="rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white transition hover:scale-[1.03] hover:bg-accent-strong active:scale-[0.98]"
             >
               Daftar sekarang
             </a>
@@ -107,21 +149,25 @@ export default async function ProdiHomePage() {
             </div>
           </Reveal>
         )}
-      </section>
+      </ParallaxHero>
 
       <section className="px-4 pb-8 sm:px-6">
         <QuickLinks pmbUrl={kontak.pmbUrl} />
       </section>
 
-      {/* ─── Sekilas ──────────────────────────────────────── */}
-      <section className="px-4 py-24 sm:px-6 sm:py-32">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Sekilas prodi"
-            title="Program Sarjana Ekonomi Syariah"
+      {/* ─── Pengantar (kata menyala saat digulir) ────────── */}
+      {statement && (
+        <section className="px-4 py-24 sm:px-6 sm:py-36">
+          <ScrollWords
+            text={statement}
+            className="mx-auto max-w-[900px] text-[clamp(1.75rem,1.2rem+2.2vw,3rem)] font-bold leading-[1.2] tracking-[-0.025em] text-label"
           />
-        </Reveal>
-        <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 md:grid-cols-6">
+        </section>
+      )}
+
+      {/* ─── Sekilas ──────────────────────────────────────── */}
+      <section className="px-4 pb-24 sm:px-6 sm:pb-32">
+        <div className="mx-auto grid max-w-[1024px] gap-4 md:grid-cols-6">
           <Tile className="md:col-span-4" label="Kurikulum">
             <p className="text-[clamp(4rem,3rem+4vw,7rem)] font-extrabold leading-none tracking-[-0.05em] text-label">
               <CountUp value={identity.totalCredits} />
@@ -135,7 +181,12 @@ export default async function ProdiHomePage() {
               {identity.degree}.
             </p>
           </Tile>
-          <Tile className="md:col-span-2" label="Akreditasi UIN SGD" dark>
+          <Tile
+            className="md:col-span-2"
+            label="Akreditasi UIN SGD"
+            dark
+            delay={0.06}
+          >
             <p className="text-[clamp(2.5rem,2rem+2vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em]">
               {identity.universityAccreditation}
             </p>
@@ -143,7 +194,11 @@ export default async function ProdiHomePage() {
               BAN-PT · {identity.universityAccreditationPeriod}
             </p>
           </Tile>
-          <Tile className="md:col-span-3" label="Pasar modal syariah">
+          <Tile
+            className="md:col-span-3"
+            label="Pasar modal syariah"
+            delay={0.1}
+          >
             <p className="text-[clamp(2.5rem,2rem+2vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em] text-label">
               <CountUp value={115} />
             </p>
@@ -152,7 +207,11 @@ export default async function ProdiHomePage() {
               Perwakilan BEI Jawa Barat.
             </p>
           </Tile>
-          <Tile className="md:col-span-3" label="Pengabdian masyarakat">
+          <Tile
+            className="md:col-span-3"
+            label="Pengabdian masyarakat"
+            delay={0.14}
+          >
             <p className="text-[clamp(2.5rem,2rem+2vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em] text-label">
               <CountUp value={15} />
             </p>
@@ -164,95 +223,98 @@ export default async function ProdiHomePage() {
         </div>
       </section>
 
-      {/* ─── Selamat & Sukses ─────────────────────────────── */}
-      {site.prestasi.length > 0 && (
-        <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
-          <div className="mx-auto max-w-[1024px]">
-            <Reveal className="flex flex-wrap items-end justify-between gap-4">
-              <SectionHeading
-                align="left"
-                eyebrow="Selamat & Sukses"
-                title="Prestasi mahasiswa & dosen"
-              />
-              <Link
-                href="/prodi/kemahasiswaan#prestasi"
-                className="text-[16px] font-semibold text-accent hover:underline"
-              >
-                Lihat semua ›
-              </Link>
-            </Reveal>
-            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {site.prestasi.slice(0, 4).map((p, i) => (
-                <Reveal key={`${p.name}-${i}`} delay={(i % 4) * 0.05}>
-                  <PrestasiCard item={p} />
-                </Reveal>
-              ))}
+      {/* ─── Bidang kajian (kartu menumpuk) ───────────────── */}
+      <section className="border-t border-hairline px-4 py-24 sm:px-6 sm:py-32">
+        <div className="mx-auto grid max-w-[1024px] gap-12 md:grid-cols-[1fr_1.35fr]">
+          <div>
+            <div className="md:sticky md:top-28">
+              <Reveal>
+                <SectionHeading
+                  align="left"
+                  eyebrow="Keilmuan"
+                  title="Bidang kajian"
+                  description="Empat bidang yang menjadi fokus perkuliahan, penelitian, dan pengabdian dosen serta mahasiswa."
+                />
+                <Link
+                  href="/prodi/akademik"
+                  className="mt-8 inline-flex items-center gap-1.5 text-[16px] font-semibold text-accent hover:underline"
+                >
+                  Lihat kurikulum lengkap <ArrowRight className="size-4" />
+                </Link>
+              </Reveal>
             </div>
+          </div>
+          <StackBidang items={site.bidangKajian} />
+        </div>
+      </section>
+
+      {/* ─── Prestasi ─────────────────────────────────────── */}
+      {site.prestasi.length > 0 && (
+        <section className="bg-mist py-24 sm:py-32">
+          <Reveal className="mx-auto flex max-w-[1024px] flex-wrap items-end justify-between gap-4 px-4 sm:px-0">
+            <SectionHeading
+              align="left"
+              eyebrow="Selamat & Sukses"
+              title="Prestasi mahasiswa & dosen"
+            />
+            <Link
+              href="/prodi/kemahasiswaan#prestasi"
+              className="text-[16px] font-semibold text-accent hover:underline"
+            >
+              Lihat semua ›
+            </Link>
+          </Reveal>
+          <div className="mt-10">
+            <Carousel label="Prestasi" itemClassName="max-w-[280px] w-[70vw]">
+              {site.prestasi.map((p, i) => (
+                <PrestasiCard key={`${p.name}-${i}`} item={p} />
+              ))}
+            </Carousel>
           </div>
         </section>
       )}
 
-      {/* ─── Bidang kajian ────────────────────────────────── */}
-      <section className="px-4 py-24 sm:px-6 sm:py-32">
-        <Reveal>
-          <SectionHeading
-            eyebrow="Keilmuan"
-            title="Bidang kajian"
-            description="Memahami ekonomi Islam dari teori hingga praktik di berbagai sektor."
-          />
-        </Reveal>
-        <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 sm:grid-cols-2">
-          {site.bidangKajian.map((b, i) => {
-            const Icon = BIDANG_ICONS[i % BIDANG_ICONS.length];
-            return (
-              <Reveal key={b.title} delay={(i % 2) * 0.06}>
-                <div className="group h-full rounded-[24px] border border-hairline bg-canvas p-8 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
-                  <span className="grid size-12 place-items-center rounded-2xl bg-accent-soft text-accent transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
-                    <Icon className="size-6" strokeWidth={1.75} />
-                  </span>
-                  <h3 className="mt-6 text-[22px] font-bold leading-[1.2] tracking-[-0.02em] text-label">
-                    {b.title}
-                  </h3>
-                  <p className="mt-2 text-[16px] leading-[1.5] text-label-2">
-                    {b.description}
-                  </p>
-                </div>
-              </Reveal>
-            );
-          })}
-        </div>
-        <p className="mt-10 text-center">
-          <Link
-            href="/prodi/akademik"
-            className="inline-flex items-center gap-1.5 text-[16px] font-semibold text-accent hover:underline"
-          >
-            Lihat kurikulum lengkap <ArrowRight className="size-4" />
-          </Link>
-        </p>
-      </section>
-
-      {/* ─── Mitra ──────────────────────────────────────── */}
-      {site.mitra.length > 0 && (
-        <section className="border-t border-hairline px-4 py-24 sm:px-6 sm:py-32">
-          <div className="mx-auto max-w-[1024px]">
-            <Reveal className="flex flex-wrap items-end justify-between gap-4">
-              <SectionHeading
-                align="left"
-                eyebrow="Kerja sama"
-                title="Mitra program studi"
-                description="Lembaga yang terlibat dalam perkuliahan praktisi, magang, penelitian, dan pengabdian."
-              />
-              <Link
-                href="/prodi/profil#mitra"
-                className="text-[16px] font-semibold text-accent hover:underline"
-              >
-                Selengkapnya ›
-              </Link>
-            </Reveal>
-            <Reveal className="mt-10">
-              <MitraList items={site.mitra.slice(0, 6)} compact />
-            </Reveal>
+      {/* ─── Kegiatan (carousel) ──────────────────────────── */}
+      {kegiatan.length > 0 && (
+        <section className="py-24 sm:py-32">
+          <Reveal className="mx-auto flex max-w-[1024px] flex-wrap items-end justify-between gap-4 px-4 sm:px-0">
+            <SectionHeading
+              align="left"
+              eyebrow="Kegiatan"
+              title="Kegiatan terbaru"
+            />
+            <Link
+              href="/prodi/berita#kegiatan"
+              className="text-[16px] font-semibold text-accent hover:underline"
+            >
+              Arsip kegiatan ›
+            </Link>
+          </Reveal>
+          <div className="mt-10">
+            <Carousel label="Kegiatan terbaru">
+              {kegiatan.map((k, i) => (
+                <HighlightCard key={`${k.title}-${i}`} item={k} />
+              ))}
+            </Carousel>
           </div>
+        </section>
+      )}
+
+      {/* ─── Mitra (marquee) ──────────────────────────────── */}
+      {site.mitra.length > 0 && (
+        <section className="border-y border-hairline py-16 sm:py-20">
+          <Reveal className="mx-auto mb-10 flex max-w-[1024px] flex-wrap items-end justify-between gap-4 px-4 sm:px-0">
+            <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
+              Mitra kerja sama
+            </p>
+            <Link
+              href="/prodi/profil#mitra"
+              className="text-[16px] font-semibold text-accent hover:underline"
+            >
+              Bentuk kerja sama ›
+            </Link>
+          </Reveal>
+          <Marquee items={site.mitra.map((m) => m.name)} />
         </section>
       )}
 
@@ -263,7 +325,7 @@ export default async function ProdiHomePage() {
             <SectionHeading
               align="left"
               eyebrow="Kabar Eksyar"
-              title={featuredNews ? "Berita terbaru." : "Kegiatan terbaru."}
+              title="Berita & pengumuman"
             />
             <Link
               href="/prodi/berita"
@@ -273,42 +335,40 @@ export default async function ProdiHomePage() {
             </Link>
           </Reveal>
 
-          <div className="mt-10 grid gap-5 lg:grid-cols-[2fr_1fr]">
-            {featuredNews ? (
+          <div
+            className={
+              articles.length
+                ? "mt-10 grid gap-5 lg:grid-cols-[2fr_1fr]"
+                : "mt-10 grid gap-5 md:grid-cols-2"
+            }
+          >
+            {articles.length > 0 && (
               <div className="grid gap-5 sm:grid-cols-2">
-                <Reveal className="sm:col-span-2">
-                  <NewsCard
-                    item={featuredNews}
-                    cover={coverFor(featuredNews, media)}
-                  />
-                </Reveal>
-                {otherNews.slice(0, 2).map((n, i) => (
-                  <Reveal key={n.id} delay={i * 0.06}>
+                {articles.map((n, i) => (
+                  <Reveal
+                    key={n.id}
+                    delay={i * 0.06}
+                    className={i === 0 ? "sm:col-span-2" : undefined}
+                  >
                     <NewsCard item={n} cover={coverFor(n, media)} />
-                  </Reveal>
-                ))}
-              </div>
-            ) : (
-              <div className="grid gap-5 sm:grid-cols-2">
-                {site.kegiatan.slice(0, 4).map((k, i) => (
-                  <Reveal key={`${k.title}-${i}`} delay={(i % 2) * 0.06}>
-                    <HighlightCard item={k} />
                   </Reveal>
                 ))}
               </div>
             )}
 
-            <div className="flex flex-col gap-5">
+            <div
+              className={articles.length ? "flex flex-col gap-5" : "contents"}
+            >
               <Reveal>
-                <div className="rounded-[24px] border border-hairline bg-canvas px-6 pt-6">
+                <div className="h-full rounded-[24px] border border-hairline bg-canvas px-6 pt-6">
                   <h3 className="text-[19px] font-bold tracking-[-0.01em] text-label">
                     Pengumuman
                   </h3>
                   <AnnouncementList items={announcements} />
                 </div>
               </Reveal>
-              <Reveal>
-                <div className="rounded-[24px] border border-hairline bg-canvas p-6">
+              <Reveal delay={0.06}>
+                <div className="h-full rounded-[24px] border border-hairline bg-canvas p-6">
                   <h3 className="text-[19px] font-bold tracking-[-0.01em] text-label">
                     Agenda
                   </h3>
@@ -345,24 +405,66 @@ export default async function ProdiHomePage() {
   );
 }
 
+function StackBidang({
+  items,
+}: {
+  items: { title: string; description: string }[];
+}) {
+  return (
+    <StickyStack>
+      {items.map((b, i) => {
+        const Icon = BIDANG_ICONS[i % BIDANG_ICONS.length];
+        const tone = BIDANG_TONES[i % BIDANG_TONES.length];
+        return (
+          <article
+            key={b.title}
+            className={`flex min-h-[280px] flex-col rounded-[28px] p-8 sm:p-10 ${tone.card}`}
+          >
+            <div className="flex items-start justify-between">
+              <span
+                className={`grid size-12 place-items-center rounded-2xl ${tone.icon}`}
+              >
+                <Icon className="size-6" strokeWidth={1.75} />
+              </span>
+              <span
+                className={`text-[15px] font-bold tabular-nums ${tone.num}`}
+              >
+                {String(i + 1).padStart(2, "0")}
+              </span>
+            </div>
+            <h3 className="mt-auto pt-12 text-[clamp(1.5rem,1.2rem+1vw,2rem)] font-bold leading-[1.15] tracking-[-0.02em]">
+              {b.title}
+            </h3>
+            <p className={`mt-3 text-[16px] leading-[1.5] ${tone.body}`}>
+              {b.description}
+            </p>
+          </article>
+        );
+      })}
+    </StickyStack>
+  );
+}
+
 function Tile({
   label,
   children,
   className,
   dark = false,
+  delay = 0,
 }: {
   label: string;
   children: React.ReactNode;
   className?: string;
   dark?: boolean;
+  delay?: number;
 }) {
   return (
-    <Reveal className={className}>
+    <Reveal className={className} delay={delay}>
       <div
         className={
           dark
-            ? "flex h-full flex-col justify-between rounded-[28px] bg-accent p-8 text-white sm:p-10"
-            : "flex h-full flex-col justify-between rounded-[28px] bg-mist p-8 sm:p-10"
+            ? "flex h-full flex-col justify-between rounded-[28px] bg-accent p-8 text-white transition-transform duration-500 hover:scale-[1.015] sm:p-10"
+            : "flex h-full flex-col justify-between rounded-[28px] bg-mist p-8 transition-transform duration-500 hover:scale-[1.015] sm:p-10"
         }
       >
         <p

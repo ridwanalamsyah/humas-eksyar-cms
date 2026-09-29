@@ -108,6 +108,13 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
             type: "image",
             wide: true,
           },
+          {
+            name: "statement",
+            label: "Paragraf pengantar (beranda)",
+            type: "textarea",
+            wide: true,
+            hint: "Tampil besar di bawah hero; kata-katanya menyala saat digulir.",
+          },
           { name: "degree", label: "Gelar lulusan", type: "text" },
           { name: "totalCredits", label: "Total SKS", type: "number" },
           { name: "normalDuration", label: "Masa studi normal", type: "text" },

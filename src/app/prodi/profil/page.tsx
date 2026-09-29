@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { LocalNav } from "@/components/site/local-nav";
 import { MitraList } from "@/components/site/mitra-list";
+import { TimelineProgress } from "@/components/site/timeline-progress";
 import { PageHeader } from "@/components/site/page-header";
 import { PersonCard } from "@/components/site/person-card";
 import { Photo } from "@/components/site/photo";
@@ -62,7 +63,7 @@ export default async function ProfilPage() {
           ))}
         </Reveal>
         {timeline.length > 0 && (
-          <ol className="mx-auto mt-16 max-w-[820px] border-l-2 border-hairline pl-8">
+          <TimelineProgress>
             {timeline.map((t, i) => (
               <Reveal
                 key={`${t.year}-${i}`}
@@ -71,7 +72,7 @@ export default async function ProfilPage() {
                 <li>
                   <span
                     aria-hidden
-                    className="absolute -left-[41px] top-1.5 size-4 rounded-full border-[3px] border-canvas bg-accent ring-2 ring-accent/20"
+                    className="absolute -left-[39px] top-1.5 size-4 rounded-full border-[3px] border-canvas bg-accent ring-2 ring-accent/20"
                   />
                   <p className="text-[15px] font-bold text-accent">{t.year}</p>
                   <h3 className="mt-1 text-[20px] font-bold tracking-[-0.01em] text-label">
@@ -83,7 +84,7 @@ export default async function ProfilPage() {
                 </li>
               </Reveal>
             ))}
-          </ol>
+          </TimelineProgress>
         )}
       </section>
 

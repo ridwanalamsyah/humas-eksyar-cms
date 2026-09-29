@@ -116,6 +116,7 @@ export const websiteConfigSchema = z.object({
     heroTitle: text(80),
     heroDescription: longText(400),
     heroImage: image,
+    statement: longText(600).optional(),
     tagline: text(120),
     degree: text(80),
     totalCredits: z.number().int().min(1).max(400),
