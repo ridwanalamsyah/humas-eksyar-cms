@@ -4,6 +4,10 @@ import { DosenDirectory } from "@/components/site/dosen-directory";
 import { PersonCard } from "@/components/site/person-card";
 import { Reveal } from "@/components/site/reveal";
 import { getSite } from "@/lib/site/get-site";
+import { getAkademik } from "@/lib/site/akademik";
+import { buildDosenIndex } from "@/lib/site/dosen-index";
+import { getSkripsi } from "@/lib/site/skripsi";
+import { DosenIndex } from "@/components/site/dosen-index";
 import { prodi } from "@/lib/site/prodi";
 
 export const metadata: Metadata = {
@@ -11,8 +15,17 @@ export const metadata: Metadata = {
   description: `Dosen dan tenaga pengajar ${prodi.fullName} ${prodi.university}.`,
 };
 
-export default async function DosenPage() {
-  const { dosen, tendik } = await getSite();
+type Props = { searchParams: Promise<{ q?: string }> };
+
+export default async function DosenPage({ searchParams }: Props) {
+  const [{ dosen, pimpinan, tendik }, akademik, skripsi, { q = "" }] = await Promise.all([
+    getSite(),
+    getAkademik(),
+    getSkripsi(),
+    searchParams,
+  ]);
+  const index = buildDosenIndex([...pimpinan, ...dosen], akademik, skripsi);
+  const hasExtra = index.some((d) => d.mataKuliah.length || d.bimbingan);
 
   return (
     <>
@@ -24,6 +37,18 @@ export default async function DosenPage() {
 
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
         <DosenDirectory dosen={dosen} />
+
+        {hasExtra && (
+          <div id="direktori" className="mx-auto mt-20 max-w-[1024px] scroll-mt-28">
+            <h2 className="text-[28px] font-bold tracking-[-0.02em] text-label">Direktori dosen pengampu & pembimbing</h2>
+            <p className="mt-2 max-w-2xl text-[15px] text-label-2">
+              Dihimpun dari kelas daring e-Knows dan data pembimbing skripsi di Digital Library UIN SGD.
+            </p>
+            <div className="mt-6">
+              <DosenIndex items={index} initialQuery={q.slice(0, 120)} />
+            </div>
+          </div>
+        )}
 
         {tendik.length > 0 && (
           <div className="mx-auto mt-20 max-w-[1024px]">

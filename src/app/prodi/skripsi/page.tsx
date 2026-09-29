@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, Search } from "lucide-react";
+import { ArrowUpRight, ChevronRight, Search } from "lucide-react";
 import { PageHeader } from "@/components/site/page-header";
 import { prodi } from "@/lib/site/prodi";
 import {
@@ -11,6 +11,7 @@ import {
   type SkripsiItem,
 } from "@/lib/site/skripsi";
 import { cn } from "@/lib/utils";
+import { normName } from "@/lib/site/names";
 
 export const metadata: Metadata = {
   title: "Direktori Skripsi",
@@ -27,6 +28,7 @@ type Props = {
     mode?: string;
     tahun?: string;
     hal?: string;
+    pembimbing?: string;
   }>;
 };
 
@@ -56,6 +58,8 @@ export default async function SkripsiPage({ searchParams }: Props) {
   const counts = new Map<number, number>();
   list.forEach((s) => counts.set(s.tahun, (counts.get(s.tahun) ?? 0) + 1));
   const tahun = years.includes(Number(sp.tahun)) ? Number(sp.tahun) : undefined;
+  const pb = (sp.pembimbing ?? "").slice(0, 160).trim();
+  const pbKey = normName(pb);
 
   // Mode telusuri: filter kata kunci (semua kata harus muncul) + tahun.
   let browse: SkripsiItem[] = [];
@@ -64,8 +68,11 @@ export default async function SkripsiPage({ searchParams }: Props) {
     browse = list.filter(
       (s) =>
         (!tahun || s.tahun === tahun) &&
+        (!pbKey || (s.pembimbing ?? []).some((p) => normName(p) === pbKey)) &&
         words.every((w) =>
-          `${s.judul} ${s.nama} ${s.tahun}`.toLowerCase().includes(w),
+          `${s.judul} ${s.nama} ${s.tahun} ${(s.pembimbing ?? []).join(" ")}`
+            .toLowerCase()
+            .includes(w),
         ),
     );
   }
@@ -118,6 +125,9 @@ export default async function SkripsiPage({ searchParams }: Props) {
             {mode === "telusuri" && tahun && (
               <input type="hidden" name="tahun" value={tahun} />
             )}
+            {mode === "telusuri" && pb && (
+              <input type="hidden" name="pembimbing" value={pb} />
+            )}
             <Search className="size-5 shrink-0 text-label-3" />
             <input
               name="q"
@@ -149,7 +159,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
               {years.length > 1 && (
                 <div className="-mx-4 mt-8 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
                   <YearChip
-                    href={href({ q })}
+                    href={href({ pembimbing: pb, q })}
                     active={!tahun}
                     label="Semua"
                     count={list.length}
@@ -157,7 +167,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                   {years.map((y) => (
                     <YearChip
                       key={y}
-                      href={href({ q, tahun: y })}
+                      href={href({ pembimbing: pb, q, tahun: y })}
                       active={tahun === y}
                       label={String(y)}
                       count={counts.get(y) ?? 0}
@@ -166,6 +176,14 @@ export default async function SkripsiPage({ searchParams }: Props) {
                 </div>
               )}
 
+              {pb && (
+                <p className="mt-6 flex flex-wrap items-center gap-2 rounded-[16px] bg-accent-soft px-4 py-3 text-[14px] text-label">
+                  Skripsi bimbingan <span className="font-bold">{pb}</span>
+                  <Link href={href({ q, tahun })} className="ml-auto font-semibold text-accent hover:underline">
+                    Hapus filter ×
+                  </Link>
+                </p>
+              )}
               <p className="mt-8 text-[14px] text-label-3">
                 {browse.length.toLocaleString("id-ID")} hasil
                 {pages > 1 && ` · halaman ${page} dari ${pages}`}
@@ -189,7 +207,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                 >
                   <PageLink
                     href={
-                      page > 1 ? href({ q, tahun, hal: page - 1 }) : undefined
+                      page > 1 ? href({ pembimbing: pb, q, tahun, hal: page - 1 }) : undefined
                     }
                     label="‹ Sebelumnya"
                   />
@@ -199,7 +217,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                   <PageLink
                     href={
                       page < pages
-                        ? href({ q, tahun, hal: page + 1 })
+                        ? href({ pembimbing: pb, q, tahun, hal: page + 1 })
                         : undefined
                     }
                     label="Berikutnya ›"
@@ -301,33 +319,33 @@ export default async function SkripsiPage({ searchParams }: Props) {
 function SkripsiRow({ item }: { item: SkripsiItem }) {
   const body = (
     <>
-      <span className="w-12 shrink-0 pt-0.5 font-mono text-[13px] text-label-3">
-        {item.tahun}
-      </span>
+      <span className="w-12 shrink-0 pt-0.5 font-mono text-[13px] text-label-3">{item.tahun}</span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[15.5px] font-medium leading-snug text-label group-hover:text-accent">
-          {item.judul}
-        </span>
-        {item.nama && (
+        <span className="block text-[15.5px] font-medium leading-snug text-label group-hover:text-accent">{item.judul}</span>
+        {(item.nama || item.pembimbing?.length) && (
           <span className="mt-1 block text-[13px] text-label-2">
             {item.nama}
+            {item.pembimbing?.length ? (
+              <span className="text-label-3"> · Pembimbing: {item.pembimbing.join(", ")}</span>
+            ) : null}
           </span>
         )}
       </span>
-      {item.url && (
+      {item.id ? (
+        <ChevronRight className="mt-0.5 size-4 shrink-0 text-label-3 group-hover:text-accent" />
+      ) : item.url ? (
         <ArrowUpRight className="mt-0.5 size-4 shrink-0 text-label-3 group-hover:text-accent" />
-      )}
+      ) : null}
     </>
   );
   return (
     <li>
-      {item.url ? (
-        <a
-          href={item.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group flex gap-4 px-5 py-4 hover:bg-mist/60"
-        >
+      {item.id ? (
+        <Link href={`/prodi/skripsi/${item.id}`} className="group flex gap-4 px-5 py-4 hover:bg-mist/60">
+          {body}
+        </Link>
+      ) : item.url ? (
+        <a href={item.url} target="_blank" rel="noopener noreferrer" className="group flex gap-4 px-5 py-4 hover:bg-mist/60">
           {body}
         </a>
       ) : (

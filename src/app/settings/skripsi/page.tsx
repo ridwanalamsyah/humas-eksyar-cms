@@ -27,7 +27,7 @@ export default async function SkripsiSettingsPage() {
         </h1>
         <p className="mt-2 max-w-prose text-[13px] text-foreground/65">
           Dipakai halaman <span className="font-medium">/skripsi</span> di website: mahasiswa bisa menelusuri skripsi Eksyar dan
-          memeriksa kemiripan judul sebelum mengajukan proposal. Data diperbarui otomatis dari Digilib setiap Senin.
+          memeriksa kemiripan judul sebelum mengajukan proposal. Data diperbarui otomatis dari Digilib setiap hari.
         </p>
       </header>
       <SkripsiEditor initial={items} sync={sync} />

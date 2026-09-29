@@ -95,7 +95,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     {
       name: "Al-Muamalat: Jurnal Ekonomi Syariah",
       description:
-        "Jurnal ilmiah bidang ekonomi Islam, keuangan Islam, inovasi bisnis Islam, dan hukum ekonomi Islam.",
+        "Jurnal Jurusan Hukum Ekonomi Syariah FSH UIN SGD: ekonomi Islam, keuangan Islam, inovasi bisnis Islam, dan hukum ekonomi Islam.",
       url: "https://journal.uinsgd.ac.id/index.php/mua",
     },
     {

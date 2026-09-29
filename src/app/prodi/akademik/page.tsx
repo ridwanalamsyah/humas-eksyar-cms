@@ -5,6 +5,8 @@ import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 import { getSite } from "@/lib/site/get-site";
+import { getAkademik } from "@/lib/site/akademik";
+import { MataKuliahDirectory } from "@/components/site/matakuliah-directory";
 import { layananAkademik, prodi } from "@/lib/site/prodi";
 
 export const metadata: Metadata = {
@@ -21,6 +23,7 @@ export default async function AkademikPage() {
     capaianPembelajaran,
     prospekKarir,
   } = await getSite();
+  const akademik = await getAkademik();
   const facts = [
     { v: String(identity.totalCredits), u: "SKS", k: "Beban studi" },
     {
@@ -103,6 +106,25 @@ export default async function AkademikPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Mata kuliah & dosen pengampu (e-Knows) */}
+      {akademik && akademik.mataKuliah.length > 0 && (
+        <section id="mata-kuliah" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32">
+          <div className="mx-auto max-w-[1024px]">
+            <Reveal>
+              <SectionHeading
+                align="left"
+                eyebrow="Perkuliahan"
+                title="Mata kuliah & dosen pengampu"
+                description={`${akademik.mataKuliah.length} mata kuliah di kelas daring e-Knows Prodi Ekonomi Syariah, diperbarui ${new Date(akademik.at).toLocaleDateString("id-ID", { dateStyle: "long" })}.`}
+              />
+            </Reveal>
+            <div className="mt-10">
+              <MataKuliahDirectory items={akademik.mataKuliah} />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Profil lulusan */}
       <section className="px-4 py-24 sm:px-6 sm:py-32">

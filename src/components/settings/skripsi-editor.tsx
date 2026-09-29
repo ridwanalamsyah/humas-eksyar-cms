@@ -93,8 +93,8 @@ export function SkripsiEditor({ initial, sync }: { initial: SkripsiItem[]; sync:
           <div>
             <h2 className="font-display text-[17px] font-semibold">Sinkron dari Digilib</h2>
             <p className="mt-1 text-[12px] text-foreground/60">
-              Mengambil judul skripsi Prodi Ekonomi Syariah dari digilib.uinsgd.ac.id dan etheses.uinsgd.ac.id. Data yang diimpor
-              manual tetap dipertahankan.
+              Mengambil judul, penulis, pembimbing, abstrak, kata kunci, dan tautan berkas skripsi Prodi Ekonomi Syariah dari
+              digilib.uinsgd.ac.id dan etheses.uinsgd.ac.id. Data yang diimpor manual tetap dipertahankan.
             </p>
           </div>
           <Button size="sm" onClick={syncDigilib} disabled={syncing}>
@@ -104,6 +104,8 @@ export function SkripsiEditor({ initial, sync }: { initial: SkripsiItem[]; sync:
         {sync && (
           <p className="mt-3 text-[12px] text-foreground/60">
             Terakhir: {new Date(sync.at).toLocaleString("id-ID")} · {sync.total.toLocaleString("id-ID")} judul ({sync.added} baru)
+            {sync.detailed != null && ` · ${sync.detailed} dengan abstrak & berkas`}
+            {sync.pendingDetail ? ` · ${sync.pendingDetail} detail menyusul di sinkron berikutnya` : ""}
             {sync.sources.map((s) => (
               <span key={s.label} className={s.error ? "text-red-500" : undefined}>
                 {" "}
