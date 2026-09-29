@@ -874,6 +874,31 @@ export async function setBrandingConfig(value: BrandingConfig): Promise<Branding
   return value;
 }
 
+/**
+ * Konten website publik prodi (/prodi). Disimpan apa adanya; validasi &
+ * penggabungan dengan data awal dilakukan di `lib/site/get-site.ts`.
+ */
+export async function getWebsiteContent(): Promise<unknown> {
+  const rows = await client()
+    .select()
+    .from(schema.siteSettings)
+    .where(eq(schema.siteSettings.key, "website"))
+    .limit(1);
+  return rows[0]?.value ?? null;
+}
+
+export async function setWebsiteContent(value: Record<string, unknown>): Promise<Record<string, unknown>> {
+  const now = new Date().toISOString();
+  await client()
+    .insert(schema.siteSettings)
+    .values({ key: "website", value, updatedAt: now })
+    .onConflictDoUpdate({
+      target: schema.siteSettings.key,
+      set: { value, updatedAt: now },
+    });
+  return value;
+}
+
 /* ------------------------------------------------------------------ */
 /* Rubrics                                                             */
 /* ------------------------------------------------------------------ */
@@ -1095,4 +1120,22 @@ export async function clearContentDraft(contentId: ID): Promise<boolean> {
     .where(eq(schema.contentDrafts.contentId, contentId))
     .returning({ contentId: schema.contentDrafts.contentId });
   return deleted.length > 0;
+}
+
+/* ------------------------------------------------------------------ */
+/* Pengaturan generik (siteSettings)                                   */
+/* ------------------------------------------------------------------ */
+
+export async function getSiteSetting(key: string): Promise<unknown> {
+  const rows = await client().select().from(schema.siteSettings).where(eq(schema.siteSettings.key, key)).limit(1);
+  return rows[0]?.value ?? null;
+}
+
+export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
+  const now = new Date().toISOString();
+  await client()
+    .insert(schema.siteSettings)
+    .values({ key, value, updatedAt: now })
+    .onConflictDoUpdate({ target: schema.siteSettings.key, set: { value, updatedAt: now } });
+  return value;
 }

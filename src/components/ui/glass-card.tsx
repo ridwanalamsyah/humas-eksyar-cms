@@ -29,7 +29,7 @@ export function GlassCard({
         hover && "transition-shadow",
         className,
       )}
-      whileHover={hover ? { y: -4 } : undefined}
+      whileHover={hover ? { y: -2 } : undefined}
       transition={{ type: "spring", stiffness: 300, damping: 28 }}
       {...props}
     >

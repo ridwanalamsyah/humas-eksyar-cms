@@ -23,7 +23,7 @@ export default function ErrorPage({
           <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-rose-500/15">
             <AlertTriangle className="size-7 text-rose-600" strokeWidth={1.5} />
           </div>
-          <p className="mt-4 font-mono text-[11px] uppercase tracking-[0.18em] text-foreground/55">
+          <p className="mt-4 font-mono text-[12.5px] text-foreground/50">
             500 · sesuatu rusak
           </p>
           <h1 className="mt-2 font-display text-2xl font-semibold tracking-tight">

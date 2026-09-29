@@ -134,13 +134,13 @@ export default async function ContentDetail({ params }: Props) {
 
         <aside className="flex flex-col gap-4">
           <GlassCard variant="thick" className="p-5">
-            <h3 className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">Approval</h3>
+            <h3 className="text-[12.5px] text-foreground/50">Approval</h3>
             <ApprovalChain content={content} />
           </GlassCard>
 
           {content.metrics && (
             <GlassCard variant="regular" className="p-5">
-              <h3 className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+              <h3 className="text-[12.5px] text-foreground/50">
                 Performa
               </h3>
               <div className="mt-3 grid grid-cols-3 gap-3">
@@ -169,7 +169,7 @@ export default async function ContentDetail({ params }: Props) {
           )}
 
           <GlassCard variant="regular" className="p-5">
-            <h3 className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">Channel</h3>
+            <h3 className="text-[12.5px] text-foreground/50">Channel</h3>
             <ul className="mt-3 flex flex-wrap gap-1.5">
               {content.channels.map((ch) => (
                 <li key={ch}>
@@ -196,7 +196,7 @@ export default async function ContentDetail({ params }: Props) {
 
           {relatedMedia.length > 0 && (
             <GlassCard variant="thin" className="p-5">
-              <h3 className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+              <h3 className="text-[12.5px] text-foreground/50">
                 Media terkait
               </h3>
               <ul className="mt-3 grid grid-cols-3 gap-2">
@@ -214,7 +214,7 @@ export default async function ContentDetail({ params }: Props) {
           )}
 
           <GlassCard variant="thin" className="p-5">
-            <h3 className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+            <h3 className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
               <ShieldCheck className="size-3" strokeWidth={1.75} />
               Compliance
             </h3>

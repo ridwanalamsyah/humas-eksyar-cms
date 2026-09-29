@@ -21,10 +21,10 @@ export default async function ProfileEditPage() {
         <ArrowLeft className="size-4" strokeWidth={1.75} /> Settings
       </Link>
       <header className="mt-3">
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Profil
         </p>
-        <h1 className="mt-1 font-display text-[clamp(1.6rem,1.3rem+1.2vw,2.1rem)] font-semibold leading-tight tracking-tight">
+        <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">
           Edit profil
         </h1>
         <p className="mt-2 max-w-prose text-[13px] text-foreground/65">

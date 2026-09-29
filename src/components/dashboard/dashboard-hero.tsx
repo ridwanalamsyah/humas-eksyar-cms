@@ -72,7 +72,7 @@ export function DashboardHero({ member, digest, unreadCount }: Props) {
       <GlassCard variant="thick" className="overflow-hidden p-6 sm:p-10">
         <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           <div>
-            <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+            <p className="text-[12.5px] text-foreground/50">
               Beranda
             </p>
             <h1 className="mt-2 font-display text-[clamp(2rem,1.4rem+2.8vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-balance">

@@ -25,10 +25,10 @@ export default async function NewContentPage() {
         <ArrowLeft className="size-4" strokeWidth={1.75} /> Kembali
       </Link>
       <header className="mt-3">
-        <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Editor
         </p>
-        <h1 className="mt-1 font-display text-[clamp(1.8rem,1.4rem+1.5vw,2.4rem)] font-semibold leading-tight tracking-tight">
+        <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">
           Konten baru
         </h1>
         <p className="mt-2 max-w-prose text-foreground/65">

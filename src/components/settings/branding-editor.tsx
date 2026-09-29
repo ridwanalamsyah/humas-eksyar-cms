@@ -40,7 +40,7 @@ export function BrandingEditor({ initial }: Props) {
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
       <GlassCard variant="thick" className="p-6">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Editor
         </p>
         <div className="mt-4 grid gap-4">
@@ -97,7 +97,7 @@ export function BrandingEditor({ initial }: Props) {
       </GlassCard>
 
       <GlassCard className="p-6">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Preview caption
         </p>
         <div className="mt-4 rounded-2xl border border-foreground/10 bg-background/40 p-4 text-[13px] leading-relaxed dark:border-white/10">
@@ -127,7 +127,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+      <span className="mb-1 block text-[12.5px] text-foreground/50">
         {label}
       </span>
       <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">

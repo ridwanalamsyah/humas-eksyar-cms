@@ -91,7 +91,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Judul atau topik singkat…"
-          className="w-full bg-transparent font-display text-[clamp(1.4rem,1.1rem+1vw,1.9rem)] font-semibold leading-tight tracking-tight outline-none placeholder:text-foreground/40"
+          className="w-full bg-transparent text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px] outline-none placeholder:text-foreground/40"
         />
 
         <div className="mt-3 flex flex-wrap items-center gap-2 text-[12px]">
@@ -122,7 +122,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         </div>
 
         <div className="mt-5">
-          <label className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+          <label className="text-[12.5px] text-foreground/50">
             Detail / brief
           </label>
           <textarea
@@ -134,7 +134,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         </div>
 
         <div className="mt-4 flex items-center justify-between">
-          <label className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+          <label className="text-[12.5px] text-foreground/50">
             Caption
           </label>
           <Button
@@ -165,7 +165,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         />
 
         <div className="mt-4">
-          <label className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+          <label className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
             <Hash className="size-3" strokeWidth={1.75} /> Hashtag
           </label>
           <textarea
@@ -187,7 +187,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
 
       <aside className="flex flex-col gap-4">
         <GlassCard variant="regular" className="p-5">
-          <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">Channel</h3>
+          <h3 className="text-[12.5px] text-foreground/50">Channel</h3>
           <div className="mt-3 grid grid-cols-2 gap-1.5">
             {CHANNELS.map((c) => {
               const active = channels.includes(c.value);
@@ -210,7 +210,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         </GlassCard>
 
         <GlassCard variant="regular" className="p-5">
-          <h3 className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+          <h3 className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
             <ImageIcon className="size-3" strokeWidth={1.75} /> Media
           </h3>
           <div className="mt-3 grid grid-cols-3 gap-1.5">
@@ -244,7 +244,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         </GlassCard>
 
         <GlassCard variant="regular" className="p-5">
-          <h3 className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+          <h3 className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
             <Calendar className="size-3" strokeWidth={1.75} /> Penjadwalan
           </h3>
           <input
@@ -259,7 +259,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         </GlassCard>
 
         <GlassCard variant="thin" className="p-5">
-          <h3 className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">Preview status</h3>
+          <h3 className="text-[12.5px] text-foreground/50">Preview status</h3>
           <div className="mt-3 flex flex-wrap gap-2">
             <Pill tone="brand">{rubric.replace(/_/g, " ")}</Pill>
             <Pill tone="gold">

@@ -1,12 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "motion/react";
 import { ChevronRight, Search, Bell, LogOut } from "lucide-react";
 import { useState } from "react";
 import { signOut, useSession } from "next-auth/react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/common/avatar";
 import { CommandPaletteTrigger } from "@/components/layout/command-palette";
@@ -25,20 +23,15 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
   const isAuthed = status === "authenticated";
 
   return (
-    <motion.header
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ type: "spring", stiffness: 260, damping: 28 }}
-      className="flex items-center justify-between gap-3"
-    >
+    <header className="flex items-center justify-between gap-3 lg:justify-end">
       <Link
         href="/"
-        className="group flex items-center gap-3"
+        className="group flex items-center gap-2.5 lg:hidden"
         aria-label="Beranda"
       >
-        <EksyarLogo size={42} />
+        <EksyarLogo size={34} />
         <div className="leading-tight">
-          <p className="font-display text-lg font-semibold tracking-tight transition-colors group-hover:text-brand-700 dark:group-hover:text-brand-300">
+          <p className="text-[15px] font-semibold tracking-tight">
             Humas Eksyar
           </p>
           <p className="hidden text-[12px] text-foreground/55 sm:block">
@@ -53,13 +46,13 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
           type="button"
           aria-label="Cari"
           onClick={() => setOpenSearch(true)}
-          className="grid size-10 place-items-center rounded-full border border-foreground/10 bg-foreground/[0.04] text-foreground/65 transition-colors hover:bg-foreground/[0.07] dark:border-white/10 dark:bg-white/[0.04] sm:hidden"
+          className="grid size-9 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/[0.05] hover:text-foreground sm:hidden"
         >
           <Search className="size-4" strokeWidth={1.75} />
         </button>
         <Link
           href="/notifications"
-          className="relative grid size-10 place-items-center rounded-full border border-foreground/10 bg-foreground/[0.04] text-foreground/65 transition-colors hover:bg-foreground/[0.07] dark:border-white/10 dark:bg-white/[0.04]"
+          className="relative grid size-9 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/[0.05] hover:text-foreground"
           aria-label={`Notifikasi${unread > 0 ? ` (${unread} baru)` : ""}`}
         >
           <Bell className="size-4" strokeWidth={1.75} />
@@ -69,12 +62,11 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
             </span>
           )}
         </Link>
-        <ThemeToggle />
         {member ? (
           <div className="ml-1 flex items-center gap-1">
             <Link
               href="/profile"
-              className="flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/[0.04] py-1 pr-3 pl-1 text-foreground/85 transition-colors hover:bg-foreground/[0.07] dark:border-white/10 dark:bg-white/[0.04]"
+              className="flex items-center gap-2 rounded-lg py-1 pr-2 pl-1 text-foreground/85 transition-colors hover:bg-foreground/[0.05] lg:hidden"
             >
               <Avatar member={member} size={30} ring={false} />
               <span className="hidden text-sm font-medium md:block">
@@ -87,7 +79,7 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
                 onClick={() => signOut({ redirectTo: "/login" })}
                 aria-label="Keluar"
                 title="Keluar"
-                className="grid size-10 place-items-center rounded-full border border-foreground/10 bg-foreground/[0.04] text-foreground/65 transition-colors hover:bg-foreground/[0.07] hover:text-foreground/90 dark:border-white/10 dark:bg-white/[0.04]"
+                className="grid size-9 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/[0.05] hover:text-foreground"
               >
                 <LogOut className="size-4" strokeWidth={1.75} />
               </button>
@@ -101,6 +93,6 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
           </Button>
         )}
       </div>
-    </motion.header>
+    </header>
   );
 }

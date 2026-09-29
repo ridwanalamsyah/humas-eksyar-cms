@@ -21,17 +21,17 @@ export function PlaceholderPage({ title, subtitle, comingNext = [] }: Placeholde
         transition={{ type: "spring", stiffness: 220, damping: 28 }}
       >
         <GlassCard variant="thick" className="p-8 sm:p-12">
-          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-foreground/55">
+          <div className="flex items-center gap-2 text-[12.5px] text-foreground/50">
             <Construction className="size-4" strokeWidth={1.75} />
             Phase 0 placeholder
           </div>
-          <h1 className="mt-3 font-display text-[clamp(2rem,1.5rem+1.6vw,3rem)] font-semibold leading-tight tracking-tight text-balance">
+          <h1 className="mt-3 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px] text-balance">
             {title}
           </h1>
           <p className="mt-3 max-w-[60ch] text-pretty text-foreground/70">{subtitle}</p>
           {comingNext.length > 0 && (
             <div className="mt-7">
-              <p className="text-[11px] uppercase tracking-[0.18em] text-foreground/55">
+              <p className="text-[12.5px] text-foreground/50">
                 Coming next
               </p>
               <ul className="mt-3 space-y-2">

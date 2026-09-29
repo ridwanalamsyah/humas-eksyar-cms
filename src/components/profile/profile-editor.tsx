@@ -91,7 +91,7 @@ export function ProfileEditor({ member }: Props) {
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
       <GlassCard variant="thick" className="p-6">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Preview
         </p>
         <div className="mt-4 flex flex-col items-center gap-3 text-center">
@@ -137,7 +137,7 @@ export function ProfileEditor({ member }: Props) {
       </GlassCard>
 
       <GlassCard variant="thick" className="p-6">
-        <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+        <p className="text-[12.5px] text-foreground/50">
           Detail
         </p>
         <div className="mt-4 grid gap-4">
@@ -166,7 +166,7 @@ export function ProfileEditor({ member }: Props) {
 
           {!avatarUrl && (
             <div>
-              <p className="mb-2 text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+              <p className="mb-2 text-[12.5px] text-foreground/50">
                 Emoji avatar (kalau tidak upload foto)
               </p>
               <div className="grid grid-cols-8 gap-1.5">
@@ -190,7 +190,7 @@ export function ProfileEditor({ member }: Props) {
 
           {!avatarUrl && (
             <div>
-              <label className="mb-1.5 block text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+              <label className="mb-1.5 block text-[12.5px] text-foreground/50">
                 Accent warna · {accentHue}°
               </label>
               <input
@@ -220,7 +220,7 @@ export function ProfileEditor({ member }: Props) {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+      <span className="mb-1 block text-[12.5px] text-foreground/50">
         {label}
       </span>
       <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">

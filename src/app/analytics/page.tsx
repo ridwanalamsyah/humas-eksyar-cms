@@ -103,7 +103,7 @@ export default async function AnalyticsPage() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-[2fr_1fr]">
         <GlassCard className="p-5">
-          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+          <p className="text-[12.5px] text-foreground/50">
             Top 5 konten publish
           </p>
           <ul className="mt-3 divide-y divide-foreground/10 dark:divide-white/10">
@@ -141,7 +141,7 @@ export default async function AnalyticsPage() {
 
         <aside className="space-y-4">
           <GlassCard variant="thick" className="p-5">
-            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-foreground/55">
+            <div className="flex items-center gap-2 text-[12.5px] text-foreground/50">
               <Sparkles className="size-3.5 text-gold-500" strokeWidth={2} />
               Weekly Digest · {digest.isoWeek}
             </div>

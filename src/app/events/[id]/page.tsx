@@ -70,11 +70,11 @@ export default async function EventDetail({ params }: PageProps) {
           </div>
         )}
         <div className="p-7">
-          <div className="flex flex-wrap items-center gap-2 text-[11px] uppercase tracking-[0.18em] text-foreground/55">
+          <div className="flex flex-wrap items-center gap-2 text-[12.5px] text-foreground/50">
             <Pill tone="brand">{event.category.replace("_", " ")}</Pill>
             {event.isOnline && <Pill tone="info">Online</Pill>}
           </div>
-          <h1 className="mt-3 font-display text-[clamp(1.7rem,1.2rem+1.6vw,2.4rem)] font-semibold leading-tight tracking-tight">
+          <h1 className="mt-3 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">
             {event.title}
           </h1>
           <p className="mt-3 max-w-prose text-[14px] leading-relaxed text-foreground/75">
@@ -117,7 +117,7 @@ export default async function EventDetail({ params }: PageProps) {
       <div className="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
         <section className="space-y-4">
           <GlassCard className="p-5">
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+            <p className="text-[12.5px] text-foreground/50">
               Peserta RSVP ({rsvpMembers.length})
             </p>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -143,7 +143,7 @@ export default async function EventDetail({ params }: PageProps) {
 
           {coordinator && (
             <GlassCard className="p-5">
-              <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+              <p className="text-[12.5px] text-foreground/50">
                 Koordinator
               </p>
               <Link
@@ -164,7 +164,7 @@ export default async function EventDetail({ params }: PageProps) {
 
         <aside className="space-y-4">
           <GlassCard variant="thick" className="p-5">
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+            <p className="text-[12.5px] text-foreground/50">
               RSVP &amp; Check-in
             </p>
             <RSVPToggle initial={userRsvp} />
@@ -174,7 +174,7 @@ export default async function EventDetail({ params }: PageProps) {
           </GlassCard>
 
           <GlassCard className="p-5">
-            <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+            <p className="text-[12.5px] text-foreground/50">
               Tools cepat
             </p>
             <div className="mt-3 flex flex-col gap-2">

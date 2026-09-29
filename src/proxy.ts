@@ -6,6 +6,7 @@
  *
  *   - `/login` itself
  *   - `/bio` (public Linktree-style page)
+ *   - `/prodi` (public program-study website + berita)
  *   - `/api/auth/*` (NextAuth handlers + health probe)
  *   - `/api/bio` GET only (public read of bio config)
  *   - `/api/holidays` (public read of calendar)
@@ -21,6 +22,7 @@ import { NextResponse } from "next/server";
 const PUBLIC_PREFIXES = [
   "/login",
   "/bio",
+  "/prodi",
   "/api/auth",
   "/api/holidays",
   "/manifest",

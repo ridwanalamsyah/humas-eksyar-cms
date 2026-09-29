@@ -559,6 +559,23 @@ export async function setBrandingConfig(value: BrandingConfig): Promise<Branding
 }
 
 /* ------------------------------------------------------------------ */
+/* Website content (in-memory)                                         */
+/* ------------------------------------------------------------------ */
+
+// Disimpan di globalThis agar route handler (simpan) dan halaman (baca) yang
+// dibundel terpisah tetap melihat data yang sama dalam satu proses server.
+const websiteStore = globalThis as { __websiteContent?: Record<string, unknown> | null };
+
+export async function getWebsiteContent(): Promise<unknown> {
+  return websiteStore.__websiteContent ?? null;
+}
+
+export async function setWebsiteContent(value: Record<string, unknown>): Promise<Record<string, unknown>> {
+  websiteStore.__websiteContent = value;
+  return value;
+}
+
+/* ------------------------------------------------------------------ */
 /* Rubrics (in-memory)                                                  */
 /* ------------------------------------------------------------------ */
 
@@ -708,4 +725,21 @@ export async function saveContentDraft(input: {
 
 export async function clearContentDraft(contentId: ID): Promise<boolean> {
   return draftsStore.delete(contentId);
+}
+
+/* ------------------------------------------------------------------ */
+/* Pengaturan generik (in-memory, per proses)                          */
+/* ------------------------------------------------------------------ */
+
+// globalThis: dibagi antar-bundel route handler & halaman dalam satu proses.
+const store = globalThis as { __siteSettings?: Record<string, unknown> };
+const settings = () => (store.__siteSettings ??= {});
+
+export async function getSiteSetting(key: string): Promise<unknown> {
+  return settings()[key] ?? null;
+}
+
+export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
+  settings()[key] = value;
+  return value;
 }

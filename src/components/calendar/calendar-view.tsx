@@ -156,7 +156,7 @@ export function CalendarView({ events }: Props) {
 
       <aside className="space-y-4">
         <GlassCard className="p-5">
-          <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+          <p className="text-[12.5px] text-foreground/50">
             {format(selected, "EEEE", { locale: localeID })}
           </p>
           <h3 className="mt-1 font-display text-xl font-semibold tracking-tight">

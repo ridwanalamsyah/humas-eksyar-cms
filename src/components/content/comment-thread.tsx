@@ -109,7 +109,7 @@ export function CommentThread({ contentId, currentMemberId, canModerate }: Props
   return (
     <GlassCard variant="regular" className="p-5">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55">
+        <h3 className="text-[12.5px] text-foreground/50">
           <MessageSquare className="mr-1 inline size-3" strokeWidth={1.75} />
           Komentar internal
         </h3>
