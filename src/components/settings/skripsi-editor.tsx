@@ -3,10 +3,10 @@
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Plus, Save, Search, Trash2 } from "lucide-react";
+import { ExternalLink, Plus, RefreshCw, Save, Search, Trash2 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
-import type { SkripsiItem } from "@/lib/site/skripsi";
+import type { SkripsiItem, SkripsiSync } from "@/lib/site/skripsi";
 
 /** Parser sisi klien — format sama dengan `parseBulk` di server. */
 function parse(text: string) {
@@ -26,13 +26,29 @@ function parse(text: string) {
   return { items, errors };
 }
 
-export function SkripsiEditor({ initial }: { initial: SkripsiItem[] }) {
+export function SkripsiEditor({ initial, sync }: { initial: SkripsiItem[]; sync: SkripsiSync | null }) {
   const router = useRouter();
   const [items, setItems] = useState(initial);
   const [bulk, setBulk] = useState("");
   const [q, setQ] = useState("");
   const [dirty, setDirty] = useState(false);
   const [pending, startTransition] = useTransition();
+  const [syncing, startSync] = useTransition();
+
+  function syncDigilib() {
+    if (dirty && !confirm("Perubahan yang belum disimpan akan hilang. Lanjutkan sinkronisasi?")) return;
+    startSync(async () => {
+      const res = await fetch("/api/skripsi/sync", { method: "POST" });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        toast.error(j.error ?? "Sinkronisasi gagal");
+        return;
+      }
+      toast.success(`${j.total.toLocaleString("id-ID")} judul · ${j.added} baru dari Digilib.`);
+      setDirty(false);
+      router.refresh();
+    });
+  }
 
   const preview = useMemo(() => parse(bulk), [bulk]);
   const visible = useMemo(() => {
@@ -72,6 +88,32 @@ export function SkripsiEditor({ initial }: { initial: SkripsiItem[] }) {
 
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.3fr]">
+      <GlassCard variant="thick" className="p-5 sm:p-6 lg:col-span-2">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="font-display text-[17px] font-semibold">Sinkron dari Digilib</h2>
+            <p className="mt-1 text-[12px] text-foreground/60">
+              Mengambil judul skripsi Prodi Ekonomi Syariah dari digilib.uinsgd.ac.id dan etheses.uinsgd.ac.id. Data yang diimpor
+              manual tetap dipertahankan.
+            </p>
+          </div>
+          <Button size="sm" onClick={syncDigilib} disabled={syncing}>
+            <RefreshCw className={syncing ? "size-3.5 animate-spin" : "size-3.5"} /> {syncing ? "Mengambil… (±1 menit)" : "Sinkronkan sekarang"}
+          </Button>
+        </div>
+        {sync && (
+          <p className="mt-3 text-[12px] text-foreground/60">
+            Terakhir: {new Date(sync.at).toLocaleString("id-ID")} · {sync.total.toLocaleString("id-ID")} judul ({sync.added} baru)
+            {sync.sources.map((s) => (
+              <span key={s.label} className={s.error ? "text-red-500" : undefined}>
+                {" "}
+                · {s.label}: {s.error ?? `${s.items} judul, ${s.years} tahun`}
+              </span>
+            ))}
+          </p>
+        )}
+      </GlassCard>
+
       <GlassCard variant="thick" className="p-5 sm:p-6">
         <h2 className="font-display text-[17px] font-semibold">Impor massal</h2>
         <p className="mt-1 text-[12px] text-foreground/60">
@@ -115,6 +157,11 @@ export function SkripsiEditor({ initial }: { initial: SkripsiItem[] }) {
                 {it.judul}
                 {it.nama && <span className="block text-[11px] text-foreground/50">{it.nama}</span>}
               </span>
+              {it.url && (
+                <a href={it.url} target="_blank" rel="noopener noreferrer" aria-label="Buka di Digilib" className="text-foreground/40 hover:text-foreground">
+                  <ExternalLink className="size-3.5" />
+                </a>
+              )}
               <button
                 type="button"
                 aria-label="Hapus"

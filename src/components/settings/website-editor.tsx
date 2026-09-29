@@ -259,6 +259,108 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
         ],
         empty: { name: "", role: "Dosen", photo: null, expertise: [] },
       },
+      {
+        key: "tendik",
+        title: "Tenaga kependidikan & staf",
+        hint: "Staf administrasi prodi, laboran, dll. Tampil di halaman Dosen.",
+        kind: "list",
+        itemTitle: (p) => String(p.name || "Staf baru"),
+        fields: person,
+        empty: { name: "", role: "Staf Administrasi", photo: null },
+      },
+    ],
+  },
+  {
+    value: "riset",
+    label: "Riset",
+    sections: [
+      {
+        key: "publikasi",
+        title: "Publikasi & penelitian dosen",
+        hint: "Artikel jurnal, buku, prosiding, dan hasil penelitian. Tampil di halaman Penelitian.",
+        kind: "list",
+        itemTitle: (i) => String(i.title || "Publikasi baru"),
+        fields: [
+          { name: "title", label: "Judul", type: "text", wide: true },
+          { name: "authors", label: "Penulis", type: "text" },
+          { name: "year", label: "Tahun", type: "text", placeholder: "2026" },
+          {
+            name: "type",
+            label: "Jenis",
+            type: "text",
+            placeholder: "Artikel jurnal / Buku / Prosiding / Penelitian",
+          },
+          { name: "venue", label: "Jurnal / penerbit", type: "text" },
+          {
+            name: "url",
+            label: "Tautan (DOI / jurnal)",
+            type: "url",
+            wide: true,
+          },
+        ],
+        empty: {
+          title: "",
+          authors: "",
+          year: "",
+          venue: "",
+          type: "Artikel jurnal",
+          url: "",
+        },
+      },
+      {
+        key: "jurnal",
+        title: "Jurnal ilmiah",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Jurnal baru"),
+        fields: [
+          { name: "name", label: "Nama jurnal", type: "text" },
+          { name: "url", label: "Tautan", type: "url" },
+          {
+            name: "description",
+            label: "Keterangan",
+            type: "textarea",
+            wide: true,
+          },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+    ],
+  },
+  {
+    value: "galeri",
+    label: "Galeri",
+    sections: [
+      {
+        key: "galeri",
+        title: "Foto kegiatan",
+        hint: "Foto tampil di halaman Galeri (dengan filter album) dan beranda.",
+        kind: "list",
+        itemTitle: (i) => String(i.caption || "Foto baru"),
+        fields: [
+          { name: "image", label: "Foto", type: "image", wide: true },
+          { name: "caption", label: "Keterangan", type: "text", wide: true },
+          {
+            name: "album",
+            label: "Album",
+            type: "text",
+            placeholder: "Wisuda / Kuliah praktisi / PkM",
+          },
+          { name: "date", label: "Tanggal", type: "date" },
+        ],
+        empty: { image: "", caption: "", album: "Kegiatan", date: "" },
+      },
+      {
+        key: "video",
+        title: "Video (YouTube)",
+        hint: "Video pertama tampil sebagai video profil di beranda.",
+        kind: "list",
+        itemTitle: (i) => String(i.title || "Video baru"),
+        fields: [
+          { name: "title", label: "Judul", type: "text" },
+          { name: "url", label: "Tautan YouTube", type: "url" },
+        ],
+        empty: { title: "", url: "" },
+      },
     ],
   },
   {
@@ -401,6 +503,30 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     label: "Mahasiswa",
     sections: [
       {
+        key: "testimoni",
+        title: "Testimoni alumni & mahasiswa",
+        hint: "Tampil di beranda dan halaman Alumni. Cantumkan hanya kutipan yang sudah disetujui orangnya.",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Testimoni baru"),
+        fields: [
+          { name: "name", label: "Nama", type: "text" },
+          {
+            name: "role",
+            label: "Angkatan / pekerjaan",
+            type: "text",
+            placeholder: "Alumni 2020 · Bank Syariah Indonesia",
+          },
+          { name: "quote", label: "Kutipan", type: "textarea", wide: true },
+          {
+            name: "photo",
+            label: "Foto (opsional)",
+            type: "image",
+            wide: true,
+          },
+        ],
+        empty: { name: "", role: "", quote: "", photo: null },
+      },
+      {
         key: "kegiatanMahasiswa",
         title: "Kegiatan mahasiswa",
         kind: "list",
@@ -508,6 +634,26 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     label: "Layanan",
     sections: [
       {
+        key: "mutu",
+        title: "Penjaminan mutu & tracer study",
+        kind: "object",
+        fields: [
+          {
+            name: "description",
+            label: "Keterangan penjaminan mutu",
+            type: "textarea",
+            wide: true,
+          },
+          {
+            name: "surveiUrl",
+            label: "Survei kepuasan (Google Form, dll.)",
+            type: "url",
+          },
+          { name: "tracerUrl", label: "Tracer study", type: "url" },
+          { name: "sebaranUrl", label: "Peta sebaran alumni", type: "url" },
+        ],
+      },
+      {
         key: "fasilitas",
         title: "Fasilitas",
         kind: "list",
@@ -612,7 +758,7 @@ export function WebsiteEditor({
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" asChild>
-            <a href="/prodi" target="_blank" rel="noopener noreferrer">
+            <a href="/" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="size-3.5" strokeWidth={1.75} /> Lihat
               website
             </a>

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -5,6 +6,7 @@ import {
   Building2,
   HandHeart,
   Landmark,
+  Search,
 } from "lucide-react";
 import { listEvents } from "@/lib/data/provider";
 import type { Event } from "@/lib/data/types";
@@ -17,12 +19,15 @@ import {
 } from "@/lib/site/content";
 import { defaultWebsiteConfig } from "@/lib/site/defaults";
 import { getSite } from "@/lib/site/get-site";
+import { getSkripsi } from "@/lib/site/skripsi";
 import { prodi } from "@/lib/site/prodi";
 import { AnnouncementList } from "@/components/site/announcement-list";
 import { Carousel } from "@/components/site/carousel";
 import { CountUp } from "@/components/site/count-up";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { Marquee } from "@/components/site/marquee";
+import { TestimoniCard } from "@/components/site/testimoni-card";
+import { VideoEmbed } from "@/components/site/video-embed";
 import { NewsCard } from "@/components/site/news-card";
 import { ParallaxHero } from "@/components/site/parallax-hero";
 import { PmbCta } from "@/components/site/pmb-cta";
@@ -37,6 +42,10 @@ import { StickyStack } from "@/components/site/sticky-stack";
 // Halaman publik: render ulang paling lama tiap 5 menit agar berita & agenda
 // dari CMS ikut ter-update tanpa rebuild.
 export const revalidate = 300;
+
+export const metadata: Metadata = {
+  title: { absolute: `${prodi.fullName} · ${prodi.university}` },
+};
 
 /** Kategori agenda CMS yang boleh tampil ke publik. */
 const PUBLIC_EVENT_CATEGORIES: Event["category"][] = [
@@ -78,12 +87,16 @@ const BIDANG_TONES = [
 ];
 
 export default async function ProdiHomePage() {
-  const [site, news, events, media] = await Promise.all([
+  const [site, news, events, media, skripsi] = await Promise.all([
     getSite(),
     listPublishedNews(),
     listEvents({ fromDate: new Date().toISOString() }),
     getMediaMap(),
+    getSkripsi(),
   ]);
+  const skripsiYears = [...new Set(skripsi.map((s) => s.tahun))].sort(
+    (a, b) => a - b,
+  );
   const { identity, kontak } = site;
 
   const announcements = news.filter(isAnnouncement).slice(0, 4);
@@ -294,6 +307,121 @@ export default async function ProdiHomePage() {
             <Carousel label="Kegiatan terbaru">
               {kegiatan.map((k, i) => (
                 <HighlightCard key={`${k.title}-${i}`} item={k} />
+              ))}
+            </Carousel>
+          </div>
+        </section>
+      )}
+
+      {/* ─── Direktori skripsi ────────────────────────────── */}
+      <section className="px-4 pb-24 sm:px-6 sm:pb-32">
+        <Reveal className="mx-auto max-w-[1024px]">
+          <div className="rounded-[32px] bg-navy px-6 py-14 text-center text-white sm:px-16 sm:py-20">
+            <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-sand">
+              Direktori skripsi
+            </p>
+            <h2 className="mx-auto mt-3 max-w-2xl text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] font-extrabold leading-[1.05] tracking-[-0.035em]">
+              <CountUp value={skripsi.length} /> skripsi Ekonomi Syariah
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-[16px] leading-[1.5] text-white/75">
+              Cari referensi skripsi kakak tingkat
+              {skripsiYears.length > 1
+                ? ` (${skripsiYears[0]}–${skripsiYears.at(-1)})`
+                : ""}
+              , lalu cek apakah rencana judulmu sudah pernah diteliti.
+            </p>
+            <form
+              action="/prodi/skripsi"
+              className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-full bg-canvas p-2 pl-5"
+            >
+              <Search className="size-5 shrink-0 text-label-3" />
+              <input
+                name="q"
+                aria-label="Cari skripsi"
+                placeholder="Mis. zakat, bank syariah, label halal"
+                className="min-w-0 flex-1 bg-transparent py-2 text-[16px] text-label outline-none placeholder:text-label-3"
+              />
+              <button
+                type="submit"
+                className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-[15px] font-semibold text-white hover:bg-accent-strong"
+              >
+                Cari
+              </button>
+            </form>
+            <Link
+              href="/prodi/skripsi?mode=cek"
+              className="mt-5 inline-block text-[15px] font-semibold text-sand hover:underline"
+            >
+              Cek kemiripan judul ›
+            </Link>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ─── Video profil ─────────────────────────────────── */}
+      {site.video[0] && (
+        <section className="px-4 pb-24 sm:px-6 sm:pb-32">
+          <Reveal className="mx-auto max-w-[1024px]">
+            <SectionHeading eyebrow="Video" title={site.video[0].title} />
+            <div className="mt-10">
+              <VideoEmbed url={site.video[0].url} title={site.video[0].title} />
+            </div>
+          </Reveal>
+        </section>
+      )}
+
+      {/* ─── Galeri ───────────────────────────────────────── */}
+      {site.galeri.length > 0 && (
+        <section className="pb-24 sm:pb-32">
+          <Reveal className="mx-auto flex max-w-[1024px] flex-wrap items-end justify-between gap-4 px-4 sm:px-0">
+            <SectionHeading
+              align="left"
+              eyebrow="Galeri"
+              title="Dokumentasi kegiatan"
+            />
+            <Link
+              href="/prodi/galeri"
+              className="text-[16px] font-semibold text-accent hover:underline"
+            >
+              Lihat galeri ›
+            </Link>
+          </Reveal>
+          <div className="mt-10">
+            <Carousel label="Galeri" itemClassName="w-[70vw] max-w-[320px]">
+              {site.galeri.slice(0, 10).map((g, i) => (
+                <Link
+                  key={`${g.image}-${i}`}
+                  href="/prodi/galeri"
+                  className="group block overflow-hidden rounded-[24px] bg-mist"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={g.image}
+                    alt={g.caption}
+                    loading="lazy"
+                    className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.04]"
+                  />
+                </Link>
+              ))}
+            </Carousel>
+          </div>
+        </section>
+      )}
+
+      {/* ─── Testimoni ────────────────────────────────────── */}
+      {site.testimoni.length > 0 && (
+        <section className="bg-mist py-24 sm:py-32">
+          <Reveal className="mx-auto max-w-[1024px] px-4 sm:px-0">
+            <SectionHeading
+              align="left"
+              eyebrow="Cerita alumni"
+              title="Kata mereka"
+            />
+          </Reveal>
+          <div className="mt-10">
+            <Carousel label="Testimoni">
+              {site.testimoni.map((t, i) => (
+                <TestimoniCard key={`${t.name}-${i}`} item={t} />
               ))}
             </Carousel>
           </div>

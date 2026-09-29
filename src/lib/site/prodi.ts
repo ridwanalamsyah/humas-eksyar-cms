@@ -770,8 +770,135 @@ export const kontak = {
     "https://www.google.com/maps?q=UIN+Sunan+Gunung+Djati+Bandung&output=embed",
 };
 
+export type NavItem = { href: string; label: string; description?: string };
+export type NavGroup = { label: string; href: string; items?: NavItem[] };
+
+/** Menu utama website (mega menu di desktop, akordeon di ponsel). */
+export const navGroups: NavGroup[] = [
+  {
+    label: "Profil",
+    href: "/prodi/profil",
+    items: [
+      {
+        href: "/prodi/profil",
+        label: "Tentang prodi",
+        description: "Sejarah, visi, misi, dan tujuan",
+      },
+      {
+        href: "/prodi/profil#pimpinan",
+        label: "Pimpinan",
+        description: "Kaprodi dan sekretaris prodi",
+      },
+      {
+        href: "/prodi/dosen",
+        label: "Dosen & staf",
+        description: "Pengajar dan tenaga kependidikan",
+      },
+      {
+        href: "/prodi/profil#mitra",
+        label: "Mitra kerja sama",
+        description: "Perbankan, bursa, regulator, lembaga zakat",
+      },
+      {
+        href: "/prodi/mutu",
+        label: "Penjaminan mutu",
+        description: "Akreditasi, SPMI, survei kepuasan",
+      },
+      {
+        href: "/prodi/profil#fasilitas",
+        label: "Fasilitas",
+        description: "Galeri Investasi Syariah, perpustakaan",
+      },
+    ],
+  },
+  {
+    label: "Akademik",
+    href: "/prodi/akademik",
+    items: [
+      {
+        href: "/prodi/akademik",
+        label: "Kurikulum",
+        description: "Mata kuliah, capaian, profil lulusan",
+      },
+      {
+        href: "/prodi/skripsi",
+        label: "Direktori skripsi",
+        description: "Telusuri skripsi & cek kemiripan judul",
+      },
+      {
+        href: "/prodi/penelitian",
+        label: "Penelitian & publikasi",
+        description: "Karya dosen dan jurnal ilmiah",
+      },
+      {
+        href: "/prodi/unduhan",
+        label: "Unduhan",
+        description: "Pedoman, kalender, template",
+      },
+      {
+        href: "/prodi/layanan",
+        label: "Layanan akademik",
+        description: "SALAM, e-Knows, Digilib, FAQ",
+      },
+    ],
+  },
+  {
+    label: "Mahasiswa",
+    href: "/prodi/kemahasiswaan",
+    items: [
+      {
+        href: "/prodi/kemahasiswaan",
+        label: "Kemahasiswaan",
+        description: "Kegiatan pengembangan diri",
+      },
+      {
+        href: "/prodi/kemahasiswaan#prestasi",
+        label: "Prestasi",
+        description: "Capaian mahasiswa dan dosen",
+      },
+      {
+        href: "/prodi/beasiswa",
+        label: "Beasiswa",
+        description: "KIP-K, BAZNAS, BI, dan lainnya",
+      },
+      {
+        href: "/prodi/alumni",
+        label: "Alumni & karir",
+        description: "Tracer study dan kiprah lulusan",
+      },
+    ],
+  },
+  {
+    label: "Informasi",
+    href: "/prodi/berita",
+    items: [
+      {
+        href: "/prodi/berita",
+        label: "Berita",
+        description: "Kabar dan kegiatan terbaru",
+      },
+      {
+        href: "/prodi/berita?kategori=pengumuman",
+        label: "Pengumuman",
+        description: "Informasi resmi untuk mahasiswa",
+      },
+      {
+        href: "/prodi/agenda",
+        label: "Agenda",
+        description: "Jadwal kegiatan mendatang",
+      },
+      {
+        href: "/prodi/galeri",
+        label: "Galeri",
+        description: "Foto dan video kegiatan",
+      },
+    ],
+  },
+  { label: "Kontak", href: "/prodi/kontak" },
+];
+
 export const navLinks = [
-  { href: "/prodi", label: "Beranda" },
+  { href: "/", label: "Beranda" },
   { href: "/prodi/profil", label: "Profil" },
   { href: "/prodi/akademik", label: "Akademik" },
   { href: "/prodi/dosen", label: "Dosen" },

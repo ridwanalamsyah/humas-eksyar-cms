@@ -68,6 +68,57 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   beasiswa,
   timeline,
   mitra,
+  tendik: [],
+  galeri: [],
+  video: [],
+  publikasi: [
+    {
+      title:
+        "Pengaruh pengetahuan dan religiusitas terhadap niat usaha mikro dan kecil penerima program Sertifikasi Halal Gratis (SEHATI) 2025 di Jawa Barat",
+      authors: "Evi Sopiah, dkk.",
+      year: "",
+      venue: "JEMSI (Jurnal Ekonomi, Manajemen, dan Akuntansi) Vol. 12 No. 2",
+      type: "Artikel jurnal",
+      url: "",
+    },
+    {
+      title:
+        "Pengaruh Diskon dan Voucher Terhadap Keputusan Konsumen untuk Melakukan Pembelian Produk Fashion di Market Place",
+      authors: "Evi Sopiah, dkk.",
+      year: "",
+      venue: "",
+      type: "Artikel jurnal",
+      url: "",
+    },
+  ],
+  jurnal: [
+    {
+      name: "Al-Muamalat: Jurnal Ekonomi Syariah",
+      description:
+        "Jurnal ilmiah bidang ekonomi Islam, keuangan Islam, inovasi bisnis Islam, dan hukum ekonomi Islam.",
+      url: "https://journal.uinsgd.ac.id/index.php/mua",
+    },
+    {
+      name: "LOBI: Jurnal Laboratorium FEBI",
+      description:
+        "Terbitan Laboratorium FEBI UIN SGD (Maret & September) yang memuat hasil kajian, penelitian, dan pengabdian di bidang ekonomi, manajemen, dan bisnis Islam.",
+      url: "https://journal.uinsgd.ac.id/",
+    },
+    {
+      name: "Rumah Jurnal UIN SGD",
+      description:
+        "Portal seluruh jurnal ilmiah UIN Sunan Gunung Djati Bandung.",
+      url: "https://ejournal.uinsgd.ac.id/",
+    },
+  ],
+  testimoni: [],
+  mutu: {
+    description:
+      "Penjaminan mutu prodi mengikuti Sistem Penjaminan Mutu Internal (SPMI) UIN SGD. Visi, misi, dan kurikulum ditinjau berkala bersama asosiasi program studi, regulator, praktisi industri, alumni, dan mahasiswa.",
+    surveiUrl: "",
+    tracerUrl: "https://cdc.uinsgd.ac.id/tracer_study/",
+    sebaranUrl: "https://cdc.uinsgd.ac.id/tracer_study/sebaran_alumni",
+  },
   fasilitas: fasilitas.map((f) => ({ ...f, image: null })),
   jalurMasuk,
   unduhan: [

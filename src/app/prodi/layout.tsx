@@ -50,7 +50,9 @@ export default async function ProdiLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { kontak } = await getSite();
+  const { kontak, galeri, video } = await getSite();
+  // Sembunyikan menu yang belum ada isinya.
+  const hidden = galeri.length || video.length ? [] : ["/prodi/galeri"];
   return (
     <div
       className={`${jakarta.variable} relative flex min-h-dvh flex-col bg-canvas font-jakarta text-label antialiased [color-scheme:light]`}
@@ -61,7 +63,7 @@ export default async function ProdiLayout({
       >
         Lewati ke konten
       </a>
-      <SiteNavbar pmbUrl={kontak.pmbUrl} />
+      <SiteNavbar pmbUrl={kontak.pmbUrl} hidden={hidden} />
       <main id="konten" className="flex-1">
         {children}
       </main>

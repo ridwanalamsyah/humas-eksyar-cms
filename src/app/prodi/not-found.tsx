@@ -11,7 +11,7 @@ export default function ProdiNotFound() {
           Mungkin sudah dipindahkan atau alamatnya salah.
         </p>
         <Link
-          href="/prodi"
+          href="/"
           className="mt-6 inline-block text-[17px] text-accent hover:underline"
         >
           Kembali ke beranda ›

@@ -34,7 +34,7 @@ export default function LoginPage() {
 function LoginInner() {
   const [busy, setBusy] = useState(false);
   const params = useSearchParams();
-  const callbackUrl = params.get("callbackUrl") || "/";
+  const callbackUrl = params.get("callbackUrl") || "/dashboard";
 
   const handleGoogle = async () => {
     setBusy(true);

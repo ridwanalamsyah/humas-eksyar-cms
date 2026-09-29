@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/site/page-header";
 import { DosenDirectory } from "@/components/site/dosen-directory";
+import { PersonCard } from "@/components/site/person-card";
 import { Reveal } from "@/components/site/reveal";
 import { getSite } from "@/lib/site/get-site";
 import { prodi } from "@/lib/site/prodi";
@@ -11,18 +12,36 @@ export const metadata: Metadata = {
 };
 
 export default async function DosenPage() {
-  const { dosen } = await getSite();
+  const { dosen, tendik } = await getSite();
 
   return (
     <>
       <PageHeader
         crumb="Dosen"
-        title="Dosen"
+        title="Dosen & tenaga kependidikan"
         description="Dosen Ekonomi Syariah aktif mengajar, meneliti, dan mengabdi di bidang ekonomi dan keuangan Islam."
       />
 
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
         <DosenDirectory dosen={dosen} />
+
+        {tendik.length > 0 && (
+          <div className="mx-auto mt-20 max-w-[1024px]">
+            <h2 className="text-[28px] font-bold tracking-[-0.02em] text-label">
+              Tenaga kependidikan
+            </h2>
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {tendik.map((t, i) => (
+                <PersonCard
+                  key={`${t.name}-${i}`}
+                  name={t.name}
+                  role={t.role}
+                  photo={t.photo}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         <Reveal className="mx-auto mt-10 max-w-[1024px]">
           <div className="flex flex-col items-start justify-between gap-4 rounded-[24px] bg-mist p-7 sm:flex-row sm:items-center">

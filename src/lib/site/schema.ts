@@ -94,6 +94,54 @@ export const mitraSchema = z.object({
   url: url,
 });
 
+export const galeriSchema = z.object({
+  image: z
+    .string()
+    .trim()
+    .max(2000)
+    .refine(
+      (v) => SAFE_IMAGE.test(v),
+      "URL gambar harus diawali https:// atau /",
+    ),
+  caption: text(200),
+  album: text(60),
+  date: z.union([isoDate, z.literal("")]).optional(),
+});
+
+export const videoSchema = z.object({
+  title: text(160),
+  url: z
+    .string()
+    .trim()
+    .max(500)
+    .refine(
+      (v) => /^https:\/\/(www\.)?(youtube\.com|youtu\.be)\//i.test(v),
+      "Harus tautan YouTube",
+    ),
+});
+
+export const publikasiSchema = z.object({
+  title: text(400),
+  authors: text(300),
+  year: text(10),
+  venue: text(200),
+  type: text(40),
+  url: url,
+});
+
+export const tautanSchema = z.object({
+  name: text(160),
+  description: text(400),
+  url: url,
+});
+
+export const testimoniSchema = z.object({
+  name: text(120),
+  role: text(160),
+  quote: longText(600),
+  photo: image,
+});
+
 export const timelineSchema = z.object({
   year: text(10),
   title: text(160),
@@ -149,6 +197,18 @@ export const websiteConfigSchema = z.object({
   beasiswa: list(beasiswaSchema, 30),
   timeline: list(timelineSchema, 30),
   mitra: list(mitraSchema, 40),
+  tendik: list(personSchema, 30),
+  galeri: list(galeriSchema, 200),
+  video: list(videoSchema, 30),
+  publikasi: list(publikasiSchema, 300),
+  jurnal: list(tautanSchema, 12),
+  testimoni: list(testimoniSchema, 30),
+  mutu: z.object({
+    description: longText(1200),
+    surveiUrl: url,
+    tracerUrl: url,
+    sebaranUrl: url,
+  }),
   fasilitas: list(fasilitasSchema, 16),
   jalurMasuk: list(titledItemSchema, 8),
   unduhan: list(unduhanSchema, 100),
@@ -180,4 +240,9 @@ export type Fasilitas = z.infer<typeof fasilitasSchema>;
 export type Unduhan = z.infer<typeof unduhanSchema>;
 export type Beasiswa = z.infer<typeof beasiswaSchema>;
 export type Mitra = z.infer<typeof mitraSchema>;
+export type Galeri = z.infer<typeof galeriSchema>;
+export type Video = z.infer<typeof videoSchema>;
+export type Publikasi = z.infer<typeof publikasiSchema>;
+export type Tautan = z.infer<typeof tautanSchema>;
+export type Testimoni = z.infer<typeof testimoniSchema>;
 export type TimelineItem = z.infer<typeof timelineSchema>;

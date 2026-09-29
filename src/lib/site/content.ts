@@ -72,3 +72,36 @@ export function rubricLabel(slug: string): string {
     ? words.map((w) => w[0].toUpperCase() + w.slice(1)).join(" ")
     : "Berita";
 }
+
+/** Kategori agenda CMS yang boleh tampil di website publik. */
+export const PUBLIC_EVENT_CATEGORIES = [
+  "kajian",
+  "kegiatan_publik",
+  "kompetisi",
+  "pelatihan",
+  "perayaan",
+] as const;
+
+/** Tautan "Tambahkan ke Google Calendar" untuk satu agenda. */
+export function googleCalendarUrl(e: {
+  title: string;
+  startsAt: string;
+  endsAt: string;
+  isOnline: boolean;
+  location: string;
+  description: string;
+}) {
+  const fmt = (d: string) =>
+    new Date(d)
+      .toISOString()
+      .replace(/[-:]/g, "")
+      .replace(/\.\d{3}/, "");
+  const sp = new URLSearchParams({
+    action: "TEMPLATE",
+    text: e.title,
+    dates: `${fmt(e.startsAt)}/${fmt(e.endsAt || e.startsAt)}`,
+    details: e.description.slice(0, 500),
+    location: e.isOnline ? "Daring" : e.location,
+  });
+  return `https://calendar.google.com/calendar/render?${sp}`;
+}

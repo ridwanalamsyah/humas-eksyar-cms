@@ -6,8 +6,38 @@ export const skripsiItemSchema = z.object({
   judul: z.string().trim().min(5).max(400),
   nama: z.string().trim().max(120).default(""),
   tahun: z.number().int().min(1990).max(2100),
+  url: z
+    .string()
+    .trim()
+    .max(500)
+    .regex(/^https?:\/\/[^\s]+$/)
+    .optional(),
 });
-export const skripsiListSchema = z.array(skripsiItemSchema).max(10000);
+export const skripsiListSchema = z.array(skripsiItemSchema).max(20000);
+
+/** Info sinkronisasi terakhir dari Digilib (disimpan di siteSettings). */
+export const SKRIPSI_SYNC_KEY = "skripsi_sync";
+export const skripsiSyncSchema = z.object({
+  at: z.string(),
+  total: z.number(),
+  added: z.number(),
+  sources: z.array(
+    z.object({
+      label: z.string(),
+      years: z.number(),
+      items: z.number(),
+      error: z.string().optional(),
+    }),
+  ),
+});
+export type SkripsiSync = z.infer<typeof skripsiSyncSchema>;
+
+export async function getSkripsiSync(): Promise<SkripsiSync | null> {
+  const parsed = skripsiSyncSchema.safeParse(
+    await getSiteSetting(SKRIPSI_SYNC_KEY).catch(() => null),
+  );
+  return parsed.success ? parsed.data : null;
+}
 export type SkripsiItem = z.infer<typeof skripsiItemSchema>;
 
 export { SKRIPSI_KEY } from "./skripsi-data";

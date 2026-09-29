@@ -48,7 +48,7 @@ export function PlaceholderPage({ title, subtitle, comingNext = [] }: Placeholde
             </div>
           )}
           <Link
-            href="/"
+            href="/dashboard"
             className="mt-8 inline-flex items-center gap-2 text-sm font-medium text-brand-600 hover:text-brand-700 dark:text-brand-300"
           >
             ← Kembali ke dashboard
