@@ -6,8 +6,9 @@ import type { Member } from "@/lib/data/types";
  *
  * 2 Penanggung Jawab (dosen) → role "monitoring" (view-only, tidak ikut
  *                              approval/submit — hanya mengawasi)
- * 1 Koordinator              → role "ketua_divisi"
- * 7 Anggota                  → role "anggota"
+ * 1 Admin (Ridwan Alamsyah)   → role "admin"
+ * Anggota lain                → role "anggota" (tambah/hapus lewat
+ *                              Pengaturan → Anggota & role)
  *
  * Untuk dosen: `angkatan` = tahun mulai PNS dari NIP; `nimSuffix` = 4 digit
  *              terakhir NIP.
@@ -53,37 +54,17 @@ export const members: Member[] = [
     accentHue: 200,
   },
 
-  // --- KOORDINATOR ---
-  {
-    id: "mbr-aditya",
-    name: "Aditya Novrizal Ramdhani",
-    initials: "AN",
-    email: "1229220005@student.uinsgd.ac.id",
-    role: "ketua_divisi",
-    divisionId: "div-humas-eksyar",
-    position: "Koordinator Humas",
-    joinedAt: "2025-11-10",
-    bio: "Koordinator Humas Eksyar 2025-2026.",
-    xp: 0,
-    streak: 0,
-    badges: [],
-    angkatan: 2022,
-    nimSuffix: "0005",
-    avatarEmoji: "🌿",
-    accentHue: 170,
-  },
-
   // --- ANGGOTA ---
   {
     id: "mbr-ridwan",
     name: "Ridwan Alamsyah",
     initials: "RA",
     email: "1239220061@student.uinsgd.ac.id",
-    role: "anggota",
+    role: "admin",
     divisionId: "div-humas-eksyar",
-    position: "Anggota Humas",
+    position: "Admin Humas",
     joinedAt: "2025-11-10",
-    bio: "",
+    bio: "Admin website & CMS Humas Eksyar.",
     xp: 0,
     streak: 0,
     badges: [],
@@ -165,24 +146,6 @@ export const members: Member[] = [
     accentHue: 210,
   },
   {
-    id: "mbr-rizwan",
-    name: "Rizwan Ardiansyah",
-    initials: "RA",
-    email: "1229220101@student.uinsgd.ac.id",
-    role: "anggota",
-    divisionId: "div-humas-eksyar",
-    position: "Anggota Humas",
-    joinedAt: "2025-11-10",
-    bio: "",
-    xp: 0,
-    streak: 0,
-    badges: [],
-    angkatan: 2022,
-    nimSuffix: "0101",
-    avatarEmoji: "🌟",
-    accentHue: 50,
-  },
-  {
     id: "mbr-zahra",
     name: "Zahra Zahlia Putri",
     initials: "ZP",
@@ -205,10 +168,10 @@ export const members: Member[] = [
 /**
  * Default "current member" returned by `getCurrentMember()` in mock mode.
  * Real auth wires this to the signed-in user via `session.user.id`; the
- * fallback (preview without DB) shows the koordinator's perspective.
+ * fallback (preview without DB) shows the admin's perspective.
  */
 export const currentMember: Member =
-  members.find((m) => m.id === "mbr-aditya") ?? members[0];
+  members.find((m) => m.id === "mbr-ridwan") ?? members[0];
 
 export const findMember = (id: string) =>
   members.find((m) => m.id === id) ?? currentMember;

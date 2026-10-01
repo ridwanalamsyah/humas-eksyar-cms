@@ -40,7 +40,7 @@ import type {
 // ---------------------------------------------------------------------------
 
 const DIVISION_ID = "div-humas-eksyar";
-const AUTHOR_ID = "mbr-aditya";
+const AUTHOR_ID = "mbr-ridwan";
 const DEFAULT_CHANNELS: ContentChannel[] = ["instagram"];
 
 // Hashtag → rubric mapping (case-insensitive). Order matters: first match wins.

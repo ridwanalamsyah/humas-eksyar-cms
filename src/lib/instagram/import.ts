@@ -109,7 +109,7 @@ export async function importPost(
   const authorId =
     opts.authorId ??
     (await listMembers()).find((m) => m.role === "admin")?.id ??
-    "mbr-aditya";
+    "mbr-ridwan";
   const tanggal = new Date(post.timestamp).toLocaleDateString("id-ID", {
     dateStyle: "long",
     timeZone: "Asia/Jakarta",

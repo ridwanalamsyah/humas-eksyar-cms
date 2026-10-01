@@ -19,8 +19,8 @@ export const divisions: Division[] = [
       "Dewan Humas Jurusan Ekonomi Syariah FEBI UIN SGD Bandung — periode 2025-2026.",
     color: "#0D9488",
     hue: 175,
-    leadId: "mbr-aditya",
-    memberCount: 10,
+    leadId: "mbr-ridwan",
+    memberCount: 8,
   },
 ];
 

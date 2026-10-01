@@ -2,7 +2,8 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { Search, Shield } from "lucide-react";
+import { Search, Shield, Trash2, UserPlus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
 import { Pill } from "@/components/common/pill";
@@ -28,10 +29,24 @@ const ROLE_INDEX: Record<Role, (typeof ROLES)[number]> = Object.fromEntries(
   ROLES.map((r) => [r.value, r]),
 ) as Record<Role, (typeof ROLES)[number]>;
 
+/** NIM UIN SGD: digit ke-2–3 = tahun masuk (mis. 1239… → 2023). */
+function angkatanDariNim(nim: string): number {
+  const d = nim.replace(/\D/g, "");
+  const yy = Number(d.slice(1, 3));
+  return d.length >= 8 && yy >= 10 ? 2000 + yy : new Date().getFullYear();
+}
+
 export function MembersRoleEditor({ initial, currentMemberId }: Props) {
   const [members, setMembers] = useState<Member[]>(initial);
   const [filter, setFilter] = useState("");
   const [pending, startTransition] = useTransition();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    nim: "",
+    position: "Anggota Humas",
+    role: "anggota" as Role,
+  });
 
   const filtered = useMemo(() => {
     const q = filter.trim().toLowerCase();
@@ -74,8 +89,121 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
     });
   }
 
+  function addMember(e: React.FormEvent) {
+    e.preventDefault();
+    startTransition(async () => {
+      const res = await fetch("/api/members", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          angkatan: angkatanDariNim(form.nim),
+        }),
+      });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok || !j.member) {
+        toast.error(j.error ?? "Gagal menambah anggota");
+        return;
+      }
+      setMembers((prev) => [...prev, j.member as Member]);
+      setForm({ name: "", email: "", nim: "", position: "Anggota Humas", role: "anggota" });
+      toast.success(`${j.member.name} ditambahkan. Ia bisa login dengan email tersebut.`);
+    });
+  }
+
+  function removeMember(m: Member) {
+    if (
+      !confirm(
+        `Hapus ${m.name} dari anggota? Konten miliknya akan dipindahkan ke akun Anda.`,
+      )
+    )
+      return;
+    startTransition(async () => {
+      const res = await fetch(`/api/members/${m.id}`, { method: "DELETE" });
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        toast.error(j.error ?? "Gagal menghapus anggota");
+        return;
+      }
+      setMembers((prev) => prev.filter((x) => x.id !== m.id));
+      toast.success(`${m.name} dihapus.`);
+    });
+  }
+
+  const inputCls =
+    "w-full rounded-xl border border-foreground/10 bg-foreground/[0.04] px-3 py-2 text-[13.5px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5";
+
   return (
     <div className="mt-6 space-y-4">
+      <GlassCard variant="thick" className="p-5">
+        <h2 className="flex items-center gap-2 text-[15px] font-semibold">
+          <UserPlus className="size-4" strokeWidth={1.75} /> Tambah anggota
+        </h2>
+        <p className="mt-1 text-[12px] text-foreground/55">
+          Gunakan email yang dipakai untuk login (Google). Setelah ditambahkan,
+          anggota langsung bisa masuk ke CMS sesuai role-nya.
+        </p>
+        <form onSubmit={addMember} className="mt-4 grid gap-3 sm:grid-cols-2">
+          <label className="text-[12px] text-foreground/65">
+            Nama lengkap
+            <input
+              required
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className={`mt-1 ${inputCls}`}
+            />
+          </label>
+          <label className="text-[12px] text-foreground/65">
+            Email login
+            <input
+              required
+              type="email"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              placeholder="nama@gmail.com"
+              className={`mt-1 ${inputCls}`}
+            />
+          </label>
+          <label className="text-[12px] text-foreground/65">
+            NIM (opsional)
+            <input
+              inputMode="numeric"
+              value={form.nim}
+              onChange={(e) => setForm({ ...form, nim: e.target.value })}
+              className={`mt-1 ${inputCls}`}
+            />
+          </label>
+          <label className="text-[12px] text-foreground/65">
+            Jabatan
+            <input
+              value={form.position}
+              onChange={(e) => setForm({ ...form, position: e.target.value })}
+              className={`mt-1 ${inputCls}`}
+            />
+          </label>
+          <label className="text-[12px] text-foreground/65">
+            Role
+            <select
+              value={form.role}
+              onChange={(e) => setForm({ ...form, role: e.target.value as Role })}
+              className={`mt-1 ${inputCls}`}
+            >
+              {ROLES.map((r) => (
+                <option key={r.value} value={r.value}>
+                  {r.label}
+                </option>
+              ))}
+            </select>
+          </label>
+          <div className="flex items-end">
+            <Button type="submit" disabled={pending} className="w-full sm:w-auto">
+              <UserPlus className="size-4" strokeWidth={1.75} />
+              {pending ? "Menyimpan…" : "Tambah anggota"}
+            </Button>
+          </div>
+        </form>
+      </GlassCard>
+
       <div className="flex flex-wrap items-center gap-3">
         <label className="flex flex-1 items-center gap-2 rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">
           <Search className="size-4 text-foreground/40" strokeWidth={1.75} />
@@ -131,6 +259,18 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
                     </option>
                   ))}
                 </select>
+                {!isSelf && (
+                  <button
+                    type="button"
+                    disabled={pending}
+                    onClick={() => removeMember(m)}
+                    aria-label={`Hapus ${m.name}`}
+                    title="Hapus anggota"
+                    className="grid size-8 place-items-center rounded-lg text-foreground/45 transition-colors hover:bg-red-500/10 hover:text-red-600"
+                  >
+                    <Trash2 className="size-4" strokeWidth={1.75} />
+                  </button>
+                )}
               </li>
             );
           })}

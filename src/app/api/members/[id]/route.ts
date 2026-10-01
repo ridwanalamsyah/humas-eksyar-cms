@@ -92,9 +92,9 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   }
   const { id } = await params;
   if (id === me.id) {
-    return NextResponse.json({ error: "Cannot delete yourself" }, { status: 400 });
+    return NextResponse.json({ error: "Tidak bisa menghapus akun sendiri." }, { status: 400 });
   }
-  const ok = await deleteMember(id);
+  const ok = await deleteMember(id, me.id);
   if (!ok) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
   }
