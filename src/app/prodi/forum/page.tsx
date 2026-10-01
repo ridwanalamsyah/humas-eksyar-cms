@@ -18,8 +18,8 @@ export const revalidate = 300;
 export default async function ForumPage() {
   const [{ faq }, tanya, konsultasi] = await Promise.all([
     getSite(),
-    listSubmissions({ type: "tanya", published: true, limit: 200 }),
-    listSubmissions({ type: "konsultasi", published: true, limit: 200 }),
+    listSubmissions({ type: "tanya", published: true, limit: 200 }).catch(() => []),
+    listSubmissions({ type: "konsultasi", published: true, limit: 200 }).catch(() => []),
   ]);
   const answered = [...tanya, ...konsultasi]
     .filter((s) => s.note.trim())

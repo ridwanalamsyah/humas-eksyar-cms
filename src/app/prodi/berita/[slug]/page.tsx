@@ -51,7 +51,7 @@ export default async function BeritaDetailPage({ params }: Props) {
       refId: slug,
       published: true,
       limit: 200,
-    }),
+    }).catch(() => []),
   ]);
   if (!item) notFound();
 
