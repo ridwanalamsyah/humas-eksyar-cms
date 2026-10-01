@@ -16,7 +16,12 @@ export const metadata = { title: "Website Prodi · Settings" };
 // Selalu ambil konten terbaru dari database (bukan hasil build).
 export const dynamic = "force-dynamic";
 
-export default async function WebsiteSettingsPage() {
+export default async function WebsiteSettingsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ bagian?: string }>;
+}) {
+  const { bagian } = await searchParams;
   const member = await getCurrentMember();
   if (!member) redirect("/login");
   if (member.role !== "admin") redirect("/settings");
@@ -47,7 +52,7 @@ export default async function WebsiteSettingsPage() {
         }
       />
       <WebsiteHistory items={history.map(({ at, by }) => ({ at, by }))} />
-      <WebsiteEditor initial={website} defaults={defaultWebsiteConfig} />
+      <WebsiteEditor initial={website} defaults={defaultWebsiteConfig} initialTab={bagian} />
     </AppShell>
   );
 }
