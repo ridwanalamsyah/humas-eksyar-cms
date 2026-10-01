@@ -383,3 +383,22 @@ export interface WeeklyDigest {
   totalReach: number;
   topContentId?: ID;
 }
+
+/** Isian formulir publik website prodi. */
+export interface Submission {
+  id: ID;
+  type: string;
+  status: "baru" | "diproses" | "selesai" | "ditolak";
+  data: Record<string, unknown>;
+  note: string;
+  published: boolean;
+  refId?: string | null;
+  createdAt: ISODateTime;
+  updatedAt: ISODateTime;
+}
+
+export interface PageViewRow {
+  path: string;
+  day: string;
+  count: number;
+}

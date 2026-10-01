@@ -39,7 +39,7 @@ export function AnnouncementBar({
     </>
   );
   return (
-    <div className="relative bg-navy text-white">
+    <div data-print-hide className="relative bg-navy text-white">
       <div className="mx-auto flex max-w-[1024px] items-center justify-center px-10 py-2 text-center text-[13px] font-medium">
         {href ? (
           external ? (

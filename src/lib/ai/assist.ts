@@ -92,3 +92,23 @@ export async function artikelFromCaption(caption: string, tanggal: string): Prom
   if (!parsed.judul || !parsed.isi) throw new Error("Format jawaban AI tidak sesuai");
   return { judul: parsed.judul.slice(0, 160), isi: parsed.isi.slice(0, 12000) };
 }
+
+export interface RepurposeDraft {
+  instagram: string;
+  whatsapp: string;
+  ringkas: string;
+}
+
+/** Satu tulisan → caption Instagram, pesan WhatsApp, ringkasan pengumuman. */
+export async function repurpose(title: string, body: string, url: string): Promise<RepurposeDraft> {
+  const raw = await gemini(
+    `${BASE_RULES}\nUbah konten berikut menjadi tiga format. JANGAN menambah fakta baru. Kembalikan JSON ` +
+      `{"instagram": string (caption 80–150 kata, pembuka menarik, paragraf pendek, ajakan membaca di website, 3–6 hashtag relevan termasuk #EkonomiSyariah #UINSGD), ` +
+      `"whatsapp": string (pesan siaran singkat, judul tebal pakai *bintang*, 2–4 kalimat, diakhiri "Selengkapnya: ${url}"), ` +
+      `"ringkas": string (satu kalimat maks 160 karakter untuk pita pengumuman website)}.\n\nJudul: ${title}\n\nIsi:\n"""${body.slice(0, 6000)}"""`,
+    true,
+  );
+  const j = JSON.parse(raw) as Partial<RepurposeDraft>;
+  if (!j.instagram || !j.whatsapp || !j.ringkas) throw new Error("Format jawaban AI tidak sesuai");
+  return { instagram: j.instagram.slice(0, 2200), whatsapp: j.whatsapp.slice(0, 1500), ringkas: j.ringkas.slice(0, 200) };
+}

@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { KurikulumTabs } from "@/components/site/kurikulum-tabs";
 import { PageHeader } from "@/components/site/page-header";
+import { PrintButton } from "@/components/site/print-button";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 import { getSite } from "@/lib/site/get-site";
 import { getAkademik } from "@/lib/site/akademik";
 import { MataKuliahDirectory } from "@/components/site/matakuliah-directory";
+import { RpsList } from "@/components/site/rps-list";
 import { layananAkademik, prodi } from "@/lib/site/prodi";
 
 export const metadata: Metadata = {
@@ -22,6 +24,8 @@ export default async function AkademikPage() {
     profilLulusan,
     capaianPembelajaran,
     prospekKarir,
+    peminatan,
+    rps,
   } = await getSite();
   const akademik = await getAkademik();
   const facts = [
@@ -46,6 +50,9 @@ export default async function AkademikPage() {
         title="Akademik"
         description="Kurikulum yang memadukan teori ekonomi, fiqh muamalah, dan praktik industri."
       />
+      <div className="flex justify-center px-4 pb-8" data-print-hide>
+        <PrintButton />
+      </div>
 
       {/* Angka */}
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
@@ -106,6 +113,88 @@ export default async function AkademikPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* Peminatan & roadmap */}
+      {peminatan.length > 0 && (
+        <section id="peminatan" className="scroll-mt-28 px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[1024px]">
+            <Reveal>
+              <SectionHeading
+                align="left"
+                eyebrow="Roadmap studi"
+                title="Peminatan"
+                description="Pilihan fokus studi beserta mata kuliah yang disarankan dan arah kariernya."
+              />
+            </Reveal>
+            <div className="mt-10 grid gap-4 md:grid-cols-2">
+              {peminatan.map((p, i) => (
+                <div
+                  key={p.nama}
+                  className={
+                    i % 2
+                      ? "rounded-[28px] bg-mist p-7"
+                      : "rounded-[28px] bg-accent p-7 text-white"
+                  }
+                >
+                  <h3 className="text-[22px] font-bold tracking-[-0.01em]">
+                    {p.nama}
+                  </h3>
+                  <p
+                    className={
+                      i % 2
+                        ? "mt-2 text-[15px] text-label-2"
+                        : "mt-2 text-[15px] text-white/80"
+                    }
+                  >
+                    {p.deskripsi}
+                  </p>
+                  {p.mataKuliah.length > 0 && (
+                    <ol className="mt-5 space-y-1.5 text-[14.5px]">
+                      {p.mataKuliah.map((mk, k) => (
+                        <li key={mk} className="flex gap-2">
+                          <span className="font-bold tabular-nums opacity-60">
+                            {k + 1}.
+                          </span>{" "}
+                          {mk}
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                  {p.karier.length > 0 && (
+                    <p
+                      className={
+                        i % 2
+                          ? "mt-5 text-[13.5px] text-label-2"
+                          : "mt-5 text-[13.5px] text-white/75"
+                      }
+                    >
+                      Arah karier: {p.karier.join(", ")}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* RPS & referensi */}
+      {rps.length > 0 && (
+        <section id="rps" className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[1024px]">
+            <Reveal>
+              <SectionHeading
+                align="left"
+                eyebrow="Bahan kuliah"
+                title="RPS & referensi mata kuliah"
+              />
+            </Reveal>
+            <div className="mt-8">
+              <RpsList items={rps} />
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Mata kuliah & dosen pengampu (e-Knows) */}
       {akademik && akademik.mataKuliah.length > 0 && (

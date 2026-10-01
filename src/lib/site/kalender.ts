@@ -53,3 +53,25 @@ export function kalenderMendatang(
     .sort((a, b) => a.mulai.localeCompare(b.mulai))
     .slice(0, n);
 }
+
+/** Sisa hari menuju tenggat (negatif bila sudah lewat; null bila tanpa tenggat). */
+export function sisaHari(deadline?: string): number | null {
+  if (!deadline) return null;
+  const today = todayJakarta();
+  return Math.round(
+    (new Date(`${deadline}T00:00:00Z`).getTime() -
+      new Date(`${today}T00:00:00Z`).getTime()) /
+      864e5,
+  );
+}
+
+export function labelTenggat(deadline?: string): {
+  text: string;
+  open: boolean;
+} {
+  const d = sisaHari(deadline);
+  if (d === null) return { text: "Tanpa tenggat", open: true };
+  if (d < 0) return { text: "Ditutup", open: false };
+  if (d === 0) return { text: "Hari terakhir", open: true };
+  return { text: `${d} hari lagi`, open: true };
+}

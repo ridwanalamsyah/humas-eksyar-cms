@@ -7,6 +7,10 @@ import { getSite } from "@/lib/site/get-site";
 import { prodi } from "@/lib/site/prodi";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { PageHeader } from "@/components/site/page-header";
+import { FormRenderer } from "@/components/site/form-renderer";
+import { findForm } from "@/lib/site/forms";
+
+const acaraForm = findForm("acara")!;
 import { Reveal } from "@/components/site/reveal";
 
 export const metadata: Metadata = {
@@ -130,6 +134,18 @@ export default async function AgendaPage() {
                                 kalender
                               </a>
                             </div>
+                            <details className="group mt-4 rounded-[16px] border border-hairline open:bg-mist/40">
+                              <summary className="cursor-pointer list-none px-4 py-2.5 text-[14px] font-semibold text-accent [&::-webkit-details-marker]:hidden">
+                                Daftar ikut acara ›
+                              </summary>
+                              <div className="px-4 pb-4">
+                                <FormRenderer
+                                  def={acaraForm}
+                                  refId={e.id}
+                                  compact
+                                />
+                              </div>
+                            </details>
                           </div>
                         </li>
                       </Reveal>

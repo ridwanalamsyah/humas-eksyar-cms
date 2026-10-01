@@ -1150,3 +1150,76 @@ export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
     .onConflictDoUpdate({ target: schema.siteSettings.key, set: { value, updatedAt: now } });
   return value;
 }
+
+/* ------------------------------------------------------------------ */
+/* Formulir publik & statistik kunjungan                               */
+/* ------------------------------------------------------------------ */
+
+type SubmissionFilter = { type?: string; status?: string; refId?: string; published?: boolean; limit?: number };
+type SubmissionPatch = Partial<Pick<import("./types").Submission, "status" | "note" | "published" | "data">>;
+
+export async function createSubmission(input: {
+  type: string;
+  data: Record<string, unknown>;
+  refId?: string | null;
+}): Promise<import("./types").Submission> {
+  const now = new Date().toISOString();
+  const row = {
+    id: `sub-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+    type: input.type,
+    status: "baru" as const,
+    data: input.data,
+    note: "",
+    published: false,
+    refId: input.refId ?? null,
+    createdAt: now,
+    updatedAt: now,
+  };
+  await client().insert(schema.submissions).values(row);
+  return row;
+}
+
+export async function listSubmissions(f: SubmissionFilter = {}): Promise<import("./types").Submission[]> {
+  const where = [];
+  if (f.type) where.push(eq(schema.submissions.type, f.type));
+  if (f.status) where.push(eq(schema.submissions.status, f.status));
+  if (f.refId) where.push(eq(schema.submissions.refId, f.refId));
+  if (f.published !== undefined) where.push(eq(schema.submissions.published, f.published));
+  const rows = await client()
+    .select()
+    .from(schema.submissions)
+    .where(where.length ? and(...where) : undefined)
+    .orderBy(desc(schema.submissions.createdAt))
+    .limit(f.limit ?? 2000);
+  return rows.map((r) => row<import("./types").Submission>(r));
+}
+
+export async function updateSubmission(id: ID, patch: SubmissionPatch): Promise<import("./types").Submission | null> {
+  const rows = await client()
+    .update(schema.submissions)
+    .set({ ...patch, updatedAt: new Date().toISOString() })
+    .where(eq(schema.submissions.id, id))
+    .returning();
+  return rows[0] ? row<import("./types").Submission>(rows[0]) : null;
+}
+
+export async function deleteSubmission(id: ID): Promise<void> {
+  await client().delete(schema.submissions).where(eq(schema.submissions.id, id));
+}
+
+export async function recordPageView(path: string, day: string): Promise<void> {
+  await client()
+    .insert(schema.pageViews)
+    .values({ path, day, count: 1 })
+    .onConflictDoUpdate({
+      target: [schema.pageViews.path, schema.pageViews.day],
+      set: { count: drizzleSql`${schema.pageViews.count} + 1` },
+    });
+}
+
+export async function listPageViews(sinceDay: string): Promise<import("./types").PageViewRow[]> {
+  return client()
+    .select()
+    .from(schema.pageViews)
+    .where(drizzleSql`${schema.pageViews.day} >= ${sinceDay}`);
+}

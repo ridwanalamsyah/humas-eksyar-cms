@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronDown, Search } from "lucide-react";
+import { DisplayMenu } from "./display-menu";
 import { ProdiLogo } from "./prodi-logo";
 import { cn } from "@/lib/utils";
 import { navGroups, prodi, type NavGroup } from "@/lib/site/prodi";
@@ -146,6 +147,7 @@ export function SiteNavbar({
           </ul>
 
           <div className="flex items-center gap-1.5 sm:gap-3">
+            <DisplayMenu />
             <Link
               href="/prodi/cari"
               aria-label="Cari di website"

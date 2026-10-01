@@ -758,3 +758,74 @@ export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
   settings()[key] = value;
   return value;
 }
+
+/* ------------------------------------------------------------------ */
+/* Formulir publik & statistik kunjungan (in-memory)                   */
+/* ------------------------------------------------------------------ */
+
+const gs = globalThis as unknown as { __submissions?: import("./types").Submission[]; __pageViews?: Map<string, number> };
+const submissionsStore = () => (gs.__submissions ??= []);
+const pageViewStore = () => (gs.__pageViews ??= new Map());
+
+export async function createSubmission(input: {
+  type: string;
+  data: Record<string, unknown>;
+  refId?: string | null;
+}): Promise<import("./types").Submission> {
+  const now = new Date().toISOString();
+  const row: import("./types").Submission = {
+    id: `sub-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+    type: input.type,
+    status: "baru",
+    data: input.data,
+    note: "",
+    published: false,
+    refId: input.refId ?? null,
+    createdAt: now,
+    updatedAt: now,
+  };
+  submissionsStore().unshift(row);
+  return row;
+}
+
+export async function listSubmissions(
+  f: { type?: string; status?: string; refId?: string; published?: boolean; limit?: number } = {},
+): Promise<import("./types").Submission[]> {
+  return submissionsStore()
+    .filter(
+      (s) =>
+        (!f.type || s.type === f.type) &&
+        (!f.status || s.status === f.status) &&
+        (!f.refId || s.refId === f.refId) &&
+        (f.published === undefined || s.published === f.published),
+    )
+    .slice(0, f.limit ?? 2000);
+}
+
+export async function updateSubmission(
+  id: ID,
+  patch: Partial<Pick<import("./types").Submission, "status" | "note" | "published" | "data">>,
+): Promise<import("./types").Submission | null> {
+  const s = submissionsStore().find((x) => x.id === id);
+  if (!s) return null;
+  Object.assign(s, patch, { updatedAt: new Date().toISOString() });
+  return s;
+}
+
+export async function deleteSubmission(id: ID): Promise<void> {
+  const list = submissionsStore();
+  const i = list.findIndex((x) => x.id === id);
+  if (i >= 0) list.splice(i, 1);
+}
+
+export async function recordPageView(path: string, day: string): Promise<void> {
+  const k = `${day}|${path}`;
+  pageViewStore().set(k, (pageViewStore().get(k) ?? 0) + 1);
+}
+
+export async function listPageViews(sinceDay: string): Promise<import("./types").PageViewRow[]> {
+  return [...pageViewStore()].flatMap(([k, count]) => {
+    const [day, path] = k.split("|");
+    return day >= sinceDay ? [{ path, day, count }] : [];
+  });
+}

@@ -24,6 +24,7 @@ import {
   tujuan,
   visi,
 } from "./prodi";
+import { kamusAwal } from "./kamus-data";
 import type { WebsiteConfig } from "./schema";
 
 /** Isi awal website sebelum admin menyimpan perubahan dari CMS. */
@@ -201,6 +202,80 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     },
   ],
   banner: { aktif: false, teks: "", url: "" },
+  kamus: kamusAwal,
+  lomba: [],
+  lowongan: [],
+  topikSkripsi: [],
+  panduanSkripsi: [
+    {
+      name: "Cari referensi di Digital Library",
+      description: "Repositori skripsi, tesis, dan karya ilmiah UIN SGD.",
+      url: "https://digilib.uinsgd.ac.id",
+    },
+    {
+      name: "Rumah Jurnal UIN SGD",
+      description: "Jurnal ilmiah untuk referensi penelitian.",
+      url: "https://ejournal.uinsgd.ac.id/",
+    },
+  ],
+  jadwalSidang: [],
+  rps: [],
+  peminatan: [],
+  apresiasi: [],
+  statusLayanan: { status: "", pesan: "" },
+  struktur: pimpinan.map((p, i) => ({
+    jabatan: p.role,
+    nama: p.name,
+    level: i === 0 ? 1 : 2,
+  })),
+  statistik: [],
+  infografis: [],
+  ruangAlat: [],
+  wisuda: [],
+  karya: [],
+  panduanMaba: [
+    {
+      name: "Aktifkan akun SALAM",
+      description: "Portal akademik untuk KRS, nilai, dan tagihan UKT.",
+      url: "https://simak.uinsgd.ac.id/beranda/",
+    },
+    {
+      name: "Masuk ke e-Knows",
+      description: "Kelas daring dan materi kuliah.",
+      url: "https://eknows.uinsgd.ac.id",
+    },
+    {
+      name: "Pelajari tata cara pembayaran UKT",
+      description: "Bayar lewat SALAM di bank mitra UIN SGD.",
+      url: "https://uinsgd.ac.id/tata-cara-pembayaran-ukt/",
+    },
+    {
+      name: "Unduh kalender akademik",
+      description: "Jadwal perkuliahan, ujian, dan libur semester.",
+      url: "https://s.id/KalenderAkademik2026_2027",
+    },
+  ],
+  integritas: [
+    "Skripsi dan tugas kuliah harus merupakan karya sendiri. Setiap gagasan, data, atau kutipan dari orang lain wajib dicantumkan sumbernya sesuai gaya sitasi yang ditetapkan pedoman penulisan.",
+    "Gunakan aplikasi pengelola referensi (misalnya Mendeley atau Zotero) agar sitasi dan daftar pustaka rapi dan konsisten.",
+    "Periksa kemiripan naskah sebelum dikumpulkan sesuai ketentuan prodi/fakultas, dan konsultasikan hasilnya dengan dosen pembimbing.",
+    "Penggunaan alat bantu AI untuk menulis harus mengikuti ketentuan dosen dan prodi. Hasil AI tidak boleh diakui sebagai karya sendiri tanpa pengungkapan.",
+  ],
+  sertifikat: [],
+  pressKit: {
+    profilSingkat:
+      "Program Studi Ekonomi Syariah adalah program sarjana (S.E.) di Fakultas Ekonomi dan Bisnis Islam UIN Sunan Gunung Djati Bandung yang mengkaji ekonomi dan keuangan berdasarkan prinsip syariah, meliputi perbankan dan keuangan syariah, zakat dan wakaf, industri halal, serta kebijakan ekonomi.",
+    kontakMedia: kontak.email,
+  },
+  kampanyePmb: { aktif: false, judul: "", teks: "", tenggat: "" },
+  zakat: {
+    nisabPenghasilanTahun: 91681728,
+    hargaEmas: 0,
+    nisabGram: 85,
+    sumber: "SK Ketua BAZNAS No. 15 Tahun 2026 (nisab zakat pendapatan)",
+    diperbarui: "2026-02-25",
+  },
+  medsos: { youtubeChannelId: "", whatsappChannel: "" },
   mutu: {
     description:
       "Penjaminan mutu prodi mengikuti Sistem Penjaminan Mutu Internal (SPMI) UIN SGD. Visi, misi, dan kurikulum ditinjau berkala bersama asosiasi program studi, regulator, praktisi industri, alumni, dan mahasiswa.",

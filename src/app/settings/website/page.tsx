@@ -7,6 +7,8 @@ import { getCurrentMember } from "@/lib/data/provider";
 import { defaultWebsiteConfig } from "@/lib/site/defaults";
 import { getSite } from "@/lib/site/get-site";
 import { getAkademik } from "@/lib/site/akademik";
+import { getHistory } from "@/lib/site/history";
+import { WebsiteHistory } from "@/components/settings/website-history";
 import { AkademikSyncCard } from "@/components/settings/akademik-sync-card";
 
 export const metadata = { title: "Website Prodi · Settings" };
@@ -19,7 +21,7 @@ export default async function WebsiteSettingsPage() {
   if (!member) redirect("/login");
   if (member.role !== "admin") redirect("/settings");
 
-  const [website, akademik] = await Promise.all([getSite(), getAkademik()]);
+  const [website, akademik, history] = await Promise.all([getSite(), getAkademik(), getHistory()]);
 
   return (
     <AppShell>
@@ -44,6 +46,7 @@ export default async function WebsiteSettingsPage() {
             : null
         }
       />
+      <WebsiteHistory items={history.map(({ at, by }) => ({ at, by }))} />
       <WebsiteEditor initial={website} defaults={defaultWebsiteConfig} />
     </AppShell>
   );

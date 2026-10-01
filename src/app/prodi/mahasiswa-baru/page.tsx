@@ -6,6 +6,7 @@ import { prodi } from "@/lib/site/prodi";
 import { FaqList } from "@/components/site/faq-list";
 import { PageHeader } from "@/components/site/page-header";
 import { PmbCta } from "@/components/site/pmb-cta";
+import { PmbCampaign } from "@/components/site/pmb-campaign";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 
@@ -24,6 +25,9 @@ export default async function MahasiswaBaruPage() {
     beasiswa,
     faq,
     mitra,
+    kampanyePmb,
+    kontak,
+    panduanMaba,
   } = await getSite();
   const facts = [
     { v: String(identity.totalCredits), k: "SKS untuk gelar S.E." },
@@ -42,6 +46,14 @@ export default async function MahasiswaBaruPage() {
         title="Kuliah di Ekonomi Syariah"
         description={`Informasi untuk calon mahasiswa ${prodi.fullName}, ${prodi.faculty}, ${prodi.university}.`}
       />
+      {kampanyePmb.aktif && kampanyePmb.judul && (
+        <PmbCampaign
+          judul={kampanyePmb.judul}
+          teks={kampanyePmb.teks}
+          tenggat={kampanyePmb.tenggat}
+          pmbUrl={kontak.pmbUrl}
+        />
+      )}
 
       <section className="px-4 pb-20 sm:px-6">
         <div className="mx-auto grid max-w-[1024px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -198,6 +210,41 @@ export default async function MahasiswaBaruPage() {
           )}
         </div>
       </section>
+
+      {panduanMaba.length > 0 && (
+        <section className="px-4 pt-24 sm:px-6">
+          <div className="mx-auto max-w-[820px]">
+            <SectionHeading
+              title="Sudah diterima? Lakukan ini"
+              description="Langkah awal setelah dinyatakan lulus seleksi."
+            />
+            <ol className="mt-10 grid gap-3">
+              {panduanMaba.map((p, i) => (
+                <li key={p.url}>
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center gap-4 rounded-[20px] border border-hairline bg-canvas p-5 hover:border-accent/40"
+                  >
+                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-[14px] font-bold text-white">
+                      {i + 1}
+                    </span>
+                    <span className="flex-1">
+                      <span className="block text-[16px] font-bold text-label group-hover:text-accent">
+                        {p.name}
+                      </span>
+                      <span className="block text-[14px] text-label-2">
+                        {p.description}
+                      </span>
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
 
       {faq.length > 0 && (
         <section className="px-4 py-24 sm:px-6">

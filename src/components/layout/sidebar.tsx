@@ -18,6 +18,7 @@ import {
   Users,
   type LucideIcon,
   Camera,
+  Inbox,
 } from "lucide-react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { Avatar } from "@/components/common/avatar";
@@ -54,6 +55,8 @@ function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
       title: "Website Prodi",
       items: [
         { href: "/settings/website", label: "Konten website", icon: Globe },
+        { href: "/settings/formulir", label: "Kotak masuk", icon: Inbox },
+        { href: "/settings/kinerja", label: "Kinerja & laporan", icon: BarChart3 },
         { href: "/settings/skripsi", label: "Direktori skripsi", icon: BookMarked },
         { href: "/", label: "Lihat website", icon: ExternalLink, external: true },
       ],

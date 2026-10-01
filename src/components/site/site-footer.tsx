@@ -4,13 +4,14 @@ import { layananAkademik, navGroups, prodi } from "@/lib/site/prodi";
 import { ProdiLogo } from "./prodi-logo";
 
 export async function SiteFooter() {
-  const { kontak, identity } = await getSite();
+  const { kontak, identity, medsos } = await getSite();
   const year = new Date().getFullYear();
   const sosial = [
     { href: kontak.instagram, label: "Instagram" },
     { href: kontak.tiktok, label: "TikTok" },
     { href: kontak.x, label: "X" },
-    { href: kontak.linktree, label: "Linktree" },
+    { href: medsos.whatsappChannel, label: "Saluran WhatsApp" },
+    { href: "/prodi/link", label: "Semua tautan" },
   ].filter((s) => s.href);
 
   return (
@@ -35,7 +36,7 @@ export async function SiteFooter() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-8 py-8 md:grid-cols-3 lg:grid-cols-6">
+        <div className="grid grid-cols-2 gap-8 py-8 md:grid-cols-3 lg:grid-cols-7">
           {navGroups
             .filter((g) => g.items?.length)
             .map((g) => (

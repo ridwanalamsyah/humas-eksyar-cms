@@ -785,14 +785,14 @@ export const navGroups: NavGroup[] = [
         description: "Sejarah, visi, misi, dan tujuan",
       },
       {
-        href: "/prodi/profil#pimpinan",
-        label: "Pimpinan",
-        description: "Kaprodi dan sekretaris prodi",
+        href: "/prodi/profil#struktur",
+        label: "Pimpinan & struktur",
+        description: "Kaprodi, sekprodi, dan organisasi",
       },
       {
         href: "/prodi/dosen",
         label: "Dosen & staf",
-        description: "Pengajar dan tenaga kependidikan",
+        description: "Profil, keahlian, mata kuliah",
       },
       {
         href: "/prodi/profil#mitra",
@@ -805,9 +805,19 @@ export const navGroups: NavGroup[] = [
         description: "Akreditasi, SPMI, survei kepuasan",
       },
       {
+        href: "/prodi/data",
+        label: "Data & statistik",
+        description: "Mahasiswa, lulusan, skripsi, infografis",
+      },
+      {
         href: "/prodi/profil#fasilitas",
         label: "Fasilitas",
-        description: "Galeri Investasi Syariah, perpustakaan",
+        description: "Ruang, galeri investasi, peminjaman",
+      },
+      {
+        href: "/prodi/media",
+        label: "Ruang media",
+        description: "Rilis pers, logo, kontak media",
       },
     ],
   },
@@ -818,7 +828,7 @@ export const navGroups: NavGroup[] = [
       {
         href: "/prodi/akademik",
         label: "Kurikulum",
-        description: "Mata kuliah, capaian, profil lulusan",
+        description: "Mata kuliah, peminatan, RPS",
       },
       {
         href: "/prodi/kalender",
@@ -829,6 +839,11 @@ export const navGroups: NavGroup[] = [
         href: "/prodi/skripsi",
         label: "Direktori skripsi",
         description: "Telusuri skripsi & cek kemiripan judul",
+      },
+      {
+        href: "/prodi/skripsi/pojok",
+        label: "Pojok skripsi",
+        description: "Topik, jadwal sidang, panduan",
       },
       {
         href: "/prodi/penelitian",
@@ -843,7 +858,7 @@ export const navGroups: NavGroup[] = [
       {
         href: "/prodi/layanan",
         label: "Layanan akademik",
-        description: "SALAM, e-Knows, Digilib, FAQ",
+        description: "Alur layanan, akses cepat, FAQ",
       },
     ],
   },
@@ -862,19 +877,70 @@ export const navGroups: NavGroup[] = [
         description: "Kegiatan pengembangan diri",
       },
       {
-        href: "/prodi/kemahasiswaan#prestasi",
-        label: "Prestasi",
-        description: "Capaian mahasiswa dan dosen",
-      },
-      {
         href: "/prodi/beasiswa",
         label: "Beasiswa",
         description: "KIP-K, BAZNAS, BI, dan lainnya",
       },
       {
+        href: "/prodi/lomba",
+        label: "Info lomba",
+        description: "Kompetisi & prestasi",
+      },
+      {
+        href: "/prodi/karier",
+        label: "Karier & magang",
+        description: "Asisten dosen, relawan, magang",
+      },
+      {
+        href: "/prodi/karya",
+        label: "Karya mahasiswa",
+        description: "Business plan, esai, UMKM binaan",
+      },
+      {
+        href: "/prodi/wisuda",
+        label: "Wisudawan",
+        description: "Lulusan per periode wisuda",
+      },
+      {
         href: "/prodi/alumni",
-        label: "Alumni & karir",
-        description: "Tracer study dan kiprah lulusan",
+        label: "Alumni & karier",
+        description: "Direktori, mentoring, tracer study",
+      },
+    ],
+  },
+  {
+    label: "Edukasi",
+    href: "/prodi/alat",
+    items: [
+      {
+        href: "/prodi/kamus",
+        label: "Kamus istilah",
+        description: "Istilah ekonomi & keuangan syariah",
+      },
+      {
+        href: "/prodi/alat/zakat",
+        label: "Kalkulator zakat",
+        description: "Penghasilan, harta, perdagangan",
+      },
+      {
+        href: "/prodi/alat/akad",
+        label: "Simulasi akad",
+        description: "Murabahah & mudharabah",
+      },
+      {
+        href: "/prodi/alat/kuis",
+        label: "Kuis minat",
+        description: "Cocok di bidang apa?",
+      },
+      {
+        href: "/prodi/alat/kelulusan",
+        label: "Kalkulator kelulusan",
+        description: "Perkiraan sisa SKS",
+      },
+      {
+        href: "/prodi/formulir/konsultasi",
+        label: "Konsultasi ekonomi syariah",
+        description: "Untuk masyarakat & UMKM",
       },
     ],
   },
@@ -895,12 +961,27 @@ export const navGroups: NavGroup[] = [
       {
         href: "/prodi/agenda",
         label: "Agenda",
-        description: "Jadwal kegiatan mendatang",
+        description: "Jadwal & pendaftaran acara",
       },
       {
         href: "/prodi/galeri",
         label: "Galeri",
         description: "Foto dan video kegiatan",
+      },
+      {
+        href: "/prodi/formulir",
+        label: "Formulir online",
+        description: "Saran, survei, lapor prestasi, kerja sama",
+      },
+      {
+        href: "/prodi/forum",
+        label: "Tanya jawab",
+        description: "Pertanyaan dan jawaban dari prodi",
+      },
+      {
+        href: "/prodi/verifikasi",
+        label: "Verifikasi sertifikat",
+        description: "Cek keaslian sertifikat kegiatan",
       },
     ],
   },

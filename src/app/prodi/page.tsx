@@ -21,6 +21,8 @@ import { defaultWebsiteConfig } from "@/lib/site/defaults";
 import { getSite } from "@/lib/site/get-site";
 import { getSkripsi } from "@/lib/site/skripsi";
 import { kalenderMendatang, rentang } from "@/lib/site/kalender";
+import { latestYoutube } from "@/lib/site/youtube-feed";
+import { PmbCampaign } from "@/components/site/pmb-campaign";
 import { prodi } from "@/lib/site/prodi";
 import { AnnouncementList } from "@/components/site/announcement-list";
 import { Carousel } from "@/components/site/carousel";
@@ -96,6 +98,19 @@ export default async function ProdiHomePage() {
     getSkripsi(),
   ]);
   const jadwal = kalenderMendatang(site.kalender, 3);
+  const ytLatest = await latestYoutube(site.medsos.youtubeChannelId);
+  const latestBulan = site.apresiasi
+    .map((x) => x.bulan)
+    .sort()
+    .at(-1);
+  const apresiasi = site.apresiasi.filter((x) => x.bulan === latestBulan);
+  const bulanApresiasi = latestBulan
+    ? new Date(`${latestBulan}-01T00:00:00+07:00`).toLocaleDateString("id-ID", {
+        month: "long",
+        year: "numeric",
+        timeZone: "Asia/Jakarta",
+      })
+    : "";
   const skripsiYears = [...new Set(skripsi.map((s) => s.tahun))].sort(
     (a, b) => a - b,
   );
@@ -289,6 +304,48 @@ export default async function ProdiHomePage() {
         </section>
       )}
 
+      {/* ─── Apresiasi bulan ini ───────────────────────────── */}
+      {apresiasi.length > 0 && (
+        <section className="px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[1024px]">
+            <Reveal>
+              <SectionHeading
+                align="left"
+                eyebrow="Apresiasi"
+                title={`Insan Eksyar ${bulanApresiasi}`}
+              />
+            </Reveal>
+            <div className="mt-8 grid gap-4 md:grid-cols-2">
+              {apresiasi.map((a, i) => (
+                <Reveal key={`${a.nama}-${i}`} delay={i * 0.06}>
+                  <div className="flex h-full gap-5 rounded-[28px] bg-sand/60 p-6">
+                    {a.photo ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={a.photo}
+                        alt=""
+                        className="size-24 shrink-0 rounded-[20px] object-cover"
+                      />
+                    ) : null}
+                    <div>
+                      <p className="text-[13px] font-semibold text-accent">
+                        {a.peran}
+                      </p>
+                      <p className="mt-1 text-[19px] font-bold leading-snug text-navy">
+                        {a.nama}
+                      </p>
+                      <p className="mt-2 text-[14.5px] leading-[1.55] text-navy/75">
+                        {a.alasan}
+                      </p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ─── Kegiatan (carousel) ──────────────────────────── */}
       {kegiatan.length > 0 && (
         <section className="py-24 sm:py-32">
@@ -359,6 +416,41 @@ export default async function ProdiHomePage() {
           </div>
         </Reveal>
       </section>
+
+      {site.kampanyePmb.aktif && site.kampanyePmb.judul && (
+        <PmbCampaign
+          judul={site.kampanyePmb.judul}
+          teks={site.kampanyePmb.teks}
+          tenggat={site.kampanyePmb.tenggat}
+          pmbUrl={kontak.pmbUrl}
+        />
+      )}
+
+      {/* ─── Video YouTube terbaru ─────────────────────────── */}
+      {ytLatest.length > 0 && (
+        <section className="px-4 pb-24 sm:px-6">
+          <div className="mx-auto max-w-[1024px]">
+            <Reveal className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading
+                align="left"
+                eyebrow="YouTube"
+                title="Video terbaru"
+              />
+              <Link
+                href="/prodi/galeri"
+                className="text-[16px] font-semibold text-accent hover:underline"
+              >
+                Semua video ›
+              </Link>
+            </Reveal>
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              {ytLatest.slice(0, 2).map((v) => (
+                <VideoEmbed key={v.url} url={v.url} title={v.title} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ─── Video profil ─────────────────────────────────── */}
       {site.video[0] && (

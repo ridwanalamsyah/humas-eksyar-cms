@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { DosenEntry } from "@/lib/site/dosen-index";
+import { dosenSlug } from "@/lib/site/names";
 import { EmptyResult, SearchInput, matches } from "./filter-chips";
 
 /** Direktori seluruh dosen pengampu & pembimbing, dengan pencarian. */
@@ -45,9 +46,12 @@ export function DosenIndex({
               key={d.nama}
               className="flex h-full flex-col rounded-[20px] border border-hairline bg-canvas p-5"
             >
-              <p className="text-[16.5px] font-bold leading-snug text-label">
+              <Link
+                href={`/prodi/dosen/${dosenSlug(d.nama)}`}
+                className="text-[16.5px] font-bold leading-snug text-label hover:text-accent"
+              >
                 {d.nama}
-              </p>
+              </Link>
               {d.jabatan && (
                 <p className="mt-0.5 text-[13.5px] text-label-2">{d.jabatan}</p>
               )}

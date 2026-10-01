@@ -28,6 +28,11 @@ const PUBLIC_PREFIXES = [
   "/api/holidays",
   // Endpoint cron memverifikasi CRON_SECRET / sesi admin sendiri.
   "/api/cron",
+  // Formulir publik & penghitung kunjungan website.
+  "/api/formulir",
+  "/api/views",
+  "/verifikasi",
+  "/link",
   "/manifest",
   "/sw",
   "/icon-",
@@ -49,6 +54,11 @@ const SHORT_LINKS: Record<string, string> = {
   "/unduhan": "/prodi/unduhan",
   "/agenda": "/prodi/agenda",
   "/cms": "/dashboard",
+  "/link": "/prodi/link",
+  "/verifikasi": "/prodi/verifikasi",
+  "/kamus": "/prodi/kamus",
+  "/zakat": "/prodi/alat/zakat",
+  "/formulir": "/prodi/formulir",
 };
 
 export default auth((req) => {
@@ -59,6 +69,12 @@ export default auth((req) => {
   // Domain utama langsung membuka website prodi; alamat /prodi dirapikan ke /.
   if (path === "/") return NextResponse.rewrite(new URL("/prodi" + nextUrl.search, nextUrl));
   if (path === "/prodi") return NextResponse.redirect(new URL("/" + nextUrl.search, nextUrl), 308);
+  // /verifikasi/KODE (dari QR sertifikat) dan formulir cek kode.
+  if (path === "/verifikasi/cek") {
+    const kode = (nextUrl.searchParams.get("kode") ?? "").trim().toUpperCase().replace(/[^A-Z0-9-]/g, "");
+    return NextResponse.redirect(new URL(`/prodi/verifikasi/${kode || ""}`, nextUrl));
+  }
+  if (path.startsWith("/verifikasi/")) return NextResponse.rewrite(new URL(`/prodi${path}`, nextUrl));
   const short = SHORT_LINKS[path.replace(/\/$/, "")];
   if (short) return NextResponse.redirect(new URL(short + nextUrl.search, nextUrl), 308);
 

@@ -9,6 +9,8 @@ import {
 } from "@/lib/site/kalender";
 import { prodi } from "@/lib/site/prodi";
 import { PageHeader } from "@/components/site/page-header";
+import { CalendarSubscribe } from "@/components/site/calendar-subscribe";
+import { PrintButton } from "@/components/site/print-button";
 import { Reveal } from "@/components/site/reveal";
 import { cn } from "@/lib/utils";
 
@@ -48,6 +50,13 @@ export default async function KalenderPage() {
 
       <section className="px-4 pb-24 sm:px-6">
         <div className="mx-auto max-w-[820px]">
+          <div
+            className="mb-10 flex flex-wrap items-center justify-between gap-3"
+            data-print-hide
+          >
+            <CalendarSubscribe />
+            <PrintButton />
+          </div>
           {dokumen.length > 0 && (
             <div className="mb-12 grid gap-3 sm:grid-cols-2">
               {dokumen.map((d) => (

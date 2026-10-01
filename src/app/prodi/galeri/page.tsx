@@ -52,13 +52,24 @@ export default async function GaleriPage() {
             <SectionHeading
               align="left"
               eyebrow="Video"
-              title="Video kegiatan"
+              title="Video kegiatan & kajian"
             />
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {video.map((v) => (
-                <VideoEmbed key={v.url} url={v.url} title={v.title} />
-              ))}
-            </div>
+            {[...new Set(video.map((v) => v.kategori || "Kegiatan"))].map(
+              (k) => (
+                <div key={k} className="mt-8">
+                  <h3 className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
+                    {k}
+                  </h3>
+                  <div className="mt-4 grid gap-5 md:grid-cols-2">
+                    {video
+                      .filter((v) => (v.kategori || "Kegiatan") === k)
+                      .map((v) => (
+                        <VideoEmbed key={v.url} url={v.url} title={v.title} />
+                      ))}
+                  </div>
+                </div>
+              ),
+            )}
           </div>
         </section>
       )}

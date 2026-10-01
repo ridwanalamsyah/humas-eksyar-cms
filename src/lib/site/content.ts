@@ -54,6 +54,7 @@ export function contentExcerpt(item: ContentItem, max = 180): string {
 
 const RUBRIC_LABELS: Record<string, string> = {
   pengumuman: "Pengumuman",
+  rilis_pers: "Rilis Pers",
   dokumentasi: "Kegiatan",
   kajian: "Kajian",
   campaign: "Kampanye",

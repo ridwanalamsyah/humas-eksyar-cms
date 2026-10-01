@@ -16,3 +16,8 @@ export function normName(name: string): string {
     .replace(/\s+/g, " ")
     .trim();
 }
+
+/** Slug URL profil dosen: "Dr. Evi Sopiah, M.Ag." → "evi-sopiah". */
+export function dosenSlug(name: string): string {
+  return normName(name).replace(/\s+/g, "-");
+}

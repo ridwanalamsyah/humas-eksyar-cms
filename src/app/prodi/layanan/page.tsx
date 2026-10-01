@@ -4,6 +4,7 @@ import { ArrowUpRight, Building2, FolderDown, ScanSearch } from "lucide-react";
 import { FaqList } from "@/components/site/faq-list";
 import { LocalNav } from "@/components/site/local-nav";
 import { PageHeader } from "@/components/site/page-header";
+import { StatusLayanan } from "@/components/site/status-layanan";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 import { getSite } from "@/lib/site/get-site";
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 const FEBI_URL = "https://febi.uinsgd.ac.id";
 
 export default async function LayananPage() {
-  const { faq, kontak, aksesCepat, prosedur } = await getSite();
+  const { faq, kontak, aksesCepat, prosedur, statusLayanan } = await getSite();
 
   return (
     <>
@@ -27,6 +28,12 @@ export default async function LayananPage() {
         title="Layanan mahasiswa"
         description="Sistem akademik kampus, dokumen prodi, dan alat bantu skripsi."
       />
+      <div className="px-4 sm:px-6">
+        <StatusLayanan
+          status={statusLayanan.status}
+          pesan={statusLayanan.pesan}
+        />
+      </div>
 
       <LocalNav
         items={[
