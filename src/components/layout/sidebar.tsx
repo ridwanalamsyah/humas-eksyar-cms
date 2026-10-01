@@ -55,6 +55,9 @@ function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
       title: "Website Prodi",
       items: [
         { href: "/settings/website", label: "Konten website", icon: Globe },
+        { href: "/settings/website?bagian=akademik", label: "Akademik & kalender", icon: CalendarDays },
+        { href: "/settings/website?bagian=mahasiswa", label: "Kemahasiswaan & lomba", icon: Trophy },
+        { href: "/settings/website?bagian=layanan", label: "Layanan & sertifikat", icon: Ticket },
         { href: "/settings/formulir", label: "Kotak masuk", icon: Inbox },
         { href: "/settings/kinerja", label: "Kinerja & laporan", icon: BarChart3 },
         { href: "/settings/skripsi", label: "Direktori skripsi", icon: BookMarked },
@@ -70,6 +73,8 @@ function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
 export function isActivePath(pathname: string, href: string) {
   if (href === "/dashboard") return pathname === "/dashboard";
   if (href === "/settings") return pathname === "/settings";
+  // Tautan pintasan ke bagian editor (?bagian=…) tidak ditandai aktif.
+  if (href.includes("?")) return false;
   return pathname === href || pathname.startsWith(href + "/");
 }
 

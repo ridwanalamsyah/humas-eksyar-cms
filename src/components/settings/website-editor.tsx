@@ -12,11 +12,11 @@ import {
   RotateCcw,
   Sparkles,
   Save,
+  Search,
   Trash2,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
-import { SegmentedTabs } from "@/components/common/tabs";
 import type { WebsiteConfig } from "@/lib/site/schema";
 import { cn } from "@/lib/utils";
 
@@ -86,7 +86,7 @@ const person: FieldSpec[] = [
   { name: "photo", label: "Foto (potret 4:5)", type: "image", wide: true },
 ];
 
-const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
+const RAW_TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
   {
     value: "umum",
     label: "Umum",
@@ -1369,6 +1369,210 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
   },
 ];
 
+/**
+ * Menu editor disusun mengikuti menu website, supaya setiap fitur mudah
+ * dicari. Bagian yang belum masuk grup mana pun otomatis tampil di "Lainnya".
+ */
+const GROUPS: {
+  value: string;
+  label: string;
+  keys: (keyof WebsiteConfig)[];
+}[] = [
+  {
+    value: "beranda",
+    label: "Beranda & promosi",
+    keys: ["identity", "banner", "kampanyePmb", "apresiasi", "medsos"],
+  },
+  {
+    value: "profil",
+    label: "Profil prodi",
+    keys: ["profil", "timeline", "pimpinan", "struktur", "fasilitas", "mitra"],
+  },
+  {
+    value: "dosen",
+    label: "Dosen & riset",
+    keys: ["dosen", "tendik", "publikasi", "jurnal"],
+  },
+  {
+    value: "akademik",
+    label: "Akademik",
+    keys: [
+      "kalender",
+      "kurikulum",
+      "bidangKajian",
+      "kelompokMataKuliah",
+      "peminatan",
+      "rps",
+      "profilLulusan",
+      "capaianPembelajaran",
+    ],
+  },
+  {
+    value: "skripsi",
+    label: "Skripsi",
+    keys: ["panduanSkripsi", "topikSkripsi", "jadwalSidang", "integritas"],
+  },
+  {
+    value: "maba",
+    label: "Mahasiswa baru",
+    keys: ["infoMaba", "panduanMaba", "jalurMasuk"],
+  },
+  {
+    value: "mahasiswa",
+    label: "Kemahasiswaan",
+    keys: [
+      "prestasi",
+      "lomba",
+      "beasiswa",
+      "kegiatanMahasiswa",
+      "karya",
+      "wisuda",
+      "testimoni",
+    ],
+  },
+  {
+    value: "karier",
+    label: "Karier & alumni",
+    keys: ["prospekKarir", "lowongan"],
+  },
+  {
+    value: "kegiatan",
+    label: "Kegiatan & media",
+    keys: ["kegiatan", "galeri", "video", "pressKit"],
+  },
+  {
+    value: "layanan",
+    label: "Layanan & kontak",
+    keys: [
+      "kontak",
+      "statusLayanan",
+      "aksesCepat",
+      "prosedur",
+      "ruangAlat",
+      "unduhan",
+      "sertifikat",
+      "faq",
+    ],
+  },
+  {
+    value: "mutu",
+    label: "Data & mutu",
+    keys: ["statistik", "infografis", "mutu"],
+  },
+  { value: "alat", label: "Kamus & alat", keys: ["kamus", "zakat"] },
+];
+
+const SECTIONS = new Map(
+  RAW_TABS.flatMap((t) => t.sections).map((s) => [s.key, s] as const),
+);
+const grouped = new Set(GROUPS.flatMap((g) => g.keys));
+const leftover = [...SECTIONS.values()].filter((s) => !grouped.has(s.key));
+
+const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
+  ...GROUPS.map((g) => ({
+    value: g.value,
+    label: g.label,
+    sections: g.keys.flatMap((k) => SECTIONS.get(k) ?? []),
+  })),
+  ...(leftover.length
+    ? [{ value: "lainnya", label: "Lainnya", sections: leftover }]
+    : []),
+];
+
+/** Halaman website tempat tiap bagian tampil (untuk tautan "Tampil di"). */
+const SHOWN_ON: Partial<Record<keyof WebsiteConfig, [string, string][]>> = {
+  identity: [["Beranda", "/"]],
+  banner: [["Semua halaman", "/"]],
+  kampanyePmb: [
+    ["Beranda", "/"],
+    ["Mahasiswa baru", "/prodi/mahasiswa-baru"],
+    ["Tautan bio", "/prodi/link"],
+  ],
+  apresiasi: [["Beranda", "/"]],
+  medsos: [
+    ["Beranda", "/"],
+    ["Tautan bio", "/prodi/link"],
+  ],
+  profil: [["Profil", "/prodi/profil"]],
+  timeline: [["Profil", "/prodi/profil"]],
+  pimpinan: [
+    ["Profil", "/prodi/profil"],
+    ["Dosen", "/prodi/dosen"],
+  ],
+  struktur: [["Profil", "/prodi/profil"]],
+  fasilitas: [["Profil", "/prodi/profil"]],
+  mitra: [["Profil", "/prodi/profil"]],
+  dosen: [["Dosen", "/prodi/dosen"]],
+  tendik: [["Dosen", "/prodi/dosen"]],
+  publikasi: [["Penelitian", "/prodi/penelitian"]],
+  jurnal: [["Penelitian", "/prodi/penelitian"]],
+  kalender: [["Kalender akademik", "/prodi/kalender"]],
+  kurikulum: [["Akademik", "/prodi/akademik"]],
+  bidangKajian: [
+    ["Akademik", "/prodi/akademik"],
+    ["Kuis minat", "/prodi/alat/kuis"],
+  ],
+  kelompokMataKuliah: [["Akademik", "/prodi/akademik"]],
+  peminatan: [["Akademik", "/prodi/akademik"]],
+  rps: [["Akademik", "/prodi/akademik"]],
+  profilLulusan: [["Akademik", "/prodi/akademik"]],
+  capaianPembelajaran: [["Akademik", "/prodi/akademik"]],
+  panduanSkripsi: [["Pojok skripsi", "/prodi/skripsi/pojok"]],
+  topikSkripsi: [["Pojok skripsi", "/prodi/skripsi/pojok"]],
+  jadwalSidang: [["Pojok skripsi", "/prodi/skripsi/pojok"]],
+  integritas: [["Pojok skripsi", "/prodi/skripsi/pojok"]],
+  infoMaba: [["Mahasiswa baru", "/prodi/mahasiswa-baru"]],
+  panduanMaba: [["Mahasiswa baru", "/prodi/mahasiswa-baru"]],
+  jalurMasuk: [["Mahasiswa baru", "/prodi/mahasiswa-baru"]],
+  prestasi: [
+    ["Beranda", "/"],
+    ["Kemahasiswaan", "/prodi/kemahasiswaan"],
+  ],
+  lomba: [["Info lomba", "/prodi/lomba"]],
+  beasiswa: [["Beasiswa", "/prodi/beasiswa"]],
+  kegiatanMahasiswa: [["Kemahasiswaan", "/prodi/kemahasiswaan"]],
+  karya: [["Karya mahasiswa", "/prodi/karya"]],
+  wisuda: [["Wisuda", "/prodi/wisuda"]],
+  testimoni: [
+    ["Beranda", "/"],
+    ["Alumni", "/prodi/alumni"],
+  ],
+  prospekKarir: [
+    ["Karier", "/prodi/karier"],
+    ["Akademik", "/prodi/akademik"],
+  ],
+  lowongan: [["Karier", "/prodi/karier"]],
+  kegiatan: [
+    ["Beranda", "/"],
+    ["Agenda", "/prodi/agenda"],
+  ],
+  galeri: [["Galeri", "/prodi/galeri"]],
+  video: [["Galeri", "/prodi/galeri"]],
+  pressKit: [["Ruang media", "/prodi/media"]],
+  kontak: [["Kontak", "/prodi/kontak"]],
+  statusLayanan: [
+    ["Kontak", "/prodi/kontak"],
+    ["Layanan", "/prodi/layanan"],
+  ],
+  aksesCepat: [["Layanan", "/prodi/layanan"]],
+  prosedur: [["Layanan", "/prodi/layanan"]],
+  ruangAlat: [
+    ["Profil", "/prodi/profil"],
+    ["Formulir pinjam", "/prodi/formulir/pinjam"],
+  ],
+  unduhan: [["Unduhan", "/prodi/unduhan"]],
+  sertifikat: [["Verifikasi", "/prodi/verifikasi"]],
+  faq: [
+    ["Layanan", "/prodi/layanan"],
+    ["Kontak", "/prodi/kontak"],
+  ],
+  statistik: [["Data & statistik", "/prodi/data"]],
+  infografis: [["Data & statistik", "/prodi/data"]],
+  mutu: [["Penjaminan mutu", "/prodi/mutu"]],
+  kamus: [["Kamus", "/prodi/kamus"]],
+  zakat: [["Kalkulator zakat", "/prodi/alat/zakat"]],
+};
+
 /* ------------------------------------------------------------------ */
 /* Editor                                                              */
 /* ------------------------------------------------------------------ */
@@ -1376,13 +1580,24 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
 export function WebsiteEditor({
   initial,
   defaults,
+  initialTab,
 }: {
   initial: WebsiteConfig;
   defaults: WebsiteConfig;
+  initialTab?: string;
 }) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-  const [tab, setTab] = useState(TABS[0].value);
+  const [tab, setTab] = useState(
+    TABS.some((t) => t.value === initialTab) ? initialTab! : TABS[0].value,
+  );
+  const [query, setQuery] = useState("");
+  // Pindah bagian saat pintasan di sidebar (?bagian=…) diklik.
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (initialTab && TABS.some((t) => t.value === initialTab))
+      setTab(initialTab);
+  }, [initialTab]);
   const [config, setConfig] = useState<WebsiteConfig>(initial);
   const [saved, setSaved] = useState(() => JSON.stringify(initial));
   const dirty = useMemo(
@@ -1421,35 +1636,149 @@ export function WebsiteEditor({
   }
 
   const active = TABS.find((t) => t.value === tab) ?? TABS[0];
+  const q = query.trim().toLowerCase();
+  const matches = q
+    ? TABS.flatMap((t) =>
+        t.sections
+          .filter((sec) =>
+            [
+              sec.title,
+              sec.hint ?? "",
+              t.label,
+              ...(SHOWN_ON[sec.key] ?? []).map(([l]) => l),
+            ]
+              .join(" ")
+              .toLowerCase()
+              .includes(q),
+          )
+          .map((sec) => ({ tab: t, section: sec })),
+      )
+    : [];
+
+  function jumpTo(tabValue: string, key: string) {
+    setTab(tabValue);
+    setQuery("");
+    requestAnimationFrame(() =>
+      document
+        .getElementById(`bagian-${key}`)
+        ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+    );
+  }
 
   return (
     <div className="mt-6">
-      <div className="sticky top-2 z-20 flex flex-wrap items-center justify-between gap-3 rounded-2xl glass-thick px-3 py-2">
-        <div className="max-w-full overflow-x-auto">
-          <SegmentedTabs
-            value={tab}
-            onChange={setTab}
-            options={TABS.map((t) => ({ value: t.value, label: t.label }))}
-            size="sm"
-          />
+      <div className="z-20 rounded-2xl glass-thick px-3 py-3 sm:sticky sm:top-2">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="relative w-full min-w-0 sm:w-auto sm:max-w-xs sm:flex-1">
+            <Search
+              className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-foreground/40"
+              strokeWidth={1.75}
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Cari bagian: lomba, kalender, zakat…"
+              aria-label="Cari bagian website"
+              className="h-8 w-full rounded-lg bg-foreground/[0.05] pr-2 pl-8 text-[13px] outline-none placeholder:text-foreground/40 focus:ring-2 focus:ring-foreground/15"
+            />
+            {q && (
+              <div className="absolute inset-x-0 top-full z-30 mt-1 max-h-80 overflow-y-auto rounded-xl border border-foreground/10 bg-background p-1 shadow-lg">
+                {matches.length === 0 ? (
+                  <p className="px-3 py-2 text-[12.5px] text-foreground/55">
+                    Tidak ada bagian yang cocok.
+                  </p>
+                ) : (
+                  matches.map(({ tab: t, section: sec }) => (
+                    <button
+                      key={sec.key}
+                      type="button"
+                      onClick={() => jumpTo(t.value, sec.key)}
+                      className="block w-full rounded-lg px-3 py-2 text-left hover:bg-foreground/[0.05]"
+                    >
+                      <span className="block text-[13px] font-medium">
+                        {sec.title}
+                      </span>
+                      <span className="block text-[11.5px] text-foreground/50">
+                        {t.label}
+                      </span>
+                    </button>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="ghost" size="sm" asChild>
+              <a href="/" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="size-3.5" strokeWidth={1.75} /> Lihat
+                website
+              </a>
+            </Button>
+            <Button size="sm" disabled={pending || !dirty} onClick={save}>
+              <Save className="size-3.5" strokeWidth={1.75} />{" "}
+              {pending ? "Menyimpan…" : dirty ? "Simpan" : "Tersimpan"}
+            </Button>
+          </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" asChild>
-            <a href="/" target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="size-3.5" strokeWidth={1.75} /> Lihat
-              website
-            </a>
-          </Button>
-          <Button size="sm" disabled={pending || !dirty} onClick={save}>
+        <nav
+          aria-label="Bagian website"
+          className="mt-2.5 flex flex-wrap gap-1.5"
+        >
+          {TABS.map((t) => (
+            <button
+              key={t.value}
+              type="button"
+              aria-pressed={t.value === active.value}
+              onClick={() => setTab(t.value)}
+              className={cn(
+                "rounded-full px-3 py-1 text-[12.5px] transition-colors",
+                t.value === active.value
+                  ? "bg-foreground text-background"
+                  : "bg-foreground/[0.05] text-foreground/70 hover:bg-foreground/[0.09] hover:text-foreground",
+              )}
+            >
+              {t.label}
+              <span className="ml-1 opacity-50">{t.sections.length}</span>
+            </button>
+          ))}
+        </nav>
+      </div>
+
+      {dirty && (
+        <div className="fixed inset-x-4 bottom-24 z-30 sm:hidden">
+          <Button
+            className="w-full shadow-lg"
+            disabled={pending}
+            onClick={save}
+          >
             <Save className="size-3.5" strokeWidth={1.75} />{" "}
-            {pending ? "Menyimpan…" : dirty ? "Simpan" : "Tersimpan"}
+            {pending ? "Menyimpan…" : "Simpan perubahan"}
           </Button>
         </div>
+      )}
+
+      <div className="mt-4 flex flex-wrap gap-1.5">
+        {active.sections.map((sec) => (
+          <button
+            key={sec.key}
+            type="button"
+            onClick={() => jumpTo(active.value, sec.key)}
+            className="rounded-lg border border-foreground/10 px-2.5 py-1 text-[12px] text-foreground/65 hover:border-foreground/25 hover:text-foreground"
+          >
+            {sec.title}
+          </button>
+        ))}
       </div>
 
       <div className="mt-6 grid gap-6">
         {active.sections.map((section) => (
-          <GlassCard key={section.key} variant="thick" className="p-5 sm:p-6">
+          <GlassCard
+            key={section.key}
+            id={`bagian-${section.key}`}
+            variant="thick"
+            className="scroll-mt-40 p-5 sm:p-6"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="font-display text-[17px] font-semibold tracking-tight">
@@ -1458,6 +1787,23 @@ export function WebsiteEditor({
                 {section.hint && (
                   <p className="mt-1 text-[12px] text-foreground/55">
                     {section.hint}
+                  </p>
+                )}
+                {SHOWN_ON[section.key] && (
+                  <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-foreground/55">
+                    Tampil di:
+                    {SHOWN_ON[section.key]!.map(([label, href]) => (
+                      <a
+                        key={href}
+                        href={href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-0.5 font-medium text-foreground/75 underline-offset-2 hover:text-foreground hover:underline"
+                      >
+                        {label}
+                        <ExternalLink className="size-3" strokeWidth={1.75} />
+                      </a>
+                    ))}
                   </p>
                 )}
               </div>

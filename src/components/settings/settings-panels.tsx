@@ -20,6 +20,9 @@ import {
   Tag,
   Users as UsersIcon,
   Globe,
+  Inbox,
+  BarChart3,
+  Camera,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
@@ -78,7 +81,25 @@ export function SettingsPanels({ member }: Props) {
               href="/settings/website"
               icon={<Globe className="size-4" strokeWidth={1.75} />}
               title="Website Prodi"
-              desc="Konten website publik: profil, dosen, prestasi, kegiatan, layanan."
+              desc="Semua isi website: beranda, akademik, kalender, lomba, beasiswa, karier, kamus, zakat, sertifikat, layanan."
+            />
+            <AdminLink
+              href="/settings/formulir"
+              icon={<Inbox className="size-4" strokeWidth={1.75} />}
+              title="Kotak masuk"
+              desc="Formulir, pertanyaan forum, komentar, alumni, dan pendaftaran acara dari website."
+            />
+            <AdminLink
+              href="/content/instagram"
+              icon={<Camera className="size-4" strokeWidth={1.75} />}
+              title="Instagram → Artikel"
+              desc="Ubah postingan Instagram jadi berita di website."
+            />
+            <AdminLink
+              href="/settings/kinerja"
+              icon={<BarChart3 className="size-4" strokeWidth={1.75} />}
+              title="Kinerja & laporan"
+              desc="Pengunjung website, laporan bulanan, ekspor, dan backup."
             />
             <AdminLink
               href="/settings/skripsi"
