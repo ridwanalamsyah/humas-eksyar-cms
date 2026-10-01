@@ -12,6 +12,10 @@
     {
       "path": "/api/cron/akademik-sync",
       "schedule": "41 2 * * 1"
+    },
+    {
+      "path": "/api/cron/instagram-sync",
+      "schedule": "53 3 * * *"
     }
   ]
 }

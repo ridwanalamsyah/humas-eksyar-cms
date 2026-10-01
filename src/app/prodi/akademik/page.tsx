@@ -109,7 +109,10 @@ export default async function AkademikPage() {
 
       {/* Mata kuliah & dosen pengampu (e-Knows) */}
       {akademik && akademik.mataKuliah.length > 0 && (
-        <section id="mata-kuliah" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32">
+        <section
+          id="mata-kuliah"
+          className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32"
+        >
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading

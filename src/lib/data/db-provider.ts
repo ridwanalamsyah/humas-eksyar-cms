@@ -311,6 +311,17 @@ export async function listMedia(opts?: {
   return rows.map((r) => row<MediaAsset>(r));
 }
 
+/** Simpan aset media baru (mis. foto hasil impor Instagram). */
+export async function createMedia(input: Omit<MediaAsset, "id" | "uploadedAt"> & { id?: ID }): Promise<MediaAsset> {
+  const asset: MediaAsset = {
+    ...input,
+    id: input.id ?? `med-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+    uploadedAt: new Date().toISOString(),
+  };
+  await client().insert(schema.media).values(asset).onConflictDoNothing();
+  return asset;
+}
+
 export async function getMedia(id: ID): Promise<MediaAsset | null> {
   const rows = await client()
     .select()

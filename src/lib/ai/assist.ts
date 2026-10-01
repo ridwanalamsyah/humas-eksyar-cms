@@ -69,3 +69,26 @@ export async function kegiatanFromCaption(caption: string, today: string): Promi
     summary: String(data.summary ?? "").slice(0, 800),
   };
 }
+
+export interface ArtikelDraft {
+  judul: string;
+  isi: string;
+}
+
+/**
+ * Ubah caption Instagram menjadi artikel berita website (markdown).
+ * Hanya memakai fakta di caption — tidak menambah nama, angka, atau kutipan.
+ */
+export async function artikelFromCaption(caption: string, tanggal: string): Promise<ArtikelDraft> {
+  const raw = await gemini(
+    `${BASE_RULES}\nUbah caption Instagram berikut menjadi artikel berita untuk website prodi. ` +
+      `Gaya berita kampus: paragraf pembuka menjawab apa, siapa, kapan, di mana (sejauh ada di caption), lalu 2–4 paragraf isi. ` +
+      `JANGAN menambah fakta, kutipan, angka, atau nama yang tidak ada di caption. Hapus hashtag, emoji, ajakan "link in bio", dan mention akun. ` +
+      `Tanggal unggahan: ${tanggal}. Kembalikan JSON {"judul": string (maks 100 karakter, judul berita yang jelas), ` +
+      `"isi": string (markdown, paragraf dipisah baris kosong, tanpa judul)}.\n\nCaption:\n"""${caption.slice(0, 4000)}"""`,
+    true,
+  );
+  const parsed = JSON.parse(raw) as Partial<ArtikelDraft>;
+  if (!parsed.judul || !parsed.isi) throw new Error("Format jawaban AI tidak sesuai");
+  return { judul: parsed.judul.slice(0, 160), isi: parsed.isi.slice(0, 12000) };
+}

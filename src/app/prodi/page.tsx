@@ -20,6 +20,7 @@ import {
 import { defaultWebsiteConfig } from "@/lib/site/defaults";
 import { getSite } from "@/lib/site/get-site";
 import { getSkripsi } from "@/lib/site/skripsi";
+import { kalenderMendatang, rentang } from "@/lib/site/kalender";
 import { prodi } from "@/lib/site/prodi";
 import { AnnouncementList } from "@/components/site/announcement-list";
 import { Carousel } from "@/components/site/carousel";
@@ -94,6 +95,7 @@ export default async function ProdiHomePage() {
     getMediaMap(),
     getSkripsi(),
   ]);
+  const jadwal = kalenderMendatang(site.kalender, 3);
   const skripsiYears = [...new Set(skripsi.map((s) => s.tahun))].sort(
     (a, b) => a - b,
   );
@@ -515,6 +517,30 @@ export default async function ProdiHomePage() {
                           </p>
                         </li>
                       ))}
+                    </ul>
+                  ) : jadwal.length ? (
+                    <ul className="mt-2 divide-y divide-hairline">
+                      {jadwal.map((k) => (
+                        <li key={k.kegiatan} className="py-4">
+                          <p className="text-[13px] text-label-3">
+                            {rentang(k)}
+                          </p>
+                          <p className="mt-1 text-[16px] font-semibold leading-snug text-label">
+                            {k.kegiatan}
+                          </p>
+                          <p className="mt-0.5 text-[13px] text-label-2">
+                            {k.kategori}
+                          </p>
+                        </li>
+                      ))}
+                      <li className="py-3">
+                        <Link
+                          href="/prodi/kalender"
+                          className="text-[14px] font-semibold text-accent hover:underline"
+                        >
+                          Kalender akademik ›
+                        </Link>
+                      </li>
                     </ul>
                   ) : (
                     <p className="py-4 text-[15px] text-label-2">

@@ -179,7 +179,10 @@ export default async function SkripsiPage({ searchParams }: Props) {
               {pb && (
                 <p className="mt-6 flex flex-wrap items-center gap-2 rounded-[16px] bg-accent-soft px-4 py-3 text-[14px] text-label">
                   Skripsi bimbingan <span className="font-bold">{pb}</span>
-                  <Link href={href({ q, tahun })} className="ml-auto font-semibold text-accent hover:underline">
+                  <Link
+                    href={href({ q, tahun })}
+                    className="ml-auto font-semibold text-accent hover:underline"
+                  >
                     Hapus filter ×
                   </Link>
                 </p>
@@ -207,7 +210,9 @@ export default async function SkripsiPage({ searchParams }: Props) {
                 >
                   <PageLink
                     href={
-                      page > 1 ? href({ pembimbing: pb, q, tahun, hal: page - 1 }) : undefined
+                      page > 1
+                        ? href({ pembimbing: pb, q, tahun, hal: page - 1 })
+                        : undefined
                     }
                     label="‹ Sebelumnya"
                   />
@@ -319,14 +324,21 @@ export default async function SkripsiPage({ searchParams }: Props) {
 function SkripsiRow({ item }: { item: SkripsiItem }) {
   const body = (
     <>
-      <span className="w-12 shrink-0 pt-0.5 font-mono text-[13px] text-label-3">{item.tahun}</span>
+      <span className="w-12 shrink-0 pt-0.5 font-mono text-[13px] text-label-3">
+        {item.tahun}
+      </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[15.5px] font-medium leading-snug text-label group-hover:text-accent">{item.judul}</span>
+        <span className="block text-[15.5px] font-medium leading-snug text-label group-hover:text-accent">
+          {item.judul}
+        </span>
         {(item.nama || item.pembimbing?.length) && (
           <span className="mt-1 block text-[13px] text-label-2">
             {item.nama}
             {item.pembimbing?.length ? (
-              <span className="text-label-3"> · Pembimbing: {item.pembimbing.join(", ")}</span>
+              <span className="text-label-3">
+                {" "}
+                · Pembimbing: {item.pembimbing.join(", ")}
+              </span>
             ) : null}
           </span>
         )}
@@ -341,11 +353,19 @@ function SkripsiRow({ item }: { item: SkripsiItem }) {
   return (
     <li>
       {item.id ? (
-        <Link href={`/prodi/skripsi/${item.id}`} className="group flex gap-4 px-5 py-4 hover:bg-mist/60">
+        <Link
+          href={`/prodi/skripsi/${item.id}`}
+          className="group flex gap-4 px-5 py-4 hover:bg-mist/60"
+        >
           {body}
         </Link>
       ) : item.url ? (
-        <a href={item.url} target="_blank" rel="noopener noreferrer" className="group flex gap-4 px-5 py-4 hover:bg-mist/60">
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex gap-4 px-5 py-4 hover:bg-mist/60"
+        >
           {body}
         </a>
       ) : (

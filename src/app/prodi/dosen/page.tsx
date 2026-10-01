@@ -18,12 +18,8 @@ export const metadata: Metadata = {
 type Props = { searchParams: Promise<{ q?: string }> };
 
 export default async function DosenPage({ searchParams }: Props) {
-  const [{ dosen, pimpinan, tendik }, akademik, skripsi, { q = "" }] = await Promise.all([
-    getSite(),
-    getAkademik(),
-    getSkripsi(),
-    searchParams,
-  ]);
+  const [{ dosen, pimpinan, tendik }, akademik, skripsi, { q = "" }] =
+    await Promise.all([getSite(), getAkademik(), getSkripsi(), searchParams]);
   const index = buildDosenIndex([...pimpinan, ...dosen], akademik, skripsi);
   const hasExtra = index.some((d) => d.mataKuliah.length || d.bimbingan);
 
@@ -39,10 +35,16 @@ export default async function DosenPage({ searchParams }: Props) {
         <DosenDirectory dosen={dosen} />
 
         {hasExtra && (
-          <div id="direktori" className="mx-auto mt-20 max-w-[1024px] scroll-mt-28">
-            <h2 className="text-[28px] font-bold tracking-[-0.02em] text-label">Direktori dosen pengampu & pembimbing</h2>
+          <div
+            id="direktori"
+            className="mx-auto mt-20 max-w-[1024px] scroll-mt-28"
+          >
+            <h2 className="text-[28px] font-bold tracking-[-0.02em] text-label">
+              Direktori dosen pengampu & pembimbing
+            </h2>
             <p className="mt-2 max-w-2xl text-[15px] text-label-2">
-              Dihimpun dari kelas daring e-Knows dan data pembimbing skripsi di Digital Library UIN SGD.
+              Dihimpun dari kelas daring e-Knows dan data pembimbing skripsi di
+              Digital Library UIN SGD.
             </p>
             <div className="mt-6">
               <DosenIndex items={index} initialQuery={q.slice(0, 120)} />

@@ -17,6 +17,7 @@ import {
   Trophy,
   Users,
   type LucideIcon,
+  Camera,
 } from "lucide-react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { Avatar } from "@/components/common/avatar";
@@ -32,6 +33,7 @@ function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
       items: [
         { href: "/dashboard", label: "Beranda", icon: Home },
         { href: "/content", label: "Konten", icon: FileText },
+        { href: "/content/instagram", label: "Instagram → Artikel", icon: Camera },
         { href: "/approval", label: "Approval", icon: CheckSquare },
         { href: "/calendar", label: "Kalender", icon: CalendarDays },
         { href: "/events", label: "Kegiatan", icon: Ticket },

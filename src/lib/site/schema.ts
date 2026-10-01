@@ -142,6 +142,21 @@ export const testimoniSchema = z.object({
   photo: image,
 });
 
+export const kalenderSchema = z.object({
+  mulai: isoDate,
+  selesai: z.union([isoDate, z.literal("")]).optional(),
+  kegiatan: text(200),
+  kategori: text(40),
+  sumber: url.optional(),
+});
+
+export const prosedurSchema = z.object({
+  title: text(160),
+  description: text(400),
+  steps: list(text(300), 15),
+  url: url,
+});
+
 export const timelineSchema = z.object({
   year: text(10),
   title: text(160),
@@ -203,6 +218,11 @@ export const websiteConfigSchema = z.object({
   publikasi: list(publikasiSchema, 300),
   jurnal: list(tautanSchema, 12),
   testimoni: list(testimoniSchema, 30),
+  kalender: list(kalenderSchema, 80),
+  prosedur: list(prosedurSchema, 20),
+  aksesCepat: list(tautanSchema, 24),
+  infoMaba: list(tautanSchema, 12),
+  banner: z.object({ aktif: z.boolean(), teks: text(200), url: url }),
   mutu: z.object({
     description: longText(1200),
     surveiUrl: url,
@@ -227,6 +247,8 @@ export const websiteConfigSchema = z.object({
     website: url,
     pmbUrl: url,
     mapsUrl: url,
+    /** Tautan wa.me untuk tombol "Tanya prodi" (opsional). */
+    whatsapp: url.optional(),
   }),
 });
 
@@ -245,4 +267,6 @@ export type Video = z.infer<typeof videoSchema>;
 export type Publikasi = z.infer<typeof publikasiSchema>;
 export type Tautan = z.infer<typeof tautanSchema>;
 export type Testimoni = z.infer<typeof testimoniSchema>;
+export type KalenderItem = z.infer<typeof kalenderSchema>;
+export type Prosedur = z.infer<typeof prosedurSchema>;
 export type TimelineItem = z.infer<typeof timelineSchema>;

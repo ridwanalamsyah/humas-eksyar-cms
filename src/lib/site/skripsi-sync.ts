@@ -1,6 +1,11 @@
 import { revalidatePath } from "next/cache";
 import { setSiteSetting } from "@/lib/data/provider";
-import { enrichItems, fetchDigilibSkripsi, mergeSkripsi, type DigilibItem } from "./digilib";
+import {
+  enrichItems,
+  fetchDigilibSkripsi,
+  mergeSkripsi,
+  type DigilibItem,
+} from "./digilib";
 import {
   SKRIPSI_KEY,
   SKRIPSI_SYNC_KEY,
@@ -20,7 +25,10 @@ import {
  * tidak diambil ulang; sisanya dilengkapi bertahap tiap kali sinkron.
  */
 export async function syncSkripsiFromDigilib(): Promise<SkripsiSync> {
-  const [report, existing] = await Promise.all([fetchDigilibSkripsi(), getSkripsi()]);
+  const [report, existing] = await Promise.all([
+    fetchDigilibSkripsi(),
+    getSkripsi(),
+  ]);
   const hadError = report.sources.some((s) => s.error);
   if (report.items.length === 0) {
     throw new Error(
@@ -31,7 +39,9 @@ export async function syncSkripsiFromDigilib(): Promise<SkripsiSync> {
   // Detail lama per tahun → pasang ke item agar tidak diambil ulang.
   const years = [...new Set(report.items.map((i) => i.tahun))];
   const buckets = new Map<number, Record<string, SkripsiDetail>>(
-    await Promise.all(years.map(async (y) => [y, await getSkripsiDetailBucket(y)] as const)),
+    await Promise.all(
+      years.map(async (y) => [y, await getSkripsiDetailBucket(y)] as const),
+    ),
   );
   for (const it of report.items) {
     const old = buckets.get(it.tahun)?.[it.id];
@@ -53,12 +63,21 @@ export async function syncSkripsiFromDigilib(): Promise<SkripsiSync> {
   for (const y of changed) await setSiteSetting(detailKey(y), buckets.get(y));
 
   const fetched = report.items
-    .map((i) => skripsiItemSchema.safeParse({ id: i.id, judul: i.judul, nama: i.nama, tahun: i.tahun, url: i.url, pembimbing: i.pembimbing.slice(0, 6) }))
+    .map((i) =>
+      skripsiItemSchema.safeParse({
+        id: i.id,
+        judul: i.judul,
+        nama: i.nama,
+        tahun: i.tahun,
+        url: i.url,
+        pembimbing: i.pembimbing.slice(0, 6),
+      }),
+    )
     .flatMap((r) => (r.success ? [r.data] : []));
   const known = new Set(existing.map((e) => e.judul.toLowerCase()));
-  const merged: SkripsiItem[] = mergeSkripsi(existing, fetched, { keepLinked: hadError }).sort(
-    (a, b) => b.tahun - a.tahun || a.judul.localeCompare(b.judul, "id"),
-  );
+  const merged: SkripsiItem[] = mergeSkripsi(existing, fetched, {
+    keepLinked: hadError,
+  }).sort((a, b) => b.tahun - a.tahun || a.judul.localeCompare(b.judul, "id"));
   const detailed = report.items.filter((i) => i.detail).length;
   const info: SkripsiSync = {
     at: new Date().toISOString(),

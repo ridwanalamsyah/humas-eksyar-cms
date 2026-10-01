@@ -105,3 +105,18 @@ export function googleCalendarUrl(e: {
   });
   return `https://calendar.google.com/calendar/render?${sp}`;
 }
+
+/** Pengumuman terbaru yang terbit dalam `days` hari terakhir (untuk pita pengumuman). */
+export function recentAnnouncement(
+  news: ContentItem[],
+  days = 14,
+): ContentItem | null {
+  const since = Date.now() - days * 864e5;
+  return (
+    news.find(
+      (n) =>
+        isAnnouncement(n) &&
+        new Date(n.publishedAt ?? n.updatedAt).getTime() >= since,
+    ) ?? null
+  );
+}

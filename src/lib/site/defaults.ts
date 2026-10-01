@@ -112,6 +112,95 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     },
   ],
   testimoni: [],
+  // Sumber: uinsgd.ac.id (jadwal UKT) dan Kalender Akademik UIN SGD 2026/2027.
+  kalender: [
+    {
+      mulai: "2026-07-06",
+      selesai: "2026-08-14",
+      kegiatan: "Pembayaran UKT mahasiswa lama semester ganjil 2026/2027",
+      kategori: "Administrasi",
+      sumber:
+        "https://uinsgd.ac.id/jadwal-pembayaran-ukt-mahasiswa-lama-semester-ganjil-2026-2027/",
+    },
+    {
+      mulai: "2026-08-15",
+      selesai: "2026-08-28",
+      kegiatan: "Perpanjangan pembayaran UKT semester ganjil 2026/2027",
+      kategori: "Administrasi",
+      sumber:
+        "https://uinsgd.ac.id/perpanjangan-jadwal-pembayaran-ukt-mahasiswa-lama-semester-ganjil-2026-2027/",
+    },
+    {
+      mulai: "2026-08-31",
+      selesai: "2026-09-04",
+      kegiatan: "Awal perkuliahan semester ganjil 2026/2027",
+      kategori: "Perkuliahan",
+      sumber: "https://uinsgd.ac.id/ingat-kalender-akademik-2026-2027/",
+    },
+  ],
+  prosedur: [],
+  aksesCepat: [
+    {
+      name: "SALAM",
+      description: "KRS, nilai, tagihan UKT, dan administrasi akademik.",
+      url: "https://simak.uinsgd.ac.id/beranda/",
+    },
+    {
+      name: "e-Knows",
+      description: "Kelas daring dan materi kuliah.",
+      url: "https://eknows.uinsgd.ac.id",
+    },
+    {
+      name: "Digital Library",
+      description: "Repositori skripsi dan karya ilmiah UIN SGD.",
+      url: "https://digilib.uinsgd.ac.id",
+    },
+    {
+      name: "Kalender Akademik 2026/2027",
+      description: "Dokumen resmi kalender akademik UIN SGD.",
+      url: "https://s.id/KalenderAkademik2026_2027",
+    },
+    {
+      name: "Tata cara pembayaran UKT",
+      description: "Langkah membayar UKT lewat SALAM dan bank mitra.",
+      url: "https://uinsgd.ac.id/tata-cara-pembayaran-ukt/",
+    },
+    {
+      name: "Career Development Center",
+      description: "Info karier, lowongan, dan tracer study.",
+      url: "https://cdc.uinsgd.ac.id/tracer_study/",
+    },
+    {
+      name: "Rumah Jurnal",
+      description: "Portal jurnal ilmiah UIN SGD.",
+      url: "https://ejournal.uinsgd.ac.id/",
+    },
+    {
+      name: "PMB UIN SGD",
+      description: "Pendaftaran mahasiswa baru.",
+      url: "https://pmb.uinsgd.ac.id",
+    },
+  ],
+  infoMaba: [
+    {
+      name: "Tarif UKT mahasiswa baru 2026/2027",
+      description:
+        "Informasi resmi tarif Uang Kuliah Tunggal dari panitia PMB UIN SGD.",
+      url: "https://pmb.uinsgd.ac.id/2026/04/14/informasi-tarif-uang-kuliah-tunggal-ukt-mahasiswa-baru-uin-sunan-gunung-djati-bandung-tahun-akademik-2026-2027/",
+    },
+    {
+      name: "Tata cara pembayaran UKT",
+      description:
+        "Bayar lewat SALAM (menu Keuangan → Tagihan UKT) di bank mitra UIN SGD.",
+      url: "https://uinsgd.ac.id/tata-cara-pembayaran-ukt/",
+    },
+    {
+      name: "Portal PMB UIN SGD",
+      description: "Jadwal, jalur, dan pendaftaran.",
+      url: "https://pmb.uinsgd.ac.id",
+    },
+  ],
+  banner: { aktif: false, teks: "", url: "" },
   mutu: {
     description:
       "Penjaminan mutu prodi mengikuti Sistem Penjaminan Mutu Internal (SPMI) UIN SGD. Visi, misi, dan kurikulum ditinjau berkala bersama asosiasi program studi, regulator, praktisi industri, alumni, dan mahasiswa.",
@@ -122,6 +211,12 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   fasilitas: fasilitas.map((f) => ({ ...f, image: null })),
   jalurMasuk,
   unduhan: [
+    {
+      title: "Kalender Akademik UIN SGD 2026/2027",
+      category: "Akademik",
+      description: "Dokumen resmi kalender akademik tahun 2026/2027.",
+      url: "https://s.id/KalenderAkademik2026_2027",
+    },
     {
       title: "Sertifikat Akreditasi UIN Sunan Gunung Djati Bandung 2024–2029",
       category: "Akreditasi",
@@ -144,5 +239,6 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     website: prodi.officialSite,
     pmbUrl: kontak.pmbUrl,
     mapsUrl: kontak.mapsUrl,
+    whatsapp: "",
   },
 };

@@ -18,11 +18,20 @@ export const akademikSchema = z.object({
       }),
     )
     .max(3000),
-  dosen: z.array(z.object({ nama: z.string().max(160), mataKuliah: z.array(z.string().max(200)).max(200) })).max(1000),
+  dosen: z
+    .array(
+      z.object({
+        nama: z.string().max(160),
+        mataKuliah: z.array(z.string().max(200)).max(200),
+      }),
+    )
+    .max(1000),
 });
 export type AkademikSync = z.infer<typeof akademikSchema>;
 
 export async function getAkademik(): Promise<AkademikSync | null> {
-  const parsed = akademikSchema.safeParse(await getSiteSetting(AKADEMIK_KEY).catch(() => null));
+  const parsed = akademikSchema.safeParse(
+    await getSiteSetting(AKADEMIK_KEY).catch(() => null),
+  );
   return parsed.success ? parsed.data : null;
 }

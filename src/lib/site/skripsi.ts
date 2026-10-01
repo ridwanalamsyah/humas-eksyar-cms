@@ -20,23 +20,40 @@ export const skripsiItemSchema = z.object({
   pembimbing: z.array(z.string().trim().max(160)).max(6).optional(),
 });
 
-const safeUrl = z.string().trim().max(800).regex(/^https?:\/\/[^\s]+$/);
+const safeUrl = z
+  .string()
+  .trim()
+  .max(800)
+  .regex(/^https?:\/\/[^\s]+$/);
 export const skripsiDetailSchema = z.object({
   abstrak: z.string().max(8000).optional(),
   kataKunci: z.string().max(600).optional(),
   dokumen: z
-    .array(z.object({ label: z.string().max(120), url: safeUrl, terbatas: z.boolean().optional() }))
+    .array(
+      z.object({
+        label: z.string().max(120),
+        url: safeUrl,
+        terbatas: z.boolean().optional(),
+      }),
+    )
     .max(30)
     .optional(),
 });
 export type SkripsiDetail = z.infer<typeof skripsiDetailSchema>;
-export const skripsiDetailBucketSchema = z.record(z.string(), skripsiDetailSchema);
+export const skripsiDetailBucketSchema = z.record(
+  z.string(),
+  skripsiDetailSchema,
+);
 
 /** Detail (abstrak, berkas) disimpan per tahun agar daftar utama tetap ringan. */
 export const detailKey = (tahun: number) => `skripsi_detail_${tahun}`;
 
-export async function getSkripsiDetailBucket(tahun: number): Promise<Record<string, SkripsiDetail>> {
-  const parsed = skripsiDetailBucketSchema.safeParse(await getSiteSetting(detailKey(tahun)).catch(() => null));
+export async function getSkripsiDetailBucket(
+  tahun: number,
+): Promise<Record<string, SkripsiDetail>> {
+  const parsed = skripsiDetailBucketSchema.safeParse(
+    await getSiteSetting(detailKey(tahun)).catch(() => null),
+  );
   return parsed.success ? parsed.data : {};
 }
 export const skripsiListSchema = z.array(skripsiItemSchema).max(20000);

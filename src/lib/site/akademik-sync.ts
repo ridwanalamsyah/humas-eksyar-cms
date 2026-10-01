@@ -5,7 +5,10 @@ import { aggregate, fetchEknows } from "./eknows";
 
 export async function syncAkademikFromEknows(): Promise<AkademikSync> {
   const report = await fetchEknows();
-  if (report.courses.length === 0) throw new Error(`Tidak ada mata kuliah ditemukan (${report.pages} halaman dibaca).`);
+  if (report.courses.length === 0)
+    throw new Error(
+      `Tidak ada mata kuliah ditemukan (${report.pages} halaman dibaca).`,
+    );
   const data = akademikSchema.parse({
     at: new Date().toISOString(),
     pages: report.pages,

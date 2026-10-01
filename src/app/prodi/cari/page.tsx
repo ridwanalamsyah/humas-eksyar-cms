@@ -145,14 +145,12 @@ export default async function CariPage({ searchParams }: Props) {
     const sk = skripsi.filter((s) => m(`${s.judul} ${s.nama}`));
     groups.push({
       label: "Skripsi",
-      hits: sk
-        .slice(0, 6)
-        .map((s) => ({
-          title: s.judul,
-          href: s.url ?? `/prodi/skripsi?q=${encodeURIComponent(q)}`,
-          snippet: `${s.tahun}${s.nama ? ` · ${s.nama}` : ""}`,
-          external: !!s.url,
-        })),
+      hits: sk.slice(0, 6).map((s) => ({
+        title: s.judul,
+        href: s.url ?? `/prodi/skripsi?q=${encodeURIComponent(q)}`,
+        snippet: `${s.tahun}${s.nama ? ` · ${s.nama}` : ""}`,
+        external: !!s.url,
+      })),
       more:
         sk.length > 6 ? `/prodi/skripsi?q=${encodeURIComponent(q)}` : undefined,
     });

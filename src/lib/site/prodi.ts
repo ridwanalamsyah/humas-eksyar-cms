@@ -821,6 +821,11 @@ export const navGroups: NavGroup[] = [
         description: "Mata kuliah, capaian, profil lulusan",
       },
       {
+        href: "/prodi/kalender",
+        label: "Kalender akademik",
+        description: "Perkuliahan, UKT, ujian, wisuda",
+      },
+      {
         href: "/prodi/skripsi",
         label: "Direktori skripsi",
         description: "Telusuri skripsi & cek kemiripan judul",
@@ -846,6 +851,11 @@ export const navGroups: NavGroup[] = [
     label: "Mahasiswa",
     href: "/prodi/kemahasiswaan",
     items: [
+      {
+        href: "/prodi/mahasiswa-baru",
+        label: "Calon mahasiswa baru",
+        description: "Jalur masuk, biaya, beasiswa",
+      },
       {
         href: "/prodi/kemahasiswaan",
         label: "Kemahasiswaan",

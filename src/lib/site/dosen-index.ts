@@ -20,14 +20,24 @@ export type DosenEntry = {
  * Digilib. Nama dicocokkan tanpa gelar. Pembimbing yang tidak tercatat di
  * CMS/e-Knows baru ditampilkan bila membimbing minimal 2 skripsi.
  */
-export function buildDosenIndex(cms: Person[], akademik: AkademikSync | null, skripsi: SkripsiItem[]): DosenEntry[] {
+export function buildDosenIndex(
+  cms: Person[],
+  akademik: AkademikSync | null,
+  skripsi: SkripsiItem[],
+): DosenEntry[] {
   const map = new Map<string, DosenEntry>();
   const upsert = (name: string) => {
     const key = normName(name);
     if (!key) return null;
     let e = map.get(key);
     if (!e) {
-      e = { nama: name, keahlian: [], mataKuliah: [], bimbingan: 0, fromCms: false };
+      e = {
+        nama: name,
+        keahlian: [],
+        mataKuliah: [],
+        bimbingan: 0,
+        fromCms: false,
+      };
       map.set(key, e);
     }
     return e;
@@ -60,11 +70,10 @@ export function buildDosenIndex(cms: Person[], akademik: AkademikSync | null, sk
     e.namaPembimbing = c.name;
   }
 
-  return [...map.values()]
-    .sort(
-      (a, b) =>
-        Number(b.fromCms) - Number(a.fromCms) ||
-        b.mataKuliah.length + b.bimbingan - (a.mataKuliah.length + a.bimbingan) ||
-        a.nama.localeCompare(b.nama, "id"),
-    );
+  return [...map.values()].sort(
+    (a, b) =>
+      Number(b.fromCms) - Number(a.fromCms) ||
+      b.mataKuliah.length + b.bimbingan - (a.mataKuliah.length + a.bimbingan) ||
+      a.nama.localeCompare(b.nama, "id"),
+  );
 }

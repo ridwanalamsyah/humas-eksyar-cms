@@ -33,7 +33,8 @@ type FieldType =
   | "date"
   | "number"
   | "lines"
-  | "paragraphs";
+  | "paragraphs"
+  | "checkbox";
 
 interface FieldSpec {
   name: string;
@@ -173,6 +174,14 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
             label: "URL Google Maps",
             type: "url",
             wide: true,
+          },
+          {
+            name: "whatsapp",
+            label: "WhatsApp prodi (opsional)",
+            type: "url",
+            wide: true,
+            placeholder: "https://wa.me/62812xxxxxxx",
+            hint: "Bila diisi, muncul tombol \"Tanya prodi\" di pojok website.",
           },
         ],
       },
@@ -634,6 +643,71 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     label: "Layanan",
     sections: [
       {
+        key: "banner",
+        title: "Pengumuman berjalan (atas website)",
+        hint: "Bila tidak diaktifkan, website menampilkan pengumuman terbaru dari Konten (rubrik Pengumuman) selama 14 hari.",
+        kind: "object",
+        fields: [
+          { name: "aktif", label: "Tampilkan pengumuman ini", type: "checkbox", wide: true },
+          { name: "teks", label: "Teks pengumuman", type: "text", wide: true },
+          { name: "url", label: "Tautan (opsional)", type: "url", wide: true },
+        ],
+      },
+      {
+        key: "kalender",
+        title: "Kalender akademik",
+        hint: "Tampil di halaman Kalender. Isi dari kalender akademik resmi UIN SGD dan agenda prodi (seminar proposal, sidang, wisuda).",
+        kind: "list",
+        itemTitle: (i) => String(i.kegiatan || "Kegiatan baru"),
+        fields: [
+          { name: "kegiatan", label: "Kegiatan", type: "text", wide: true },
+          { name: "mulai", label: "Mulai", type: "date" },
+          { name: "selesai", label: "Selesai (opsional)", type: "date" },
+          { name: "kategori", label: "Kategori", type: "text", placeholder: "Perkuliahan / Ujian / Administrasi / Wisuda / Libur" },
+          { name: "sumber", label: "Sumber (opsional)", type: "url" },
+        ],
+        empty: { kegiatan: "", mulai: "", selesai: "", kategori: "Perkuliahan", sumber: "" },
+      },
+      {
+        key: "prosedur",
+        title: "Alur layanan akademik",
+        hint: "Mis. pengajuan judul skripsi, seminar proposal, sidang munaqasyah, magang. Tampil di halaman Layanan.",
+        kind: "list",
+        itemTitle: (i) => String(i.title || "Alur baru"),
+        fields: [
+          { name: "title", label: "Nama layanan", type: "text" },
+          { name: "url", label: "Formulir / dokumen (opsional)", type: "url" },
+          { name: "description", label: "Keterangan singkat", type: "text", wide: true },
+          { name: "steps", label: "Langkah-langkah", type: "lines", wide: true, hint: "Satu langkah per baris, berurutan." },
+        ],
+        empty: { title: "", description: "", steps: [], url: "" },
+      },
+      {
+        key: "aksesCepat",
+        title: "Akses cepat layanan digital",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Tautan baru"),
+        fields: [
+          { name: "name", label: "Nama", type: "text" },
+          { name: "url", label: "Tautan", type: "url" },
+          { name: "description", label: "Keterangan", type: "text", wide: true },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+      {
+        key: "infoMaba",
+        title: "Info mahasiswa baru",
+        hint: "Tautan resmi untuk calon mahasiswa (UKT, pembayaran, PMB). Tampil di halaman Mahasiswa Baru.",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Tautan baru"),
+        fields: [
+          { name: "name", label: "Judul", type: "text" },
+          { name: "url", label: "Tautan", type: "url" },
+          { name: "description", label: "Keterangan", type: "text", wide: true },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+      {
         key: "mutu",
         title: "Penjaminan mutu & tracer study",
         kind: "object",
@@ -940,6 +1014,13 @@ function FieldInput({
             onApply={onChange}
           />
         </div>
+      );
+    case "checkbox":
+      return (
+        <label className="flex items-center gap-2 py-2 text-[14px]">
+          <input type="checkbox" checked={Boolean(value)} onChange={(e) => onChange(e.target.checked)} />
+          {spec.label}
+        </label>
       );
     case "number":
       control = (
