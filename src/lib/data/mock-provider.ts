@@ -502,7 +502,8 @@ export async function updateMember(id: ID, patch: MemberUpdate): Promise<Member 
   return next;
 }
 
-export async function deleteMember(id: ID): Promise<boolean> {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+export async function deleteMember(id: ID, reassignTo?: ID): Promise<boolean> {
   const idx = membersStore.findIndex((m) => m.id === id);
   if (idx === -1) return false;
   membersStore.splice(idx, 1);

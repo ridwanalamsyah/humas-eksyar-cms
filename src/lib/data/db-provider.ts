@@ -124,7 +124,45 @@ export async function getMember(id: ID): Promise<Member | null> {
  * surfaces still render the right name and avatar; the admin can promote
  * the ghost to a real roster entry through the members UI.
  */
+/**
+ * Penyesuaian roster sekali jalan (Oktober 2026): Ridwan Alamsyah menjadi
+ * admin, Aditya Novrizal Ramdhani dan Rizwan Ardiansyah dihapus. Konten
+ * mereka dipindahkan ke Ridwan. Ditandai di siteSettings agar tidak
+ * mengulang dan tidak menimpa perubahan role setelahnya.
+ */
+const ROSTER_FLAG = "roster_2026_10";
+let rosterReady: Promise<void> | null = null;
+function ensureRosterUpdate(): Promise<void> {
+  rosterReady ??= (async () => {
+    if (await getSiteSetting(ROSTER_FLAG)) return;
+    const admin = "mbr-ridwan";
+    const [row] = await client()
+      .select({ id: schema.members.id })
+      .from(schema.members)
+      .where(eq(schema.members.id, admin))
+      .limit(1);
+    if (!row) return; // roster belum di-seed; tidak ada yang perlu diubah
+    await client()
+      .update(schema.members)
+      .set({ role: "admin", position: "Admin Humas" })
+      .where(eq(schema.members.id, admin));
+    await client()
+      .update(schema.divisions)
+      .set({ leadId: admin })
+      .where(eq(schema.divisions.leadId, "mbr-aditya"));
+    for (const id of ["mbr-aditya", "mbr-rizwan"]) {
+      await deleteMember(id, admin);
+    }
+    await setSiteSetting(ROSTER_FLAG, { at: new Date().toISOString() });
+  })().catch((err) => {
+    rosterReady = null;
+    console.error("[roster] gagal menyesuaikan anggota", err);
+  });
+  return rosterReady;
+}
+
 export async function getCurrentMember(): Promise<Member> {
+  await ensureRosterUpdate();
   try {
     const { auth } = await import("@/auth");
     const session = await auth();
@@ -704,7 +742,8 @@ export interface MemberInput {
 }
 
 export async function createMember(input: MemberInput): Promise<Member> {
-  const id = `mbr-${slugify(input.name) || Date.now().toString(36)}`;
+  // Akhiran acak supaya dua anggota bernama sama tidak bentrok id-nya.
+  const id = `mbr-${slugify(input.name) || "anggota"}-${Date.now().toString(36).slice(-5)}`;
   const initials = input.name
     .split(/\s+/)
     .slice(0, 2)
@@ -774,7 +813,23 @@ export async function updateMember(
   return updated[0] ? row<Member>(updated[0]) : null;
 }
 
-export async function deleteMember(id: ID): Promise<boolean> {
+export async function deleteMember(id: ID, reassignTo?: ID): Promise<boolean> {
+  // Konten milik anggota yang dihapus dipindahkan ke admin yang menghapus,
+  // karena kolom authorId di tabel contents wajib diisi.
+  if (reassignTo && reassignTo !== id) {
+    await client()
+      .update(schema.contents)
+      .set({ authorId: reassignTo })
+      .where(eq(schema.contents.authorId, id));
+    await client()
+      .update(schema.media)
+      .set({ uploaderId: reassignTo })
+      .where(eq(schema.media.uploaderId, id));
+    await client()
+      .update(schema.events)
+      .set({ coordinatorId: reassignTo })
+      .where(eq(schema.events.coordinatorId, id));
+  }
   const deleted = await client()
     .delete(schema.members)
     .where(eq(schema.members.id, id))

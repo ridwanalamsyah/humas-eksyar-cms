@@ -25,11 +25,12 @@ export default async function MembersSettingsPage() {
           Anggota
         </p>
         <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">
-          Role &amp; akses
+          Anggota &amp; role
         </h1>
         <p className="mt-2 max-w-prose text-[13px] text-foreground/65">
-          Promote / demote role per anggota. Role <code>admin</code> bisa atur
-          semua; <code>monitoring</code> hanya bisa view (cocok untuk pembina).
+          Tambah, hapus, dan atur role anggota. Role <code>admin</code> bisa
+          mengatur semua; <code>monitoring</code> hanya bisa melihat (cocok
+          untuk pembina).
         </p>
       </header>
       <MembersRoleEditor

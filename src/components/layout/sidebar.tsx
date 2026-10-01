@@ -19,6 +19,7 @@ import {
   type LucideIcon,
   Camera,
   Inbox,
+  UserCog,
 } from "lucide-react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { Avatar } from "@/components/common/avatar";
@@ -45,6 +46,9 @@ function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
       title: "Tim",
       items: [
         { href: "/members", label: "Anggota", icon: Users },
+        ...(role === "admin"
+          ? [{ href: "/settings/members", label: "Kelola anggota", icon: UserCog }]
+          : []),
         { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
         { href: "/analytics", label: "Insight", icon: BarChart3 },
       ],

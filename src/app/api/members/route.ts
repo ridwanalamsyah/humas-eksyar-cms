@@ -9,7 +9,17 @@ import {
   listMembers,
   createMember,
   findMemberByEmail,
+  listDivisions,
 } from "@/lib/data/provider";
+
+const ALLOWED_ROLES = new Set([
+  "monitoring",
+  "anggota",
+  "pengurus",
+  "ketua_divisi",
+  "sekjen",
+  "admin",
+]);
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -29,21 +39,37 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
   const body = await req.json().catch(() => ({}));
-  if (!body.name || !body.email || !body.divisionId || !body.angkatan || !body.nimSuffix) {
+  const name = String(body.name ?? "").trim();
+  const email = String(body.email ?? "").trim().toLowerCase();
+  if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return NextResponse.json(
-      { error: "name, email, divisionId, angkatan, nimSuffix are required" },
+      { error: "Nama dan email yang valid wajib diisi." },
       { status: 400 },
     );
   }
+  if (await findMemberByEmail(email)) {
+    return NextResponse.json(
+      { error: "Email ini sudah terdaftar sebagai anggota." },
+      { status: 409 },
+    );
+  }
+  const role = ALLOWED_ROLES.has(body.role) ? body.role : "anggota";
+  const divisionId =
+    body.divisionId ? String(body.divisionId) : (await listDivisions())[0]?.id;
+  if (!divisionId) {
+    return NextResponse.json({ error: "Divisi belum ada." }, { status: 400 });
+  }
+  const angkatan = Number(body.angkatan) || new Date().getFullYear();
+  const nim = String(body.nim ?? body.nimSuffix ?? "").replace(/\D/g, "");
   const member = await createMember({
-    name: String(body.name),
-    email: String(body.email),
-    role: body.role,
-    divisionId: String(body.divisionId),
-    position: body.position,
+    name,
+    email,
+    role,
+    divisionId,
+    position: String(body.position ?? "").trim() || "Anggota Humas",
     bio: body.bio,
-    angkatan: Number(body.angkatan),
-    nimSuffix: String(body.nimSuffix),
+    angkatan,
+    nimSuffix: nim.slice(-4) || "0000",
     avatarEmoji: body.avatarEmoji,
     accentHue: body.accentHue,
   });
