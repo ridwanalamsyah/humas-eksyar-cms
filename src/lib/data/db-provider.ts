@@ -1155,6 +1155,37 @@ export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
 /* Formulir publik & statistik kunjungan                               */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Buat tabel formulir & kunjungan bila belum ada, agar fitur jalan tanpa
+ * menunggu `pnpm db:push` (struktur sama dengan schema.ts).
+ */
+let tablesReady: Promise<void> | null = null;
+function ensureFormTables(): Promise<void> {
+  tablesReady ??= (async () => {
+    await client().execute(drizzleSql`CREATE TABLE IF NOT EXISTS "submissions" (
+      "id" text PRIMARY KEY NOT NULL,
+      "type" text NOT NULL,
+      "status" text DEFAULT 'baru' NOT NULL,
+      "data" jsonb NOT NULL,
+      "note" text DEFAULT '' NOT NULL,
+      "published" boolean DEFAULT false NOT NULL,
+      "refId" text,
+      "createdAt" text NOT NULL,
+      "updatedAt" text NOT NULL
+    )`);
+    await client().execute(drizzleSql`CREATE TABLE IF NOT EXISTS "pageViews" (
+      "path" text NOT NULL,
+      "day" text NOT NULL,
+      "count" integer DEFAULT 0 NOT NULL,
+      CONSTRAINT "pageViews_path_day_pk" PRIMARY KEY("path","day")
+    )`);
+  })().catch((err) => {
+    tablesReady = null;
+    throw err;
+  });
+  return tablesReady;
+}
+
 type SubmissionFilter = { type?: string; status?: string; refId?: string; published?: boolean; limit?: number };
 type SubmissionPatch = Partial<Pick<import("./types").Submission, "status" | "note" | "published" | "data">>;
 
@@ -1163,6 +1194,7 @@ export async function createSubmission(input: {
   data: Record<string, unknown>;
   refId?: string | null;
 }): Promise<import("./types").Submission> {
+  await ensureFormTables();
   const now = new Date().toISOString();
   const row = {
     id: `sub-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
@@ -1180,6 +1212,7 @@ export async function createSubmission(input: {
 }
 
 export async function listSubmissions(f: SubmissionFilter = {}): Promise<import("./types").Submission[]> {
+  await ensureFormTables();
   const where = [];
   if (f.type) where.push(eq(schema.submissions.type, f.type));
   if (f.status) where.push(eq(schema.submissions.status, f.status));
@@ -1195,6 +1228,7 @@ export async function listSubmissions(f: SubmissionFilter = {}): Promise<import(
 }
 
 export async function updateSubmission(id: ID, patch: SubmissionPatch): Promise<import("./types").Submission | null> {
+  await ensureFormTables();
   const rows = await client()
     .update(schema.submissions)
     .set({ ...patch, updatedAt: new Date().toISOString() })
@@ -1204,10 +1238,12 @@ export async function updateSubmission(id: ID, patch: SubmissionPatch): Promise<
 }
 
 export async function deleteSubmission(id: ID): Promise<void> {
+  await ensureFormTables();
   await client().delete(schema.submissions).where(eq(schema.submissions.id, id));
 }
 
 export async function recordPageView(path: string, day: string): Promise<void> {
+  await ensureFormTables();
   await client()
     .insert(schema.pageViews)
     .values({ path, day, count: 1 })
@@ -1218,6 +1254,7 @@ export async function recordPageView(path: string, day: string): Promise<void> {
 }
 
 export async function listPageViews(sinceDay: string): Promise<import("./types").PageViewRow[]> {
+  await ensureFormTables();
   return client()
     .select()
     .from(schema.pageViews)

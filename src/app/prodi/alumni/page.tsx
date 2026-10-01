@@ -27,7 +27,7 @@ export default async function AlumniPage() {
     kabar,
   ] = await Promise.all([
     getSite(),
-    listSubmissions({ type: "alumni", published: true, limit: 1000 }),
+    listSubmissions({ type: "alumni", published: true, limit: 1000 }).catch(() => []),
   ]);
   const direktori: AlumniEntry[] = kabar
     .filter((k) => k.data.direktori === true)
