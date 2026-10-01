@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { LocalNav } from "@/components/site/local-nav";
 import { MitraList } from "@/components/site/mitra-list";
@@ -26,7 +27,12 @@ export default async function ProfilPage() {
     kontak,
     timeline,
     mitra,
+    struktur,
+    ruangAlat,
   } = await getSite();
+  const levels = [1, 2, 3, 4]
+    .map((l) => struktur.filter((x) => x.level === l))
+    .filter((x) => x.length);
   const mutu = kegiatan.find(
     (s) => s.category.toLowerCase() === "penjaminan mutu",
   );
@@ -44,6 +50,7 @@ export default async function ProfilPage() {
           { id: "sejarah", label: "Sejarah" },
           { id: "visi-misi", label: "Visi & Misi" },
           { id: "pimpinan", label: "Pimpinan" },
+          ...(levels.length ? [{ id: "struktur", label: "Struktur" }] : []),
           { id: "fasilitas", label: "Fasilitas" },
           { id: "mitra", label: "Mitra" },
           { id: "akreditasi", label: "Akreditasi" },
@@ -148,6 +155,54 @@ export default async function ProfilPage() {
         </div>
       </section>
 
+      {levels.length > 0 && (
+        <section id="struktur" className="scroll-mt-28 px-4 pb-24 sm:px-6">
+          <div className="mx-auto max-w-[1024px]">
+            <SectionHeading eyebrow="Organisasi" title="Struktur organisasi" />
+            <div className="mt-10 flex flex-col items-center gap-6">
+              {levels.map((row, i) => (
+                <div key={i} className="flex w-full flex-col items-center">
+                  {i > 0 && (
+                    <span aria-hidden className="mb-6 h-6 w-px bg-hairline" />
+                  )}
+                  <ul className="flex flex-wrap justify-center gap-3">
+                    {row.map((x) => (
+                      <li
+                        key={`${x.jabatan}-${x.nama}`}
+                        className={
+                          i === 0
+                            ? "min-w-[220px] rounded-[20px] bg-accent px-5 py-4 text-center text-white"
+                            : "min-w-[200px] rounded-[20px] border border-hairline bg-canvas px-5 py-4 text-center"
+                        }
+                      >
+                        <p
+                          className={
+                            i === 0
+                              ? "text-[12.5px] font-semibold text-sand"
+                              : "text-[12.5px] font-semibold text-accent"
+                          }
+                        >
+                          {x.jabatan}
+                        </p>
+                        <p
+                          className={
+                            i === 0
+                              ? "mt-1 text-[15.5px] font-bold"
+                              : "mt-1 text-[15.5px] font-bold text-label"
+                          }
+                        >
+                          {x.nama}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       <section
         id="fasilitas"
         className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32"
@@ -175,6 +230,48 @@ export default async function ProfilPage() {
           ))}
         </div>
       </section>
+
+      {ruangAlat.length > 0 && (
+        <section id="ruang" className="scroll-mt-28 px-4 py-24 sm:px-6">
+          <div className="mx-auto max-w-[1024px]">
+            <SectionHeading
+              align="left"
+              eyebrow="Peminjaman"
+              title="Ruang & alat yang bisa dipinjam"
+            />
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {ruangAlat.map((r) => (
+                <div
+                  key={r.name}
+                  className="overflow-hidden rounded-[24px] border border-hairline bg-canvas"
+                >
+                  {r.image && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={r.image}
+                      alt=""
+                      loading="lazy"
+                      className="aspect-[16/10] w-full object-cover"
+                    />
+                  )}
+                  <div className="p-5">
+                    <p className="text-[16px] font-bold text-label">{r.name}</p>
+                    <p className="mt-1 text-[14px] text-label-2">
+                      {r.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <Link
+              href="/prodi/formulir/pinjam"
+              className="mt-6 inline-block rounded-full bg-accent px-6 py-3 text-[15px] font-semibold text-white hover:bg-accent-strong"
+            >
+              Ajukan peminjaman
+            </Link>
+          </div>
+        </section>
+      )}
 
       {mitra.length > 0 && (
         <section

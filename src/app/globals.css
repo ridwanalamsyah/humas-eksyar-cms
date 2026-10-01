@@ -128,23 +128,7 @@
   --color-ink-soft: var(--ink-soft);
   --color-ink-deep: var(--ink-deep);
 
-  /* Website publik prodi (/prodi) — palet feed IG @eksyaruinsgd:
-     langit teal → krem → emas, teks biru-teal tua. Tidak ikut dark mode CMS. */
-  --color-canvas: #ffffff;
-  --color-mist: #eef7f8;
-  --color-sky: #daeff5;
-  --color-label: #163a45;
-  --color-label-2: #4f6b73;
-  --color-label-3: #7d9299;
-  --color-hairline: #d3e4e7;
-  --color-accent: #237a74;
-  --color-accent-strong: #42918b;
-  --color-accent-soft: #daeff5;
-  --color-teal-sky: #6ab5c7;
-  --color-amber: #eeb25f;
-  --color-amber-deep: #d98f3a;
-  --color-sand: #f6e3bd;
-  --color-navy: #1d3d55;
+
 
   --font-sans: var(--font-inter), var(--font-geist-sans), system-ui, sans-serif;
   --font-display: var(--font-inter-tight), var(--font-geist-sans), system-ui, sans-serif;
@@ -372,4 +356,110 @@ body {
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+
+
+/* ============================================================
+   WEBSITE PUBLIK PRODI — token warna (bukan inline agar bisa
+   ditimpa untuk mode gelap, kontras tinggi, dsb.)
+   ============================================================ */
+@theme {
+  /* Website publik prodi (/prodi) — palet feed IG @eksyaruinsgd:
+     langit teal → krem → emas, teks biru-teal tua. Tidak ikut dark mode CMS. */
+  --color-canvas: #ffffff;
+  --color-mist: #eef7f8;
+  --color-sky: #daeff5;
+  --color-label: #163a45;
+  --color-label-2: #4f6b73;
+  --color-label-3: #7d9299;
+  --color-hairline: #d3e4e7;
+  --color-accent: #237a74;
+  --color-accent-strong: #42918b;
+  --color-accent-soft: #daeff5;
+  --color-teal-sky: #6ab5c7;
+  --color-amber: #eeb25f;
+  --color-amber-deep: #d98f3a;
+  --color-sand: #f6e3bd;
+  --color-navy: #1d3d55;
+}
+
+/* Mode gelap website prodi */
+[data-site-theme="dark"] {
+  --color-canvas: #0f1c21;
+  --color-mist: #16282e;
+  --color-sky: #1b3139;
+  --color-label: #e6f0f2;
+  --color-label-2: #a9bec4;
+  --color-label-3: #829aa1;
+  --color-hairline: #26404a;
+  --color-accent: #2f8f87;
+  --color-accent-strong: #3aa59c;
+  --color-accent-soft: #173a3c;
+  --color-sand: #e9cf98;
+  --color-navy: #0b2433;
+  color-scheme: dark;
+}
+
+/* Kontras tinggi */
+[data-site-contrast="high"] {
+  --color-label: #06191f;
+  --color-label-2: #1e3740;
+  --color-label-3: #34505a;
+  --color-hairline: #8fb0b8;
+  --color-accent: #145a55;
+  --color-accent-strong: #0f4a46;
+}
+[data-site-theme="dark"][data-site-contrast="high"] {
+  --color-label: #ffffff;
+  --color-label-2: #d6e6ea;
+  --color-label-3: #b5cbd1;
+  --color-hairline: #5d8590;
+  --color-accent: #2f8f87;
+}
+
+/* Teks besar */
+[data-site-text="lg"] main,
+[data-site-text="lg"] footer {
+  zoom: 1.15;
+}
+
+/* Hemat data & kurangi animasi */
+[data-site-hemat="1"] *,
+[data-site-hemat="1"] *::before,
+[data-site-hemat="1"] *::after {
+  animation: none !important;
+  transition: none !important;
+  scroll-behavior: auto !important;
+}
+
+/* Cetak: tanpa navigasi, warna hemat tinta, tautan tetap terbaca */
+@media print {
+  [data-print-hide],
+  header.sticky,
+  footer {
+    display: none !important;
+  }
+  [data-site-theme] {
+    --color-canvas: #ffffff;
+    --color-mist: #ffffff;
+    --color-label: #000000;
+    --color-label-2: #222222;
+    --color-hairline: #bbbbbb;
+  }
+  aside,
+  .lg\:pl-60 > header {
+    display: none !important;
+  }
+  .lg\:pl-60 {
+    padding-left: 0 !important;
+  }
+  main a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #555;
+  }
+  section {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
 }

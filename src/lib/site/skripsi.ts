@@ -6,8 +6,83 @@ export const skripsiItemSchema = z.object({
   judul: z.string().trim().min(5).max(400),
   nama: z.string().trim().max(120).default(""),
   tahun: z.number().int().min(1990).max(2100),
+  url: z
+    .string()
+    .trim()
+    .max(500)
+    .regex(/^https?:\/\/[^\s]+$/)
+    .optional(),
+  /** ID Digilib, mis. "d70000" — dipakai untuk halaman detail. */
+  id: z
+    .string()
+    .regex(/^[a-z]\d{1,9}$/)
+    .optional(),
+  pembimbing: z.array(z.string().trim().max(160)).max(6).optional(),
 });
-export const skripsiListSchema = z.array(skripsiItemSchema).max(10000);
+
+const safeUrl = z
+  .string()
+  .trim()
+  .max(800)
+  .regex(/^https?:\/\/[^\s]+$/);
+export const skripsiDetailSchema = z.object({
+  abstrak: z.string().max(8000).optional(),
+  kataKunci: z.string().max(600).optional(),
+  dokumen: z
+    .array(
+      z.object({
+        label: z.string().max(120),
+        url: safeUrl,
+        terbatas: z.boolean().optional(),
+      }),
+    )
+    .max(30)
+    .optional(),
+});
+export type SkripsiDetail = z.infer<typeof skripsiDetailSchema>;
+export const skripsiDetailBucketSchema = z.record(
+  z.string(),
+  skripsiDetailSchema,
+);
+
+/** Detail (abstrak, berkas) disimpan per tahun agar daftar utama tetap ringan. */
+export const detailKey = (tahun: number) => `skripsi_detail_${tahun}`;
+
+export async function getSkripsiDetailBucket(
+  tahun: number,
+): Promise<Record<string, SkripsiDetail>> {
+  const parsed = skripsiDetailBucketSchema.safeParse(
+    await getSiteSetting(detailKey(tahun)).catch(() => null),
+  );
+  return parsed.success ? parsed.data : {};
+}
+export const skripsiListSchema = z.array(skripsiItemSchema).max(20000);
+
+/** Info sinkronisasi terakhir dari Digilib (disimpan di siteSettings). */
+export const SKRIPSI_SYNC_KEY = "skripsi_sync";
+export const skripsiSyncSchema = z.object({
+  at: z.string(),
+  total: z.number(),
+  added: z.number(),
+  detailed: z.number().optional(),
+  pendingDetail: z.number().optional(),
+  sources: z.array(
+    z.object({
+      label: z.string(),
+      years: z.number(),
+      items: z.number(),
+      error: z.string().optional(),
+    }),
+  ),
+});
+export type SkripsiSync = z.infer<typeof skripsiSyncSchema>;
+
+export async function getSkripsiSync(): Promise<SkripsiSync | null> {
+  const parsed = skripsiSyncSchema.safeParse(
+    await getSiteSetting(SKRIPSI_SYNC_KEY).catch(() => null),
+  );
+  return parsed.success ? parsed.data : null;
+}
 export type SkripsiItem = z.infer<typeof skripsiItemSchema>;
 
 export { SKRIPSI_KEY } from "./skripsi-data";

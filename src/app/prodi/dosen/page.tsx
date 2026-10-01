@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import { PageHeader } from "@/components/site/page-header";
 import { DosenDirectory } from "@/components/site/dosen-directory";
+import { PersonCard } from "@/components/site/person-card";
 import { Reveal } from "@/components/site/reveal";
 import { getSite } from "@/lib/site/get-site";
+import { getAkademik } from "@/lib/site/akademik";
+import { buildDosenIndex } from "@/lib/site/dosen-index";
+import { getSkripsi } from "@/lib/site/skripsi";
+import { DosenIndex } from "@/components/site/dosen-index";
 import { prodi } from "@/lib/site/prodi";
 
 export const metadata: Metadata = {
@@ -10,19 +15,60 @@ export const metadata: Metadata = {
   description: `Dosen dan tenaga pengajar ${prodi.fullName} ${prodi.university}.`,
 };
 
-export default async function DosenPage() {
-  const { dosen } = await getSite();
+type Props = { searchParams: Promise<{ q?: string }> };
+
+export default async function DosenPage({ searchParams }: Props) {
+  const [{ dosen, pimpinan, tendik }, akademik, skripsi, { q = "" }] =
+    await Promise.all([getSite(), getAkademik(), getSkripsi(), searchParams]);
+  const index = buildDosenIndex([...pimpinan, ...dosen], akademik, skripsi);
+  const hasExtra = index.some((d) => d.mataKuliah.length || d.bimbingan);
 
   return (
     <>
       <PageHeader
         crumb="Dosen"
-        title="Dosen"
+        title="Dosen & tenaga kependidikan"
         description="Dosen Ekonomi Syariah aktif mengajar, meneliti, dan mengabdi di bidang ekonomi dan keuangan Islam."
       />
 
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
         <DosenDirectory dosen={dosen} />
+
+        {hasExtra && (
+          <div
+            id="direktori"
+            className="mx-auto mt-20 max-w-[1024px] scroll-mt-28"
+          >
+            <h2 className="text-[28px] font-bold tracking-[-0.02em] text-label">
+              Direktori dosen pengampu & pembimbing
+            </h2>
+            <p className="mt-2 max-w-2xl text-[15px] text-label-2">
+              Dihimpun dari kelas daring e-Knows dan data pembimbing skripsi di
+              Digital Library UIN SGD.
+            </p>
+            <div className="mt-6">
+              <DosenIndex items={index} initialQuery={q.slice(0, 120)} />
+            </div>
+          </div>
+        )}
+
+        {tendik.length > 0 && (
+          <div className="mx-auto mt-20 max-w-[1024px]">
+            <h2 className="text-[28px] font-bold tracking-[-0.02em] text-label">
+              Tenaga kependidikan
+            </h2>
+            <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+              {tendik.map((t, i) => (
+                <PersonCard
+                  key={`${t.name}-${i}`}
+                  name={t.name}
+                  role={t.role}
+                  photo={t.photo}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         <Reveal className="mx-auto mt-10 max-w-[1024px]">
           <div className="flex flex-col items-start justify-between gap-4 rounded-[24px] bg-mist p-7 sm:flex-row sm:items-center">

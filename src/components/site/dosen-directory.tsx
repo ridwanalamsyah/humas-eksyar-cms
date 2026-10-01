@@ -10,6 +10,7 @@ import {
   matches,
 } from "./filter-chips";
 import { PersonCard } from "./person-card";
+import { dosenSlug } from "@/lib/site/names";
 
 /** Daftar dosen dengan pencarian nama dan filter bidang keahlian. */
 export function DosenDirectory({ dosen }: { dosen: Person[] }) {
@@ -50,6 +51,7 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
               role={d.role}
               photo={d.photo}
               tags={d.expertise}
+              href={`/prodi/dosen/${dosenSlug(d.name)}`}
             />
           ))}
         </div>

@@ -29,6 +29,7 @@ export const getContent = impl.getContent;
 
 export const listMedia = impl.listMedia;
 export const getMedia = impl.getMedia;
+export const createMedia = impl.createMedia;
 
 export const listEvents = impl.listEvents;
 export const getEvent = impl.getEvent;
@@ -90,3 +91,10 @@ export const saveContentDraft = impl.saveContentDraft;
 export const clearContentDraft = impl.clearContentDraft;
 
 export { HASHTAG_BLOCK };
+
+export const createSubmission = impl.createSubmission;
+export const listSubmissions = impl.listSubmissions;
+export const updateSubmission = impl.updateSubmission;
+export const deleteSubmission = impl.deleteSubmission;
+export const recordPageView = impl.recordPageView;
+export const listPageViews = impl.listPageViews;

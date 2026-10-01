@@ -13,10 +13,9 @@ import {
 } from "@/lib/fixtures/members";
 import {
   contents,
-  findContent,
   captionTemplates,
 } from "@/lib/fixtures/contents";
-import { media, findMedia } from "@/lib/fixtures/media";
+import { media as mediaFixtures } from "@/lib/fixtures/media";
 import { events, findEvent } from "@/lib/fixtures/events";
 import { badges, findBadge, quests } from "@/lib/fixtures/badges";
 import {
@@ -89,7 +88,7 @@ export async function listContents(opts?: {
   rubric?: string;
   search?: string;
 }): Promise<ContentItem[]> {
-  let result = contents.slice();
+  let result = contentsStore.slice();
   if (opts?.status) {
     const set = Array.isArray(opts.status) ? opts.status : [opts.status];
     result = result.filter((c) => set.includes(c.status));
@@ -115,8 +114,12 @@ export async function listContents(opts?: {
 }
 
 export async function getContent(id: ID): Promise<ContentItem | null> {
-  return findContent(id);
+  return contentsStore.find((c) => c.id === id) ?? null;
 }
+
+const gm = globalThis as unknown as { __mediaStore?: MediaAsset[] };
+const media: MediaAsset[] = (gm.__mediaStore ??= mediaFixtures);
+const findMedia = (id: ID) => media.find((m) => m.id === id) ?? null;
 
 export async function listMedia(opts?: {
   tag?: string;
@@ -139,6 +142,16 @@ export async function listMedia(opts?: {
     );
   }
   return result.sort((a, b) => b.uploadedAt.localeCompare(a.uploadedAt));
+}
+
+export async function createMedia(input: Omit<MediaAsset, "id" | "uploadedAt"> & { id?: ID }): Promise<MediaAsset> {
+  const asset: MediaAsset = {
+    ...input,
+    id: input.id ?? `med-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+    uploadedAt: new Date().toISOString(),
+  };
+  media.unshift(asset);
+  return asset;
 }
 
 export async function getMedia(id: ID): Promise<MediaAsset | null> {
@@ -258,7 +271,7 @@ export async function restoreCaptionVersion(
 ): Promise<{ content: ContentItem; version: CaptionVersion } | null> {
   const ver = captionVersionsStore.find((v) => v.id === versionId);
   if (!ver) return null;
-  const content = findContent(ver.contentId);
+  const content = contentsStore.find((c) => c.id === ver.contentId) ?? null;
   if (!content) return null;
   // Mutate the in-memory fixture (mock-only behavior; resets on reload).
   content.caption = ver.caption;
@@ -327,7 +340,9 @@ export async function listDivisionLeaderboard(): Promise<
 /* Mutations (in-memory; reset on server restart)                      */
 /* ------------------------------------------------------------------ */
 
-const contentsStore: ContentItem[] = [...contents];
+// Disimpan di globalThis agar semua bundle rute (halaman & API) berbagi data yang sama.
+const g = globalThis as unknown as { __contentsStore?: ContentItem[]; __mediaStore?: MediaAsset[] };
+const contentsStore: ContentItem[] = (g.__contentsStore ??= [...contents]);
 const membersStore: Member[] = [...members];
 
 function slugifyMock(s: string): string {
@@ -742,4 +757,75 @@ export async function getSiteSetting(key: string): Promise<unknown> {
 export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
   settings()[key] = value;
   return value;
+}
+
+/* ------------------------------------------------------------------ */
+/* Formulir publik & statistik kunjungan (in-memory)                   */
+/* ------------------------------------------------------------------ */
+
+const gs = globalThis as unknown as { __submissions?: import("./types").Submission[]; __pageViews?: Map<string, number> };
+const submissionsStore = () => (gs.__submissions ??= []);
+const pageViewStore = () => (gs.__pageViews ??= new Map());
+
+export async function createSubmission(input: {
+  type: string;
+  data: Record<string, unknown>;
+  refId?: string | null;
+}): Promise<import("./types").Submission> {
+  const now = new Date().toISOString();
+  const row: import("./types").Submission = {
+    id: `sub-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`,
+    type: input.type,
+    status: "baru",
+    data: input.data,
+    note: "",
+    published: false,
+    refId: input.refId ?? null,
+    createdAt: now,
+    updatedAt: now,
+  };
+  submissionsStore().unshift(row);
+  return row;
+}
+
+export async function listSubmissions(
+  f: { type?: string; status?: string; refId?: string; published?: boolean; limit?: number } = {},
+): Promise<import("./types").Submission[]> {
+  return submissionsStore()
+    .filter(
+      (s) =>
+        (!f.type || s.type === f.type) &&
+        (!f.status || s.status === f.status) &&
+        (!f.refId || s.refId === f.refId) &&
+        (f.published === undefined || s.published === f.published),
+    )
+    .slice(0, f.limit ?? 2000);
+}
+
+export async function updateSubmission(
+  id: ID,
+  patch: Partial<Pick<import("./types").Submission, "status" | "note" | "published" | "data">>,
+): Promise<import("./types").Submission | null> {
+  const s = submissionsStore().find((x) => x.id === id);
+  if (!s) return null;
+  Object.assign(s, patch, { updatedAt: new Date().toISOString() });
+  return s;
+}
+
+export async function deleteSubmission(id: ID): Promise<void> {
+  const list = submissionsStore();
+  const i = list.findIndex((x) => x.id === id);
+  if (i >= 0) list.splice(i, 1);
+}
+
+export async function recordPageView(path: string, day: string): Promise<void> {
+  const k = `${day}|${path}`;
+  pageViewStore().set(k, (pageViewStore().get(k) ?? 0) + 1);
+}
+
+export async function listPageViews(sinceDay: string): Promise<import("./types").PageViewRow[]> {
+  return [...pageViewStore()].flatMap(([k, count]) => {
+    const [day, path] = k.split("|");
+    return day >= sinceDay ? [{ path, day, count }] : [];
+  });
 }

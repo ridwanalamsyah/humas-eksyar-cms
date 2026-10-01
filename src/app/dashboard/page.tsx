@@ -2,11 +2,15 @@ import Link from "next/link";
 import { ArrowRight, PenLine, Sparkles } from "lucide-react";
 import { getCurrentMember, listContents, listEvents, listMembers } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
+import { OpsAlerts } from "@/components/dashboard/ops-alerts";
 import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/common/pill";
 import { formatHijri, formatLongDate, formatShortDate, formatTime, relativeFromNow } from "@/lib/format/dates";
 import { findMember } from "@/lib/fixtures/members";
 import type { ContentItem } from "@/lib/data/types";
+
+// Selalu render ulang: peringatan sinkron & formulir harus terkini.
+export const dynamic = "force-dynamic";
 
 const REVIEW: ContentItem["status"][] = ["review_divisi", "review_sekjen"];
 
@@ -56,6 +60,8 @@ export default async function HomePage() {
           </Button>
         </div>
       </div>
+
+      {member.role === "admin" && <OpsAlerts />}
 
       {/* Angka ringkas */}
       <dl className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">

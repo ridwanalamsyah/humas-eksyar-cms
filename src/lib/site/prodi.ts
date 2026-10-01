@@ -770,8 +770,226 @@ export const kontak = {
     "https://www.google.com/maps?q=UIN+Sunan+Gunung+Djati+Bandung&output=embed",
 };
 
+export type NavItem = { href: string; label: string; description?: string };
+export type NavGroup = { label: string; href: string; items?: NavItem[] };
+
+/** Menu utama website (mega menu di desktop, akordeon di ponsel). */
+export const navGroups: NavGroup[] = [
+  {
+    label: "Profil",
+    href: "/prodi/profil",
+    items: [
+      {
+        href: "/prodi/profil",
+        label: "Tentang prodi",
+        description: "Sejarah, visi, misi, dan tujuan",
+      },
+      {
+        href: "/prodi/profil#struktur",
+        label: "Pimpinan & struktur",
+        description: "Kaprodi, sekprodi, dan organisasi",
+      },
+      {
+        href: "/prodi/dosen",
+        label: "Dosen & staf",
+        description: "Profil, keahlian, mata kuliah",
+      },
+      {
+        href: "/prodi/profil#mitra",
+        label: "Mitra kerja sama",
+        description: "Perbankan, bursa, regulator, lembaga zakat",
+      },
+      {
+        href: "/prodi/mutu",
+        label: "Penjaminan mutu",
+        description: "Akreditasi, SPMI, survei kepuasan",
+      },
+      {
+        href: "/prodi/data",
+        label: "Data & statistik",
+        description: "Mahasiswa, lulusan, skripsi, infografis",
+      },
+      {
+        href: "/prodi/profil#fasilitas",
+        label: "Fasilitas",
+        description: "Ruang, galeri investasi, peminjaman",
+      },
+      {
+        href: "/prodi/media",
+        label: "Ruang media",
+        description: "Rilis pers, logo, kontak media",
+      },
+    ],
+  },
+  {
+    label: "Akademik",
+    href: "/prodi/akademik",
+    items: [
+      {
+        href: "/prodi/akademik",
+        label: "Kurikulum",
+        description: "Mata kuliah, peminatan, RPS",
+      },
+      {
+        href: "/prodi/kalender",
+        label: "Kalender akademik",
+        description: "Perkuliahan, UKT, ujian, wisuda",
+      },
+      {
+        href: "/prodi/skripsi",
+        label: "Direktori skripsi",
+        description: "Telusuri skripsi & cek kemiripan judul",
+      },
+      {
+        href: "/prodi/skripsi/pojok",
+        label: "Pojok skripsi",
+        description: "Topik, jadwal sidang, panduan",
+      },
+      {
+        href: "/prodi/penelitian",
+        label: "Penelitian & publikasi",
+        description: "Karya dosen dan jurnal ilmiah",
+      },
+      {
+        href: "/prodi/unduhan",
+        label: "Unduhan",
+        description: "Pedoman, kalender, template",
+      },
+      {
+        href: "/prodi/layanan",
+        label: "Layanan akademik",
+        description: "Alur layanan, akses cepat, FAQ",
+      },
+    ],
+  },
+  {
+    label: "Mahasiswa",
+    href: "/prodi/kemahasiswaan",
+    items: [
+      {
+        href: "/prodi/mahasiswa-baru",
+        label: "Calon mahasiswa baru",
+        description: "Jalur masuk, biaya, beasiswa",
+      },
+      {
+        href: "/prodi/kemahasiswaan",
+        label: "Kemahasiswaan",
+        description: "Kegiatan pengembangan diri",
+      },
+      {
+        href: "/prodi/beasiswa",
+        label: "Beasiswa",
+        description: "KIP-K, BAZNAS, BI, dan lainnya",
+      },
+      {
+        href: "/prodi/lomba",
+        label: "Info lomba",
+        description: "Kompetisi & prestasi",
+      },
+      {
+        href: "/prodi/karier",
+        label: "Karier & magang",
+        description: "Asisten dosen, relawan, magang",
+      },
+      {
+        href: "/prodi/karya",
+        label: "Karya mahasiswa",
+        description: "Business plan, esai, UMKM binaan",
+      },
+      {
+        href: "/prodi/wisuda",
+        label: "Wisudawan",
+        description: "Lulusan per periode wisuda",
+      },
+      {
+        href: "/prodi/alumni",
+        label: "Alumni & karier",
+        description: "Direktori, mentoring, tracer study",
+      },
+    ],
+  },
+  {
+    label: "Edukasi",
+    href: "/prodi/alat",
+    items: [
+      {
+        href: "/prodi/kamus",
+        label: "Kamus istilah",
+        description: "Istilah ekonomi & keuangan syariah",
+      },
+      {
+        href: "/prodi/alat/zakat",
+        label: "Kalkulator zakat",
+        description: "Penghasilan, harta, perdagangan",
+      },
+      {
+        href: "/prodi/alat/akad",
+        label: "Simulasi akad",
+        description: "Murabahah & mudharabah",
+      },
+      {
+        href: "/prodi/alat/kuis",
+        label: "Kuis minat",
+        description: "Cocok di bidang apa?",
+      },
+      {
+        href: "/prodi/alat/kelulusan",
+        label: "Kalkulator kelulusan",
+        description: "Perkiraan sisa SKS",
+      },
+      {
+        href: "/prodi/formulir/konsultasi",
+        label: "Konsultasi ekonomi syariah",
+        description: "Untuk masyarakat & UMKM",
+      },
+    ],
+  },
+  {
+    label: "Informasi",
+    href: "/prodi/berita",
+    items: [
+      {
+        href: "/prodi/berita",
+        label: "Berita",
+        description: "Kabar dan kegiatan terbaru",
+      },
+      {
+        href: "/prodi/berita?kategori=pengumuman",
+        label: "Pengumuman",
+        description: "Informasi resmi untuk mahasiswa",
+      },
+      {
+        href: "/prodi/agenda",
+        label: "Agenda",
+        description: "Jadwal & pendaftaran acara",
+      },
+      {
+        href: "/prodi/galeri",
+        label: "Galeri",
+        description: "Foto dan video kegiatan",
+      },
+      {
+        href: "/prodi/formulir",
+        label: "Formulir online",
+        description: "Saran, survei, lapor prestasi, kerja sama",
+      },
+      {
+        href: "/prodi/forum",
+        label: "Tanya jawab",
+        description: "Pertanyaan dan jawaban dari prodi",
+      },
+      {
+        href: "/prodi/verifikasi",
+        label: "Verifikasi sertifikat",
+        description: "Cek keaslian sertifikat kegiatan",
+      },
+    ],
+  },
+  { label: "Kontak", href: "/prodi/kontak" },
+];
+
 export const navLinks = [
-  { href: "/prodi", label: "Beranda" },
+  { href: "/", label: "Beranda" },
   { href: "/prodi/profil", label: "Profil" },
   { href: "/prodi/akademik", label: "Akademik" },
   { href: "/prodi/dosen", label: "Dosen" },

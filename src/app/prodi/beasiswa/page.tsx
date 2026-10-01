@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ArrowUpRight } from "lucide-react";
 import { BeasiswaCard } from "@/components/site/beasiswa-card";
 import { PageHeader } from "@/components/site/page-header";
+import { PrintButton } from "@/components/site/print-button";
 import { Reveal } from "@/components/site/reveal";
 import { getSite } from "@/lib/site/get-site";
 import { prodi } from "@/lib/site/prodi";
@@ -20,6 +21,9 @@ export default async function BeasiswaPage() {
         title="Beasiswa"
         description="Beasiswa pemerintah, lembaga zakat, perbankan, dan kampus yang bisa diikuti mahasiswa Ekonomi Syariah."
       />
+      <div className="flex justify-center px-4 pb-8" data-print-hide>
+        <PrintButton />
+      </div>
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
         <div className="mx-auto grid max-w-[1024px] gap-5 md:grid-cols-2">
           {beasiswa.map((b, i) => (

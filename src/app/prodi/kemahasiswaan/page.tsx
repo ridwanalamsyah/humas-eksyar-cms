@@ -155,7 +155,15 @@ export default async function KemahasiswaanPage() {
             </li>
           ))}
         </ul>
-        <p className="mt-10 text-center text-[15px] text-label-2">
+        <p className="mt-10 text-center">
+          <Link
+            href="/prodi/alumni"
+            className="text-[16px] font-semibold text-accent hover:underline"
+          >
+            Alumni & tracer study ›
+          </Link>
+        </p>
+        <p className="mt-4 text-center text-[15px] text-label-2">
           Alumni? Bagikan kabarmu lewat{" "}
           <a
             href={`mailto:${kontak.email}`}

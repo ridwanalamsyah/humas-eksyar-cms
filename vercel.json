@@ -4,6 +4,22 @@
     {
       "path": "/api/cron/auto-draft",
       "schedule": "0 1 * * *"
+    },
+    {
+      "path": "/api/cron/skripsi-sync",
+      "schedule": "17 2 * * *"
+    },
+    {
+      "path": "/api/cron/akademik-sync",
+      "schedule": "41 2 * * 1"
+    },
+    {
+      "path": "/api/cron/instagram-sync",
+      "schedule": "53 3 * * *"
+    },
+    {
+      "path": "/api/cron/backup",
+      "schedule": "29 4 * * 0"
     }
   ]
 }

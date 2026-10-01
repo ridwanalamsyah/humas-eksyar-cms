@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { ArticleBody } from "@/components/site/article-body";
 import { NewsCard } from "@/components/site/news-card";
 import { ShareBar } from "@/components/site/share-bar";
+import { FormRenderer } from "@/components/site/form-renderer";
+import { listSubmissions } from "@/lib/data/provider";
+import { findForm } from "@/lib/site/forms";
 import { formatLongDate } from "@/lib/format/dates";
 import {
   contentExcerpt,
@@ -39,10 +42,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function BeritaDetailPage({ params }: Props) {
   const { slug } = await params;
-  const [item, all, media] = await Promise.all([
+  const [item, all, media, comments] = await Promise.all([
     findPublishedNews(slug),
     listPublishedNews(),
     getMediaMap(),
+    listSubmissions({
+      type: "komentar",
+      refId: slug,
+      published: true,
+      limit: 200,
+    }),
   ]);
   if (!item) notFound();
 
@@ -111,6 +120,37 @@ export default async function BeritaDetailPage({ params }: Props) {
             <ShareBar title={item.title} />
           </div>
         </footer>
+
+        <section
+          id="komentar"
+          className="mx-auto mt-14 max-w-[692px] scroll-mt-24"
+        >
+          <h2 className="text-[22px] font-bold tracking-[-0.01em] text-label">
+            Komentar{comments.length ? ` (${comments.length})` : ""}
+          </h2>
+          {comments.length > 0 && (
+            <ul className="mt-5 grid gap-3">
+              {[...comments].reverse().map((c) => (
+                <li key={c.id} className="rounded-[18px] bg-mist p-4">
+                  <p className="text-[14px] font-bold text-label">
+                    {String(c.data.nama ?? "Pembaca")}
+                    <span className="ml-2 font-normal text-label-3">
+                      {new Date(c.createdAt).toLocaleDateString("id-ID", {
+                        dateStyle: "medium",
+                      })}
+                    </span>
+                  </p>
+                  <p className="mt-1 whitespace-pre-line text-[15px] leading-relaxed text-label">
+                    {String(c.data.komentar ?? "")}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          )}
+          <div className="mt-6 rounded-[20px] border border-hairline p-5">
+            <FormRenderer def={findForm("komentar")!} refId={slug} compact />
+          </div>
+        </section>
       </article>
 
       {related.length > 0 && (

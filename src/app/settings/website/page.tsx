@@ -6,6 +6,10 @@ import { WebsiteEditor } from "@/components/settings/website-editor";
 import { getCurrentMember } from "@/lib/data/provider";
 import { defaultWebsiteConfig } from "@/lib/site/defaults";
 import { getSite } from "@/lib/site/get-site";
+import { getAkademik } from "@/lib/site/akademik";
+import { getHistory } from "@/lib/site/history";
+import { WebsiteHistory } from "@/components/settings/website-history";
+import { AkademikSyncCard } from "@/components/settings/akademik-sync-card";
 
 export const metadata = { title: "Website Prodi · Settings" };
 
@@ -17,7 +21,7 @@ export default async function WebsiteSettingsPage() {
   if (!member) redirect("/login");
   if (member.role !== "admin") redirect("/settings");
 
-  const website = await getSite();
+  const [website, akademik, history] = await Promise.all([getSite(), getAkademik(), getHistory()]);
 
   return (
     <AppShell>
@@ -30,11 +34,19 @@ export default async function WebsiteSettingsPage() {
           Konten website publik
         </h1>
         <p className="mt-2 max-w-prose text-[13px] text-foreground/65">
-          Atur isi website Program Studi Ekonomi Syariah di <span className="font-medium">/prodi</span>. Berita,
+          Atur isi website Program Studi Ekonomi Syariah (domain utama). Berita,
           pengumuman, dan agenda diambil otomatis dari Konten (status <em>published</em>) dan Kegiatan. Perubahan di
           sini langsung tayang setelah disimpan.
         </p>
       </header>
+      <AkademikSyncCard
+        info={
+          akademik
+            ? { at: akademik.at, mataKuliah: akademik.mataKuliah.length, dosen: akademik.dosen.length, errors: akademik.errors }
+            : null
+        }
+      />
+      <WebsiteHistory items={history.map(({ at, by }) => ({ at, by }))} />
       <WebsiteEditor initial={website} defaults={defaultWebsiteConfig} />
     </AppShell>
   );

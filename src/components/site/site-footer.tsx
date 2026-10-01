@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { getSite } from "@/lib/site/get-site";
-import { layananAkademik, navLinks, prodi } from "@/lib/site/prodi";
+import { layananAkademik, navGroups, prodi } from "@/lib/site/prodi";
 import { ProdiLogo } from "./prodi-logo";
 
 export async function SiteFooter() {
-  const { kontak, identity } = await getSite();
+  const { kontak, identity, medsos } = await getSite();
   const year = new Date().getFullYear();
   const sosial = [
     { href: kontak.instagram, label: "Instagram" },
     { href: kontak.tiktok, label: "TikTok" },
     { href: kontak.x, label: "X" },
-    { href: kontak.linktree, label: "Linktree" },
+    { href: medsos.whatsappChannel, label: "Saluran WhatsApp" },
+    { href: "/prodi/link", label: "Semua tautan" },
   ].filter((s) => s.href);
 
   return (
@@ -35,35 +36,25 @@ export async function SiteFooter() {
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-8 py-8 md:grid-cols-4">
-          <Column title="Jelajahi">
-            {navLinks.map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className="hover:text-label hover:underline"
-                >
-                  {l.label}
-                </Link>
-              </li>
+        <div className="grid grid-cols-2 gap-8 py-8 md:grid-cols-3 lg:grid-cols-7">
+          {navGroups
+            .filter((g) => g.items?.length)
+            .map((g) => (
+              <Column key={g.label} title={g.label}>
+                {g.items!.map((l) => (
+                  <li key={l.href}>
+                    <Link
+                      href={l.href}
+                      className="hover:text-label hover:underline"
+                    >
+                      {l.label}
+                    </Link>
+                  </li>
+                ))}
+              </Column>
             ))}
-          </Column>
-          <Column title="Layanan">
-            {[
-              { href: "/prodi/beasiswa", label: "Beasiswa" },
-              { href: "/prodi/unduhan", label: "Unduhan dokumen" },
-              { href: "/prodi/skripsi", label: "Cek judul skripsi" },
-            ].map((l) => (
-              <li key={l.href}>
-                <Link
-                  href={l.href}
-                  className="hover:text-label hover:underline"
-                >
-                  {l.label}
-                </Link>
-              </li>
-            ))}
-            {layananAkademik.slice(0, 3).map((l) => (
+          <Column title="Sistem kampus">
+            {layananAkademik.map((l) => (
               <li key={l.href}>
                 <a
                   href={l.href}
@@ -76,7 +67,17 @@ export async function SiteFooter() {
               </li>
             ))}
           </Column>
-          <Column title="Ikuti Kami">
+          <Column title="Kontak">
+            <li>{kontak.address}</li>
+            <li>{kontak.street}</li>
+            <li>
+              <a
+                href={`mailto:${kontak.email}`}
+                className="break-all hover:text-label hover:underline"
+              >
+                {kontak.email}
+              </a>
+            </li>
             {sosial.map((s) => (
               <li key={s.href}>
                 <a
@@ -90,24 +91,20 @@ export async function SiteFooter() {
               </li>
             ))}
           </Column>
-          <Column title="Kontak">
-            <li>{kontak.address}</li>
-            <li>{kontak.street}</li>
-            <li>
-              <a
-                href={`mailto:${kontak.email}`}
-                className="hover:text-label hover:underline"
-              >
-                {kontak.email}
-              </a>
-            </li>
-          </Column>
         </div>
 
-        <p className="border-t border-hairline py-4">
-          Hak Cipta © {year} {prodi.fullName} {prodi.universityShort}.{" "}
-          {prodi.paradigm}.
-        </p>
+        <div className="flex flex-wrap items-center justify-between gap-2 border-t border-hairline py-4">
+          <p>
+            Hak Cipta © {year} {prodi.fullName} {prodi.universityShort}.{" "}
+            {prodi.paradigm}.
+          </p>
+          <Link
+            href="/login"
+            className="font-medium hover:text-label hover:underline"
+          >
+            Masuk pengurus
+          </Link>
+        </div>
       </div>
 
       {/* Strip kontak — seperti footer di setiap postingan IG Eksyar */}

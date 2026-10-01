@@ -63,15 +63,28 @@ pnpm db:studio    # open Drizzle Studio at https://local.drizzle.studio
 pnpm db:generate  # generate SQL migration files
 ```
 
-## Website Publik Prodi (`/prodi`)
+## Website Publik Prodi (domain utama)
 
-Website publik Program Studi Ekonomi Syariah ada di `/prodi` (tanpa login).
+Domain utama (`/`) langsung membuka website publik Program Studi Ekonomi Syariah (tanpa login; halaman di bawah `/prodi/...`). CMS Humas ada di **`/dashboard`** (login di `/login`, atau tautan "Masuk pengurus" di footer website).
+
+Tautan pendek untuk bio Instagram: `/skripsi`, `/beasiswa`, `/unduhan`, `/agenda`, `/cms`.
 
 - **Konten diatur dari CMS:** Settings → **Website Prodi** (khusus admin) — profil, visi-misi, pimpinan, dosen, prestasi, kegiatan, kurikulum, layanan, FAQ, kontak. Disimpan di tabel `siteSettings` (key `website`) dan langsung tayang setelah disimpan.
 - **Berita, pengumuman & agenda** diambil otomatis dari Konten berstatus *published* (rubrik `pengumuman` → Pengumuman) dan Kegiatan publik.
 - **Foto** diunggah ke Vercel Blob (`BLOB_READ_WRITE_TOKEN`) atau tempel URL `https://`.
 - **Unduhan** (`/prodi/unduhan`): pedoman, kalender, jadwal, template, sertifikat — dikelola di Settings → Website Prodi → tab Unduhan (upload PDF/DOCX/XLSX).
-- **Cek judul skripsi** (`/prodi/skripsi`): skor kemiripan terhadap direktori judul yang diimpor admin di Settings → **Direktori Skripsi** (tempel dari Excel: Tahun | Judul | Nama).
+- **Direktori skripsi** (`/skripsi`): telusuri per tahun/kata kunci/dosen pembimbing, halaman detail berisi abstrak, kata kunci, pembimbing, dan tautan berkas (BAB, daftar pustaka) di Digilib, serta cek kemiripan judul. Data diambil dari Digilib & Etheses UIN SGD (divisi `prodi_ekonomi_syariah`) oleh cron harian `/api/cron/skripsi-sync` atau tombol **Sinkronkan sekarang** di Settings → Direktori Skripsi. Berkas PDF tidak disalin, hanya ditautkan.
+- **Mata kuliah & dosen pengampu**: diambil dari e-Knows (kategori Ekonomi Syariah, `categoryid=40`) oleh cron mingguan `/api/cron/akademik-sync` atau tombol di Settings → Website Prodi. Tampil di Akademik dan di direktori Dosen (digabung dengan data pembimbing skripsi).
+- **Instagram → artikel berita** (CMS → Instagram → Artikel): postingan @eksyaruinsgd diubah AI menjadi artikel berita (hanya dari fakta di caption), foto disalin ke Vercel Blob, dan disimpan sebagai Konten *draft* untuk direview Humas. Otomatis tiap hari lewat `/api/cron/instagram-sync` bila `INSTAGRAM_ACCESS_TOKEN` (Instagram API with Instagram Login, akun profesional) diisi; tanpa token tetap bisa impor manual (tempel tautan + caption + unggah foto).
+- **Kalender akademik, mahasiswa baru, alur layanan, akses cepat, pita pengumuman, tombol WhatsApp**: dikelola di Settings → Website Prodi → tab Layanan & Umum.
+- **Formulir online** (`/prodi/formulir`): kritik & saran, survei kepuasan, lapor prestasi, kabar alumni, survei pengguna lulusan, mentoring, asisten dosen/relawan, janji konsultasi dosen, peminjaman ruang, kerja sama, konsultasi ekonomi syariah, pembaruan profil dosen; tersemat: tanya jawab, komentar berita (dimoderasi), pendaftaran acara. Semua masuk ke **Settings → Kotak masuk** (status, jawaban, tampilkan di website, terapkan ke data website, unduh CSV). Dilindungi honeypot + batas kiriman per IP.
+- **Halaman tambahan:** Tanya jawab, Kamus istilah, Info lomba, Karier & magang, Pojok skripsi, Data & statistik, Ruang media, Wisudawan, Karya mahasiswa, profil per dosen (`/prodi/dosen/[slug]`), verifikasi sertifikat (`/verifikasi/KODE`), halaman tautan bio (`/link`), kalender langganan (`/prodi/kalender.ics`).
+- **Alat:** kalkulator zakat (nisab BAZNAS dari CMS), simulasi akad murabahah/mudharabah, kuis minat, kalkulator kelulusan (`/prodi/alat`).
+- **Tampilan pengunjung:** mode gelap, teks besar, kontras tinggi, hemat data (menu "Aa" di navbar); gaya cetak rapi.
+- **Operasional CMS:** Settings → **Kinerja & laporan** (kunjungan, berita, formulir, rekap CSV, cadangan JSON, cetak laporan bulanan), riwayat versi isi website (pulihkan), peringatan sinkron gagal di dashboard, template gambar IG (feed/story) & "versi IG/WhatsApp/ringkasan" di halaman konten.
+- **Tabel baru:** `submissions` dan `pageViews` — jalankan `pnpm db:push` setelah deploy.
+- Semua cron butuh `CRON_SECRET` di environment Vercel; cadangan mingguan ke Blob butuh `BLOB_READ_WRITE_TOKEN`.
+- **Halaman lain:** Agenda, Galeri (foto + video YouTube), Penelitian & publikasi, Penjaminan mutu, Alumni & tracer study, pencarian situs (`/prodi/cari`) — semua isinya dikelola di Settings → Website Prodi.
 - **Beasiswa** (`/prodi/beasiswa`) & **timeline sejarah** di Profil — data riset dari sumber resmi UIN SGD, dikelola di tab Mahasiswa & Profil.
 - **AI Bantu** (butuh `GEMINI_API_KEY`): tombol "Bantu tulis dengan AI" di setiap kolom teks panjang (perbaiki, ringkas, lebih resmi/ramah, kembangkan — tanpa menambah fakta), dan "Isi dari caption IG" di tab Kegiatan.
 - **Database awal:** `pnpm db:seed:website` mengisi tabel `siteSettings` dengan konten awal (tidak menimpa data yang sudah diedit; `--force` untuk menimpa).

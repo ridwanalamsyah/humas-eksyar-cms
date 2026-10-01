@@ -3,6 +3,11 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { SiteNavbar } from "@/components/site/site-navbar";
 import { SiteFooter } from "@/components/site/site-footer";
 import { getSite } from "@/lib/site/get-site";
+import { listPublishedNews, recentAnnouncement } from "@/lib/site/content";
+import { AnnouncementBar } from "@/components/site/announcement-bar";
+import { WhatsAppButton } from "@/components/site/whatsapp-button";
+import { SiteShell } from "@/components/site/site-shell";
+import { ViewBeacon } from "@/components/site/view-beacon";
 import { prodi } from "@/lib/site/prodi";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -50,10 +55,26 @@ export default async function ProdiLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { kontak } = await getSite();
+  const [{ kontak, galeri, video, kalender, banner, wisuda, karya }, news] =
+    await Promise.all([getSite(), listPublishedNews()]);
+  // Sembunyikan menu yang belum ada isinya.
+  const hidden = [
+    ...(galeri.length || video.length ? [] : ["/prodi/galeri"]),
+    ...(kalender.length ? [] : ["/prodi/kalender"]),
+    ...(wisuda.length ? [] : ["/prodi/wisuda"]),
+    ...(karya.length ? [] : ["/prodi/karya"]),
+  ];
+  // Pita pengumuman: dari CMS bila diaktifkan, atau pengumuman terbaru (≤ 14 hari).
+  const latest = recentAnnouncement(news);
+  const bar =
+    banner.aktif && banner.teks
+      ? { text: banner.teks, href: banner.url || undefined }
+      : latest
+        ? { text: latest.title, href: `/prodi/berita/${latest.slug}` }
+        : null;
   return (
-    <div
-      className={`${jakarta.variable} relative flex min-h-dvh flex-col bg-canvas font-jakarta text-label antialiased [color-scheme:light]`}
+    <SiteShell
+      className={`${jakarta.variable} relative flex min-h-dvh flex-col bg-canvas font-jakarta text-label antialiased`}
     >
       <a
         href="#konten"
@@ -61,11 +82,14 @@ export default async function ProdiLayout({
       >
         Lewati ke konten
       </a>
-      <SiteNavbar pmbUrl={kontak.pmbUrl} />
+      {bar && <AnnouncementBar text={bar.text} href={bar.href} />}
+      <SiteNavbar pmbUrl={kontak.pmbUrl} hidden={hidden} />
       <main id="konten" className="flex-1">
         {children}
       </main>
       <SiteFooter />
-    </div>
+      <ViewBeacon />
+      {kontak.whatsapp && <WhatsAppButton href={kontak.whatsapp} />}
+    </SiteShell>
   );
 }

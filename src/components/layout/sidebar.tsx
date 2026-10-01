@@ -17,6 +17,8 @@ import {
   Trophy,
   Users,
   type LucideIcon,
+  Camera,
+  Inbox,
 } from "lucide-react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { Avatar } from "@/components/common/avatar";
@@ -30,8 +32,9 @@ function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
     {
       title: "Kerja",
       items: [
-        { href: "/", label: "Beranda", icon: Home },
+        { href: "/dashboard", label: "Beranda", icon: Home },
         { href: "/content", label: "Konten", icon: FileText },
+        { href: "/content/instagram", label: "Instagram → Artikel", icon: Camera },
         { href: "/approval", label: "Approval", icon: CheckSquare },
         { href: "/calendar", label: "Kalender", icon: CalendarDays },
         { href: "/events", label: "Kegiatan", icon: Ticket },
@@ -52,18 +55,20 @@ function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
       title: "Website Prodi",
       items: [
         { href: "/settings/website", label: "Konten website", icon: Globe },
+        { href: "/settings/formulir", label: "Kotak masuk", icon: Inbox },
+        { href: "/settings/kinerja", label: "Kinerja & laporan", icon: BarChart3 },
         { href: "/settings/skripsi", label: "Direktori skripsi", icon: BookMarked },
-        { href: "/prodi", label: "Lihat website", icon: ExternalLink, external: true },
+        { href: "/", label: "Lihat website", icon: ExternalLink, external: true },
       ],
     });
   } else {
-    groups.push({ title: "Website Prodi", items: [{ href: "/prodi", label: "Lihat website", icon: ExternalLink, external: true }] });
+    groups.push({ title: "Website Prodi", items: [{ href: "/", label: "Lihat website", icon: ExternalLink, external: true }] });
   }
   return groups;
 }
 
 export function isActivePath(pathname: string, href: string) {
-  if (href === "/") return pathname === "/";
+  if (href === "/dashboard") return pathname === "/dashboard";
   if (href === "/settings") return pathname === "/settings";
   return pathname === href || pathname.startsWith(href + "/");
 }
@@ -74,7 +79,7 @@ export function Sidebar({ member }: { member: Member }) {
 
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-foreground/[0.07] bg-background lg:flex dark:border-white/[0.07]">
-      <Link href="/" className="flex items-center gap-2.5 px-5 pt-5 pb-4" aria-label="Beranda">
+      <Link href="/dashboard" className="flex items-center gap-2.5 px-5 pt-5 pb-4" aria-label="Beranda">
         <EksyarLogo size={32} />
         <span className="leading-tight">
           <span className="block text-[14px] font-semibold tracking-tight">Humas Eksyar</span>

@@ -13,6 +13,7 @@ import { findMemberByEmail, setWebsiteContent } from "@/lib/data/provider";
 import { defaultWebsiteConfig } from "@/lib/site/defaults";
 import { getSite } from "@/lib/site/get-site";
 import { websiteConfigSchema } from "@/lib/site/schema";
+import { snapshotBeforeSave } from "@/lib/site/history";
 
 async function requireAdmin() {
   const session = await auth();
@@ -49,6 +50,8 @@ export async function PUT(req: NextRequest) {
     );
   }
 
+  const session = await auth();
+  await snapshotBeforeSave(session?.user?.name ?? session?.user?.email ?? "admin");
   const saved = await setWebsiteContent(parsed.data);
   revalidatePath("/prodi", "layout");
   revalidatePath("/settings/website");

@@ -33,7 +33,9 @@ type FieldType =
   | "date"
   | "number"
   | "lines"
-  | "paragraphs";
+  | "paragraphs"
+  | "checkbox"
+  | "pairs";
 
 interface FieldSpec {
   name: string;
@@ -174,6 +176,137 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
             type: "url",
             wide: true,
           },
+          {
+            name: "whatsapp",
+            label: "WhatsApp prodi (opsional)",
+            type: "url",
+            wide: true,
+            placeholder: "https://wa.me/62812xxxxxxx",
+            hint: 'Bila diisi, muncul tombol "Tanya prodi" di pojok website.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    value: "promosi",
+    label: "Promosi",
+    sections: [
+      {
+        key: "kampanyePmb",
+        title: "Kampanye PMB (hitung mundur)",
+        hint: "Saat aktif, muncul pita kampanye dengan hitung mundur di beranda, halaman Mahasiswa Baru, dan halaman tautan bio.",
+        kind: "object",
+        fields: [
+          {
+            name: "aktif",
+            label: "Tampilkan kampanye",
+            type: "checkbox",
+            wide: true,
+          },
+          {
+            name: "judul",
+            label: "Judul kampanye",
+            type: "text",
+            wide: true,
+            placeholder: "Pendaftaran Mandiri UIN SGD 2027 dibuka",
+          },
+          { name: "tenggat", label: "Tenggat pendaftaran", type: "date" },
+          { name: "teks", label: "Keterangan", type: "textarea", wide: true },
+        ],
+      },
+      {
+        key: "statusLayanan",
+        title: "Status layanan prodi hari ini",
+        hint: "Tampil di halaman Kontak & Layanan. Kosongkan untuk menyembunyikan.",
+        kind: "object",
+        fields: [
+          {
+            name: "status",
+            label: "Status",
+            type: "text",
+            placeholder: "Buka / Terbatas / Tutup",
+          },
+          {
+            name: "pesan",
+            label: "Pesan",
+            type: "text",
+            wide: true,
+            placeholder: "Kaprodi dinas luar, layanan TTD hingga Kamis",
+          },
+        ],
+      },
+      {
+        key: "apresiasi",
+        title: "Apresiasi bulanan (Insan Eksyar)",
+        hint: "Entri dengan bulan terbaru tampil di beranda.",
+        kind: "list",
+        itemTitle: (i) => `${i.bulan || "YYYY-MM"} · ${i.nama || "Nama"}`,
+        fields: [
+          {
+            name: "bulan",
+            label: "Bulan (YYYY-MM)",
+            type: "text",
+            placeholder: "2026-10",
+          },
+          { name: "nama", label: "Nama", type: "text" },
+          {
+            name: "peran",
+            label: "Peran",
+            type: "text",
+            placeholder: "Mahasiswa / Dosen / Tendik",
+          },
+          {
+            name: "alasan",
+            label: "Alasan apresiasi",
+            type: "textarea",
+            wide: true,
+          },
+          {
+            name: "photo",
+            label: "Foto (opsional)",
+            type: "image",
+            wide: true,
+          },
+        ],
+        empty: {
+          bulan: "",
+          nama: "",
+          peran: "Mahasiswa",
+          alasan: "",
+          photo: null,
+        },
+      },
+      {
+        key: "medsos",
+        title: "Media sosial tambahan",
+        kind: "object",
+        fields: [
+          {
+            name: "youtubeChannelId",
+            label: "ID kanal YouTube (UC…)",
+            type: "text",
+            hint: "Video terbaru tampil otomatis di beranda.",
+          },
+          {
+            name: "whatsappChannel",
+            label: "Tautan Saluran WhatsApp",
+            type: "url",
+          },
+        ],
+      },
+      {
+        key: "pressKit",
+        title: "Ruang media",
+        kind: "object",
+        fields: [
+          {
+            name: "profilSingkat",
+            label: "Profil singkat untuk media",
+            type: "textarea",
+            wide: true,
+          },
+          { name: "kontakMedia", label: "Kontak media (email)", type: "text" },
         ],
       },
     ],
@@ -236,6 +369,69 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
         fields: person,
         empty: { name: "", role: "", photo: null },
       },
+      {
+        key: "struktur",
+        title: "Struktur organisasi",
+        hint: "Level 1 = paling atas (Kaprodi), level 2 = di bawahnya, dst.",
+        kind: "list",
+        itemTitle: (i) => `${i.jabatan || "Jabatan"} · ${i.nama || "Nama"}`,
+        fields: [
+          { name: "jabatan", label: "Jabatan", type: "text" },
+          { name: "nama", label: "Nama", type: "text" },
+          { name: "level", label: "Level (1–4)", type: "number" },
+        ],
+        empty: { jabatan: "", nama: "", level: 2 },
+      },
+      {
+        key: "statistik",
+        title: "Statistik prodi per tahun",
+        hint: "Tampil sebagai grafik di halaman Data & statistik. Sumber: PDDikti/data prodi.",
+        kind: "list",
+        itemTitle: (i) => String(i.tahun || "Tahun"),
+        fields: [
+          { name: "tahun", label: "Tahun", type: "text", placeholder: "2026" },
+          { name: "mahasiswaAktif", label: "Mahasiswa aktif", type: "number" },
+          { name: "mahasiswaBaru", label: "Mahasiswa baru", type: "number" },
+          { name: "lulusan", label: "Lulusan", type: "number" },
+          { name: "dosen", label: "Dosen", type: "number" },
+        ],
+        empty: {
+          tahun: "",
+          mahasiswaAktif: 0,
+          mahasiswaBaru: 0,
+          lulusan: 0,
+          dosen: 0,
+        },
+      },
+      {
+        key: "infografis",
+        title: "Infografis",
+        kind: "list",
+        itemTitle: (i) => String(i.judul || "Infografis baru"),
+        fields: [
+          { name: "judul", label: "Judul", type: "text", wide: true },
+          {
+            name: "satuan",
+            label: "Satuan",
+            type: "text",
+            placeholder: "miliar rupiah",
+          },
+          { name: "sumber", label: "Sumber data", type: "text" },
+          {
+            name: "deskripsi",
+            label: "Keterangan",
+            type: "textarea",
+            wide: true,
+          },
+          {
+            name: "data",
+            label: "Data (satu per baris: Label | angka)",
+            type: "pairs",
+            wide: true,
+          },
+        ],
+        empty: { judul: "", deskripsi: "", satuan: "", sumber: "", data: [] },
+      },
     ],
   },
   {
@@ -256,8 +452,131 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
             wide: true,
             hint: "Satu bidang per baris.",
           },
+          {
+            name: "pendidikan",
+            label: "Riwayat pendidikan",
+            type: "textarea",
+            wide: true,
+          },
+          { name: "sinta", label: "Profil SINTA", type: "url" },
+          { name: "scholar", label: "Google Scholar", type: "url" },
+          {
+            name: "konsultasi",
+            label: "Jadwal konsultasi",
+            type: "text",
+            wide: true,
+            placeholder: "Selasa 10.00–12.00, Ruang Prodi",
+          },
         ],
         empty: { name: "", role: "Dosen", photo: null, expertise: [] },
+      },
+      {
+        key: "tendik",
+        title: "Tenaga kependidikan & staf",
+        hint: "Staf administrasi prodi, laboran, dll. Tampil di halaman Dosen.",
+        kind: "list",
+        itemTitle: (p) => String(p.name || "Staf baru"),
+        fields: person,
+        empty: { name: "", role: "Staf Administrasi", photo: null },
+      },
+    ],
+  },
+  {
+    value: "riset",
+    label: "Riset",
+    sections: [
+      {
+        key: "publikasi",
+        title: "Publikasi & penelitian dosen",
+        hint: "Artikel jurnal, buku, prosiding, dan hasil penelitian. Tampil di halaman Penelitian.",
+        kind: "list",
+        itemTitle: (i) => String(i.title || "Publikasi baru"),
+        fields: [
+          { name: "title", label: "Judul", type: "text", wide: true },
+          { name: "authors", label: "Penulis", type: "text" },
+          { name: "year", label: "Tahun", type: "text", placeholder: "2026" },
+          {
+            name: "type",
+            label: "Jenis",
+            type: "text",
+            placeholder: "Artikel jurnal / Buku / Prosiding / Penelitian",
+          },
+          { name: "venue", label: "Jurnal / penerbit", type: "text" },
+          {
+            name: "url",
+            label: "Tautan (DOI / jurnal)",
+            type: "url",
+            wide: true,
+          },
+        ],
+        empty: {
+          title: "",
+          authors: "",
+          year: "",
+          venue: "",
+          type: "Artikel jurnal",
+          url: "",
+        },
+      },
+      {
+        key: "jurnal",
+        title: "Jurnal ilmiah",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Jurnal baru"),
+        fields: [
+          { name: "name", label: "Nama jurnal", type: "text" },
+          { name: "url", label: "Tautan", type: "url" },
+          {
+            name: "description",
+            label: "Keterangan",
+            type: "textarea",
+            wide: true,
+          },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+    ],
+  },
+  {
+    value: "galeri",
+    label: "Galeri",
+    sections: [
+      {
+        key: "galeri",
+        title: "Foto kegiatan",
+        hint: "Foto tampil di halaman Galeri (dengan filter album) dan beranda.",
+        kind: "list",
+        itemTitle: (i) => String(i.caption || "Foto baru"),
+        fields: [
+          { name: "image", label: "Foto", type: "image", wide: true },
+          { name: "caption", label: "Keterangan", type: "text", wide: true },
+          {
+            name: "album",
+            label: "Album",
+            type: "text",
+            placeholder: "Wisuda / Kuliah praktisi / PkM",
+          },
+          { name: "date", label: "Tanggal", type: "date" },
+        ],
+        empty: { image: "", caption: "", album: "Kegiatan", date: "" },
+      },
+      {
+        key: "video",
+        title: "Video (YouTube)",
+        hint: "Video pertama tampil sebagai video profil di beranda.",
+        kind: "list",
+        itemTitle: (i) => String(i.title || "Video baru"),
+        fields: [
+          { name: "title", label: "Judul", type: "text" },
+          { name: "url", label: "Tautan YouTube", type: "url" },
+          {
+            name: "kategori",
+            label: "Kategori",
+            type: "text",
+            placeholder: "Profil / Kajian / Kuliah umum / Podcast",
+          },
+        ],
+        empty: { title: "", url: "", kategori: "Kegiatan" },
       },
     ],
   },
@@ -397,9 +716,298 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     ],
   },
   {
+    value: "skripsi",
+    label: "Skripsi & RPS",
+    sections: [
+      {
+        key: "peminatan",
+        title: "Peminatan / roadmap studi",
+        kind: "list",
+        itemTitle: (i) => String(i.nama || "Peminatan baru"),
+        fields: [
+          { name: "nama", label: "Nama peminatan", type: "text" },
+          {
+            name: "deskripsi",
+            label: "Deskripsi",
+            type: "textarea",
+            wide: true,
+          },
+          {
+            name: "mataKuliah",
+            label: "Mata kuliah disarankan (urut)",
+            type: "lines",
+            wide: true,
+          },
+          { name: "karier", label: "Arah karier", type: "lines", wide: true },
+        ],
+        empty: { nama: "", deskripsi: "", mataKuliah: [], karier: [] },
+      },
+      {
+        key: "rps",
+        title: "RPS & referensi mata kuliah",
+        kind: "list",
+        itemTitle: (i) => String(i.mk || "Mata kuliah baru"),
+        fields: [
+          { name: "mk", label: "Mata kuliah", type: "text" },
+          { name: "semester", label: "Semester", type: "text" },
+          { name: "url", label: "File RPS", type: "file", wide: true },
+          {
+            name: "referensi",
+            label: "Referensi (satu per baris)",
+            type: "lines",
+            wide: true,
+          },
+        ],
+        empty: { mk: "", semester: "", url: "", referensi: [] },
+      },
+      {
+        key: "topikSkripsi",
+        title: "Topik skripsi yang disarankan dosen",
+        kind: "list",
+        itemTitle: (i) => String(i.topik || "Topik baru"),
+        fields: [
+          { name: "topik", label: "Topik", type: "text", wide: true },
+          { name: "dosen", label: "Dosen pengusul", type: "text" },
+          {
+            name: "deskripsi",
+            label: "Keterangan",
+            type: "textarea",
+            wide: true,
+          },
+        ],
+        empty: { topik: "", deskripsi: "", dosen: "" },
+      },
+      {
+        key: "jadwalSidang",
+        title: "Jadwal seminar & sidang",
+        kind: "list",
+        itemTitle: (i) =>
+          `${i.tanggal || "Tanggal"} · ${i.nama || "Mahasiswa"}`,
+        fields: [
+          { name: "tanggal", label: "Tanggal", type: "date" },
+          {
+            name: "jenis",
+            label: "Jenis",
+            type: "text",
+            placeholder: "Seminar proposal / Sidang munaqasyah",
+          },
+          { name: "nama", label: "Mahasiswa", type: "text" },
+          { name: "ruang", label: "Ruang", type: "text" },
+          { name: "judul", label: "Judul", type: "text", wide: true },
+        ],
+        empty: {
+          tanggal: "",
+          jenis: "Seminar proposal",
+          nama: "",
+          judul: "",
+          ruang: "",
+        },
+      },
+      {
+        key: "panduanSkripsi",
+        title: "Panduan skripsi",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Tautan baru"),
+        fields: [
+          { name: "name", label: "Judul", type: "text" },
+          { name: "url", label: "Tautan / file", type: "url" },
+          {
+            name: "description",
+            label: "Keterangan",
+            type: "text",
+            wide: true,
+          },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+      {
+        key: "integritas",
+        title: "Integritas akademik",
+        kind: "field",
+        field: {
+          name: "integritas",
+          label: "Poin-poin (pisahkan dengan baris kosong)",
+          type: "paragraphs",
+          wide: true,
+        },
+      },
+    ],
+  },
+  {
     value: "mahasiswa",
     label: "Mahasiswa",
     sections: [
+      {
+        key: "lomba",
+        title: "Info lomba",
+        kind: "list",
+        itemTitle: (i) => String(i.nama || "Lomba baru"),
+        fields: [
+          { name: "nama", label: "Nama lomba", type: "text", wide: true },
+          { name: "penyelenggara", label: "Penyelenggara", type: "text" },
+          {
+            name: "tingkat",
+            label: "Tingkat",
+            type: "text",
+            placeholder: "Nasional",
+          },
+          { name: "deadline", label: "Tenggat", type: "date" },
+          { name: "url", label: "Tautan info/daftar", type: "url" },
+          {
+            name: "deskripsi",
+            label: "Keterangan",
+            type: "textarea",
+            wide: true,
+          },
+        ],
+        empty: {
+          nama: "",
+          penyelenggara: "",
+          tingkat: "Nasional",
+          deadline: "",
+          deskripsi: "",
+          url: "",
+        },
+      },
+      {
+        key: "lowongan",
+        title: "Lowongan (asisten dosen, relawan, magang, kerja)",
+        hint: "Kosongkan tautan bila pendaftaran lewat formulir website (Asisten dosen & relawan).",
+        kind: "list",
+        itemTitle: (i) => String(i.title || "Lowongan baru"),
+        fields: [
+          { name: "title", label: "Posisi", type: "text", wide: true },
+          {
+            name: "jenis",
+            label: "Jenis",
+            type: "text",
+            placeholder: "Asisten dosen / Relawan / Magang / Kerja",
+          },
+          { name: "deadline", label: "Tenggat", type: "date" },
+          {
+            name: "url",
+            label: "Tautan pendaftaran eksternal (opsional)",
+            type: "url",
+            wide: true,
+          },
+          {
+            name: "deskripsi",
+            label: "Keterangan & syarat",
+            type: "textarea",
+            wide: true,
+          },
+        ],
+        empty: {
+          title: "",
+          jenis: "Asisten dosen",
+          deskripsi: "",
+          deadline: "",
+          url: "",
+        },
+      },
+      {
+        key: "wisuda",
+        title: "Wisudawan",
+        kind: "list",
+        itemTitle: (i) => String(i.periode || "Periode baru"),
+        fields: [
+          {
+            name: "periode",
+            label: "Periode",
+            type: "text",
+            placeholder: "Wisuda ke-100, Oktober 2026",
+          },
+          { name: "tanggal", label: "Tanggal", type: "date" },
+          { name: "url", label: "Album foto", type: "url" },
+          { name: "image", label: "Foto utama", type: "image", wide: true },
+          {
+            name: "wisudawan",
+            label: "Wisudawan (satu per baris: Nama | Judul skripsi)",
+            type: "lines",
+            wide: true,
+          },
+        ],
+        empty: {
+          periode: "",
+          tanggal: "",
+          wisudawan: [],
+          url: "",
+          image: null,
+        },
+      },
+      {
+        key: "karya",
+        title: "Karya mahasiswa",
+        kind: "list",
+        itemTitle: (i) => String(i.judul || "Karya baru"),
+        fields: [
+          { name: "judul", label: "Judul", type: "text", wide: true },
+          {
+            name: "jenis",
+            label: "Jenis",
+            type: "text",
+            placeholder: "Business plan / Esai / Produk UMKM",
+          },
+          { name: "pembuat", label: "Pembuat", type: "text" },
+          { name: "url", label: "Tautan", type: "url" },
+          { name: "image", label: "Gambar", type: "image", wide: true },
+          {
+            name: "deskripsi",
+            label: "Deskripsi",
+            type: "textarea",
+            wide: true,
+          },
+        ],
+        empty: {
+          judul: "",
+          jenis: "",
+          pembuat: "",
+          deskripsi: "",
+          url: "",
+          image: null,
+        },
+      },
+      {
+        key: "panduanMaba",
+        title: "Langkah mahasiswa baru",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Langkah baru"),
+        fields: [
+          { name: "name", label: "Langkah", type: "text" },
+          { name: "url", label: "Tautan", type: "url" },
+          {
+            name: "description",
+            label: "Keterangan",
+            type: "text",
+            wide: true,
+          },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+      {
+        key: "testimoni",
+        title: "Testimoni alumni & mahasiswa",
+        hint: "Tampil di beranda dan halaman Alumni. Cantumkan hanya kutipan yang sudah disetujui orangnya.",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Testimoni baru"),
+        fields: [
+          { name: "name", label: "Nama", type: "text" },
+          {
+            name: "role",
+            label: "Angkatan / pekerjaan",
+            type: "text",
+            placeholder: "Alumni 2020 · Bank Syariah Indonesia",
+          },
+          { name: "quote", label: "Kutipan", type: "textarea", wide: true },
+          {
+            name: "photo",
+            label: "Foto (opsional)",
+            type: "image",
+            wide: true,
+          },
+        ],
+        empty: { name: "", role: "", quote: "", photo: null },
+      },
       {
         key: "kegiatanMahasiswa",
         title: "Kegiatan mahasiswa",
@@ -451,6 +1059,24 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
           requirements: [],
           url: "",
         },
+      },
+    ],
+  },
+  {
+    value: "edukasi",
+    label: "Kamus",
+    sections: [
+      {
+        key: "kamus",
+        title: "Kamus istilah ekonomi syariah",
+        kind: "list",
+        itemTitle: (i) => String(i.istilah || "Istilah baru"),
+        fields: [
+          { name: "istilah", label: "Istilah", type: "text" },
+          { name: "kategori", label: "Kategori", type: "text" },
+          { name: "arti", label: "Arti", type: "textarea", wide: true },
+        ],
+        empty: { istilah: "", arti: "", kategori: "Dasar" },
       },
     ],
   },
@@ -507,6 +1133,203 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     value: "layanan",
     label: "Layanan",
     sections: [
+      {
+        key: "ruangAlat",
+        title: "Ruang & alat yang bisa dipinjam",
+        hint: "Pilihan ini muncul di formulir peminjaman.",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Ruang/alat baru"),
+        fields: [
+          { name: "name", label: "Nama", type: "text" },
+          {
+            name: "description",
+            label: "Keterangan",
+            type: "text",
+            wide: true,
+          },
+          { name: "image", label: "Foto", type: "image", wide: true },
+        ],
+        empty: { name: "", description: "", image: null },
+      },
+      {
+        key: "sertifikat",
+        title: "Sertifikat terverifikasi",
+        hint: "Kode bisa dicek di /verifikasi/KODE. Sertifikat peserta acara bisa dibuat otomatis dari Kotak masuk.",
+        kind: "list",
+        itemTitle: (i) => `${i.kode || "KODE"} · ${i.nama || "Nama"}`,
+        fields: [
+          {
+            name: "kode",
+            label: "Kode (huruf besar/angka)",
+            type: "text",
+            placeholder: "EKSYAR-2610-0001",
+          },
+          { name: "nama", label: "Nama", type: "text" },
+          { name: "kegiatan", label: "Kegiatan", type: "text", wide: true },
+          {
+            name: "peran",
+            label: "Peran",
+            type: "text",
+            placeholder: "Peserta / Panitia / Pemateri",
+          },
+          { name: "tanggal", label: "Tanggal", type: "date" },
+        ],
+        empty: {
+          kode: "",
+          nama: "",
+          kegiatan: "",
+          peran: "Peserta",
+          tanggal: "",
+        },
+      },
+      {
+        key: "zakat",
+        title: "Kalkulator zakat",
+        kind: "object",
+        fields: [
+          {
+            name: "nisabPenghasilanTahun",
+            label: "Nisab zakat penghasilan per tahun (Rp)",
+            type: "number",
+            wide: true,
+          },
+          {
+            name: "hargaEmas",
+            label: "Harga emas per gram (Rp, opsional)",
+            type: "number",
+          },
+          { name: "nisabGram", label: "Nisab emas (gram)", type: "number" },
+          {
+            name: "sumber",
+            label: "Sumber ketetapan",
+            type: "text",
+            wide: true,
+          },
+          { name: "diperbarui", label: "Tanggal ketetapan", type: "date" },
+        ],
+      },
+      {
+        key: "banner",
+        title: "Pengumuman berjalan (atas website)",
+        hint: "Bila tidak diaktifkan, website menampilkan pengumuman terbaru dari Konten (rubrik Pengumuman) selama 14 hari.",
+        kind: "object",
+        fields: [
+          {
+            name: "aktif",
+            label: "Tampilkan pengumuman ini",
+            type: "checkbox",
+            wide: true,
+          },
+          { name: "teks", label: "Teks pengumuman", type: "text", wide: true },
+          { name: "url", label: "Tautan (opsional)", type: "url", wide: true },
+        ],
+      },
+      {
+        key: "kalender",
+        title: "Kalender akademik",
+        hint: "Tampil di halaman Kalender. Isi dari kalender akademik resmi UIN SGD dan agenda prodi (seminar proposal, sidang, wisuda).",
+        kind: "list",
+        itemTitle: (i) => String(i.kegiatan || "Kegiatan baru"),
+        fields: [
+          { name: "kegiatan", label: "Kegiatan", type: "text", wide: true },
+          { name: "mulai", label: "Mulai", type: "date" },
+          { name: "selesai", label: "Selesai (opsional)", type: "date" },
+          {
+            name: "kategori",
+            label: "Kategori",
+            type: "text",
+            placeholder: "Perkuliahan / Ujian / Administrasi / Wisuda / Libur",
+          },
+          { name: "sumber", label: "Sumber (opsional)", type: "url" },
+        ],
+        empty: {
+          kegiatan: "",
+          mulai: "",
+          selesai: "",
+          kategori: "Perkuliahan",
+          sumber: "",
+        },
+      },
+      {
+        key: "prosedur",
+        title: "Alur layanan akademik",
+        hint: "Mis. pengajuan judul skripsi, seminar proposal, sidang munaqasyah, magang. Tampil di halaman Layanan.",
+        kind: "list",
+        itemTitle: (i) => String(i.title || "Alur baru"),
+        fields: [
+          { name: "title", label: "Nama layanan", type: "text" },
+          { name: "url", label: "Formulir / dokumen (opsional)", type: "url" },
+          {
+            name: "description",
+            label: "Keterangan singkat",
+            type: "text",
+            wide: true,
+          },
+          {
+            name: "steps",
+            label: "Langkah-langkah",
+            type: "lines",
+            wide: true,
+            hint: "Satu langkah per baris, berurutan.",
+          },
+        ],
+        empty: { title: "", description: "", steps: [], url: "" },
+      },
+      {
+        key: "aksesCepat",
+        title: "Akses cepat layanan digital",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Tautan baru"),
+        fields: [
+          { name: "name", label: "Nama", type: "text" },
+          { name: "url", label: "Tautan", type: "url" },
+          {
+            name: "description",
+            label: "Keterangan",
+            type: "text",
+            wide: true,
+          },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+      {
+        key: "infoMaba",
+        title: "Info mahasiswa baru",
+        hint: "Tautan resmi untuk calon mahasiswa (UKT, pembayaran, PMB). Tampil di halaman Mahasiswa Baru.",
+        kind: "list",
+        itemTitle: (i) => String(i.name || "Tautan baru"),
+        fields: [
+          { name: "name", label: "Judul", type: "text" },
+          { name: "url", label: "Tautan", type: "url" },
+          {
+            name: "description",
+            label: "Keterangan",
+            type: "text",
+            wide: true,
+          },
+        ],
+        empty: { name: "", description: "", url: "" },
+      },
+      {
+        key: "mutu",
+        title: "Penjaminan mutu & tracer study",
+        kind: "object",
+        fields: [
+          {
+            name: "description",
+            label: "Keterangan penjaminan mutu",
+            type: "textarea",
+            wide: true,
+          },
+          {
+            name: "surveiUrl",
+            label: "Survei kepuasan (Google Form, dll.)",
+            type: "url",
+          },
+          { name: "tracerUrl", label: "Tracer study", type: "url" },
+          { name: "sebaranUrl", label: "Peta sebaran alumni", type: "url" },
+        ],
+      },
       {
         key: "fasilitas",
         title: "Fasilitas",
@@ -612,7 +1435,7 @@ export function WebsiteEditor({
         </div>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" asChild>
-            <a href="/prodi" target="_blank" rel="noopener noreferrer">
+            <a href="/" target="_blank" rel="noopener noreferrer">
               <ExternalLink className="size-3.5" strokeWidth={1.75} /> Lihat
               website
             </a>
@@ -794,6 +1617,48 @@ function FieldInput({
             onApply={onChange}
           />
         </div>
+      );
+    case "pairs":
+      control = (
+        <textarea
+          rows={5}
+          defaultValue={((value as { label: string; nilai: number }[]) ?? [])
+            .map((d) => `${d.label} | ${d.nilai}`)
+            .join("\n")}
+          placeholder={"2024 | 120\n2025 | 135"}
+          onBlur={(e) =>
+            onChange(
+              e.target.value
+                .split("\n")
+                .map((l) => l.split("|").map((x) => x.trim()))
+                .filter(
+                  ([l, n]) =>
+                    l &&
+                    n !== undefined &&
+                    !Number.isNaN(
+                      Number(n.replace(/\./g, "").replace(",", ".")),
+                    ),
+                )
+                .map(([label, n]) => ({
+                  label,
+                  nilai: Number(n.replace(/\./g, "").replace(",", ".")),
+                })),
+            )
+          }
+          className={cn(inputCls, "resize-y font-mono text-[13px]")}
+        />
+      );
+      break;
+    case "checkbox":
+      return (
+        <label className="flex items-center gap-2 py-2 text-[14px]">
+          <input
+            type="checkbox"
+            checked={Boolean(value)}
+            onChange={(e) => onChange(e.target.checked)}
+          />
+          {spec.label}
+        </label>
       );
     case "number":
       control = (

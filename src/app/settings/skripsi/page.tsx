@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { AppShell } from "@/components/layout/app-shell";
 import { SkripsiEditor } from "@/components/settings/skripsi-editor";
 import { getCurrentMember } from "@/lib/data/provider";
-import { getSkripsi } from "@/lib/site/skripsi";
+import { getSkripsi, getSkripsiSync } from "@/lib/site/skripsi";
 
 export const metadata = { title: "Direktori Skripsi · Settings" };
 export const dynamic = "force-dynamic";
@@ -13,7 +13,7 @@ export default async function SkripsiSettingsPage() {
   const member = await getCurrentMember();
   if (!member) redirect("/login");
   if (member.role !== "admin") redirect("/settings");
-  const items = await getSkripsi();
+  const [items, sync] = await Promise.all([getSkripsi(), getSkripsiSync()]);
 
   return (
     <AppShell>
@@ -26,11 +26,11 @@ export default async function SkripsiSettingsPage() {
           Direktori judul skripsi
         </h1>
         <p className="mt-2 max-w-prose text-[13px] text-foreground/65">
-          Dipakai fitur <span className="font-medium">Cek Judul</span> di /prodi/skripsi agar mahasiswa bisa memeriksa kemiripan
-          judul sebelum mengajukan proposal.
+          Dipakai halaman <span className="font-medium">/skripsi</span> di website: mahasiswa bisa menelusuri skripsi Eksyar dan
+          memeriksa kemiripan judul sebelum mengajukan proposal. Data diperbarui otomatis dari Digilib setiap hari.
         </p>
       </header>
-      <SkripsiEditor initial={items} />
+      <SkripsiEditor initial={items} sync={sync} />
     </AppShell>
   );
 }

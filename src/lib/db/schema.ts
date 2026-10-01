@@ -349,3 +349,32 @@ export const weeklyDigests = pgTable("weeklyDigests", {
   totalReach: integer("totalReach").notNull().default(0),
   topContentId: text("topContentId"),
 });
+
+/**
+ * Isian formulir publik website prodi (kritik & saran, lapor prestasi,
+ * kabar alumni, pendaftaran acara, tanya jawab, komentar berita, dll.).
+ * `data` berisi jawaban formulir; `published` menandai isian yang boleh
+ * tampil di website (mis. tanya jawab yang sudah dijawab).
+ */
+export const submissions = pgTable("submissions", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(),
+  status: text("status").notNull().default("baru"),
+  data: jsonb("data").$type<Record<string, unknown>>().notNull(),
+  note: text("note").notNull().default(""),
+  published: boolean("published").notNull().default(false),
+  refId: text("refId"),
+  createdAt: text("createdAt").notNull(),
+  updatedAt: text("updatedAt").notNull(),
+});
+
+/** Jumlah kunjungan per halaman per hari (tanpa data pribadi pengunjung). */
+export const pageViews = pgTable(
+  "pageViews",
+  {
+    path: text("path").notNull(),
+    day: text("day").notNull(),
+    count: integer("count").notNull().default(0),
+  },
+  (t) => [primaryKey({ columns: [t.path, t.day] })],
+);

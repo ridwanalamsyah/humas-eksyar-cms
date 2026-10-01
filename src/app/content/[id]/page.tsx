@@ -5,6 +5,8 @@ import { getContent, getMember, listMedia } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { GlassCard } from "@/components/ui/glass-card";
 import { StatusPill, Pill } from "@/components/common/pill";
+import { rubricLabel } from "@/lib/site/content";
+import { RepurposePanel } from "@/components/content/repurpose-panel";
 import { Avatar } from "@/components/common/avatar";
 import { ApprovalChain } from "@/components/content/approval-chain";
 import { CaptionHistory } from "@/components/content/caption-history";
@@ -57,6 +59,22 @@ export default async function ContentDetail({ params }: Props) {
           <h1 className="mt-3 font-display text-[clamp(1.8rem,1.4rem+1.5vw,2.4rem)] font-semibold leading-[1.05] tracking-tight">
             {content.title}
           </h1>
+
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-[12.5px]">
+            <span className="text-foreground/55">Template IG:</span>
+            {(["feed", "story"] as const).map((f) => (
+              <a
+                key={f}
+                href={`/api/og/instagram?format=${f}&judul=${encodeURIComponent(content.title)}&kategori=${encodeURIComponent(rubricLabel(content.rubric))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full bg-foreground/[0.06] px-3 py-1 font-medium hover:bg-foreground/[0.1]"
+              >
+                {f === "feed" ? "Feed 4:5" : "Story 9:16"}
+              </a>
+            ))}
+          </div>
+          <RepurposePanel contentId={content.id} />
 
           {author && (
             <div className="mt-4 flex flex-wrap items-center gap-3 text-sm text-foreground/65">

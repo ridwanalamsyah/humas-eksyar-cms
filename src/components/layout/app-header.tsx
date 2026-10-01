@@ -25,7 +25,7 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
   return (
     <header className="flex items-center justify-between gap-3 lg:justify-end">
       <Link
-        href="/"
+        href="/dashboard"
         className="group flex items-center gap-2.5 lg:hidden"
         aria-label="Beranda"
       >

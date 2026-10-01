@@ -6,7 +6,7 @@ import { CalendarDays, FileText, Home as HomeIcon, Image as ImageIcon, Menu } fr
 import { cn } from "@/lib/utils";
 
 const tabs = [
-  { href: "/", label: "Beranda", icon: HomeIcon },
+  { href: "/dashboard", label: "Beranda", icon: HomeIcon },
   { href: "/content", label: "Konten", icon: FileText },
   { href: "/calendar", label: "Kalender", icon: CalendarDays },
   { href: "/media", label: "Media", icon: ImageIcon },
@@ -24,7 +24,7 @@ export function BottomDock() {
     >
       <ul className="mx-auto grid max-w-md grid-cols-5">
         {tabs.map(({ href, label, icon: Icon }) => {
-          const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+          const active = href === "/dashboard" ? pathname === "/dashboard" : pathname.startsWith(href);
           return (
             <li key={href}>
               <Link

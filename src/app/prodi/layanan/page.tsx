@@ -4,10 +4,12 @@ import { ArrowUpRight, Building2, FolderDown, ScanSearch } from "lucide-react";
 import { FaqList } from "@/components/site/faq-list";
 import { LocalNav } from "@/components/site/local-nav";
 import { PageHeader } from "@/components/site/page-header";
+import { StatusLayanan } from "@/components/site/status-layanan";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 import { getSite } from "@/lib/site/get-site";
-import { layananAkademik, prodi } from "@/lib/site/prodi";
+import { prodi } from "@/lib/site/prodi";
+import { ProsedurList } from "@/components/site/prosedur-list";
 
 export const metadata: Metadata = {
   title: "Layanan",
@@ -17,7 +19,7 @@ export const metadata: Metadata = {
 const FEBI_URL = "https://febi.uinsgd.ac.id";
 
 export default async function LayananPage() {
-  const { faq, kontak } = await getSite();
+  const { faq, kontak, aksesCepat, prosedur, statusLayanan } = await getSite();
 
   return (
     <>
@@ -26,11 +28,18 @@ export default async function LayananPage() {
         title="Layanan mahasiswa"
         description="Sistem akademik kampus, dokumen prodi, dan alat bantu skripsi."
       />
+      <div className="px-4 sm:px-6">
+        <StatusLayanan
+          status={statusLayanan.status}
+          pesan={statusLayanan.pesan}
+        />
+      </div>
 
       <LocalNav
         items={[
           { id: "prodi", label: "Layanan prodi" },
-          { id: "digital", label: "Sistem kampus" },
+          ...(prosedur.length ? [{ id: "alur", label: "Alur layanan" }] : []),
+          { id: "digital", label: "Akses cepat" },
           { id: "faq", label: "FAQ" },
         ]}
       />
@@ -97,6 +106,23 @@ export default async function LayananPage() {
         </div>
       </section>
 
+      {/* Alur layanan akademik */}
+      {prosedur.length > 0 && (
+        <section id="alur" className="scroll-mt-28 px-4 pb-24 sm:px-6 sm:pb-32">
+          <div className="mx-auto max-w-[860px]">
+            <Reveal>
+              <SectionHeading
+                eyebrow="Tata cara"
+                title="Alur layanan akademik"
+              />
+            </Reveal>
+            <div className="mt-10">
+              <ProsedurList items={prosedur} />
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Sistem kampus */}
       <section
         id="digital"
@@ -105,21 +131,21 @@ export default async function LayananPage() {
         <Reveal>
           <SectionHeading
             eyebrow="Sistem kampus"
-            title="Sistem informasi UIN SGD"
+            title="Akses cepat layanan digital"
           />
         </Reveal>
         <div className="mx-auto mt-12 grid max-w-[1024px] gap-4 sm:grid-cols-2">
-          {layananAkademik.map((l) => (
+          {aksesCepat.map((l) => (
             <a
-              key={l.href}
-              href={l.href}
+              key={l.url}
+              href={l.url}
               target="_blank"
               rel="noopener noreferrer"
               className="group flex items-start justify-between gap-6 rounded-[24px] bg-canvas p-7 transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]"
             >
               <span>
                 <span className="block text-[19px] font-bold tracking-[-0.01em] text-label">
-                  {l.title}
+                  {l.name}
                 </span>
                 <span className="mt-1 block text-[15px] text-label-2">
                   {l.description}

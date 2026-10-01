@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { FaqList } from "@/components/site/faq-list";
 import { PageHeader } from "@/components/site/page-header";
+import { StatusLayanan } from "@/components/site/status-layanan";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 import { getSite } from "@/lib/site/get-site";
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export default async function KontakPage() {
-  const { faq, kontak } = await getSite();
+  const { faq, kontak, statusLayanan } = await getSite();
   const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(`${kontak.address}, ${kontak.street}`)}&output=embed`;
   const sosial = [
     {
@@ -30,6 +31,12 @@ export default async function KontakPage() {
         title="Kontak program studi"
         description="Seputar perkuliahan, pendaftaran, atau kerja sama."
       />
+      <div className="px-4 sm:px-6">
+        <StatusLayanan
+          status={statusLayanan.status}
+          pesan={statusLayanan.pesan}
+        />
+      </div>
 
       <section className="px-4 pb-24 sm:px-6 sm:pb-32">
         <div className="mx-auto grid max-w-[1024px] gap-4 md:grid-cols-3">

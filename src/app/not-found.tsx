@@ -24,7 +24,7 @@ export default function NotFound() {
           </p>
           <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
             <Button asChild>
-              <Link href="/">
+              <Link href="/dashboard">
                 <Home className="size-4" strokeWidth={1.75} /> Dashboard
               </Link>
             </Button>
