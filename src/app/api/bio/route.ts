@@ -23,16 +23,16 @@ export async function GET() {
 export async function PUT(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Silakan masuk terlebih dahulu." }, { status: 401 });
   }
   const me = await findMemberByEmail(session.user.email);
   if (!me || me.role !== "admin") {
-    return NextResponse.json({ error: "Admin only" }, { status: 403 });
+    return NextResponse.json({ error: "Hanya admin yang bisa melakukan ini." }, { status: 403 });
   }
 
   const body = (await req.json().catch(() => null)) as Partial<BioConfig> | null;
   if (!body || typeof body !== "object") {
-    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+    return NextResponse.json({ error: "Data yang dikirim tidak valid." }, { status: 400 });
   }
 
   const current = await getBioConfig();
@@ -47,7 +47,7 @@ export async function PUT(req: NextRequest) {
 
   if (!next.name || !next.tagline) {
     return NextResponse.json(
-      { error: "name and tagline are required" },
+      { error: "Nama dan tagline wajib diisi." },
       { status: 400 },
     );
   }

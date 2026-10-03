@@ -56,7 +56,7 @@ export default async function PrivasiPage() {
       body: (
         <>
           Kami menghitung jumlah kunjungan per halaman tanpa cookie dan tanpa
-          menyimpan identitas pengunjung. Cookie hanya dipakai untuk login
+          menyimpan identitas pengunjung. Cookie hanya dipakai untuk masuk
           pengurus.
         </>
       ),

@@ -14,7 +14,10 @@ interface Params {
 export async function GET(_req: NextRequest, { params }: Params) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
   const { id } = await params;
   const draft = await getContentDraft(id);
@@ -24,12 +27,22 @@ export async function GET(_req: NextRequest, { params }: Params) {
 export async function PUT(req: NextRequest, { params }: Params) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
   const me = await findMemberByEmail(session.user.email);
-  if (!me) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!me)
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   if (me.role === "monitoring") {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   }
   const { id } = await params;
   const body = await req.json().catch(() => ({}));
@@ -46,7 +59,10 @@ export async function PUT(req: NextRequest, { params }: Params) {
 export async function DELETE(_req: NextRequest, { params }: Params) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
   const { id } = await params;
   await clearContentDraft(id);

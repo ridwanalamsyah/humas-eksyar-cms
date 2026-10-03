@@ -4,7 +4,7 @@
  *   { url, caption, imageUrls?, timestamp? } → impor manual (tanpa token)
  */
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { z } from "@/lib/zod";
 import { shortcodeFromUrl } from "@/lib/instagram/caption";
 import { listInstagramPosts } from "@/lib/instagram/graph";
 import { importPost } from "@/lib/instagram/import";
@@ -35,7 +35,11 @@ const schema = z.union([
 
 export async function POST(req: NextRequest) {
   const me = await requireEditor();
-  if (!me) return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!me)
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   const parsed = schema.safeParse(await req.json().catch(() => null));
   if (!parsed.success)
     return NextResponse.json(

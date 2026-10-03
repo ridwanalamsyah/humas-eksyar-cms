@@ -123,11 +123,11 @@ function CommandPalette({ open, setOpen }: Props) {
                   <CmdItem onSelect={() => go("/members")} icon={<Users className="size-4" />} label="Anggota" />
                   <CmdItem onSelect={() => go("/badges")} icon={<Trophy className="size-4" />} label="Badge & Quest" />
                   <CmdItem onSelect={() => go("/leaderboard")} icon={<Trophy className="size-4" />} label="Leaderboard" />
-                  <CmdItem onSelect={() => go("/approval")} icon={<ShieldCheck className="size-4" />} label="Approval Queue" />
+                  <CmdItem onSelect={() => go("/approval")} icon={<ShieldCheck className="size-4" />} label="Perlu disetujui" />
                   <CmdItem onSelect={() => go("/analytics")} icon={<Zap className="size-4" />} label="Insight" />
                   <CmdItem onSelect={() => go("/profile")} icon={<Users className="size-4" />} label="Profil saya" />
                   <CmdItem onSelect={() => go("/settings/website")} icon={<Hash className="size-4" />} label="Website Prodi" hint="Atur konten /prodi" />
-                  <CmdItem onSelect={() => go("/settings")} icon={<Hash className="size-4" />} label="Settings" />
+                  <CmdItem onSelect={() => go("/settings")} icon={<Hash className="size-4" />} label="Pengaturan" />
                 </Command.Group>
 
                 <Command.Group heading="Tampilan" className="cmd-group">

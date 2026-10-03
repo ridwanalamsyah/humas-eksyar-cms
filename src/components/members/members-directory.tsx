@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "motion/react";
-import { Search, Flame, Trophy } from "lucide-react";
+import { Search } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
 import { Pill } from "@/components/common/pill";
@@ -12,7 +12,6 @@ import type { Member, Role } from "@/lib/data/types";
 
 interface Props {
   members: Member[];
-  topXP: string[];
 }
 
 const ROLE_LABEL: Record<Role, string> = {
@@ -24,7 +23,7 @@ const ROLE_LABEL: Record<Role, string> = {
   admin: "Admin",
 };
 
-export function MembersDirectory({ members, topXP }: Props) {
+export function MembersDirectory({ members }: Props) {
   const [query, setQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState<Role | "all">("all");
 
@@ -92,7 +91,6 @@ export function MembersDirectory({ members, topXP }: Props) {
             className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
             {filtered.map((m) => {
-              const isTop = topXP.includes(m.id);
               return (
                 <motion.div
                   key={m.id}
@@ -103,12 +101,6 @@ export function MembersDirectory({ members, topXP }: Props) {
                 >
                   <Link href={`/members/${m.id}`}>
                     <GlassCard hover className="relative h-full p-5">
-                      {isTop && (
-                        <span className="absolute -top-2 -right-2 inline-flex items-center gap-1 rounded-full bg-gradient-to-br from-gold-400 to-gold-500 px-2 py-0.5 text-[10px] font-semibold text-ink-900 shadow-[0_8px_24px_-6px_rgba(232,148,34,0.5)]">
-                          <Trophy className="size-3" strokeWidth={2} />
-                          Top XP
-                        </span>
-                      )}
                       <div className="flex items-start gap-3">
                         <Avatar member={m} size={56} />
                         <div className="min-w-0 flex-1">
@@ -123,22 +115,6 @@ export function MembersDirectory({ members, topXP }: Props) {
                           </div>
                         </div>
                       </div>
-                      <div className="mt-4 grid grid-cols-3 gap-2 border-t border-foreground/10 pt-3 text-center text-[11px] dark:border-white/10">
-                        <Stat label="XP" value={m.xp.toLocaleString()} />
-                        <Stat
-                          label="Streak"
-                          value={
-                            <span className="inline-flex items-center gap-1">
-                              <Flame
-                                className="size-3 text-gold-500"
-                                strokeWidth={2}
-                              />
-                              {m.streak}h
-                            </span>
-                          }
-                        />
-                        <Stat label="Badge" value={m.badges.length} />
-                      </div>
                     </GlassCard>
                   </Link>
                 </motion.div>
@@ -147,23 +123,6 @@ export function MembersDirectory({ members, topXP }: Props) {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
-  );
-}
-
-function Stat({
-  label,
-  value,
-}: {
-  label: string;
-  value: React.ReactNode;
-}) {
-  return (
-    <div>
-      <p className="text-[10px] uppercase tracking-[0.16em] text-foreground/55">
-        {label}
-      </p>
-      <p className="mt-0.5 text-[13px] font-semibold">{value}</p>
     </div>
   );
 }

@@ -11,7 +11,7 @@ import { getHistory } from "@/lib/site/history";
 import { WebsiteHistory } from "@/components/settings/website-history";
 import { AkademikSyncCard } from "@/components/settings/akademik-sync-card";
 
-export const metadata = { title: "Website Prodi · Settings" };
+export const metadata = { title: "Isi website" };
 
 // Selalu ambil konten terbaru dari database (bukan hasil build).
 export const dynamic = "force-dynamic";
@@ -31,7 +31,7 @@ export default async function WebsiteSettingsPage({
   return (
     <AppShell>
       <Link href="/settings" className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground">
-        <ArrowLeft className="size-4" strokeWidth={1.75} /> Settings
+        <ArrowLeft className="size-4" strokeWidth={1.75} /> Pengaturan
       </Link>
       <header className="mt-3">
         <p className="text-[12.5px] text-foreground/50">Website Prodi</p>
@@ -40,7 +40,7 @@ export default async function WebsiteSettingsPage({
         </h1>
         <p className="mt-2 max-w-prose text-[13px] text-foreground/65">
           Atur isi website Program Studi Ekonomi Syariah (domain utama). Berita,
-          pengumuman, dan agenda diambil otomatis dari Konten (status <em>published</em>) dan Kegiatan. Perubahan di
+          pengumuman, dan agenda diambil otomatis dari Berita & konten yang sudah terbit dan dari Agenda. Perubahan di
           sini langsung tayang setelah disimpan.
         </p>
       </header>

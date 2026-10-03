@@ -90,7 +90,7 @@ export function InboxView({
       });
       const j = await res.json().catch(() => ({}));
       if (!res.ok) {
-        toast.error(j.error ?? "Gagal");
+        toast.error(j.error ?? "Gagal menyimpan. Coba lagi.");
         return;
       }
       toast.success(j.message ?? ok ?? "Tersimpan");
@@ -152,7 +152,7 @@ export function InboxView({
           </div>
           <Button size="sm" variant="secondary" asChild>
             <a href={`/api/formulir-admin/export?type=${type}`}>
-              <Download className="size-3.5" /> Unduh Excel (CSV)
+              <Download className="size-3.5" /> Unduh ke Excel
             </a>
           </Button>
         </div>

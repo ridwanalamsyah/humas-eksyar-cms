@@ -8,9 +8,9 @@ export const maxDuration = 60;
 
 export async function POST() {
   const session = await auth();
-  if (!session?.user?.email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!session?.user?.email) return NextResponse.json({ error: "Silakan masuk terlebih dahulu." }, { status: 401 });
   const me = await findMemberByEmail(session.user.email);
-  if (!me || me.role !== "admin") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!me || me.role !== "admin") return NextResponse.json({ error: "Anda tidak punya akses untuk tindakan ini." }, { status: 403 });
   try {
     const data = await syncAkademikFromEknows();
     return NextResponse.json({ at: data.at, mataKuliah: data.mataKuliah.length, dosen: data.dosen.length, pages: data.pages });

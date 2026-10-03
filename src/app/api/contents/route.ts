@@ -29,26 +29,26 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Silakan masuk terlebih dahulu." }, { status: 401 });
   }
   const member = await findMemberByEmail(session.user.email);
   if (!member) {
     return NextResponse.json(
-      { error: "No member record linked to this Google account" },
+      { error: "Akun Google ini belum terdaftar sebagai anggota. Hubungi admin." },
       { status: 403 },
     );
   }
   // Monitoring roles (pembina) are view-only — cannot submit content.
   if (member.role === "monitoring") {
     return NextResponse.json(
-      { error: "Akun pembina hanya untuk monitoring, tidak bisa submit konten." },
+      { error: "Akun pembina hanya bisa melihat, tidak bisa mengirim konten." },
       { status: 403 },
     );
   }
   const body = await req.json().catch(() => ({}));
   if (!body.title || !body.rubric) {
     return NextResponse.json(
-      { error: "title and rubric are required" },
+      { error: "Judul dan rubrik wajib diisi." },
       { status: 400 },
     );
   }

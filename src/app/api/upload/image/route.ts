@@ -17,11 +17,11 @@ export const runtime = "nodejs";
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Silakan masuk terlebih dahulu." }, { status: 401 });
   }
   const me = await findMemberByEmail(session.user.email);
   if (!me || me.role !== "admin") {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json({ error: "Anda tidak punya akses untuk tindakan ini." }, { status: 403 });
   }
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
     return NextResponse.json(

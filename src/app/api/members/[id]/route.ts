@@ -21,7 +21,7 @@ export async function GET(_req: NextRequest, { params }: Params) {
   const { id } = await params;
   const member = await getMember(id);
   if (!member) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ error: "Data tidak ditemukan." }, { status: 404 });
   }
   return NextResponse.json({ member });
 }
@@ -38,17 +38,17 @@ const ALLOWED_ROLES = new Set([
 export async function PATCH(req: NextRequest, { params }: Params) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Silakan masuk terlebih dahulu." }, { status: 401 });
   }
   const me = await findMemberByEmail(session.user.email);
   if (!me) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json({ error: "Anda tidak punya akses untuk tindakan ini." }, { status: 403 });
   }
   const { id } = await params;
   const isAdmin = me.role === "admin";
   const isSelf = me.id === id;
   if (!isAdmin && !isSelf) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json({ error: "Anda tidak punya akses untuk tindakan ini." }, { status: 403 });
   }
   const patch = await req.json().catch(() => ({}));
   // Non-admins can't change their own role / divisionId / xp.
@@ -69,14 +69,14 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     }
     if (isSelf && patch.role !== "admin") {
       return NextResponse.json(
-        { error: "Admin tidak boleh menurunkan rolenya sendiri." },
+        { error: "Admin tidak bisa menurunkan perannya sendiri." },
         { status: 400 },
       );
     }
   }
   const member = await updateMember(id, patch);
   if (!member) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ error: "Data tidak ditemukan." }, { status: 404 });
   }
   return NextResponse.json({ member });
 }
@@ -84,11 +84,11 @@ export async function PATCH(req: NextRequest, { params }: Params) {
 export async function DELETE(_req: NextRequest, { params }: Params) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Silakan masuk terlebih dahulu." }, { status: 401 });
   }
   const me = await findMemberByEmail(session.user.email);
   if (!me || me.role !== "admin") {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json({ error: "Anda tidak punya akses untuk tindakan ini." }, { status: 403 });
   }
   const { id } = await params;
   if (id === me.id) {
@@ -96,7 +96,7 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   }
   const ok = await deleteMember(id, me.id);
   if (!ok) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+    return NextResponse.json({ error: "Data tidak ditemukan." }, { status: 404 });
   }
   return NextResponse.json({ ok: true });
 }

@@ -5,8 +5,8 @@ import { SectionHeader } from "@/components/common/section-header";
 import { MediaLibrary } from "@/components/media/media-library";
 
 export const metadata: Metadata = {
-  title: "Media Library",
-  description: "Pusat aset visual — foto, video, dokumen — yang dipakai konten.",
+  title: "Media",
+  description: "Pustaka foto untuk konten dan website.",
 };
 
 export default async function MediaPage() {
@@ -14,9 +14,9 @@ export default async function MediaPage() {
   return (
     <AppShell width="wide">
       <SectionHeader
-        eyebrow="Aset Visual"
-        title="Media Library"
-        description={`${media.length} aset tersedia.`}
+        eyebrow="Pustaka foto"
+        title="Media"
+        description={`${media.length} foto tersimpan.`}
       />
       <MediaLibrary media={media} />
     </AppShell>

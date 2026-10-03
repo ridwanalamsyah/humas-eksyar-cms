@@ -28,7 +28,7 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
 import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/common/pill";
-import type { Member } from "@/lib/data/types";
+import { ROLE_LABEL, type Member } from "@/lib/data/types";
 
 interface Props {
   member: Member;
@@ -60,12 +60,12 @@ export function SettingsPanels({ member }: Props) {
             </p>
             <p className="text-[12px] text-foreground/65">{member.email}</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
-              <Pill tone="brand">{member.role}</Pill>
+              <Pill tone="brand">{ROLE_LABEL[member.role]}</Pill>
               <Pill>Angkatan {member.angkatan}</Pill>
             </div>
           </div>
           <Button variant="ghost" size="sm" asChild>
-            <Link href="/profile/edit">Edit profil</Link>
+            <Link href="/profile/edit">Ubah profil</Link>
           </Button>
         </div>
       </GlassCard>
@@ -74,7 +74,7 @@ export function SettingsPanels({ member }: Props) {
         <Panel
           icon={<ShieldCheck className="size-4" strokeWidth={1.75} />}
           title="Admin"
-          hint="Atur branding, rubrik, dan role anggota."
+          hint="Pengaturan website, tim, dan konten."
         >
           <div className="flex w-full flex-col gap-2">
             <AdminLink
@@ -87,7 +87,7 @@ export function SettingsPanels({ member }: Props) {
               href="/settings/formulir"
               icon={<Inbox className="size-4" strokeWidth={1.75} />}
               title="Kotak masuk"
-              desc="Formulir, pertanyaan forum, komentar, alumni, dan pendaftaran acara dari website."
+              desc="Kiriman formulir, pertanyaan, dan pendaftaran acara dari website."
             />
             <AdminLink
               href="/content/instagram"
@@ -98,32 +98,32 @@ export function SettingsPanels({ member }: Props) {
             <AdminLink
               href="/settings/kinerja"
               icon={<BarChart3 className="size-4" strokeWidth={1.75} />}
-              title="Kinerja & laporan"
-              desc="Pengunjung website, laporan bulanan, ekspor, dan backup."
+              title="Laporan"
+              desc="Pengunjung website, laporan bulanan, unduh data, dan cadangan."
             />
             <AdminLink
               href="/settings/skripsi"
               icon={<Tag className="size-4" strokeWidth={1.75} />}
-              title="Direktori Skripsi"
+              title="Direktori skripsi"
               desc="Data untuk fitur Cek Judul di website prodi."
             />
             <AdminLink
               href="/settings/branding"
               icon={<Palette className="size-4" strokeWidth={1.75} />}
-              title="Branding"
-              desc="Footer caption, hashtag default, nama organisasi."
+              title="Identitas konten"
+              desc="Nama organisasi, penutup caption, dan tagar bawaan."
             />
             <AdminLink
               href="/settings/rubrics"
               icon={<Tag className="size-4" strokeWidth={1.75} />}
               title="Rubrik konten"
-              desc="Tambah / edit kategori rubrik editorial."
+              desc="Tambah atau ubah kategori konten."
             />
             <AdminLink
               href="/settings/members"
               icon={<UsersIcon className="size-4" strokeWidth={1.75} />}
-              title="Anggota & role"
-              desc="Promote / demote role anggota."
+              title="Anggota & peran"
+              desc="Tambah, hapus, dan atur peran anggota."
             />
           </div>
         </Panel>
@@ -132,7 +132,7 @@ export function SettingsPanels({ member }: Props) {
       <Panel
         icon={<Sun className="size-4" strokeWidth={1.75} />}
         title="Tampilan"
-        hint="Ikut OS, atau pilih manual."
+        hint="Ikuti perangkat, atau pilih sendiri."
       >
         <div className="grid grid-cols-3 gap-2">
           {[
@@ -167,15 +167,15 @@ export function SettingsPanels({ member }: Props) {
       <Panel
         icon={<Bell className="size-4" strokeWidth={1.75} />}
         title="Notifikasi"
-        hint="Pilih channel mana yang dipakai."
+        hint="Pilih cara menerima pemberitahuan."
       >
         <Toggle
-          label="Email digest mingguan"
+          label="Ringkasan mingguan lewat email"
           checked={notifEmail}
           onChange={setNotifEmail}
         />
         <Toggle
-          label="Push notification PWA"
+          label="Pemberitahuan di perangkat"
           checked={notifPush}
           onChange={setNotifPush}
         />
@@ -183,11 +183,11 @@ export function SettingsPanels({ member }: Props) {
 
       <Panel
         icon={<Volume2 className="size-4" strokeWidth={1.75} />}
-        title="Sound &amp; haptic"
-        hint="Untuk mobile, getaran lembut saat aksi penting."
+        title="Suara &amp; getar"
+        hint="Di ponsel, getaran lembut saat tindakan penting."
       >
-        <Toggle label="Sound effect halus" checked={sounds} onChange={setSounds} />
-        <Toggle label="Haptic mobile" checked={haptics} onChange={setHaptics} />
+        <Toggle label="Efek suara halus" checked={sounds} onChange={setSounds} />
+        <Toggle label="Getar di ponsel" checked={haptics} onChange={setHaptics} />
       </Panel>
 
       <Panel
@@ -208,7 +208,7 @@ export function SettingsPanels({ member }: Props) {
             >
               <p className="font-medium">{l === "id" ? "Indonesia" : "English"}</p>
               <p className="text-[10px] text-foreground/55">
-                {l === "id" ? "Bahasa default" : "Coming soon"}
+                {l === "id" ? "Bahasa utama" : "Segera hadir"}
               </p>
             </button>
           ))}

@@ -27,9 +27,9 @@ export default async function HomePage() {
 
   const waiting = contents.filter((c) => REVIEW.includes(c.status));
   const stats = [
-    { label: "Dipublikasikan", value: contents.filter((c) => c.status === "published").length, href: "/content" },
-    { label: "Menunggu review", value: waiting.length, href: "/approval" },
-    { label: "Draft & ide", value: contents.filter((c) => c.status === "draft" || c.status === "idea").length, href: "/content" },
+    { label: "Terbit", value: contents.filter((c) => c.status === "published").length, href: "/content" },
+    { label: "Menunggu persetujuan", value: waiting.length, href: "/approval" },
+    { label: "Draf & ide", value: contents.filter((c) => c.status === "draft" || c.status === "idea").length, href: "/content" },
     { label: "Agenda 30 hari", value: events.filter((e) => new Date(e.startsAt) <= in30).length, href: "/events" },
   ];
   const recent = contents.slice(0, 6);
@@ -96,7 +96,7 @@ export default async function HomePage() {
             <div className="px-5 py-12 text-center">
               <p className="text-[14px] text-foreground/60">Belum ada konten.</p>
               <Button asChild size="sm" className="mt-3">
-                <Link href="/content/new">Tulis konten pertama</Link>
+                <Link href="/content/new">Tulis berita pertama</Link>
               </Button>
             </div>
           ) : (
@@ -122,7 +122,7 @@ export default async function HomePage() {
           {/* Perlu review */}
           <section className="glass-regular rounded-xl">
             <header className="flex items-center justify-between border-b border-foreground/[0.07] px-5 py-3.5 dark:border-white/[0.07]">
-              <h2 className="text-[14px] font-semibold">Perlu review</h2>
+              <h2 className="text-[14px] font-semibold">Perlu disetujui</h2>
               <span className="rounded-full bg-foreground/[0.06] px-2 py-0.5 text-[12px] tabular-nums">{waiting.length}</span>
             </header>
             {waiting.length === 0 ? (

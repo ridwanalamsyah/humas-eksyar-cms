@@ -32,8 +32,8 @@ export default async function NewContentPage() {
           Konten baru
         </h1>
         <p className="mt-2 max-w-prose text-foreground/65">
-          Tulis caption, pilih media, dan kirim ke approval. AI sidebar di kanan
-          siap bantu polish.
+          Tulis isi, pilih foto, lalu kirim untuk diperiksa. Bantuan AI di
+          sebelah kanan bisa merapikan tulisan.
         </p>
       </header>
       <ContentEditor

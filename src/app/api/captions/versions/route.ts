@@ -22,7 +22,7 @@ export async function GET(req: Request) {
   const contentId = url.searchParams.get("contentId");
   if (!contentId) {
     return NextResponse.json(
-      { error: "contentId is required" },
+      { error: "Konten wajib dipilih." },
       { status: 400 },
     );
   }
@@ -32,7 +32,7 @@ export async function GET(req: Request) {
   } catch (err) {
     console.error("listCaptionVersions error", err);
     return NextResponse.json(
-      { error: "Failed to list versions" },
+      { error: "Gagal memuat daftar versi." },
       { status: 500 },
     );
   }
@@ -53,11 +53,11 @@ export async function POST(req: Request) {
   try {
     body = (await req.json()) as CreateBody;
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json({ error: "Data yang dikirim tidak valid." }, { status: 400 });
   }
   if (!body.contentId || typeof body.caption !== "string") {
     return NextResponse.json(
-      { error: "contentId and caption are required" },
+      { error: "Konten dan caption wajib diisi." },
       { status: 400 },
     );
   }
@@ -75,7 +75,7 @@ export async function POST(req: Request) {
   } catch (err) {
     console.error("createCaptionVersion error", err);
     return NextResponse.json(
-      { error: "Failed to create version" },
+      { error: "Gagal menyimpan versi." },
       { status: 500 },
     );
   }

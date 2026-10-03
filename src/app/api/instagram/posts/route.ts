@@ -9,7 +9,10 @@ import { requireEditor } from "@/lib/instagram/auth";
 
 export async function GET() {
   if (!(await requireEditor()))
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   try {
     const [posts, imported] = await Promise.all([
       listInstagramPosts(24),

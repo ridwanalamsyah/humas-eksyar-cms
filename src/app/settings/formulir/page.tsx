@@ -21,7 +21,7 @@ export default async function FormulirInboxPage() {
         href="/settings"
         className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground"
       >
-        <ArrowLeft className="size-4" strokeWidth={1.75} /> Settings
+        <ArrowLeft className="size-4" strokeWidth={1.75} /> Pengaturan
       </Link>
       <header className="mt-3">
         <p className="text-[12.5px] text-foreground/50">Website Prodi</p>
@@ -29,10 +29,9 @@ export default async function FormulirInboxPage() {
           Kotak masuk formulir
         </h1>
         <p className="mt-2 max-w-prose text-[13px] text-foreground/65">
-          Isian dari formulir website: kritik & saran, survei, lapor prestasi,
-          kabar alumni, kerja sama, tanya jawab, komentar, pendaftaran acara,
-          dan lainnya. Ubah status, tulis jawaban, tampilkan di website, atau
-          unduh sebagai Excel.
+          Kiriman dari formulir website: kritik & saran, survei, lapor prestasi,
+          kerja sama, pertanyaan, pendaftaran acara, dan lainnya. Ubah status,
+          tulis catatan, atau unduh sebagai Excel.
         </p>
       </header>
       <InboxView forms={FORMS} items={items} />

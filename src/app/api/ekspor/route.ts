@@ -16,7 +16,10 @@ const cell = (v: unknown) => {
 
 export async function GET(req: NextRequest) {
   if (!(await requireAdmin()))
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   const jenis = req.nextUrl.searchParams.get("jenis") ?? "";
   const tahun = req.nextUrl.searchParams.get("tahun") ?? "";
   const site = await getSite();

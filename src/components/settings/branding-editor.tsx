@@ -29,10 +29,10 @@ export function BrandingEditor({ initial }: Props) {
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        toast.error(j.error ?? "Gagal menyimpan branding");
+        toast.error(j.error ?? "Gagal menyimpan. Coba lagi.");
         return;
       }
-      toast.success("Branding tersimpan. AI caption generator akan pakai ini.");
+      toast.success("Tersimpan. Konten berikutnya akan memakai pengaturan ini.");
       router.refresh();
     });
   }
@@ -45,8 +45,8 @@ export function BrandingEditor({ initial }: Props) {
         </p>
         <div className="mt-4 grid gap-4">
           <Field
-            label="Tanda tangan caption (signature)"
-            hint="Baris yang dipasang otomatis di bawah setiap caption AI."
+            label="Penutup caption"
+            hint="Baris yang ditambahkan otomatis di akhir setiap caption."
           >
             <input
               value={signature}
@@ -56,8 +56,8 @@ export function BrandingEditor({ initial }: Props) {
             />
           </Field>
           <Field
-            label="Hashtag default"
-            hint="Dipisah spasi. Ditambahkan otomatis ke setiap caption."
+            label="Tagar bawaan"
+            hint="Pisahkan dengan spasi. Ditambahkan otomatis ke setiap caption."
           >
             <textarea
               value={defaultHashtags}
@@ -68,7 +68,7 @@ export function BrandingEditor({ initial }: Props) {
           </Field>
           <Field
             label="Nama organisasi"
-            hint="Dipakai di footer dashboard, meta tags, dan prompt AI."
+            hint="Ditampilkan di CMS dan dipakai AI saat menyusun tulisan."
           >
             <input
               value={orgName}
@@ -78,7 +78,7 @@ export function BrandingEditor({ initial }: Props) {
           </Field>
           <Field
             label="Tagline"
-            hint="Subtitle di footer dashboard."
+            hint="Slogan singkat organisasi."
           >
             <input
               value={tagline}
@@ -90,7 +90,7 @@ export function BrandingEditor({ initial }: Props) {
           <div className="flex justify-end gap-2 pt-2">
             <Button disabled={pending} onClick={save}>
               <Save className="size-3.5" strokeWidth={1.75} />{" "}
-              {pending ? "Menyimpan…" : "Simpan branding"}
+              {pending ? "Menyimpan…" : "Simpan"}
             </Button>
           </div>
         </div>
@@ -98,18 +98,18 @@ export function BrandingEditor({ initial }: Props) {
 
       <GlassCard className="p-6">
         <p className="text-[12.5px] text-foreground/50">
-          Preview caption
+          Contoh tampilan
         </p>
         <div className="mt-4 rounded-2xl border border-foreground/10 bg-background/40 p-4 text-[13px] leading-relaxed dark:border-white/10">
-          <p className="font-medium">Contoh caption yang dihasilkan AI:</p>
+          <p className="font-medium">Contoh caption:</p>
           <p className="mt-3 whitespace-pre-line text-foreground/80">
             {`${orgName} hadir di acara perdana semester ini.\nMari hadir, simak, dan diskusi bersama.\n\n———\n${signature}`}
           </p>
           <div className="mt-3 text-[11px] text-foreground/55">{defaultHashtags}</div>
         </div>
         <p className="mt-4 text-[11px] text-foreground/55">
-          Footer ini diterapkan di semua caption AI dan template manual.
-          Berubah otomatis di seluruh sistem tanpa perlu deploy ulang.
+          Penutup ini dipakai di semua caption, baik yang ditulis sendiri
+          maupun yang disusun AI. Perubahan langsung berlaku.
         </p>
       </GlassCard>
     </div>

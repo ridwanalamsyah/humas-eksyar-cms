@@ -12,7 +12,10 @@ import { getHistory, snapshotBeforeSave } from "@/lib/site/history";
 
 export async function GET() {
   if (!(await requireAdmin()))
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   return NextResponse.json(
     (await getHistory()).map(({ at, by }) => ({ at, by })),
   );
@@ -20,7 +23,10 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   if (!(await requireAdmin()))
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   const { at } = ((await req.json().catch(() => ({}))) ?? {}) as {
     at?: string;
   };

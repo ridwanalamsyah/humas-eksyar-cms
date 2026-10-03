@@ -29,6 +29,16 @@ export type Role =
   | "sekjen"
   | "admin";
 
+/** Nama peran yang ditampilkan ke pengguna. */
+export const ROLE_LABEL: Record<Role, string> = {
+  monitoring: "Pembina",
+  anggota: "Anggota",
+  pengurus: "Pengurus",
+  ketua_divisi: "Koordinator",
+  sekjen: "Sekretaris",
+  admin: "Admin",
+};
+
 export type DivisionSlug = string;
 
 export type ContentStatus =

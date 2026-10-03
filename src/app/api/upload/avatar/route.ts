@@ -20,11 +20,17 @@ export const runtime = "nodejs";
 export async function POST(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
   const me = await findMemberByEmail(session.user.email);
   if (!me) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   }
   if (!process.env.BLOB_READ_WRITE_TOKEN) {
     return NextResponse.json(
@@ -39,7 +45,10 @@ export async function POST(req: NextRequest) {
   const form = await req.formData();
   const file = form.get("file");
   if (!(file instanceof Blob)) {
-    return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Belum ada file yang dipilih." },
+      { status: 400 },
+    );
   }
   if (file.size > MAX_BYTES) {
     return NextResponse.json(

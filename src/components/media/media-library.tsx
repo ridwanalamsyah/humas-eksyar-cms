@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { toast } from "sonner";
@@ -21,7 +21,31 @@ const ASPECT_RATIOS: MediaAsset["aspect"][] = [
   "wide",
 ];
 
-export function MediaLibrary({ media }: Props) {
+/** Baca ukuran gambar di browser sebelum diunggah. */
+function imageSize(file: File): Promise<{ width: number; height: number }> {
+  return new Promise((resolve) => {
+    const url = URL.createObjectURL(file);
+    const img = new window.Image();
+    img.onload = () => {
+      resolve({ width: img.naturalWidth, height: img.naturalHeight });
+      URL.revokeObjectURL(url);
+    };
+    img.onerror = () => resolve({ width: 1200, height: 800 });
+    img.src = url;
+  });
+}
+
+const ASPECT_LABEL: Record<MediaAsset["aspect"], string> = {
+  square: "Persegi",
+  portrait: "Tegak",
+  landscape: "Mendatar",
+  wide: "Lebar",
+};
+
+export function MediaLibrary({ media: initial }: Props) {
+  const [media, setMedia] = useState(initial);
+  const [uploading, setUploading] = useState(false);
+  const fileInput = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [aspect, setAspect] = useState<MediaAsset["aspect"] | "all">("all");
   const [activeTag, setActiveTag] = useState<string | "all">("all");
@@ -49,9 +73,36 @@ export function MediaLibrary({ media }: Props) {
     });
   }, [media, query, aspect, activeTag]);
 
+  async function upload(files: FileList | File[]) {
+    const list = Array.from(files).filter((f) => f.type.startsWith("image/"));
+    if (!list.length) {
+      toast.error("Pilih file gambar (JPG, PNG, atau WEBP).");
+      return;
+    }
+    setUploading(true);
+    let ok = 0;
+    for (const file of list) {
+      const { width, height } = await imageSize(file);
+      const body = new FormData();
+      body.append("file", file);
+      body.append("width", String(width));
+      body.append("height", String(height));
+      const res = await fetch("/api/media", { method: "POST", body });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        toast.error(`${file.name}: ${j.error ?? "Gagal mengunggah."}`);
+        continue;
+      }
+      ok++;
+      setMedia((m) => [j.media as MediaAsset, ...m]);
+    }
+    setUploading(false);
+    if (ok) toast.success(`${ok} foto berhasil diunggah.`);
+  }
+
   function onDrop(e: React.DragEvent) {
     e.preventDefault();
-    toast.success("Upload disimulasikan (mock). Phase Supabase nanti akan sync ke storage.");
+    if (e.dataTransfer.files.length) void upload(e.dataTransfer.files);
   }
 
   return (
@@ -63,7 +114,7 @@ export function MediaLibrary({ media }: Props) {
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Cari alt, tag…"
+              placeholder="Cari keterangan atau label…"
               className="w-full bg-transparent text-[13px] outline-none placeholder:text-foreground/45"
             />
           </label>
@@ -72,20 +123,32 @@ export function MediaLibrary({ media }: Props) {
             onChange={(e) => setAspect(e.target.value as MediaAsset["aspect"] | "all")}
             className="h-10 rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 text-[13px] dark:border-white/10 dark:bg-white/5"
           >
-            <option value="all">Semua aspect</option>
+            <option value="all">Semua bentuk</option>
             {ASPECT_RATIOS.map((a) => (
               <option key={a} value={a}>
-                {a}
+                {ASPECT_LABEL[a]}
               </option>
             ))}
           </select>
-          <Button size="sm" onClick={() => toast.info("Drag file ke area di bawah untuk upload (mock).")}>
-            <Upload className="size-4" strokeWidth={1.75} /> Upload
+          <input
+            ref={fileInput}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            hidden
+            onChange={(e) => {
+              if (e.target.files?.length) void upload(e.target.files);
+              e.target.value = "";
+            }}
+          />
+          <Button size="sm" disabled={uploading} onClick={() => fileInput.current?.click()}>
+            <Upload className="size-4" strokeWidth={1.75} />{" "}
+            {uploading ? "Mengunggah…" : "Unggah foto"}
           </Button>
         </div>
         <div className="mt-3 flex flex-wrap items-center gap-1.5 text-[11px]">
           <span className="inline-flex items-center gap-1 text-foreground/55">
-            <Filter className="size-3" strokeWidth={2} /> Tag:
+            <Filter className="size-3" strokeWidth={2} /> Label:
           </span>
           <button
             type="button"
@@ -121,7 +184,9 @@ export function MediaLibrary({ media }: Props) {
         onDrop={onDrop}
         className="rounded-3xl border-2 border-dashed border-foreground/15 px-4 py-3 text-center text-[12px] text-foreground/55"
       >
-        Drag &amp; drop file ke sini untuk upload — mock (akan terhubung ke Supabase storage).
+        {uploading
+          ? "Mengunggah…"
+          : "Seret foto ke sini, atau tekan Unggah foto. Maksimal 10 MB per foto."}
       </div>
 
       <div
@@ -157,7 +222,7 @@ export function MediaLibrary({ media }: Props) {
         })}
         {filtered.length === 0 && (
           <p className="col-span-full rounded-xl border border-dashed border-foreground/15 p-8 text-center text-[12px] text-foreground/55">
-            Tidak ada media cocok. Coba ubah filter.
+            Tidak ada foto yang cocok. Coba kata kunci lain.
           </p>
         )}
       </div>

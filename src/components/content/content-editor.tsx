@@ -152,7 +152,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
             ) : (
               <>
                 <Wand2 className="size-3.5" strokeWidth={1.75} />
-                Generate dengan AI
+                Susun dengan AI
               </>
             )}
           </Button>
@@ -160,13 +160,13 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         <textarea
           value={caption}
           onChange={(e) => setCaption(e.target.value)}
-          placeholder="Tulis caption — atau biarkan AI yang menyusun."
+          placeholder="Tulis isi konten di sini, atau biarkan AI yang menyusun."
           className="mt-2 h-72 w-full resize-y rounded-2xl border border-foreground/10 bg-foreground/5 p-4 font-mono text-[13.5px] leading-[1.7] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
         />
 
         <div className="mt-4">
           <label className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
-            <Hash className="size-3" strokeWidth={1.75} /> Hashtag
+            <Hash className="size-3" strokeWidth={1.75} /> Tagar
           </label>
           <textarea
             value={hashtags}
@@ -177,10 +177,10 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
           <Button onClick={() => submit("draft")} variant="secondary" disabled={pending}>
-            <Save className="size-4" strokeWidth={1.75} /> Simpan draft
+            <Save className="size-4" strokeWidth={1.75} /> Simpan draf
           </Button>
           <Button onClick={() => submit("submit")} disabled={pending}>
-            <Send className="size-4" strokeWidth={1.75} /> Kirim ke review
+            <Send className="size-4" strokeWidth={1.75} /> Kirim untuk diperiksa
           </Button>
         </div>
       </GlassCard>
@@ -259,7 +259,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         </GlassCard>
 
         <GlassCard variant="thin" className="p-5">
-          <h3 className="text-[12.5px] text-foreground/50">Preview status</h3>
+          <h3 className="text-[12.5px] text-foreground/50">Setelah dikirim</h3>
           <div className="mt-3 flex flex-wrap gap-2">
             <Pill tone="brand">{rubric.replace(/_/g, " ")}</Pill>
             <Pill tone="gold">
@@ -267,7 +267,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
             </Pill>
           </div>
           <p className="mt-3 text-[12px] text-foreground/65">
-            {scheduledFor ? "Akan masuk antrian terjadwal." : "Akan masuk antrian Review Koordinator setelah dikirim."}
+            {scheduledFor ? "Konten akan terbit sesuai jadwal." : "Konten akan diperiksa koordinator sebelum terbit."}
           </p>
         </GlassCard>
       </aside>

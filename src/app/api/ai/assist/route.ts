@@ -5,7 +5,7 @@
  * Hanya anggota CMS (bukan role monitoring). Dibatasi per pengguna.
  */
 import { NextRequest, NextResponse } from "next/server";
-import { z } from "zod";
+import { z } from "@/lib/zod";
 import { auth } from "@/auth";
 import { findMemberByEmail } from "@/lib/data/provider";
 import { AssistUnavailableError, assistText, kegiatanFromCaption } from "@/lib/ai/assist";
@@ -33,9 +33,9 @@ function allow(key: string) {
 
 export async function POST(req: NextRequest) {
   const session = await auth();
-  if (!session?.user?.email) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!session?.user?.email) return NextResponse.json({ error: "Silakan masuk terlebih dahulu." }, { status: 401 });
   const me = await findMemberByEmail(session.user.email);
-  if (!me || me.role === "monitoring") return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  if (!me || me.role === "monitoring") return NextResponse.json({ error: "Anda tidak punya akses untuk tindakan ini." }, { status: 403 });
   if (!allow(me.id)) return NextResponse.json({ error: "Terlalu banyak permintaan. Tunggu sebentar." }, { status: 429 });
 
   const parsed = bodySchema.safeParse(await req.json().catch(() => null));

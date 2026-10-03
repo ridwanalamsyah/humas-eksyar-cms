@@ -22,11 +22,11 @@ export async function GET() {
 export async function PUT(req: NextRequest) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json({ error: "Silakan masuk terlebih dahulu." }, { status: 401 });
   }
   const me = await findMemberByEmail(session.user.email);
   if (!me || me.role !== "admin") {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json({ error: "Anda tidak punya akses untuk tindakan ini." }, { status: 403 });
   }
   const body = (await req.json().catch(() => ({}))) as Partial<BrandingConfig>;
   const current = await getBrandingConfig();

@@ -53,7 +53,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 
 async function handle(req: NextRequest): Promise<NextResponse> {
   if (!(await isAuthorized(req))) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
 
   const today = new Date();
@@ -73,7 +76,7 @@ async function handle(req: NextRequest): Promise<NextResponse> {
     members[0];
   if (!defaultAuthor) {
     return NextResponse.json(
-      { error: "No member to assign auto-draft" },
+      { error: "Belum ada anggota untuk diberi draf otomatis." },
       { status: 500 },
     );
   }
