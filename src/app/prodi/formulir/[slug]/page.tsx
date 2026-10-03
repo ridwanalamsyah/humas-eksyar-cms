@@ -2,31 +2,31 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { findForm } from "@/lib/site/forms";
+import { findActiveForm } from "@/lib/site/forms";
 import { resolveOptions } from "@/lib/site/form-options";
 import { FormRenderer } from "@/components/site/form-renderer";
 
 type Props = { params: Promise<{ slug: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const def = findForm((await params).slug);
+  const def = findActiveForm((await params).slug);
   return def
     ? { title: def.title, description: def.description }
     : { title: "Formulir tidak ditemukan" };
 }
 
 export default async function FormulirPage({ params }: Props) {
-  const def = findForm((await params).slug);
+  const def = findActiveForm((await params).slug);
   if (!def || def.embedded) notFound();
   const options = await resolveOptions(def);
   return (
     <section className="px-4 pb-24 pt-10 sm:px-6 sm:pt-16">
       <div className="mx-auto max-w-[720px]">
         <Link
-          href="/prodi/formulir"
+          href="/prodi/layanan#formulir"
           className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-accent hover:underline"
         >
-          <ArrowLeft className="size-4" /> Semua formulir
+          <ArrowLeft className="size-4" /> Layanan & formulir
         </Link>
         <p className="mt-8 text-[14px] font-semibold uppercase tracking-[0.08em] text-accent">
           {def.group}

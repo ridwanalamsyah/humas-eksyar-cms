@@ -1,12 +1,23 @@
 import Link from "next/link";
 import { AlertTriangle, Inbox } from "lucide-react";
-import { getSiteSetting, listSubmissions } from "@/lib/data/provider";
+import {
+  getSiteSetting,
+  listContents,
+  listSubmissions,
+} from "@/lib/data/provider";
+import { getSite } from "@/lib/site/get-site";
+import { kalenderMendatang, nowMs } from "@/lib/site/kalender";
 
 type Alert = { text: string; href: string; tone: "warn" | "info" };
 
-/** Hal yang perlu perhatian admin: sinkron otomatis gagal & isian formulir baru. */
+const DAY = 24 * 60 * 60 * 1000;
+
+/**
+ * Pengingat untuk admin: sinkron otomatis gagal, isian formulir yang belum
+ * dibalas, berita yang lama tidak diperbarui, dan kalender yang kosong.
+ */
 export async function OpsAlerts() {
-  const [skripsi, ig, akademik, baru] = await Promise.all([
+  const [skripsi, ig, akademik, baru, published, site] = await Promise.all([
     getSiteSetting("skripsi_sync").catch(() => null) as Promise<{
       sources?: { label: string; error?: string }[];
     } | null>,
@@ -17,7 +28,10 @@ export async function OpsAlerts() {
       errors?: number;
     } | null>,
     listSubmissions({ status: "baru", limit: 1000 }).catch(() => []),
+    listContents({ status: "published" }).catch(() => []),
+    getSite(),
   ]);
+  const now = nowMs();
   const alerts: Alert[] = [];
   for (const s of skripsi?.sources ?? [])
     if (s.error)
@@ -38,10 +52,34 @@ export async function OpsAlerts() {
       href: "/settings/website",
       tone: "warn",
     });
-  if (baru.length)
+  const lama = baru.filter(
+    (b) => now - new Date(b.createdAt).getTime() > 3 * DAY,
+  ).length;
+  if (lama)
     alerts.push({
-      text: `${baru.length} isian formulir baru menunggu ditindaklanjuti.`,
+      text: `${lama} isian formulir belum dibalas lebih dari 3 hari.`,
       href: "/settings/formulir",
+      tone: "warn",
+    });
+  if (baru.length > lama)
+    alerts.push({
+      text: `${baru.length - lama} isian formulir baru menunggu ditindaklanjuti.`,
+      href: "/settings/formulir",
+      tone: "info",
+    });
+  const terakhir = published
+    .map((c) => new Date(c.publishedAt ?? c.updatedAt).getTime())
+    .sort((a, b) => b - a)[0];
+  if (terakhir && now - terakhir > 14 * DAY)
+    alerts.push({
+      text: `Belum ada berita baru selama ${Math.floor((now - terakhir) / DAY)} hari.`,
+      href: "/content/new",
+      tone: "info",
+    });
+  if (!kalenderMendatang(site.kalender, 1).length)
+    alerts.push({
+      text: "Kalender akademik belum berisi jadwal mendatang.",
+      href: "/settings/website?bagian=akademik",
       tone: "info",
     });
   if (!alerts.length) return null;

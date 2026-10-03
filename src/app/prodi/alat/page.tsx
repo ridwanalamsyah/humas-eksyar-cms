@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Calculator, GraduationCap, HandCoins, Sparkles } from "lucide-react";
+import { BookOpen, HandCoins } from "lucide-react";
 import { PageHeader } from "@/components/site/page-header";
 
 export const metadata: Metadata = {
-  title: "Alat Ekonomi Syariah",
-  description:
-    "Kalkulator zakat, simulasi akad murabahah & mudharabah, kuis minat, dan kalkulator kelulusan.",
+  title: "Alat & Kamus",
+  description: "Kalkulator zakat dan kamus istilah ekonomi syariah.",
 };
 
 const TOOLS = [
@@ -17,22 +16,10 @@ const TOOLS = [
     Icon: HandCoins,
   },
   {
-    href: "/prodi/alat/akad",
-    t: "Simulasi akad",
-    d: "Bandingkan murabahah dengan kredit berbunga, dan hitung bagi hasil mudharabah.",
-    Icon: Calculator,
-  },
-  {
-    href: "/prodi/alat/kuis",
-    t: "Kuis: cocok di bidang apa?",
-    d: "8 pertanyaan untuk calon mahasiswa: bidang kajian yang paling sesuai minatmu.",
-    Icon: Sparkles,
-  },
-  {
-    href: "/prodi/alat/kelulusan",
-    t: "Kalkulator kelulusan",
-    d: "Perkirakan sisa SKS dan semester lulusmu.",
-    Icon: GraduationCap,
+    href: "/prodi/kamus",
+    t: "Kamus istilah",
+    d: "Istilah ekonomi dan keuangan syariah beserta penjelasannya.",
+    Icon: BookOpen,
   },
 ];
 
@@ -40,9 +27,9 @@ export default function AlatPage() {
   return (
     <>
       <PageHeader
-        crumb="Alat"
-        title="Alat ekonomi syariah"
-        description="Alat bantu interaktif untuk belajar, berzakat, dan merencanakan studi."
+        crumb="Alat & kamus"
+        title="Alat & kamus"
+        description="Alat bantu belajar ekonomi syariah."
       />
       <section className="px-4 pb-24 sm:px-6">
         <div className="mx-auto grid max-w-[1024px] gap-4 md:grid-cols-2">

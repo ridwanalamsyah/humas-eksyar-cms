@@ -355,6 +355,15 @@ export const websiteConfigSchema = z.object({
   integritas: list(longText(1500), 12),
   sertifikat: list(sertifikatSchema, 3000),
   pressKit: z.object({ profilSingkat: longText(1500), kontakMedia: text(200) }),
+  /** Angka sorotan di bagian "Sekilas" beranda (selain kurikulum & akreditasi). */
+  sorotan: list(
+    z.object({
+      nilai: text(20),
+      judul: text(60),
+      keterangan: text(240),
+    }),
+    4,
+  ),
   kampanyePmb: z.object({
     aktif: z.boolean(),
     judul: text(160),

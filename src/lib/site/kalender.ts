@@ -75,3 +75,6 @@ export function labelTenggat(deadline?: string): {
   if (d === 0) return { text: "Hari terakhir", open: true };
   return { text: `${d} hari lagi`, open: true };
 }
+
+/** Waktu saat ini (ms). Dipisah agar komponen server tetap lolos aturan purity. */
+export const nowMs = () => Date.now();

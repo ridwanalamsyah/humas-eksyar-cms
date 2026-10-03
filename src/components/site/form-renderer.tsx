@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { CheckCircle2, Loader2, Star } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { FormDef } from "@/lib/site/forms";
@@ -254,7 +255,12 @@ export function FormRenderer({
         </p>
       )}
 
-      <div className={cn(!compact && "sm:col-span-2")}>
+      <div
+        className={cn(
+          "flex flex-wrap items-center gap-x-5 gap-y-3",
+          !compact && "sm:col-span-2",
+        )}
+      >
         <button
           type="submit"
           disabled={state === "sending" || (!!def.consent && !consent)}
@@ -263,6 +269,13 @@ export function FormRenderer({
           {state === "sending" && <Loader2 className="size-4 animate-spin" />}
           Kirim
         </button>
+        <p className="text-[12.5px] text-label-3">
+          Data Anda diproses sesuai{" "}
+          <Link href="/prodi/privasi" className="underline hover:text-label">
+            kebijakan privasi
+          </Link>
+          .
+        </p>
       </div>
     </form>
   );

@@ -51,14 +51,30 @@ function isPublic(pathname: string, method: string): boolean {
 const SHORT_LINKS: Record<string, string> = {
   "/skripsi": "/prodi/skripsi",
   "/beasiswa": "/prodi/beasiswa",
-  "/unduhan": "/prodi/unduhan",
-  "/agenda": "/prodi/agenda",
+  "/unduhan": "/prodi/layanan#unduhan",
+  "/agenda": "/prodi/kalender#agenda",
   "/cms": "/dashboard",
   "/link": "/prodi/link",
   "/verifikasi": "/prodi/verifikasi",
   "/kamus": "/prodi/kamus",
   "/zakat": "/prodi/alat/zakat",
-  "/formulir": "/prodi/formulir",
+  "/formulir": "/prodi/layanan#formulir",
+  // Halaman lama yang digabung atau dihapus (Oktober 2026).
+  "/prodi/agenda": "/prodi/kalender#agenda",
+  "/prodi/unduhan": "/prodi/layanan#unduhan",
+  "/prodi/formulir": "/prodi/layanan#formulir",
+  "/prodi/forum": "/prodi/layanan#faq",
+  "/prodi/formulir/konsultasi": "/prodi/layanan#faq",
+  "/prodi/formulir/alumni": "/prodi/karier",
+  "/prodi/formulir/mentoring": "/prodi/karier",
+  "/prodi/alumni": "/prodi/karier",
+  "/prodi/data": "/prodi/mutu#data",
+  "/prodi/media": "/prodi/galeri",
+  "/prodi/wisuda": "/prodi/kemahasiswaan",
+  "/prodi/karya": "/prodi/kemahasiswaan",
+  "/prodi/alat/kuis": "/prodi/akademik",
+  "/prodi/alat/kelulusan": "/prodi/akademik",
+  "/prodi/alat/akad": "/prodi/alat",
 };
 
 export default auth((req) => {

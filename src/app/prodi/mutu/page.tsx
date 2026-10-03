@@ -12,10 +12,11 @@ import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
 import { SectionHeading } from "@/components/site/section-heading";
 import { UnduhanList } from "@/components/site/unduhan-list";
+import { DataStatistik } from "@/components/site/data-statistik";
 
 export const metadata: Metadata = {
-  title: "Penjaminan Mutu",
-  description: `Akreditasi, sistem penjaminan mutu, dan survei kepuasan ${prodi.fullName} ${prodi.university}.`,
+  title: "Mutu & Data",
+  description: `Akreditasi, penjaminan mutu, survei kepuasan, dan data statistik ${prodi.fullName} ${prodi.university}.`,
 };
 
 export default async function MutuPage() {
@@ -48,8 +49,8 @@ export default async function MutuPage() {
   return (
     <>
       <PageHeader
-        crumb="Penjaminan mutu"
-        title="Penjaminan mutu"
+        crumb="Mutu & data"
+        title="Mutu & data"
         description={mutu.description}
       />
 
@@ -152,6 +153,22 @@ export default async function MutuPage() {
           </div>
         </section>
       )}
+      <section
+        id="data"
+        className="scroll-mt-28 border-t border-hairline px-4 py-24 sm:px-6"
+      >
+        <div className="mx-auto max-w-[1024px]">
+          <SectionHeading
+            align="left"
+            eyebrow="Data"
+            title="Data & statistik"
+            description="Angka-angka utama program studi. Sumber data dicantumkan pada tiap grafik."
+          />
+          <div className="mt-10">
+            <DataStatistik />
+          </div>
+        </div>
+      </section>
     </>
   );
 }

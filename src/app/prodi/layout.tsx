@@ -5,7 +5,6 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { getSite } from "@/lib/site/get-site";
 import { listPublishedNews, recentAnnouncement } from "@/lib/site/content";
 import { AnnouncementBar } from "@/components/site/announcement-bar";
-import { WhatsAppButton } from "@/components/site/whatsapp-button";
 import { SiteShell } from "@/components/site/site-shell";
 import { ViewBeacon } from "@/components/site/view-beacon";
 import { prodi } from "@/lib/site/prodi";
@@ -55,15 +54,12 @@ export default async function ProdiLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [{ kontak, galeri, video, kalender, banner, wisuda, karya }, news] =
-    await Promise.all([getSite(), listPublishedNews()]);
+  const [{ galeri, video, banner }, news] = await Promise.all([
+    getSite(),
+    listPublishedNews(),
+  ]);
   // Sembunyikan menu yang belum ada isinya.
-  const hidden = [
-    ...(galeri.length || video.length ? [] : ["/prodi/galeri"]),
-    ...(kalender.length ? [] : ["/prodi/kalender"]),
-    ...(wisuda.length ? [] : ["/prodi/wisuda"]),
-    ...(karya.length ? [] : ["/prodi/karya"]),
-  ];
+  const hidden = [...(galeri.length || video.length ? [] : ["/prodi/galeri"])];
   // Pita pengumuman: dari CMS bila diaktifkan, atau pengumuman terbaru (≤ 14 hari).
   const latest = recentAnnouncement(news);
   const bar =
@@ -89,7 +85,6 @@ export default async function ProdiLayout({
       </main>
       <SiteFooter />
       <ViewBeacon />
-      {kontak.whatsapp && <WhatsAppButton href={kontak.whatsapp} />}
     </SiteShell>
   );
 }

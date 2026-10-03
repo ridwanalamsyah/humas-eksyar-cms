@@ -40,8 +40,10 @@ export type FormDef = {
   success: string;
   /** Pernyataan persetujuan yang wajib dicentang. */
   consent?: string;
-  /** Tidak ditampilkan di daftar formulir (dipakai tersemat, mis. komentar). */
+  /** Tidak ditampilkan di daftar formulir (dipakai tersemat, mis. pendaftaran acara). */
   embedded?: boolean;
+  /** Sudah tidak dipakai: tidak menerima kiriman baru, tapi kiriman lama tetap terbaca di kotak masuk. */
+  retired?: boolean;
   /** Kolom yang dipakai sebagai judul ringkas di kotak masuk. */
   titleField: string;
 };
@@ -244,6 +246,7 @@ export const FORMS: FormDef[] = [
   },
   {
     slug: "alumni",
+    retired: true,
     title: "Kabar alumni",
     description:
       "Alumni Ekonomi Syariah, bagikan kabar karier Anda. Data dipakai untuk evaluasi kurikulum dan direktori alumni (bila diizinkan).",
@@ -387,6 +390,7 @@ export const FORMS: FormDef[] = [
   },
   {
     slug: "mentoring",
+    retired: true,
     title: "Daftar program mentoring",
     description:
       "Mahasiswa dapat mengajukan diri untuk dibimbing alumni sesuai bidang karier yang diminati.",
@@ -579,6 +583,7 @@ export const FORMS: FormDef[] = [
   },
   {
     slug: "konsultasi",
+    retired: true,
     title: "Konsultasi ekonomi syariah",
     description:
       "Layanan pengabdian prodi untuk masyarakat dan UMKM: tanyakan seputar zakat, wakaf, keuangan syariah, atau usaha halal.",
@@ -619,16 +624,16 @@ export const FORMS: FormDef[] = [
   },
   {
     slug: "tanya",
-    title: "Tanya jawab",
+    title: "Kirim pertanyaan",
     description:
-      "Pertanyaan seputar perkuliahan, administrasi, atau kegiatan prodi. Jawaban ditampilkan di halaman ini.",
-    group: "Mahasiswa",
+      "Belum menemukan jawaban di FAQ? Kirim pertanyaan seputar perkuliahan, administrasi, atau kegiatan prodi. Jawaban dikirim ke email Anda.",
+    group: "Layanan",
     embedded: true,
     titleField: "pertanyaan",
-    success:
-      "Pertanyaan terkirim. Jawaban akan tampil di halaman ini setelah dijawab.",
+    success: "Pertanyaan terkirim. Jawaban akan dikirim ke email Anda.",
     fields: [
-      { name: "nama", label: "Nama (opsional)", type: "text", max: 80 },
+      nama,
+      email,
       {
         name: "pertanyaan",
         label: "Pertanyaan",
@@ -640,6 +645,7 @@ export const FORMS: FormDef[] = [
   },
   {
     slug: "komentar",
+    retired: true,
     title: "Komentar",
     description: "Komentar tampil setelah dimoderasi.",
     group: "Layanan",
@@ -743,6 +749,10 @@ export const FORMS: FormDef[] = [
   },
 ];
 
+/** Formulir yang masih menerima kiriman dari publik. */
+export const ACTIVE_FORMS = FORMS.filter((f) => !f.retired);
+export const findActiveForm = (slug: string) =>
+  ACTIVE_FORMS.find((f) => f.slug === slug);
 export const findForm = (slug: string) =>
   FORMS.find((f) => f.slug === slug) ?? null;
 

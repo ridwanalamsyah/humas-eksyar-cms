@@ -8,19 +8,21 @@ import {
   todayJakarta,
 } from "@/lib/site/kalender";
 import { prodi } from "@/lib/site/prodi";
+import { AgendaList } from "@/components/site/agenda-list";
 import { PageHeader } from "@/components/site/page-header";
+import { SectionHeading } from "@/components/site/section-heading";
 import { CalendarSubscribe } from "@/components/site/calendar-subscribe";
 import { PrintButton } from "@/components/site/print-button";
 import { Reveal } from "@/components/site/reveal";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Kalender Akademik",
-  description: `Jadwal akademik, pembayaran UKT, ujian, dan wisuda untuk mahasiswa ${prodi.fullName}.`,
+  title: "Kalender & Agenda",
+  description: `Agenda kegiatan, jadwal akademik, pembayaran UKT, ujian, dan wisuda ${prodi.fullName}.`,
 };
 
-// Status "berlangsung/selesai" dihitung ulang setiap jam.
-export const revalidate = 3600;
+// Agenda & status "berlangsung/selesai" dihitung ulang berkala.
+export const revalidate = 300;
 
 const STATUS = {
   berlangsung: { label: "Sedang berlangsung", cls: "bg-accent text-white" },
@@ -43,15 +45,33 @@ export default async function KalenderPage() {
   return (
     <>
       <PageHeader
-        crumb="Kalender akademik"
-        title="Kalender akademik"
-        description="Jadwal perkuliahan, pembayaran UKT, ujian, dan wisuda. Untuk keperluan resmi, rujuk dokumen kalender akademik UIN SGD."
+        crumb="Kalender & agenda"
+        title="Kalender & agenda"
+        description="Agenda kegiatan terbuka prodi dan jadwal akademik: perkuliahan, pembayaran UKT, ujian, dan wisuda."
       />
 
-      <section className="px-4 pb-24 sm:px-6">
+      <section id="agenda" className="scroll-mt-28 px-4 pb-20 sm:px-6">
         <div className="mx-auto max-w-[820px]">
+          <SectionHeading align="left" eyebrow="Kegiatan" title="Agenda" />
+          <div className="mt-8">
+            <AgendaList />
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="akademik"
+        className="scroll-mt-28 border-t border-hairline px-4 pb-24 pt-20 sm:px-6"
+      >
+        <div className="mx-auto max-w-[820px]">
+          <SectionHeading
+            align="left"
+            eyebrow="Akademik"
+            title="Kalender akademik"
+            description="Untuk keperluan resmi, rujuk dokumen kalender akademik UIN SGD."
+          />
           <div
-            className="mb-10 flex flex-wrap items-center justify-between gap-3"
+            className="mb-10 mt-8 flex flex-wrap items-center justify-between gap-3"
             data-print-hide
           >
             <CalendarSubscribe />

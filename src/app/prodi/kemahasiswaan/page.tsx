@@ -157,10 +157,10 @@ export default async function KemahasiswaanPage() {
         </ul>
         <p className="mt-10 text-center">
           <Link
-            href="/prodi/alumni"
+            href="/prodi/karier"
             className="text-[16px] font-semibold text-accent hover:underline"
           >
-            Alumni & tracer study ›
+            Karier, alumni & tracer study ›
           </Link>
         </p>
         <p className="mt-4 text-center text-[15px] text-label-2">

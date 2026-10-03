@@ -267,6 +267,20 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       "Program Studi Ekonomi Syariah adalah program sarjana (S.E.) di Fakultas Ekonomi dan Bisnis Islam UIN Sunan Gunung Djati Bandung yang mengkaji ekonomi dan keuangan berdasarkan prinsip syariah, meliputi perbankan dan keuangan syariah, zakat dan wakaf, industri halal, serta kebijakan ekonomi.",
     kontakMedia: kontak.email,
   },
+  sorotan: [
+    {
+      nilai: "115",
+      judul: "Pasar modal syariah",
+      keterangan:
+        "mahasiswa mengikuti Sekolah Pasar Modal Syariah 2026 di Kantor Perwakilan BEI Jawa Barat.",
+    },
+    {
+      nilai: "15",
+      judul: "Pengabdian masyarakat",
+      keterangan:
+        "warga Desa Cibiru Wetan meraih sertifikat Juru Sembelih Halal lewat pelatihan berbasis SKKNI.",
+    },
+  ],
   kampanyePmb: { aktif: false, judul: "", teks: "", tenggat: "" },
   zakat: {
     nisabPenghasilanTahun: 91681728,
