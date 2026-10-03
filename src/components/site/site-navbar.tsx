@@ -20,13 +20,7 @@ function groupActive(pathname: string, g: NavGroup) {
  * Navbar website prodi: mega menu ala apple.com di desktop (panel penuh
  * yang turun saat grup disorot), akordeon layar penuh di ponsel.
  */
-export function SiteNavbar({
-  pmbUrl,
-  hidden = [],
-}: {
-  pmbUrl: string;
-  hidden?: string[];
-}) {
+export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState<string | null>(null);
@@ -153,14 +147,6 @@ export function SiteNavbar({
             >
               <Search className="size-[18px]" />
             </Link>
-            <a
-              href={pmbUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden rounded-full bg-accent px-4 py-1.5 text-[12.5px] font-semibold text-white transition-colors hover:bg-accent-strong sm:inline-block"
-            >
-              Daftar
-            </a>
             <button
               type="button"
               className="relative -mr-2 grid size-10 place-items-center lg:hidden"
@@ -338,14 +324,6 @@ export function SiteNavbar({
               ))}
             </ul>
             <div className="flex flex-wrap gap-3 px-8 pb-10">
-              <a
-                href={pmbUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block rounded-full bg-accent px-6 py-3 text-[15px] font-medium text-white"
-              >
-                Daftar Mahasiswa Baru
-              </a>
               <Link
                 href="/prodi/cari"
                 className="inline-block rounded-full bg-mist px-6 py-3 text-[15px] font-medium text-label"

@@ -83,7 +83,7 @@ export default async function ProdiLayout({
         Lewati ke konten
       </a>
       {bar && <AnnouncementBar text={bar.text} href={bar.href} />}
-      <SiteNavbar pmbUrl={kontak.pmbUrl} hidden={hidden} />
+      <SiteNavbar hidden={hidden} />
       <main id="konten" className="flex-1">
         {children}
       </main>
