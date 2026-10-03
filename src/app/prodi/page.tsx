@@ -32,7 +32,8 @@ import { Marquee } from "@/components/site/marquee";
 import { TestimoniCard } from "@/components/site/testimoni-card";
 import { VideoEmbed } from "@/components/site/video-embed";
 import { NewsCard } from "@/components/site/news-card";
-import { ParallaxHero } from "@/components/site/parallax-hero";
+import { HeroTitle, ParallaxHero } from "@/components/site/parallax-hero";
+import { HeroNow, type HeroNowItem } from "@/components/site/hero-now";
 import { PmbCta } from "@/components/site/pmb-cta";
 import { PrestasiCard } from "@/components/site/prestasi-card";
 import { ProdiLogo } from "@/components/site/prodi-logo";
@@ -124,25 +125,50 @@ export default async function ProdiHomePage() {
   const kegiatan = [...site.kegiatan]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 8);
-  const keywords = [
-    ...site.bidangKajian.map((b) => b.title),
-    ...site.prospekKarir.map((p) => p.title),
-  ];
+  const sekarang: HeroNowItem[] = [];
+  if (jadwal[0])
+    sekarang.push({
+      label: "Kalender akademik",
+      title: jadwal[0].kegiatan,
+      meta: rentang(jadwal[0]),
+      href: "/prodi/kalender",
+    });
+  const terbaru = announcements[0] ?? articles[0];
+  if (terbaru)
+    sekarang.push({
+      label: announcements[0] ? "Pengumuman terbaru" : "Berita terbaru",
+      title: terbaru.title,
+      href: `/prodi/berita/${terbaru.slug}`,
+    });
+  if (skripsi.length)
+    sekarang.push({
+      label: "Direktori skripsi",
+      title: `${skripsi.length.toLocaleString("id-ID")} judul skripsi Eksyar`,
+      meta: "Cari judul, pembimbing, dan abstrak",
+      href: "/prodi/skripsi",
+    });
+  else if (upcoming[0])
+    sekarang.push({
+      label: "Agenda",
+      title: upcoming[0].title,
+      href: "/prodi/agenda",
+    });
   const statement =
     identity.statement || defaultWebsiteConfig.identity.statement || "";
 
   return (
     <>
       {/* ─── Hero ─────────────────────────────────────────── */}
-      <ParallaxHero keywords={keywords}>
+      <ParallaxHero>
         <Reveal>
           <ProdiLogo size={72} priority className="mx-auto" />
           <p className="mt-6 text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
             {prodi.level} · {prodi.faculty}
           </p>
-          <h1 className="mt-3 text-[clamp(3rem,1.8rem+5.4vw,6.5rem)] font-extrabold leading-[0.95] tracking-[-0.045em] text-label">
-            {identity.heroTitle}
-          </h1>
+          <HeroTitle
+            text={identity.heroTitle}
+            className="mt-3 text-[clamp(3rem,1.8rem+5.4vw,6.5rem)] font-extrabold leading-[0.95] tracking-[-0.045em] text-label"
+          />
           <p className="mt-4 text-[15px] font-semibold text-label-2">
             {prodi.university}
           </p>
@@ -150,19 +176,17 @@ export default async function ProdiHomePage() {
             {identity.heroDescription}
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-            <a
-              href={kontak.pmbUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white transition hover:scale-[1.03] hover:bg-accent-strong active:scale-[0.98]"
-            >
-              Daftar sekarang
-            </a>
             <Link
               href="/prodi/profil"
-              className="text-[16px] font-semibold text-accent hover:underline"
+              className="rounded-full border border-hairline px-6 py-2.5 text-[15px] font-semibold text-label transition-colors hover:border-accent hover:text-accent"
             >
-              Kenali prodi ›
+              Kenali prodi
+            </Link>
+            <Link
+              href="/prodi/akademik"
+              className="text-[15px] font-semibold text-accent hover:underline"
+            >
+              Lihat kurikulum ›
             </Link>
           </div>
         </Reveal>
@@ -179,6 +203,10 @@ export default async function ProdiHomePage() {
             </div>
           </Reveal>
         )}
+
+        <Reveal delay={0.2}>
+          <HeroNow items={sekarang} />
+        </Reveal>
       </ParallaxHero>
 
       <section className="px-4 pb-8 sm:px-6">
