@@ -34,6 +34,7 @@ import { VideoEmbed } from "@/components/site/video-embed";
 import { NewsCard } from "@/components/site/news-card";
 import { HeroTitle, ParallaxHero } from "@/components/site/parallax-hero";
 import { HeroNow, type HeroNowItem } from "@/components/site/hero-now";
+import { HeroPhoto } from "@/components/site/hero-photo";
 import { PmbCta } from "@/components/site/pmb-cta";
 import { PrestasiCard } from "@/components/site/prestasi-card";
 import { ProdiLogo } from "@/components/site/prodi-logo";
@@ -125,6 +126,15 @@ export default async function ProdiHomePage() {
   const kegiatan = [...site.kegiatan]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 8);
+  // Foto hero: gambar hero dari CMS, atau foto terbaru di Galeri.
+  const galeriTerbaru = [...site.galeri].sort((a, b) =>
+    (b.date ?? "").localeCompare(a.date ?? ""),
+  )[0];
+  const heroFoto = identity.heroImage
+    ? { src: identity.heroImage, caption: `Kegiatan ${prodi.fullName}` }
+    : galeriTerbaru
+      ? { src: galeriTerbaru.image, caption: galeriTerbaru.caption }
+      : null;
   const sekarang: HeroNowItem[] = [];
   if (jadwal[0])
     sekarang.push({
@@ -191,23 +201,12 @@ export default async function ProdiHomePage() {
           </div>
         </Reveal>
 
-        {identity.heroImage && (
-          <Reveal delay={0.12} className="mx-auto mt-14 max-w-[1024px]">
-            <div className="relative aspect-[16/9] overflow-hidden rounded-[28px] bg-mist">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={identity.heroImage}
-                alt={`Kegiatan ${prodi.fullName}`}
-                className="absolute inset-0 size-full object-cover"
-              />
-            </div>
-          </Reveal>
-        )}
-
         <Reveal delay={0.2}>
           <HeroNow items={sekarang} />
         </Reveal>
       </ParallaxHero>
+
+      {heroFoto && <HeroPhoto src={heroFoto.src} caption={heroFoto.caption} />}
 
       <section className="px-4 pb-8 sm:px-6">
         <QuickLinks pmbUrl={kontak.pmbUrl} />
