@@ -3,7 +3,6 @@ import Link from "next/link";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
 import { FaqList } from "@/components/site/faq-list";
 import { FormRenderer } from "@/components/site/form-renderer";
-import { LocalNav } from "@/components/site/local-nav";
 import { PageHeader } from "@/components/site/page-header";
 import { ProsedurList } from "@/components/site/prosedur-list";
 import { Reveal } from "@/components/site/reveal";
@@ -41,15 +40,6 @@ export default async function LayananPage() {
         />
       </div>
 
-      <LocalNav
-        items={[
-          { id: "formulir", label: "Formulir" },
-          ...(unduhan.length ? [{ id: "unduhan", label: "Unduhan" }] : []),
-          ...(prosedur.length ? [{ id: "alur", label: "Alur layanan" }] : []),
-          { id: "digital", label: "Sistem kampus" },
-          { id: "faq", label: "FAQ" },
-        ]}
-      />
 
       {/* Formulir online */}
       <section

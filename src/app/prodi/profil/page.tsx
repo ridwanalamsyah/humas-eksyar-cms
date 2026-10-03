@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { HighlightCard } from "@/components/site/highlight-card";
-import { LocalNav } from "@/components/site/local-nav";
 import { MitraList } from "@/components/site/mitra-list";
 import { TimelineProgress } from "@/components/site/timeline-progress";
 import { PageHeader } from "@/components/site/page-header";
@@ -45,17 +44,6 @@ export default async function ProfilPage() {
         description={`${prodi.fullName}, ${prodi.faculty}, ${prodi.university}.`}
       />
 
-      <LocalNav
-        items={[
-          { id: "sejarah", label: "Sejarah" },
-          { id: "visi-misi", label: "Visi & Misi" },
-          { id: "pimpinan", label: "Pimpinan" },
-          ...(levels.length ? [{ id: "struktur", label: "Struktur" }] : []),
-          { id: "fasilitas", label: "Fasilitas" },
-          { id: "mitra", label: "Mitra" },
-          { id: "akreditasi", label: "Akreditasi" },
-        ]}
-      />
 
       <section
         id="sejarah"

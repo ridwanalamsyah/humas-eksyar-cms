@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { BeasiswaCard } from "@/components/site/beasiswa-card";
 import { HighlightCard } from "@/components/site/highlight-card";
-import { LocalNav } from "@/components/site/local-nav";
 import { PageHeader } from "@/components/site/page-header";
 import { PrestasiGrid } from "@/components/site/prestasi-grid";
 import { Reveal } from "@/components/site/reveal";
@@ -33,15 +32,6 @@ export default async function KemahasiswaanPage() {
         description="Prestasi, kegiatan, beasiswa, dan alumni Program Studi Ekonomi Syariah."
       />
 
-      <LocalNav
-        items={[
-          { id: "organisasi", label: "Kegiatan" },
-          { id: "prestasi", label: "Prestasi" },
-          { id: "kegiatan", label: "Kegiatan" },
-          { id: "beasiswa", label: "Beasiswa" },
-          { id: "alumni", label: "Alumni" },
-        ]}
-      />
 
       {/* Kegiatan mahasiswa */}
       <section
