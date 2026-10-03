@@ -30,8 +30,8 @@ export default async function LinkPage() {
     { href: "/prodi/skripsi", label: "Direktori & cek judul skripsi" },
     { href: "/prodi/kalender", label: "Kalender akademik" },
     { href: "/prodi/beasiswa", label: "Info beasiswa" },
-    { href: "/prodi/agenda", label: "Agenda & pendaftaran acara" },
-    { href: "/prodi/formulir", label: "Formulir online" },
+    { href: "/prodi/kalender#agenda", label: "Agenda & pendaftaran acara" },
+    { href: "/prodi/layanan#formulir", label: "Formulir online" },
     { href: "/prodi/alat/zakat", label: "Kalkulator zakat" },
     { href: "/prodi/mahasiswa-baru", label: "Info mahasiswa baru" },
     ...(kontak.whatsapp

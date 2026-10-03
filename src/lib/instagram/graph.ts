@@ -107,3 +107,30 @@ export async function listInstagramPosts(limit = 25): Promise<IgPost[]> {
     };
   });
 }
+
+/**
+ * Feed ringkas untuk beranda website (di-cache 30 menit). Mengembalikan
+ * daftar kosong bila Instagram belum tersambung atau API sedang gagal.
+ */
+export async function instagramFeed(
+  limit = 6,
+): Promise<{ permalink: string; image: string; caption: string }[]> {
+  try {
+    const token = await getToken();
+    const res = await fetch(
+      `${API}/me/media?fields=media_type,media_url,thumbnail_url,permalink,caption&limit=${limit}&access_token=${token}`,
+      { next: { revalidate: 1800 } },
+    );
+    if (!res.ok) return [];
+    const j = (await res.json()) as { data?: ApiMedia[] };
+    return (j.data ?? [])
+      .map((m) => ({
+        permalink: m.permalink,
+        image: (m.media_type === "VIDEO" ? m.thumbnail_url : m.media_url) ?? "",
+        caption: (m.caption ?? "").split("\n")[0].slice(0, 120),
+      }))
+      .filter((m) => m.image);
+  } catch {
+    return [];
+  }
+}

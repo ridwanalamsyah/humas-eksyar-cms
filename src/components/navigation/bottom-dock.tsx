@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 
 const tabs = [
   { href: "/dashboard", label: "Beranda", icon: HomeIcon },
-  { href: "/content", label: "Konten", icon: FileText },
-  { href: "/calendar", label: "Kalender", icon: CalendarDays },
+  { href: "/content", label: "Berita", icon: FileText },
+  { href: "/events", label: "Agenda", icon: CalendarDays },
   { href: "/media", label: "Media", icon: ImageIcon },
   { href: "/settings", label: "Lainnya", icon: Menu },
 ] as const;

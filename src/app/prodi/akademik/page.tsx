@@ -294,7 +294,7 @@ export default async function AkademikPage() {
         <div className="mx-auto grid max-w-[1024px] gap-4 sm:grid-cols-2">
           {[
             {
-              href: "/prodi/unduhan",
+              href: "/prodi/layanan#unduhan",
               t: "Unduhan dokumen",
               d: "Pedoman akademik, kalender, jadwal kuliah, dan template.",
             },

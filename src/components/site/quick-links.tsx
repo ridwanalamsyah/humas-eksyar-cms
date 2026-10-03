@@ -11,7 +11,7 @@ import {
 /** Tautan cepat ke alat bantu prodi & sistem kampus. */
 export function QuickLinks({ pmbUrl }: { pmbUrl: string }) {
   const links = [
-    { href: "/prodi/unduhan", label: "Unduhan", Icon: FolderDown },
+    { href: "/prodi/layanan#unduhan", label: "Unduhan", Icon: FolderDown },
     { href: "/prodi/skripsi", label: "Direktori skripsi", Icon: ScanSearch },
     {
       href: "https://simak.uinsgd.ac.id/beranda/",

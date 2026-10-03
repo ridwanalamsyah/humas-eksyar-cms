@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { ArrowRight, PenLine, Sparkles } from "lucide-react";
+import { ArrowRight, Camera, PenLine } from "lucide-react";
 import { getCurrentMember, listContents, listEvents, listMembers } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { OpsAlerts } from "@/components/dashboard/ops-alerts";
+import { LaunchChecklist } from "@/components/dashboard/launch-checklist";
 import { Button } from "@/components/ui/button";
 import { StatusPill } from "@/components/common/pill";
 import { formatHijri, formatLongDate, formatShortDate, formatTime, relativeFromNow } from "@/lib/format/dates";
@@ -29,7 +30,7 @@ export default async function HomePage() {
     { label: "Dipublikasikan", value: contents.filter((c) => c.status === "published").length, href: "/content" },
     { label: "Menunggu review", value: waiting.length, href: "/approval" },
     { label: "Draft & ide", value: contents.filter((c) => c.status === "draft" || c.status === "idea").length, href: "/content" },
-    { label: "Agenda 30 hari", value: events.filter((e) => new Date(e.startsAt) <= in30).length, href: "/calendar" },
+    { label: "Agenda 30 hari", value: events.filter((e) => new Date(e.startsAt) <= in30).length, href: "/events" },
   ];
   const recent = contents.slice(0, 6);
   const authorName = (id: string) => members.find((m) => m.id === id)?.name ?? findMember(id)?.name ?? "—";
@@ -49,19 +50,24 @@ export default async function HomePage() {
         </div>
         <div className="flex gap-2">
           <Button variant="secondary" asChild>
-            <Link href="/captions/playground">
-              <Sparkles className="size-4" strokeWidth={1.75} /> AI Caption
+            <Link href="/content/instagram">
+              <Camera className="size-4" strokeWidth={1.75} /> Dari Instagram
             </Link>
           </Button>
           <Button asChild>
             <Link href="/content/new">
-              <PenLine className="size-4" strokeWidth={1.75} /> Konten baru
+              <PenLine className="size-4" strokeWidth={1.75} /> Tulis berita
             </Link>
           </Button>
         </div>
       </div>
 
-      {member.role === "admin" && <OpsAlerts />}
+      {member.role === "admin" && (
+        <>
+          <OpsAlerts />
+          <LaunchChecklist />
+        </>
+      )}
 
       {/* Angka ringkas */}
       <dl className="mt-8 grid grid-cols-2 gap-3 lg:grid-cols-4">

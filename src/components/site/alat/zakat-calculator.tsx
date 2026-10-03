@@ -154,10 +154,10 @@ export function ZakatCalculator({ cfg }: { cfg: Cfg }) {
           Perhitungan ini bersifat edukatif. Untuk kepastian, konsultasikan
           dengan BAZNAS atau lembaga amil zakat resmi, atau gunakan{" "}
           <Link
-            href="/prodi/formulir/konsultasi"
+            href="/prodi/layanan#faq"
             className="font-semibold text-accent hover:underline"
           >
-            layanan konsultasi prodi
+            kirim pertanyaan ke prodi
           </Link>
           .
         </p>

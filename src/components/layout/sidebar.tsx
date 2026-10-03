@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
-  BookMarked,
   CalendarDays,
   CheckSquare,
   ExternalLink,
@@ -13,11 +12,8 @@ import {
   Home,
   Image as ImageIcon,
   Settings,
-  Ticket,
-  Trophy,
   Users,
   type LucideIcon,
-  Camera,
   Inbox,
   UserCog,
 } from "lucide-react";
@@ -29,47 +25,38 @@ import { cn } from "@/lib/utils";
 type Item = { href: string; label: string; icon: LucideIcon; external?: boolean };
 
 function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
+  const canReview = ["admin", "sekjen", "ketua_divisi"].includes(role);
   const groups: { title: string; items: Item[] }[] = [
     {
       title: "Kerja",
       items: [
         { href: "/dashboard", label: "Beranda", icon: Home },
-        { href: "/content", label: "Konten", icon: FileText },
-        { href: "/content/instagram", label: "Instagram → Artikel", icon: Camera },
-        { href: "/approval", label: "Approval", icon: CheckSquare },
-        { href: "/calendar", label: "Kalender", icon: CalendarDays },
-        { href: "/events", label: "Kegiatan", icon: Ticket },
+        { href: "/content", label: "Berita & konten", icon: FileText },
+        ...(canReview ? [{ href: "/approval", label: "Perlu disetujui", icon: CheckSquare }] : []),
+        { href: "/events", label: "Agenda", icon: CalendarDays },
         { href: "/media", label: "Media", icon: ImageIcon },
-      ],
-    },
-    {
-      title: "Tim",
-      items: [
-        { href: "/members", label: "Anggota", icon: Users },
-        ...(role === "admin"
-          ? [{ href: "/settings/members", label: "Kelola anggota", icon: UserCog }]
-          : []),
-        { href: "/leaderboard", label: "Leaderboard", icon: Trophy },
-        { href: "/analytics", label: "Insight", icon: BarChart3 },
       ],
     },
   ];
   if (role === "admin") {
     groups.push({
-      title: "Website Prodi",
+      title: "Website",
       items: [
-        { href: "/settings/website", label: "Konten website", icon: Globe },
-        { href: "/settings/website?bagian=akademik", label: "Akademik & kalender", icon: CalendarDays },
-        { href: "/settings/website?bagian=mahasiswa", label: "Kemahasiswaan & lomba", icon: Trophy },
-        { href: "/settings/website?bagian=layanan", label: "Layanan & sertifikat", icon: Ticket },
+        { href: "/settings/website", label: "Isi website", icon: Globe },
         { href: "/settings/formulir", label: "Kotak masuk", icon: Inbox },
-        { href: "/settings/kinerja", label: "Kinerja & laporan", icon: BarChart3 },
-        { href: "/settings/skripsi", label: "Direktori skripsi", icon: BookMarked },
+        { href: "/settings/kinerja", label: "Laporan", icon: BarChart3 },
+        { href: "/settings/members", label: "Anggota", icon: UserCog },
         { href: "/", label: "Lihat website", icon: ExternalLink, external: true },
       ],
     });
   } else {
-    groups.push({ title: "Website Prodi", items: [{ href: "/", label: "Lihat website", icon: ExternalLink, external: true }] });
+    groups.push({
+      title: "Website",
+      items: [
+        { href: "/members", label: "Anggota", icon: Users },
+        { href: "/", label: "Lihat website", icon: ExternalLink, external: true },
+      ],
+    });
   }
   return groups;
 }

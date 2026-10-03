@@ -12,7 +12,7 @@ import {
 } from "@/lib/data/provider";
 import { getAkademik } from "@/lib/site/akademik";
 import { listPublishedNews } from "@/lib/site/content";
-import { FORMS } from "@/lib/site/forms";
+import { ACTIVE_FORMS } from "@/lib/site/forms";
 import { getSite } from "@/lib/site/get-site";
 import { getSkripsi } from "@/lib/site/skripsi";
 
@@ -201,7 +201,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
             Formulir masuk ({subsMonth.length})
           </h2>
           <ul className="mt-3 grid gap-1.5 text-[13px]">
-            {FORMS.map((f) => {
+            {ACTIVE_FORMS.map((f) => {
               const n = subsMonth.filter((s) => s.type === f.slug).length;
               return n ? (
                 <li key={f.slug} className="flex justify-between">

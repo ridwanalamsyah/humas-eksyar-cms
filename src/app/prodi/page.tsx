@@ -6,7 +6,6 @@ import {
   Building2,
   HandHeart,
   Landmark,
-  Search,
 } from "lucide-react";
 import { listEvents } from "@/lib/data/provider";
 import type { Event } from "@/lib/data/types";
@@ -20,25 +19,20 @@ import {
 import { defaultWebsiteConfig } from "@/lib/site/defaults";
 import { getSite } from "@/lib/site/get-site";
 import { getSkripsi } from "@/lib/site/skripsi";
+import { instagramFeed } from "@/lib/instagram/graph";
 import { kalenderMendatang, rentang } from "@/lib/site/kalender";
-import { latestYoutube } from "@/lib/site/youtube-feed";
 import { PmbCampaign } from "@/components/site/pmb-campaign";
 import { prodi } from "@/lib/site/prodi";
 import { AnnouncementList } from "@/components/site/announcement-list";
 import { Carousel } from "@/components/site/carousel";
 import { CountUp } from "@/components/site/count-up";
 import { HighlightCard } from "@/components/site/highlight-card";
-import { Marquee } from "@/components/site/marquee";
-import { TestimoniCard } from "@/components/site/testimoni-card";
-import { VideoEmbed } from "@/components/site/video-embed";
 import { NewsCard } from "@/components/site/news-card";
 import { HeroTitle, ParallaxHero } from "@/components/site/parallax-hero";
 import { HeroNow, type HeroNowItem } from "@/components/site/hero-now";
 import { HeroPhoto } from "@/components/site/hero-photo";
-import { PmbCta } from "@/components/site/pmb-cta";
 import { PrestasiCard } from "@/components/site/prestasi-card";
 import { ProdiLogo } from "@/components/site/prodi-logo";
-import { QuickLinks } from "@/components/site/quick-links";
 import { Reveal } from "@/components/site/reveal";
 import { ScrollWords } from "@/components/site/scroll-words";
 import { SectionHeading } from "@/components/site/section-heading";
@@ -92,30 +86,15 @@ const BIDANG_TONES = [
 ];
 
 export default async function ProdiHomePage() {
-  const [site, news, events, media, skripsi] = await Promise.all([
+  const [site, news, events, media, skripsi, ig] = await Promise.all([
     getSite(),
     listPublishedNews(),
     listEvents({ fromDate: new Date().toISOString() }),
     getMediaMap(),
     getSkripsi(),
+    instagramFeed(6),
   ]);
   const jadwal = kalenderMendatang(site.kalender, 3);
-  const ytLatest = await latestYoutube(site.medsos.youtubeChannelId);
-  const latestBulan = site.apresiasi
-    .map((x) => x.bulan)
-    .sort()
-    .at(-1);
-  const apresiasi = site.apresiasi.filter((x) => x.bulan === latestBulan);
-  const bulanApresiasi = latestBulan
-    ? new Date(`${latestBulan}-01T00:00:00+07:00`).toLocaleDateString("id-ID", {
-        month: "long",
-        year: "numeric",
-        timeZone: "Asia/Jakarta",
-      })
-    : "";
-  const skripsiYears = [...new Set(skripsi.map((s) => s.tahun))].sort(
-    (a, b) => a - b,
-  );
   const { identity, kontak } = site;
 
   const announcements = news.filter(isAnnouncement).slice(0, 4);
@@ -161,13 +140,33 @@ export default async function ProdiHomePage() {
     sekarang.push({
       label: "Agenda",
       title: upcoming[0].title,
-      href: "/prodi/agenda",
+      href: "/prodi/kalender#agenda",
     });
   const statement =
     identity.statement || defaultWebsiteConfig.identity.statement || "";
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "EducationalOrganization",
+            name: `${prodi.fullName} ${prodi.university}`,
+            alternateName: "Ekonomi Syariah UIN SGD",
+            parentOrganization: {
+              "@type": "CollegeOrUniversity",
+              name: prodi.university,
+            },
+            email: kontak.email,
+            address: `${kontak.address}, ${kontak.street}`,
+            url: kontak.website || undefined,
+            sameAs: [kontak.instagram, kontak.tiktok, kontak.x].filter(Boolean),
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
+
       {/* ─── Hero ─────────────────────────────────────────── */}
       <ParallaxHero>
         <Reveal>
@@ -208,10 +207,6 @@ export default async function ProdiHomePage() {
 
       {heroFoto && <HeroPhoto src={heroFoto.src} caption={heroFoto.caption} />}
 
-      <section className="px-4 pb-8 sm:px-6">
-        <QuickLinks pmbUrl={kontak.pmbUrl} />
-      </section>
-
       {/* ─── Pengantar (kata menyala saat digulir) ────────── */}
       {statement && (
         <section className="px-4 py-24 sm:px-6 sm:py-36">
@@ -251,32 +246,25 @@ export default async function ProdiHomePage() {
               BAN-PT · {identity.universityAccreditationPeriod}
             </p>
           </Tile>
-          <Tile
-            className="md:col-span-3"
-            label="Pasar modal syariah"
-            delay={0.1}
-          >
-            <p className="text-[clamp(2.5rem,2rem+2vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em] text-label">
-              <CountUp value={115} />
-            </p>
-            <p className="mt-3 text-[16px] leading-[1.45] text-label-2">
-              mahasiswa mengikuti Sekolah Pasar Modal Syariah 2026 di Kantor
-              Perwakilan BEI Jawa Barat.
-            </p>
-          </Tile>
-          <Tile
-            className="md:col-span-3"
-            label="Pengabdian masyarakat"
-            delay={0.14}
-          >
-            <p className="text-[clamp(2.5rem,2rem+2vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em] text-label">
-              <CountUp value={15} />
-            </p>
-            <p className="mt-3 text-[16px] leading-[1.45] text-label-2">
-              warga Desa Cibiru Wetan meraih sertifikat Juru Sembelih Halal
-              lewat pelatihan berbasis SKKNI.
-            </p>
-          </Tile>
+          {site.sorotan.map((x, i) => (
+            <Tile
+              key={`${x.judul}-${i}`}
+              className="md:col-span-3"
+              label={x.judul}
+              delay={0.1 + i * 0.04}
+            >
+              <p className="text-[clamp(2.5rem,2rem+2vw,3.5rem)] font-extrabold leading-none tracking-[-0.03em] text-label">
+                {/^\d+$/.test(x.nilai) ? (
+                  <CountUp value={Number(x.nilai)} />
+                ) : (
+                  x.nilai
+                )}
+              </p>
+              <p className="mt-3 text-[16px] leading-[1.45] text-label-2">
+                {x.keterangan}
+              </p>
+            </Tile>
+          ))}
         </div>
       </section>
 
@@ -331,48 +319,6 @@ export default async function ProdiHomePage() {
         </section>
       )}
 
-      {/* ─── Apresiasi bulan ini ───────────────────────────── */}
-      {apresiasi.length > 0 && (
-        <section className="px-4 py-24 sm:px-6">
-          <div className="mx-auto max-w-[1024px]">
-            <Reveal>
-              <SectionHeading
-                align="left"
-                eyebrow="Apresiasi"
-                title={`Insan Eksyar ${bulanApresiasi}`}
-              />
-            </Reveal>
-            <div className="mt-8 grid gap-4 md:grid-cols-2">
-              {apresiasi.map((a, i) => (
-                <Reveal key={`${a.nama}-${i}`} delay={i * 0.06}>
-                  <div className="flex h-full gap-5 rounded-[28px] bg-sand/60 p-6">
-                    {a.photo ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={a.photo}
-                        alt=""
-                        className="size-24 shrink-0 rounded-[20px] object-cover"
-                      />
-                    ) : null}
-                    <div>
-                      <p className="text-[13px] font-semibold text-accent">
-                        {a.peran}
-                      </p>
-                      <p className="mt-1 text-[19px] font-bold leading-snug text-navy">
-                        {a.nama}
-                      </p>
-                      <p className="mt-2 text-[14.5px] leading-[1.55] text-navy/75">
-                        {a.alasan}
-                      </p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* ─── Kegiatan (carousel) ──────────────────────────── */}
       {kegiatan.length > 0 && (
         <section className="py-24 sm:py-32">
@@ -399,51 +345,6 @@ export default async function ProdiHomePage() {
         </section>
       )}
 
-      {/* ─── Direktori skripsi ────────────────────────────── */}
-      <section className="px-4 pb-24 sm:px-6 sm:pb-32">
-        <Reveal className="mx-auto max-w-[1024px]">
-          <div className="rounded-[32px] bg-navy px-6 py-14 text-center text-white sm:px-16 sm:py-20">
-            <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-sand">
-              Direktori skripsi
-            </p>
-            <h2 className="mx-auto mt-3 max-w-2xl text-[clamp(2rem,1.4rem+2.4vw,3.25rem)] font-extrabold leading-[1.05] tracking-[-0.035em]">
-              <CountUp value={skripsi.length} /> skripsi Ekonomi Syariah
-            </h2>
-            <p className="mx-auto mt-4 max-w-xl text-[16px] leading-[1.5] text-white/75">
-              Cari referensi skripsi kakak tingkat
-              {skripsiYears.length > 1
-                ? ` (${skripsiYears[0]}–${skripsiYears.at(-1)})`
-                : ""}
-              , lalu cek apakah rencana judulmu sudah pernah diteliti.
-            </p>
-            <form
-              action="/prodi/skripsi"
-              className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-full bg-canvas p-2 pl-5"
-            >
-              <Search className="size-5 shrink-0 text-label-3" />
-              <input
-                name="q"
-                aria-label="Cari skripsi"
-                placeholder="Mis. zakat, bank syariah, label halal"
-                className="min-w-0 flex-1 bg-transparent py-2 text-[16px] text-label outline-none placeholder:text-label-3"
-              />
-              <button
-                type="submit"
-                className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-[15px] font-semibold text-white hover:bg-accent-strong"
-              >
-                Cari
-              </button>
-            </form>
-            <Link
-              href="/prodi/skripsi?mode=cek"
-              className="mt-5 inline-block text-[15px] font-semibold text-sand hover:underline"
-            >
-              Cek kemiripan judul ›
-            </Link>
-          </div>
-        </Reveal>
-      </section>
-
       {site.kampanyePmb.aktif && site.kampanyePmb.judul && (
         <PmbCampaign
           judul={site.kampanyePmb.judul}
@@ -453,117 +354,48 @@ export default async function ProdiHomePage() {
         />
       )}
 
-      {/* ─── Video YouTube terbaru ─────────────────────────── */}
-      {ytLatest.length > 0 && (
-        <section className="px-4 pb-24 sm:px-6">
+      {/* ─── Dari Instagram (otomatis) ────────────────────── */}
+      {ig.length > 0 && (
+        <section className="px-4 py-24 sm:px-6 sm:py-28">
           <div className="mx-auto max-w-[1024px]">
             <Reveal className="flex flex-wrap items-end justify-between gap-4">
               <SectionHeading
                 align="left"
-                eyebrow="YouTube"
-                title="Video terbaru"
+                eyebrow="Instagram"
+                title={kontak.instagramHandle || "Dari Instagram"}
               />
-              <Link
-                href="/prodi/galeri"
-                className="text-[16px] font-semibold text-accent hover:underline"
-              >
-                Semua video ›
-              </Link>
-            </Reveal>
-            <div className="mt-8 grid gap-5 md:grid-cols-2">
-              {ytLatest.slice(0, 2).map((v) => (
-                <VideoEmbed key={v.url} url={v.url} title={v.title} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ─── Video profil ─────────────────────────────────── */}
-      {site.video[0] && (
-        <section className="px-4 pb-24 sm:px-6 sm:pb-32">
-          <Reveal className="mx-auto max-w-[1024px]">
-            <SectionHeading eyebrow="Video" title={site.video[0].title} />
-            <div className="mt-10">
-              <VideoEmbed url={site.video[0].url} title={site.video[0].title} />
-            </div>
-          </Reveal>
-        </section>
-      )}
-
-      {/* ─── Galeri ───────────────────────────────────────── */}
-      {site.galeri.length > 0 && (
-        <section className="pb-24 sm:pb-32">
-          <Reveal className="mx-auto flex max-w-[1024px] flex-wrap items-end justify-between gap-4 px-4 sm:px-0">
-            <SectionHeading
-              align="left"
-              eyebrow="Galeri"
-              title="Dokumentasi kegiatan"
-            />
-            <Link
-              href="/prodi/galeri"
-              className="text-[16px] font-semibold text-accent hover:underline"
-            >
-              Lihat galeri ›
-            </Link>
-          </Reveal>
-          <div className="mt-10">
-            <Carousel label="Galeri" itemClassName="w-[70vw] max-w-[320px]">
-              {site.galeri.slice(0, 10).map((g, i) => (
-                <Link
-                  key={`${g.image}-${i}`}
-                  href="/prodi/galeri"
-                  className="group block overflow-hidden rounded-[24px] bg-mist"
+              {kontak.instagram && (
+                <a
+                  href={kontak.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[15px] font-semibold text-accent hover:underline"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={g.image}
-                    alt={g.caption}
-                    loading="lazy"
-                    className="aspect-[4/5] w-full object-cover transition duration-700 group-hover:scale-[1.04]"
-                  />
-                </Link>
+                  Ikuti di Instagram ↗
+                </a>
+              )}
+            </Reveal>
+            <ul className="mt-8 grid grid-cols-3 gap-2 sm:gap-3">
+              {ig.map((p) => (
+                <li key={p.permalink}>
+                  <a
+                    href={p.permalink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative block aspect-square overflow-hidden rounded-[14px] bg-mist sm:rounded-[20px]"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={p.image}
+                      alt={p.caption || "Postingan Instagram"}
+                      loading="lazy"
+                      className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                    />
+                  </a>
+                </li>
               ))}
-            </Carousel>
+            </ul>
           </div>
-        </section>
-      )}
-
-      {/* ─── Testimoni ────────────────────────────────────── */}
-      {site.testimoni.length > 0 && (
-        <section className="bg-mist py-24 sm:py-32">
-          <Reveal className="mx-auto max-w-[1024px] px-4 sm:px-0">
-            <SectionHeading
-              align="left"
-              eyebrow="Cerita alumni"
-              title="Kata mereka"
-            />
-          </Reveal>
-          <div className="mt-10">
-            <Carousel label="Testimoni">
-              {site.testimoni.map((t, i) => (
-                <TestimoniCard key={`${t.name}-${i}`} item={t} />
-              ))}
-            </Carousel>
-          </div>
-        </section>
-      )}
-
-      {/* ─── Mitra (marquee) ──────────────────────────────── */}
-      {site.mitra.length > 0 && (
-        <section className="border-y border-hairline py-16 sm:py-20">
-          <Reveal className="mx-auto mb-10 flex max-w-[1024px] flex-wrap items-end justify-between gap-4 px-4 sm:px-0">
-            <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
-              Mitra kerja sama
-            </p>
-            <Link
-              href="/prodi/profil#mitra"
-              className="text-[16px] font-semibold text-accent hover:underline"
-            >
-              Bentuk kerja sama ›
-            </Link>
-          </Reveal>
-          <Marquee items={site.mitra.map((m) => m.name)} />
         </section>
       )}
 
@@ -672,8 +504,6 @@ export default async function ProdiHomePage() {
           </div>
         </div>
       </section>
-
-      <PmbCta />
     </>
   );
 }

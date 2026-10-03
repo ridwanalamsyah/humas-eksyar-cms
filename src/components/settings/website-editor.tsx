@@ -194,6 +194,24 @@ const RAW_TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     label: "Promosi",
     sections: [
       {
+        key: "sorotan",
+        title: "Angka sorotan beranda",
+        hint: "Tampil di bagian Sekilas beranda, di samping kurikulum dan akreditasi. Maksimal 4.",
+        kind: "list",
+        itemTitle: (i) => `${i.nilai || "0"} · ${i.judul || "Judul"}`,
+        fields: [
+          { name: "nilai", label: "Angka", type: "text", placeholder: "115" },
+          { name: "judul", label: "Judul", type: "text" },
+          {
+            name: "keterangan",
+            label: "Keterangan",
+            type: "textarea",
+            wide: true,
+          },
+        ],
+        empty: { nilai: "", judul: "", keterangan: "" },
+      },
+      {
         key: "kampanyePmb",
         title: "Kampanye PMB (hitung mundur)",
         hint: "Saat aktif, muncul pita kampanye dengan hitung mundur di beranda, halaman Mahasiswa Baru, dan halaman tautan bio.",
@@ -1381,18 +1399,22 @@ const GROUPS: {
 }[] = [
   {
     value: "beranda",
-    label: "Beranda & promosi",
-    keys: ["identity", "banner", "kampanyePmb", "apresiasi", "medsos"],
+    label: "Beranda",
+    keys: ["identity", "sorotan", "banner", "kampanyePmb", "medsos"],
   },
   {
     value: "profil",
-    label: "Profil prodi",
-    keys: ["profil", "timeline", "pimpinan", "struktur", "fasilitas", "mitra"],
-  },
-  {
-    value: "dosen",
-    label: "Dosen & riset",
-    keys: ["dosen", "tendik", "publikasi", "jurnal"],
+    label: "Profil & dosen",
+    keys: [
+      "profil",
+      "timeline",
+      "pimpinan",
+      "struktur",
+      "dosen",
+      "tendik",
+      "mitra",
+      "fasilitas",
+    ],
   },
   {
     value: "akademik",
@@ -1406,6 +1428,8 @@ const GROUPS: {
       "rps",
       "profilLulusan",
       "capaianPembelajaran",
+      "publikasi",
+      "jurnal",
     ],
   },
   {
@@ -1414,32 +1438,25 @@ const GROUPS: {
     keys: ["panduanSkripsi", "topikSkripsi", "jadwalSidang", "integritas"],
   },
   {
-    value: "maba",
-    label: "Mahasiswa baru",
-    keys: ["infoMaba", "panduanMaba", "jalurMasuk"],
-  },
-  {
     value: "mahasiswa",
-    label: "Kemahasiswaan",
+    label: "Mahasiswa",
     keys: [
+      "infoMaba",
+      "panduanMaba",
+      "jalurMasuk",
       "prestasi",
       "lomba",
       "beasiswa",
       "kegiatanMahasiswa",
-      "karya",
-      "wisuda",
+      "prospekKarir",
+      "lowongan",
       "testimoni",
     ],
   },
   {
-    value: "karier",
-    label: "Karier & alumni",
-    keys: ["prospekKarir", "lowongan"],
-  },
-  {
     value: "kegiatan",
-    label: "Kegiatan & media",
-    keys: ["kegiatan", "galeri", "video", "pressKit"],
+    label: "Kegiatan & galeri",
+    keys: ["kegiatan", "galeri", "video"],
   },
   {
     value: "layanan",
@@ -1447,27 +1464,36 @@ const GROUPS: {
     keys: [
       "kontak",
       "statusLayanan",
-      "aksesCepat",
-      "prosedur",
-      "ruangAlat",
-      "unduhan",
-      "sertifikat",
       "faq",
+      "unduhan",
+      "prosedur",
+      "aksesCepat",
+      "ruangAlat",
+      "sertifikat",
     ],
   },
   {
-    value: "mutu",
-    label: "Data & mutu",
-    keys: ["statistik", "infografis", "mutu"],
+    value: "lainnya",
+    label: "Mutu, data & alat",
+    keys: ["mutu", "statistik", "infografis", "kamus", "zakat"],
   },
-  { value: "alat", label: "Kamus & alat", keys: ["kamus", "zakat"] },
 ];
+
+/** Bagian lama yang fiturnya sudah dihapus dari website (datanya tetap disimpan). */
+const RETIRED = new Set<keyof WebsiteConfig>([
+  "apresiasi",
+  "karya",
+  "wisuda",
+  "pressKit",
+]);
 
 const SECTIONS = new Map(
   RAW_TABS.flatMap((t) => t.sections).map((s) => [s.key, s] as const),
 );
 const grouped = new Set(GROUPS.flatMap((g) => g.keys));
-const leftover = [...SECTIONS.values()].filter((s) => !grouped.has(s.key));
+const leftover = [...SECTIONS.values()].filter(
+  (s) => !grouped.has(s.key) && !RETIRED.has(s.key),
+);
 
 const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
   ...GROUPS.map((g) => ({
@@ -1476,20 +1502,20 @@ const TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
     sections: g.keys.flatMap((k) => SECTIONS.get(k) ?? []),
   })),
   ...(leftover.length
-    ? [{ value: "lainnya", label: "Lainnya", sections: leftover }]
+    ? [{ value: "sisa", label: "Lainnya", sections: leftover }]
     : []),
 ];
 
 /** Halaman website tempat tiap bagian tampil (untuk tautan "Tampil di"). */
 const SHOWN_ON: Partial<Record<keyof WebsiteConfig, [string, string][]>> = {
   identity: [["Beranda", "/"]],
+  sorotan: [["Beranda", "/"]],
   banner: [["Semua halaman", "/"]],
   kampanyePmb: [
     ["Beranda", "/"],
     ["Mahasiswa baru", "/prodi/mahasiswa-baru"],
     ["Tautan bio", "/prodi/link"],
   ],
-  apresiasi: [["Beranda", "/"]],
   medsos: [
     ["Beranda", "/"],
     ["Tautan bio", "/prodi/link"],
@@ -1507,12 +1533,9 @@ const SHOWN_ON: Partial<Record<keyof WebsiteConfig, [string, string][]>> = {
   tendik: [["Dosen", "/prodi/dosen"]],
   publikasi: [["Penelitian", "/prodi/penelitian"]],
   jurnal: [["Penelitian", "/prodi/penelitian"]],
-  kalender: [["Kalender akademik", "/prodi/kalender"]],
+  kalender: [["Kalender & agenda", "/prodi/kalender"]],
   kurikulum: [["Akademik", "/prodi/akademik"]],
-  bidangKajian: [
-    ["Akademik", "/prodi/akademik"],
-    ["Kuis minat", "/prodi/alat/kuis"],
-  ],
+  bidangKajian: [["Akademik", "/prodi/akademik"]],
   kelompokMataKuliah: [["Akademik", "/prodi/akademik"]],
   peminatan: [["Akademik", "/prodi/akademik"]],
   rps: [["Akademik", "/prodi/akademik"]],
@@ -1532,12 +1555,7 @@ const SHOWN_ON: Partial<Record<keyof WebsiteConfig, [string, string][]>> = {
   lomba: [["Info lomba", "/prodi/lomba"]],
   beasiswa: [["Beasiswa", "/prodi/beasiswa"]],
   kegiatanMahasiswa: [["Kemahasiswaan", "/prodi/kemahasiswaan"]],
-  karya: [["Karya mahasiswa", "/prodi/karya"]],
-  wisuda: [["Wisuda", "/prodi/wisuda"]],
-  testimoni: [
-    ["Beranda", "/"],
-    ["Alumni", "/prodi/alumni"],
-  ],
+  testimoni: [["Karier & alumni", "/prodi/karier"]],
   prospekKarir: [
     ["Karier", "/prodi/karier"],
     ["Akademik", "/prodi/akademik"],
@@ -1545,11 +1563,10 @@ const SHOWN_ON: Partial<Record<keyof WebsiteConfig, [string, string][]>> = {
   lowongan: [["Karier", "/prodi/karier"]],
   kegiatan: [
     ["Beranda", "/"],
-    ["Agenda", "/prodi/agenda"],
+    ["Agenda", "/prodi/kalender#agenda"],
   ],
   galeri: [["Galeri", "/prodi/galeri"]],
   video: [["Galeri", "/prodi/galeri"]],
-  pressKit: [["Ruang media", "/prodi/media"]],
   kontak: [["Kontak", "/prodi/kontak"]],
   statusLayanan: [
     ["Kontak", "/prodi/kontak"],
@@ -1561,15 +1578,15 @@ const SHOWN_ON: Partial<Record<keyof WebsiteConfig, [string, string][]>> = {
     ["Profil", "/prodi/profil"],
     ["Formulir pinjam", "/prodi/formulir/pinjam"],
   ],
-  unduhan: [["Unduhan", "/prodi/unduhan"]],
+  unduhan: [["Layanan", "/prodi/layanan#unduhan"]],
   sertifikat: [["Verifikasi", "/prodi/verifikasi"]],
   faq: [
     ["Layanan", "/prodi/layanan"],
     ["Kontak", "/prodi/kontak"],
   ],
-  statistik: [["Data & statistik", "/prodi/data"]],
-  infografis: [["Data & statistik", "/prodi/data"]],
-  mutu: [["Penjaminan mutu", "/prodi/mutu"]],
+  statistik: [["Mutu & data", "/prodi/mutu#data"]],
+  infografis: [["Mutu & data", "/prodi/mutu#data"]],
+  mutu: [["Mutu & data", "/prodi/mutu"]],
   kamus: [["Kamus", "/prodi/kamus"]],
   zakat: [["Kalkulator zakat", "/prodi/alat/zakat"]],
 };

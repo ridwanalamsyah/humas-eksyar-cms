@@ -42,10 +42,10 @@ export function PmbCampaign({
             Daftar sekarang
           </a>
           <Link
-            href="/prodi/alat/kuis"
+            href="/prodi/akademik"
             className="rounded-full border border-white/40 px-7 py-3 text-[15.5px] font-semibold hover:bg-white/10"
           >
-            Cocok di bidang apa?
+            Lihat kurikulum
           </Link>
         </div>
       </div>

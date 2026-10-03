@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSubmission, getEvent } from "@/lib/data/provider";
 import { findPublishedNews } from "@/lib/site/content";
-import { findForm, formSchema } from "@/lib/site/forms";
+import { findActiveForm, formSchema } from "@/lib/site/forms";
 import { resolveOptions } from "@/lib/site/form-options";
 
 const hits = new Map<string, number[]>();
@@ -22,7 +22,7 @@ export async function POST(
   req: NextRequest,
   { params }: { params: Promise<{ slug: string }> },
 ) {
-  const def = findForm((await params).slug);
+  const def = findActiveForm((await params).slug);
   if (!def)
     return NextResponse.json(
       { error: "Formulir tidak ditemukan" },
