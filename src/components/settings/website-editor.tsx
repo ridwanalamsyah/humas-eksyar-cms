@@ -106,7 +106,8 @@ const RAW_TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
           },
           {
             name: "heroImage",
-            label: "Foto utama beranda (opsional, 16:9)",
+            label: "Foto utama beranda (opsional, mendatar)",
+            hint: "Tampil di bawah judul dan melebar penuh saat pengunjung menggulir. Kosongkan untuk memakai foto terbaru di Galeri.",
             type: "image",
             wide: true,
           },
@@ -1594,8 +1595,8 @@ export function WebsiteEditor({
   const [query, setQuery] = useState("");
   // Pindah bagian saat pintasan di sidebar (?bagian=…) diklik.
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (initialTab && TABS.some((t) => t.value === initialTab))
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTab(initialTab);
   }, [initialTab]);
   const [config, setConfig] = useState<WebsiteConfig>(initial);
