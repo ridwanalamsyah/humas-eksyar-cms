@@ -19,7 +19,7 @@ import {
 } from "lucide-react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { Avatar } from "@/components/common/avatar";
-import type { Member } from "@/lib/data/types";
+import { ROLE_LABEL, type Member } from "@/lib/data/types";
 import { cn } from "@/lib/utils";
 
 type Item = { href: string; label: string; icon: LucideIcon; external?: boolean };
@@ -79,7 +79,7 @@ export function Sidebar({ member }: { member: Member }) {
         <EksyarLogo size={32} />
         <span className="leading-tight">
           <span className="block text-[14px] font-semibold tracking-tight">Humas Eksyar</span>
-          <span className="block text-[11px] text-foreground/50">Content workspace</span>
+          <span className="block text-[11px] text-foreground/50">Ruang kerja humas</span>
         </span>
       </Link>
 
@@ -129,7 +129,7 @@ export function Sidebar({ member }: { member: Member }) {
           <Avatar member={member} size={26} ring={false} />
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-[13px] font-medium">{member.name}</span>
-            <span className="block truncate text-[11px] capitalize text-foreground/50">{member.role.replace("_", " ")}</span>
+            <span className="block truncate text-[11px] text-foreground/50">{ROLE_LABEL[member.role]}</span>
           </span>
         </Link>
       </div>

@@ -18,7 +18,7 @@ export default async function ProfileEditPage() {
         href="/settings"
         className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground"
       >
-        <ArrowLeft className="size-4" strokeWidth={1.75} /> Settings
+        <ArrowLeft className="size-4" strokeWidth={1.75} /> Pengaturan
       </Link>
       <header className="mt-3">
         <p className="text-[12.5px] text-foreground/50">

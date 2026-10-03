@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 /**
  * Skema konten website publik prodi (/prodi). Seluruh isi ini dapat diubah

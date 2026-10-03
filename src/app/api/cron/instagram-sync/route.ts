@@ -7,7 +7,10 @@ export const maxDuration = 60;
 export async function GET(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
   if (!secret || req.headers.get("authorization") !== `Bearer ${secret}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
   try {
     return NextResponse.json(await syncInstagram());

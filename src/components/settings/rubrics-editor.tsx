@@ -106,7 +106,7 @@ export function RubricsEditor({ initial }: Props) {
               className="w-full bg-transparent text-[14px] outline-none"
             />
           </Field>
-          <Field label="Label">
+          <Field label="Nama">
             <input
               value={nLabel}
               onChange={(e) => setNLabel(e.target.value)}
@@ -115,8 +115,8 @@ export function RubricsEditor({ initial }: Props) {
             />
           </Field>
           <Field
-            label="Slug"
-            hint="ID internal. Lowercase, pakai underscore. Auto-generate dari label kalau dikosongin."
+            label="Kode"
+            hint="Opsional. Kosongkan saja, nanti dibuat otomatis dari nama."
           >
             <input
               value={nSlug}
@@ -130,7 +130,7 @@ export function RubricsEditor({ initial }: Props) {
               value={nDesc}
               onChange={(e) => setNDesc(e.target.value)}
               rows={2}
-              placeholder="Update beasiswa per bulan"
+              placeholder="Info beasiswa bulanan"
               className="w-full resize-y bg-transparent text-[14px] outline-none"
             />
           </Field>

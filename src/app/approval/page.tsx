@@ -16,8 +16,8 @@ import { ApprovalActions } from "@/components/content/approval-actions";
 import { Inbox } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Approval Queue",
-  description: "Konten yang menunggu review koordinator atau admin.",
+  title: "Perlu disetujui",
+  description: "Konten yang menunggu pemeriksaan koordinator atau admin.",
 };
 
 export default async function ApprovalPage() {
@@ -33,14 +33,14 @@ export default async function ApprovalPage() {
     <AppShell width="wide">
       <SectionHeader
         eyebrow="Workflow"
-        title="Approval Queue"
-        description={`${pending.length} konten menunggu review. ${inMyQueue.length} menunggu kamu.`}
+        title="Perlu disetujui"
+        description={`${pending.length} konten menunggu diperiksa, ${inMyQueue.length} di antaranya menunggu Anda.`}
       />
 
       <div className="mt-2 space-y-8">
         <Section title="Menunggu kamu" count={inMyQueue.length} highlighted>
           {inMyQueue.length === 0 ? (
-            <EmptyQueue text="Tidak ada konten yang menunggu reviewmu. Mantap." />
+            <EmptyQueue text="Tidak ada konten yang menunggu pemeriksaan Anda." />
           ) : (
             inMyQueue.map((c) => {
               const author = findMember(c.authorId);
@@ -82,7 +82,7 @@ export default async function ApprovalPage() {
           )}
         </Section>
 
-        <Section title="Konten lain dalam review" count={others.length}>
+        <Section title="Konten lain yang sedang diperiksa" count={others.length}>
           {others.length === 0 ? (
             <EmptyQueue text="Tidak ada konten yang sedang direview tim lain." />
           ) : (

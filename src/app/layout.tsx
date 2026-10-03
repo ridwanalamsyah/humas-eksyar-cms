@@ -90,6 +90,7 @@ export default function RootLayout({
             {children}
             <Toaster
               position="top-center"
+              containerAriaLabel="Pemberitahuan"
               toastOptions={{
                 style: {
                   background: "var(--glass-thick-bg)",

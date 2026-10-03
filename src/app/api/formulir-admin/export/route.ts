@@ -20,7 +20,10 @@ const cell = (v: unknown) => {
 
 export async function GET(req: NextRequest) {
   if (!(await requireAdmin()))
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   const type = req.nextUrl.searchParams.get("type") ?? "";
   const def = findForm(type);
   if (!def)

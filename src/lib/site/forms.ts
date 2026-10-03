@@ -2,7 +2,7 @@
  * Definisi formulir publik website prodi. Satu definisi dipakai untuk:
  * tampilan formulir, validasi server, kotak masuk CMS, dan ekspor CSV.
  */
-import { z } from "zod";
+import { z } from "@/lib/zod";
 
 export type FieldType =
   | "text"

@@ -16,7 +16,7 @@ import { ACTIVE_FORMS } from "@/lib/site/forms";
 import { getSite } from "@/lib/site/get-site";
 import { getSkripsi } from "@/lib/site/skripsi";
 
-export const metadata = { title: "Kinerja & laporan" };
+export const metadata = { title: "Laporan" };
 export const dynamic = "force-dynamic";
 
 type Props = { searchParams: Promise<{ bulan?: string }> };
@@ -108,7 +108,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
           href="/settings"
           className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground"
         >
-          <ArrowLeft className="size-4" strokeWidth={1.75} /> Settings
+          <ArrowLeft className="size-4" strokeWidth={1.75} /> Pengaturan
         </Link>
       </div>
       <header className="mt-3 flex flex-wrap items-end justify-between gap-4">
@@ -232,7 +232,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
       </section>
 
       <section className="glass-regular mt-6 rounded-xl p-5" data-print-hide>
-        <h2 className="text-[14px] font-semibold">Unduh rekap (Excel/CSV)</h2>
+        <h2 className="text-[14px] font-semibold">Unduh rekap ke Excel</h2>
         <p className="mt-1 text-[12.5px] text-foreground/55">
           Untuk laporan fakultas/universitas dan bahan akreditasi. Rekap tahun{" "}
           {bulan.slice(0, 4)}.
@@ -242,7 +242,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
             href="/api/backup"
             className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-3 py-1.5 text-[12.5px] font-medium text-background"
           >
-            <Download className="size-3.5" /> Cadangan lengkap (JSON)
+            <Download className="size-3.5" /> Unduh cadangan data
           </a>
           {rekap.map((r) => (
             <a

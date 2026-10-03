@@ -5,7 +5,7 @@
  */
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
+import { z } from "@/lib/zod";
 import {
   deleteSubmission,
   getEvent,
@@ -33,7 +33,10 @@ function refresh() {
 
 export async function PATCH(req: NextRequest, { params }: Ctx) {
   if (!(await requireAdmin()))
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   const parsed = patchSchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success)
     return NextResponse.json({ error: "Data tidak valid" }, { status: 400 });
@@ -46,7 +49,10 @@ export async function PATCH(req: NextRequest, { params }: Ctx) {
 
 export async function DELETE(_req: NextRequest, { params }: Ctx) {
   if (!(await requireAdmin()))
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   await deleteSubmission((await params).id);
   refresh();
   return NextResponse.json({ ok: true });
@@ -54,7 +60,10 @@ export async function DELETE(_req: NextRequest, { params }: Ctx) {
 
 export async function POST(_req: NextRequest, { params }: Ctx) {
   if (!(await requireAdmin()))
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   const id = (await params).id;
   const sub = (await listSubmissions({ limit: 5000 })).find((s) => s.id === id);
   if (!sub)

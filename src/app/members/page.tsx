@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { listMembers, listLeaderboard } from "@/lib/data/provider";
+import { listMembers } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/common/section-header";
 import { MembersDirectory } from "@/components/members/members-directory";
@@ -10,22 +10,15 @@ export const metadata: Metadata = {
 };
 
 export default async function MembersPage() {
-  const [members, leaderboard] = await Promise.all([
-    listMembers(),
-    listLeaderboard(),
-  ]);
+  const members = await listMembers();
   return (
     <AppShell width="wide">
       <SectionHeader
-        eyebrow="Komunitas"
-        title="Direktori Anggota"
+        eyebrow="Tim"
+        title="Anggota"
         description={`${members.length} anggota aktif.`}
-        cta={{ label: "Lihat leaderboard", href: "/leaderboard" }}
       />
-      <MembersDirectory
-        members={members}
-        topXP={leaderboard.slice(0, 3).map((m) => m.id)}
-      />
+      <MembersDirectory members={members} />
     </AppShell>
   );
 }

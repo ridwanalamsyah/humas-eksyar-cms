@@ -17,12 +17,15 @@ export async function POST(req: Request) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Data yang dikirim tidak valid." },
+      { status: 400 },
+    );
   }
 
   if (!body.title || !body.style || !body.rubric) {
     return NextResponse.json(
-      { error: "Missing required fields: title, style, rubric" },
+      { error: "Judul, gaya, dan rubrik wajib diisi." },
       { status: 400 },
     );
   }

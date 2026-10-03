@@ -15,7 +15,10 @@ interface Params {
 export async function GET(_req: NextRequest, { params }: Params) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
   const { id } = await params;
   const comments = await listContentComments(id);
@@ -46,15 +49,21 @@ export async function GET(_req: NextRequest, { params }: Params) {
 export async function POST(req: NextRequest, { params }: Params) {
   const session = await auth();
   if (!session?.user?.email) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
   const me = await findMemberByEmail(session.user.email);
   if (!me) {
-    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    return NextResponse.json(
+      { error: "Anda tidak punya akses untuk tindakan ini." },
+      { status: 403 },
+    );
   }
   if (me.role === "monitoring") {
     return NextResponse.json(
-      { error: "Role monitoring tidak boleh berkomentar." },
+      { error: "Akun pembina hanya bisa melihat, tidak bisa berkomentar." },
       { status: 403 },
     );
   }

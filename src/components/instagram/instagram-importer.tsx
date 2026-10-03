@@ -89,8 +89,7 @@ export function InstagramImporter({
       const res = await fetch("/api/instagram/sync", { method: "POST" });
       const j = await res.json().catch(() => ({}));
       if (!res.ok) toast.error(j.error ?? "Sinkronisasi gagal");
-      else
-        toast.success(`${j.imported} postingan baru dijadikan draft artikel.`);
+      else toast.success(`${j.imported} postingan baru dijadikan draf berita.`);
       await load();
       router.refresh();
     });
@@ -105,7 +104,7 @@ export function InstagramImporter({
             checked={publish}
             onChange={(e) => setPublish(e.target.checked)}
           />
-          Langsung terbitkan di website (tanpa review)
+          Langsung terbitkan di website (tanpa diperiksa)
         </label>
       )}
 
@@ -119,7 +118,7 @@ export function InstagramImporter({
             <p className="text-[12px] text-foreground/55">
               {lastSync
                 ? `Sinkron otomatis terakhir ${new Date(lastSync.at).toLocaleString("id-ID")} · ${lastSync.imported} draft baru${lastSync.error ? ` · galat: ${lastSync.error}` : ""}`
-                : "Postingan baru otomatis dijadikan draft artikel setiap hari."}
+                : "Postingan baru otomatis dijadikan draf berita setiap hari."}
             </p>
           </div>
           {isAdmin && feed?.configured && (
@@ -156,16 +155,15 @@ export function InstagramImporter({
                 (Kreator/Bisnis) di pengaturan Instagram.
               </li>
               <li>
-                Buat aplikasi di{" "}
+                <i>Untuk pengelola teknis:</i> buat aplikasi di{" "}
                 <span className="font-mono">developers.facebook.com</span> →
                 produk <b>Instagram</b> → “API setup with Instagram login”,
                 tambahkan akun @eksyaruinsgd, lalu buat <b>access token</b>.
               </li>
               <li>
-                Simpan token di Vercel → Settings → Environment Variables
-                sebagai{" "}
+                Simpan kode akses itu di pengaturan Vercel dengan nama{" "}
                 <span className="font-mono">INSTAGRAM_ACCESS_TOKEN</span>, lalu
-                redeploy. Token diperpanjang otomatis.
+                terbitkan ulang website. Kode akses diperpanjang otomatis.
               </li>
             </ol>
           </div>

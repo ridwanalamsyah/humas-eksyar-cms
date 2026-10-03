@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "@/lib/zod";
 import { getSiteSetting } from "@/lib/data/provider";
 import { defaultSkripsi } from "./skripsi-data";
 

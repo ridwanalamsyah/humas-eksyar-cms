@@ -9,11 +9,14 @@ export const maxDuration = 60;
 export async function GET(req: NextRequest) {
   const secret = process.env.CRON_SECRET;
   if (!secret || req.headers.get("authorization") !== `Bearer ${secret}`) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    return NextResponse.json(
+      { error: "Silakan masuk terlebih dahulu." },
+      { status: 401 },
+    );
   }
   if (!process.env.BLOB_READ_WRITE_TOKEN)
     return NextResponse.json(
-      { error: "BLOB_READ_WRITE_TOKEN belum diatur" },
+      { error: "Penyimpanan file belum diaktifkan." },
       { status: 503 },
     );
   // Data formulir (email/nomor HP pengirim) tidak ikut: berkas Blob dapat diakses lewat URL-nya.

@@ -40,7 +40,7 @@ export default async function NotificationsPage() {
   return (
     <AppShell>
       <SectionHeader
-        eyebrow="Inbox"
+        eyebrow="Pemberitahuan"
         title="Notifikasi"
         description={`${items.filter((n) => !n.read).length} belum dibaca dari ${items.length} total.`}
       />

@@ -20,24 +20,30 @@ export async function POST(req: Request) {
   try {
     body = (await req.json()) as RestoreBody;
   } catch {
-    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Data yang dikirim tidak valid." },
+      { status: 400 },
+    );
   }
   if (!body.versionId) {
     return NextResponse.json(
-      { error: "versionId is required" },
+      { error: "Versi wajib dipilih." },
       { status: 400 },
     );
   }
   try {
     const result = await restoreCaptionVersion(body.versionId);
     if (!result) {
-      return NextResponse.json({ error: "Version not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Versi tidak ditemukan." },
+        { status: 404 },
+      );
     }
     return NextResponse.json(result);
   } catch (err) {
     console.error("restoreCaptionVersion error", err);
     return NextResponse.json(
-      { error: "Failed to restore version" },
+      { error: "Gagal memulihkan versi." },
       { status: 500 },
     );
   }

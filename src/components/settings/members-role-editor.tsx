@@ -17,12 +17,12 @@ interface Props {
 type PillTone = "neutral" | "brand" | "gold" | "danger" | "success" | "info";
 
 const ROLES: { value: Role; label: string; desc: string; tone: PillTone }[] = [
-  { value: "monitoring", label: "Monitoring", desc: "View-only, mantau saja (cocok untuk pembina).", tone: "neutral" },
-  { value: "anggota", label: "Anggota", desc: "Bisa submit konten.", tone: "neutral" },
-  { value: "pengurus", label: "Pengurus", desc: "Submit + co-edit.", tone: "info" },
-  { value: "ketua_divisi", label: "Koordinator", desc: "Review submission tim.", tone: "gold" },
-  { value: "sekjen", label: "Sekjen", desc: "Cross-team coordinator.", tone: "gold" },
-  { value: "admin", label: "Admin", desc: "Full access: settings + role + final approval.", tone: "brand" },
+  { value: "monitoring", label: "Pembina", desc: "Hanya bisa melihat (cocok untuk dosen pembina).", tone: "neutral" },
+  { value: "anggota", label: "Anggota", desc: "Bisa menulis dan mengirim konten.", tone: "neutral" },
+  { value: "pengurus", label: "Pengurus", desc: "Menulis dan ikut menyunting konten.", tone: "info" },
+  { value: "ketua_divisi", label: "Koordinator", desc: "Memeriksa konten kiriman tim.", tone: "gold" },
+  { value: "sekjen", label: "Sekretaris", desc: "Mengoordinasikan antartim.", tone: "gold" },
+  { value: "admin", label: "Admin", desc: "Akses penuh: isi website, anggota, dan persetujuan akhir.", tone: "brand" },
 ];
 
 const ROLE_INDEX: Record<Role, (typeof ROLES)[number]> = Object.fromEntries(
@@ -63,7 +63,7 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
     const member = members.find((m) => m.id === memberId);
     if (!member) return;
     if (member.id === currentMemberId && nextRole !== "admin") {
-      toast.error("Admin tidak boleh menurunkan rolenya sendiri.");
+      toast.error("Admin tidak bisa menurunkan perannya sendiri.");
       return;
     }
     startTransition(async () => {
@@ -74,7 +74,7 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
-        toast.error(j.error ?? "Gagal mengubah role");
+        toast.error(j.error ?? "Gagal mengubah peran");
         return;
       }
       const j = (await res.json()) as { member?: Member };
@@ -83,7 +83,7 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
           prev.map((m) => (m.id === memberId ? (j.member as Member) : m)),
         );
         toast.success(
-          `Role ${j.member.name} → ${ROLE_INDEX[nextRole].label}`,
+          `Peran ${j.member.name} → ${ROLE_INDEX[nextRole].label}`,
         );
       }
     });
@@ -140,8 +140,8 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
           <UserPlus className="size-4" strokeWidth={1.75} /> Tambah anggota
         </h2>
         <p className="mt-1 text-[12px] text-foreground/55">
-          Gunakan email yang dipakai untuk login (Google). Setelah ditambahkan,
-          anggota langsung bisa masuk ke CMS sesuai role-nya.
+          Gunakan email Google yang dipakai orang itu untuk masuk. Setelah ditambahkan,
+          anggota langsung bisa masuk sesuai perannya.
         </p>
         <form onSubmit={addMember} className="mt-4 grid gap-3 sm:grid-cols-2">
           <label className="text-[12px] text-foreground/65">
@@ -154,7 +154,7 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
             />
           </label>
           <label className="text-[12px] text-foreground/65">
-            Email login
+            Email untuk masuk
             <input
               required
               type="email"
@@ -182,7 +182,7 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
             />
           </label>
           <label className="text-[12px] text-foreground/65">
-            Role
+            Peran
             <select
               value={form.role}
               onChange={(e) => setForm({ ...form, role: e.target.value as Role })}
@@ -284,7 +284,7 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
 
       <GlassCard className="p-5">
         <p className="text-[12.5px] text-foreground/50">
-          Penjelasan role
+          Penjelasan peran
         </p>
         <ul className="mt-3 space-y-2 text-[12px]">
           {ROLES.map((r) => (

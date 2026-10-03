@@ -5,7 +5,7 @@ import { AppShell } from "@/components/layout/app-shell";
 import { getCurrentMember, getBrandingConfig } from "@/lib/data/provider";
 import { BrandingEditor } from "@/components/settings/branding-editor";
 
-export const metadata = { title: "Branding · Settings" };
+export const metadata = { title: "Identitas konten · Pengaturan" };
 
 export default async function BrandingSettingsPage() {
   const member = await getCurrentMember();
@@ -20,18 +20,18 @@ export default async function BrandingSettingsPage() {
         href="/settings"
         className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground"
       >
-        <ArrowLeft className="size-4" strokeWidth={1.75} /> Settings
+        <ArrowLeft className="size-4" strokeWidth={1.75} /> Pengaturan
       </Link>
       <header className="mt-3">
         <p className="text-[12.5px] text-foreground/50">
-          Branding
+          Identitas konten
         </p>
         <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">
           Identitas resmi
         </h1>
         <p className="mt-2 max-w-prose text-[13px] text-foreground/65">
-          Footer caption, hashtag default, dan nama organisasi yang dipakai di
-          seluruh konten dan AI caption generator.
+          Nama organisasi, penutup caption, dan tagar bawaan yang dipakai di
+          semua konten, termasuk yang disusun AI.
         </p>
       </header>
       <BrandingEditor initial={branding} />

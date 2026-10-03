@@ -50,7 +50,7 @@ export function ContentBoard({ contents }: Props) {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Cari judul, caption, atau body…"
+            placeholder="Cari judul atau isi konten…"
             className="h-9 w-full bg-transparent text-[13px] outline-none placeholder:text-foreground/45"
           />
         </div>
@@ -60,7 +60,7 @@ export function ContentBoard({ contents }: Props) {
             onChange={setView}
             size="sm"
             options={[
-              { value: "kanban", label: "Kanban", icon: <KanbanSquare className="size-3.5" strokeWidth={1.75} /> },
+              { value: "kanban", label: "Papan", icon: <KanbanSquare className="size-3.5" strokeWidth={1.75} /> },
               { value: "grid", label: "Grid", icon: <LayoutGrid className="size-3.5" strokeWidth={1.75} /> },
               { value: "list", label: "List", icon: <ListIcon className="size-3.5" strokeWidth={1.75} /> },
             ]}
@@ -134,7 +134,7 @@ function KanbanColumn({ status, items }: { status: ContentStatus; items: Content
       <ul className="flex flex-col gap-2">
         {items.length === 0 && (
           <li className="rounded-xl border border-dashed border-foreground/15 px-3 py-6 text-center text-[12px] text-foreground/45 dark:border-white/15">
-            Tidak ada konten di status ini.
+            Belum ada konten di tahap ini.
           </li>
         )}
         {items.map((c) => {

@@ -21,31 +21,31 @@ const STATUS_META: Record<
     Icon: Lightbulb,
   },
   draft: {
-    label: "Draft",
+    label: "Draf",
     classes:
       "border-foreground/15 bg-foreground/5 text-foreground/80 dark:border-white/10 dark:bg-white/5",
     Icon: PencilLine,
   },
   review_divisi: {
-    label: "Review Koordinator",
+    label: "Diperiksa koordinator",
     classes:
       "border-amber-400/40 bg-amber-400/15 text-amber-700 dark:text-amber-300",
     Icon: Eye,
   },
   review_sekjen: {
-    label: "Review Admin",
+    label: "Diperiksa admin",
     classes:
       "border-violet-400/40 bg-violet-400/15 text-violet-700 dark:text-violet-300",
     Icon: ShieldCheck,
   },
   scheduled: {
-    label: "Scheduled",
+    label: "Terjadwal",
     classes:
       "border-sky-400/40 bg-sky-400/15 text-sky-700 dark:text-sky-300",
     Icon: Clock4,
   },
   published: {
-    label: "Published",
+    label: "Terbit",
     classes:
       "border-brand-500/40 bg-brand-500/15 text-brand-700 dark:text-brand-300",
     Icon: Sparkles,

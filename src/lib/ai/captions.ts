@@ -330,13 +330,13 @@ export const STYLE_LIST: Array<{ value: CaptionStyle; label: string; emoji: stri
   },
   {
     value: "gen_z_friendly",
-    label: "Gen Z Friendly",
+    label: "Santai ala Gen Z",
     emoji: "✨",
     hint: "Santai, IG-native, emoji minimalis",
   },
   {
     value: "cinematic",
-    label: "Cinematic",
+    label: "Sinematik",
     emoji: "🎬",
     hint: "Kalimat pendek, visual, atmospheric",
   },
@@ -354,13 +354,13 @@ export const STYLE_LIST: Array<{ value: CaptionStyle; label: string; emoji: stri
   },
   {
     value: "emotional_branding",
-    label: "Emotional Branding",
+    label: "Hangat & personal",
     emoji: "💛",
     hint: "Hangat, reflektif, personal",
   },
   {
     value: "campaign",
-    label: "Campaign",
+    label: "Kampanye",
     emoji: "📣",
     hint: "Mobilisasi massa, hashtag-driven",
   },
