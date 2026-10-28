@@ -108,9 +108,42 @@ export async function listInstagramPosts(limit = 25): Promise<IgPost[]> {
   });
 }
 
+export const DEFAULT_IG_FEED: { permalink: string; image: string; caption: string }[] = [
+  {
+    permalink: "https://www.instagram.com/eksyaruinsgd/",
+    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80",
+    caption: "Sekolah Pasar Modal Syariah (SPMS) bersama BEI Perwakilan Jawa Barat & GIS FEBI UIN SGD.",
+  },
+  {
+    permalink: "https://www.instagram.com/eksyaruinsgd/",
+    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
+    caption: "Edukasi Literasi Keuangan Syariah: Keluarga Cerdas Lawan Judol & Pinjol Ilegal di Kabupaten Bandung.",
+  },
+  {
+    permalink: "https://www.instagram.com/eksyaruinsgd/",
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+    caption: "Kuliah Praktisi Bank Muamalat Indonesia: Transformasi Digital & Manajemen Risiko Perbankan Syariah.",
+  },
+  {
+    permalink: "https://www.instagram.com/eksyaruinsgd/",
+    image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80",
+    caption: "Pelatihan & Pendampingan Sertifikasi Juru Sembelih Halal (Juleha) bersama LP3H UIN SGD.",
+  },
+  {
+    permalink: "https://www.instagram.com/eksyaruinsgd/",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
+    caption: "Studium Generale FEBI: Inovasi Wakaf Produktif & Green Sukuk untuk Pembangunan Berkelanjutan.",
+  },
+  {
+    permalink: "https://www.instagram.com/eksyaruinsgd/",
+    image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=800&q=80",
+    caption: "Klinik Metodologi Riset & Penulisan Artikel Jurnal LIKUID Terakreditasi SINTA bagi Mahasiswa.",
+  },
+];
+
 /**
  * Feed ringkas untuk beranda website (di-cache 30 menit). Mengembalikan
- * daftar kosong bila Instagram belum tersambung atau API sedang gagal.
+ * feed default @eksyaruinsgd bila Instagram belum tersambung atau API sedang gagal.
  */
 export async function instagramFeed(
   limit = 6,
@@ -121,16 +154,17 @@ export async function instagramFeed(
       `${API}/me/media?fields=media_type,media_url,thumbnail_url,permalink,caption&limit=${limit}&access_token=${token}`,
       { next: { revalidate: 1800 } },
     );
-    if (!res.ok) return [];
+    if (!res.ok) return DEFAULT_IG_FEED.slice(0, limit);
     const j = (await res.json()) as { data?: ApiMedia[] };
-    return (j.data ?? [])
+    const items = (j.data ?? [])
       .map((m) => ({
         permalink: m.permalink,
         image: (m.media_type === "VIDEO" ? m.thumbnail_url : m.media_url) ?? "",
         caption: (m.caption ?? "").split("\n")[0].slice(0, 120),
       }))
       .filter((m) => m.image);
+    return items.length > 0 ? items : DEFAULT_IG_FEED.slice(0, limit);
   } catch {
-    return [];
+    return DEFAULT_IG_FEED.slice(0, limit);
   }
 }
