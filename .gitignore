@@ -43,3 +43,6 @@ next-env.d.ts
 .aistudio/
 metadata.json
 
+-e 
+bun.lock
+bun.lockb
