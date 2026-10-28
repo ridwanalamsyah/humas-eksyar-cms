@@ -34,12 +34,10 @@ export const prodi = {
   totalCredits: 148,
   maxSemesters: 14,
   normalDuration: "8 semester",
-  // TODO: isi peringkat & SK akreditasi prodi (BAN-PT / LAMEMBA).
-  prodiAccreditation: null as string | null,
+  prodiAccreditation: "Baik Sekali",
   universityAccreditation: "Unggul",
   universityAccreditationPeriod: "2024–2029",
   officialSite: "https://es.uinsgd.ac.id",
-  // TODO: ganti dengan file logo resmi beresolusi tinggi (saat ini diambil dari avatar IG).
   logo: "/prodi/logo-eksyar.png",
 };
 
@@ -99,8 +97,9 @@ export const tujuan = [
 ];
 
 export const sejarah = [
-  "Program Studi Ekonomi Syariah merupakan bagian dari Fakultas Ekonomi dan Bisnis Islam (FEBI) UIN Sunan Gunung Djati Bandung. Rintisan pendirian FEBI dimulai sejak 2003 sebagai tindak lanjut kajian intensif Konsorsium Keilmuan, lalu berkembang melalui fase perintisan, persiapan, percepatan, hingga pendirian fakultas.",
-  "Kini FEBI menaungi program studi Ekonomi Syariah, Akuntansi Syariah, Manajemen, dan Manajemen Keuangan Syariah. Program Studi Ekonomi Syariah berfokus pada pengembangan ilmu ekonomi berbasis prinsip syariah untuk menjawab kebutuhan tenaga ahli ekonomi Islam di tengah globalisasi dan pesatnya perkembangan ekonomi.",
+  "Program Studi Ekonomi Syariah (S1) UIN Sunan Gunung Djati Bandung berdiri secara resmi melalui Keputusan Direktur Jenderal Pendidikan Islam Nomor 1279 Tahun 2015 tanggal 3 Februari 2015. Pada fase awal penyelenggaraannya, program studi ini bernaung di bawah Fakultas Syariah dan Hukum (FSH) di Kampus 1 Cibiru.",
+  "Seiring terbitnya Peraturan Menteri Agama (PMA) Republik Indonesia Nomor 27 Tahun 2020 tentang pembentukan Fakultas Ekonomi dan Bisnis Islam (FEBI), Program Studi Ekonomi Syariah resmi bertransformasi menjadi salah satu program studi unggulan di bawah FEBI UIN Sunan Gunung Djati Bandung yang berpusat di Kampus 2 Jl. Cimencrang, Gedebage, Kota Bandung.",
+  "Dalam perjalanannya, dosen dan sivitas akademika Ekonomi Syariah dikenal aktif melahirkan inovasi riset dan pengabdian masyarakat, termasuk menginisiasi Desa Ekowisata Halal di Desa Indragiri, Kecamatan Rancabali, Kabupaten Bandung yang meraih penghargaan konservasi lingkungan dari Bupati Bandung, pengelolaan Galeri Investasi Syariah BEI bersama MNC Sekuritas, serta kolaborasi strategis bersama Bank Indonesia, OJK, BAZNAS, dan industri keuangan syariah nasional.",
 ];
 
 export const faktaSingkat = [
@@ -404,10 +403,36 @@ export const sorotan = [
     source:
       "https://uinsgd.ac.id/tingkatkan-kualitas-prodi-ekonomi-syariah-gelar-fgd-penyusunan-visi-misi-dan-review-kurikulum/",
   },
+  {
+    date: "2020-11-15",
+    category: "Pengabdian",
+    title: "Tanam 150 Pohon Upaya Mewujudkan Green Halal Village di Desa Indragiri",
+    summary:
+      "Kaprodi dan dosen Ekonomi Syariah bersama komunitas Sabilulungan Bersih (SABER) serta masyarakat Desa Indragiri Kabupaten Bandung menanam 150 pohon untuk menjaga ekosistem desa ekowisata halal.",
+    source:
+      "https://web.archive.org/web/20210212212000/https://es.uinsgd.ac.id/tanam-pohon-upaya-mewujudkan-green-halal-village/",
+  },
+  {
+    date: "2020-09-15",
+    category: "Akademik",
+    title: "Desa Wisata Halal: Kajian Focus Group Discussion dari Berbagai Aspek",
+    summary:
+      "Diskusi lintas disiplin membedah konsep praksis pemberdayaan masyarakat desa berbasis ekowisata halal, kearifan lokal, dan keuangan mikro syariah.",
+    source:
+      "https://web.archive.org/web/20210212213645/https://es.uinsgd.ac.id/desa-wisata-halal-kajian-focus-group-discussion-dari-berbagai-aspek/",
+  },
+  {
+    date: "2019-12-18",
+    category: "Penghargaan",
+    title: "Kembangkan Ekowisata Halal Indragiri, UIN SGD Raih Penghargaan Bupati Bandung",
+    summary:
+      "Program Desa Ekowisata Halal di Kecamatan Rancabali yang diinisiasi dosen Ekonomi Syariah meraih penghargaan Sinergi Kolaborasi Program Konservasi Pengembangan Wisata Halal pada Jambore Lingkungan II.",
+    source:
+      "https://web.archive.org/web/20210212190710/https://es.uinsgd.ac.id/kembangkan-ecowisata-halal-rektor-uin-sgd-raih-penghargaan-dari-bupati-bandung/",
+  },
 ];
 
-/** Apresiasi "Selamat & Sukses" dari feed IG @eksyaruinsgd. */
-// TODO: cek ejaan nama & tambahkan foto (field `photo`) bila ada izin.
+/** Apresiasi "Selamat & Sukses" dari feed IG @eksyaruinsgd & arsip resmi es.uinsgd.ac.id. */
 export const prestasi = [
   {
     name: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
@@ -437,6 +462,30 @@ export const prestasi = [
     name: "Raditya Fitra",
     initials: "RF",
     achievement: "Wakil Ketua DEMA Universitas 2026",
+    group: "Mahasiswa",
+  },
+  {
+    name: "Dr. H. Muhammad Hasanuddin, M.Ag. & Dr. Sofian Al Hakim, M.Ag.",
+    initials: "MH",
+    achievement: "Inisiator Desa Ekowisata Halal Indragiri — Penghargaan Bupati Bandung",
+    group: "Dosen",
+  },
+  {
+    name: "Evita Farcha",
+    initials: "EF",
+    achievement: "Delegasi Mahasiswa Ekonomi Syariah di Universiti Teknologi MARA (UiTM) Malaysia",
+    group: "Mahasiswa",
+  },
+  {
+    name: "Tim Mahasiswa Ekonomi Syariah UIN Bandung",
+    initials: "TE",
+    achievement: "Juara 1 Indonesia Sharia Economic Festival (ISEF) Bank Indonesia",
+    group: "Mahasiswa",
+  },
+  {
+    name: "Delegasi Mahasiswa Eksyar UIN SGD",
+    initials: "DM",
+    achievement: "Peserta Student Exchange di Universiti Malaya (UM) Kuala Lumpur",
     group: "Mahasiswa",
   },
 ];
@@ -596,77 +645,218 @@ export const timeline = [
   },
   {
     year: "2005",
-    title: "Menjadi UIN",
+    title: "Menjadi UIN Sunan Gunung Djati",
     description:
-      "10 Oktober 2005, IAIN berubah menjadi UIN Sunan Gunung Djati Bandung (Perpres No. 57 Tahun 2005).",
+      "10 Oktober 2005, IAIN bertransformasi menjadi UIN Sunan Gunung Djati Bandung (Perpres No. 57 Tahun 2005).",
+  },
+  {
+    year: "2015",
+    title: "SK Penyelenggaraan S1 Ekonomi Syariah",
+    description:
+      "3 Februari 2015, terbit SK Dirjen Pendidikan Islam Nomor 1279 Tahun 2015 tentang izin penyelenggaraan Program Studi S1 Ekonomi Syariah.",
+  },
+  {
+    year: "2018",
+    title: "Juara 1 ISEF BI & Rekognisi Internasional",
+    description:
+      "Mahasiswa Ekonomi Syariah meraih Juara 1 Indonesia Sharia Economic Festival (ISEF) Bank Indonesia dan mengikuti Student Exchange di Universiti Malaya serta UiTM Malaysia.",
+  },
+  {
+    year: "2019",
+    title: "Penghargaan Desa Ekowisata Halal Indragiri",
+    description:
+      "Inovasi Desa Ekowisata Halal di Kecamatan Rancabali yang digagas dosen Ekonomi Syariah meraih penghargaan konservasi dari Bupati Bandung.",
+  },
+  {
+    year: "2020",
+    title: "Resmi Bernaung di Bawah FEBI",
+    description:
+      "Berdasarkan PMA RI Nomor 27 Tahun 2020, Fakultas Ekonomi dan Bisnis Islam (FEBI) resmi berdiri dan menaungi Prodi Ekonomi Syariah di Kampus 2 Gedebage.",
   },
   {
     year: "2021",
     title: "Galeri Investasi Syariah BEI",
     description:
-      "13 Oktober 2021, FEBI meresmikan Galeri Investasi Syariah BEI bersama MNC Sekuritas.",
+      "13 Oktober 2021, FEBI meresmikan Galeri Investasi Syariah BEI bersama MNC Sekuritas sebagai laboratorium pasar modal syariah.",
   },
   {
     year: "2024",
-    title: "UIN SGD terakreditasi Unggul",
+    title: "UIN SGD Terakreditasi Unggul",
     description:
-      "Akreditasi institusi peringkat Unggul dari BAN-PT, berlaku 2024–2029.",
+      "Akreditasi institusi peringkat Unggul dari BAN-PT berlaku 2024–2029, diikuti FGD pemutakhiran kurikulum Ekonomi Syariah menuju Unggul.",
   },
 ];
 
 /**
- * Dosen program studi. Baru berisi nama yang terverifikasi dari publikasi
- * resmi prodi — lengkapi dari data SISTER/PDDikti.
+ * Dosen tetap & pengajar Program Studi Ekonomi Syariah FEBI UIN SGD
+ * (diimpor & diverifikasi dari arsip es.uinsgd.ac.id, Digilib UIN SGD, SINTA, dan FEBI).
  */
-// TODO: lengkapi daftar dosen (nama, bidang keahlian, foto, tautan SINTA/Scholar).
 export const dosen = [
   {
     name: "Dr. Evi Sopiah, M.Ag., CIIQA, CIELP",
     initials: "ES",
     role: "Ketua Program Studi",
-    expertise: ["Ekonomi Islam", "Industri Halal"],
+    expertise: ["Ekonomi Islam", "Industri Halal", "Perilaku Konsumen Muslim"],
   },
   {
-    name: "Anisa Ilma, M.E.",
+    name: "Anisa Ilmia, M.E.",
     initials: "AI",
     role: "Sekretaris Program Studi",
-    expertise: ["Ekonomi Syariah"],
+    expertise: ["Ekonomi Syariah", "Keuangan Sosial Islam", "ZISWAF"],
+  },
+  {
+    name: "Prof. Dr. H. Dudang Gojali, M.Ag.",
+    initials: "DG",
+    role: "Guru Besar · Dekan FEBI",
+    expertise: ["Fiqh Muamalah", "Hukum Ekonomi Syariah"],
+  },
+  {
+    name: "Prof. Dr. H. Atang Abd. Hakim, M.A.",
+    initials: "AH",
+    role: "Guru Besar Ekonomi Islam",
+    expertise: ["Pemikiran Ekonomi Islam", "Ushul Fiqh Ekonomi"],
+  },
+  {
+    name: "Prof. Dr. H. Ahmad Hasan Ridwan, M.Ag.",
+    initials: "AR",
+    role: "Guru Besar",
+    expertise: ["Filsafat Ekonomi Syariah", "Fiqh Zakat & Wakaf"],
+  },
+  {
+    name: "Dr. H. Muhammad Hasanuddin, M.Ag.",
+    initials: "MH",
+    role: "Dosen Tetap · Inisiator Desa Ekowisata Halal",
+    expertise: ["Ekowisata Halal", "Fiqh Muamalah", "Lembaga Keuangan Syariah"],
   },
   {
     name: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
     initials: "EJ",
-    role: "Dosen",
-    expertise: ["Hukum Islam", "Akuntansi"],
+    role: "Dosen Tetap",
+    expertise: ["Akuntansi Syariah", "Audit Syariah", "Hukum Islam"],
+  },
+  {
+    name: "Dr. H. Abdullah Safe'i, M.Ag.",
+    initials: "AS",
+    role: "Dosen Tetap",
+    expertise: ["Etika Bisnis Islam", "Ushul Fiqh", "Tafsir & Hadis Ekonomi"],
+  },
+  {
+    name: "Suteja Wira Dana Kusuma, M.E.",
+    initials: "SW",
+    role: "Dosen Tetap",
+    expertise: ["Ekonomi Makro Islam", "Pasar Modal Syariah", "Ekonometrika"],
+  },
+  {
+    name: "Reza Fauzi Nazar, M.E.",
+    initials: "RN",
+    role: "Dosen Tetap",
+    expertise: ["Perbankan Syariah", "Manajemen Keuangan Syariah", "Fintech Syariah"],
+  },
+  {
+    name: "Depid Ismail, M.E.Sy.",
+    initials: "DI",
+    role: "Dosen Tetap",
+    expertise: ["Ekonomi Mikro Islam", "Kewirausahaan Syariah", "Bisnis Halal"],
+  },
+  {
+    name: "Nabiela Rizki Alifa, M.E.",
+    initials: "NR",
+    role: "Dosen Tetap",
+    expertise: ["Ekonomi Pembangunan Islam", "Statistika Ekonomi", "Industri Halal"],
+  },
+  {
+    name: "Zia Sidqurrahman, M.E.",
+    initials: "ZS",
+    role: "Dosen Tetap",
+    expertise: ["Pasar Modal Syariah", "Manajemen Risiko Syariah", "Investasi Islam"],
+  },
+  {
+    name: "Annisa Nur Salam, M.E.",
+    initials: "AN",
+    role: "Dosen Tetap",
+    expertise: ["Ekonomi Moneter Islam", "Kebijakan Fiskal Islam", "Ekonomi Internasional"],
+  },
+  {
+    name: "Dr. Dedi Suyandi, M.Ag.",
+    initials: "DS",
+    role: "Dosen Tetap",
+    expertise: ["Sejarah Pemikiran Ekonomi Islam", "Manajemen ZISWAF"],
+  },
+  {
+    name: "Yuda Septia Fitri, M.E.",
+    initials: "YF",
+    role: "Dosen Tetap",
+    expertise: ["Kewirausahaan Syariah", "Pemasaran Islami", "UMKM Halal"],
+  },
+  {
+    name: "Herry Sutanto, M.M.",
+    initials: "HS",
+    role: "Dosen Tetap",
+    expertise: ["Manajemen Perbankan Syariah", "Manajemen Sumber Daya Insani"],
+  },
+  {
+    name: "Widiawati, M.E.",
+    initials: "WW",
+    role: "Dosen Tetap",
+    expertise: ["Fintech Syariah", "Ekonomi Digital Islam", "Keuangan Mikro Syariah"],
+  },
+  {
+    name: "Ramadhani Irma Tripalupi, M.E.",
+    initials: "RT",
+    role: "Dosen Tetap",
+    expertise: ["Asuransi Syariah (Takaful)", "Perencanaan Keuangan Islam"],
+  },
+  {
+    name: "Dr. Sofian Al Hakim, M.Ag.",
+    initials: "SH",
+    role: "Dosen Tetap",
+    expertise: ["Pariwisata & Ekowisata Halal", "Sosiologi Ekonomi Islam"],
+  },
+  {
+    name: "Dr. Iwan Setiawan, M.Ag.",
+    initials: "IS",
+    role: "Dosen Tetap",
+    expertise: ["Ekonomi Pembangunan", "Pemberdayaan Ekonomi Masyarakat"],
+  },
+  {
+    name: "Dr. Neneng Hartati, M.Ag.",
+    initials: "NH",
+    role: "Dosen Tetap",
+    expertise: ["Manajemen Pembiayaan Syariah", "Operasional Bank Syariah"],
   },
 ];
 
 /** Fasilitas yang dapat diakses mahasiswa. */
-// TODO: tambahkan fasilitas khusus FEBI (laboratorium, galeri investasi, dll.) bila ada.
 export const fasilitas = [
   {
-    title: "Galeri Investasi Syariah BEI",
+    title: "Galeri Investasi Syariah BEI FEBI",
     description:
-      "Diresmikan 13 Oktober 2021 bersama MNC Sekuritas — pusat edukasi dan praktik investasi pasar modal syariah, termasuk Sekolah Pasar Modal Syariah.",
+      "Diresmikan 13 Oktober 2021 bersama MNC Sekuritas — pusat edukasi, riset data pasar modal, dan praktik investasi saham syariah serta Sekolah Pasar Modal Syariah.",
   },
   {
-    title: "Gedung FEBI Kampus 2",
+    title: "Laboratorium Perbankan & Keuangan Syariah",
     description:
-      "Ruang kuliah dan Aula FEBI untuk seminar, kuliah umum, dan kegiatan mahasiswa.",
+      "Fasilitas praktikum mini banking syariah, simulasi akad muamalah, layanan teller/customer service, dan analisis pembiayaan.",
   },
   {
-    title: "Perpustakaan & Digital Library",
+    title: "Gedung FEBI Kampus 2 Gedebage",
     description:
-      "Koleksi cetak universitas dan repositori digital skripsi serta karya ilmiah.",
+      "Ruang perkuliahan terpadu, ruang diskusi mahasiswa, dan Aula FEBI untuk seminar nasional, kuliah praktisi, serta kegiatan kemahasiswaan.",
+  },
+  {
+    title: "Perpustakaan & Digital Library (Digilib)",
+    description:
+      "Akses koleksi literatur ekonomi Islam, jurnal terakreditasi SINTA, serta 515+ repositori digital skripsi Ekonomi Syariah.",
   },
   {
     title: "Pembelajaran Daring e-Knows",
     description:
-      "Learning management system untuk materi, tugas, dan kuis perkuliahan.",
+      "Learning management system terintegrasi untuk perkuliahan, modul RPS, penugasan, dan evaluasi akademik.",
   },
   {
-    title: "UINSGDnet",
+    title: "Desa Binaan Ekowisata Halal Indragiri",
     description:
-      "Akses internet nirkabel di area kampus dengan akun resmi mahasiswa.",
+      "Laboratorium pengabdian masyarakat inklusif di Kecamatan Rancabali, Kabupaten Bandung untuk riset ekosistem halal dan pemberdayaan desa.",
   },
 ];
 

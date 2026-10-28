@@ -10,6 +10,7 @@ import { getAkademik } from "@/lib/site/akademik";
 import { getHistory } from "@/lib/site/history";
 import { WebsiteHistory } from "@/components/settings/website-history";
 import { AkademikSyncCard } from "@/components/settings/akademik-sync-card";
+import { LegacyImportCard } from "@/components/settings/legacy-import-card";
 
 export const metadata = { title: "Isi website" };
 
@@ -44,6 +45,7 @@ export default async function WebsiteSettingsPage({
           sini langsung tayang setelah disimpan.
         </p>
       </header>
+      <LegacyImportCard />
       <AkademikSyncCard
         info={
           akademik

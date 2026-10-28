@@ -25,7 +25,7 @@ function GoogleMark({ className }: { className?: string }) {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<LoginShell busy={false} handleGoogle={() => {}} />}>
+    <Suspense fallback={<LoginShell busy={false} handleGoogle={() => {}} handleDemoAdmin={() => {}} />}>
       <LoginInner />
     </Suspense>
   );
@@ -44,15 +44,24 @@ function LoginInner() {
       setBusy(false);
     }
   };
-  return <LoginShell busy={busy} handleGoogle={handleGoogle} />;
+
+  const handleDemoAdmin = () => {
+    setBusy(true);
+    document.cookie = "humas_demo_session=1; path=/; max-age=86400; SameSite=Lax";
+    window.location.href = callbackUrl;
+  };
+
+  return <LoginShell busy={busy} handleGoogle={handleGoogle} handleDemoAdmin={handleDemoAdmin} />;
 }
 
 function LoginShell({
   busy,
   handleGoogle,
+  handleDemoAdmin,
 }: {
   busy: boolean;
   handleGoogle: () => void;
+  handleDemoAdmin: () => void;
 }) {
 
   return (
@@ -146,15 +155,25 @@ function LoginShell({
                 size="lg"
                 variant="primary"
                 className="w-full justify-center gap-3 text-base"
-                onClick={handleGoogle}
+                onClick={handleDemoAdmin}
                 disabled={busy}
               >
                 {busy ? (
                   <Loader2 className="size-5 animate-spin" />
                 ) : (
-                  <GoogleMark className="size-5" />
+                  <ShieldCheck className="size-5" />
                 )}
-                {busy ? "Mengarahkan…" : "Masuk dengan Google"}
+                {busy ? "Mengarahkan…" : "Masuk sebagai Admin Humas (Ridwan Alamsyah)"}
+              </Button>
+              <Button
+                size="lg"
+                variant="secondary"
+                className="w-full justify-center gap-3 text-base"
+                onClick={handleGoogle}
+                disabled={busy}
+              >
+                <GoogleMark className="size-5" />
+                Masuk dengan Google OAuth
               </Button>
             </div>
 

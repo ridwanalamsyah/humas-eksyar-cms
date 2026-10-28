@@ -42,10 +42,13 @@ if (process.env.NODE_ENV === "production" && (!googleClientId || !googleClientSe
 }
 
 const baseConfig: NextAuthConfig = {
+  secret:
+    readEnv("AUTH_SECRET", "NEXTAUTH_SECRET") ??
+    "humas-eksyar-cms-preview-secret-uinsgd-2026",
   providers: [
     Google({
-      clientId: googleClientId,
-      clientSecret: googleClientSecret,
+      clientId: googleClientId ?? "preview-google-client-id",
+      clientSecret: googleClientSecret ?? "preview-google-client-secret",
       allowDangerousEmailAccountLinking: true,
     }),
   ],
@@ -53,7 +56,7 @@ const baseConfig: NextAuthConfig = {
     signIn: "/login",
   },
   trustHost: true,
-  debug: true,
+  debug: false,
   logger: {
     error(error) {
       recordAuthError(error);

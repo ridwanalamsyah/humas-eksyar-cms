@@ -40,13 +40,19 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Humas Eksyar — Ekosistem Organisasi",
+    default: "Humas Eksyar — Website & CMS Ekonomi Syariah UIN SGD",
     template: "%s · Humas Eksyar",
   },
   description:
-    "Humas Eksyar — pusat ekosistem organisasi Ekonomi Syariah UIN SGD: manajemen anggota, content pipeline, AI caption generator, kegiatan, gamifikasi, dan analytics.",
+    "Portal resmi dan CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, direktori dosen, 515+ skripsi Digilib, berita, agenda, dan sanitasi arsip bebas malware.",
   applicationName: "Humas Eksyar",
   authors: [{ name: "Eksyar UIN SGD" }],
+  openGraph: {
+    title: "Humas Eksyar — Website & CMS Ekonomi Syariah UIN SGD",
+    description:
+      "Portal resmi dan CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, direktori dosen, 515+ skripsi Digilib, berita, agenda, dan sanitasi arsip bebas malware.",
+    type: "website",
+  },
   keywords: [
     "Eksyar",
     "Ekonomi Syariah",

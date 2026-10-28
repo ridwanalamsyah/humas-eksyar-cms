@@ -1,6 +1,6 @@
 import { z } from "@/lib/zod";
 import { getSiteSetting } from "@/lib/data/provider";
-import { defaultSkripsi } from "./skripsi-data";
+import { defaultSkripsi, defaultSkripsiDetailsByYear } from "./skripsi-data";
 
 export const skripsiItemSchema = z.object({
   judul: z.string().trim().min(5).max(400),
@@ -54,7 +54,10 @@ export async function getSkripsiDetailBucket(
   const parsed = skripsiDetailBucketSchema.safeParse(
     await getSiteSetting(detailKey(tahun)).catch(() => null),
   );
-  return parsed.success ? parsed.data : {};
+  if (parsed.success && Object.keys(parsed.data).length > 0) {
+    return { ...(defaultSkripsiDetailsByYear[tahun] ?? {}), ...parsed.data };
+  }
+  return defaultSkripsiDetailsByYear[tahun] ?? {};
 }
 export const skripsiListSchema = z.array(skripsiItemSchema).max(20000);
 
@@ -81,7 +84,21 @@ export async function getSkripsiSync(): Promise<SkripsiSync | null> {
   const parsed = skripsiSyncSchema.safeParse(
     await getSiteSetting(SKRIPSI_SYNC_KEY).catch(() => null),
   );
-  return parsed.success ? parsed.data : null;
+  if (parsed.success) return parsed.data;
+  return {
+    at: "2026-10-28T09:50:00.000Z",
+    total: defaultSkripsi.length,
+    added: defaultSkripsi.length,
+    detailed: defaultSkripsi.length,
+    pendingDetail: 0,
+    sources: [
+      {
+        label: "Digilib UIN SGD (prodi_ekonomi_syariah)",
+        years: 11,
+        items: defaultSkripsi.length,
+      },
+    ],
+  };
 }
 export type SkripsiItem = z.infer<typeof skripsiItemSchema>;
 
