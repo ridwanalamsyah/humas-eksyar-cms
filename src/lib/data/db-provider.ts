@@ -305,10 +305,20 @@ export async function listContents(opts?: {
     .select()
     .from(schema.contents)
     .orderBy(desc(schema.contents.updatedAt));
-  const rows = await (filters.length
-    ? query.where(and(...filters))
-    : query);
-  return rows.map((r) => row<ContentItem>(r));
+  const [rows, seedRows] = await Promise.all([
+    filters.length ? query.where(and(...filters)) : query,
+    fixtures.listContents(opts),
+  ]);
+  const dbItems = rows.map((r) => row<ContentItem>(r));
+  const seen = new Set(dbItems.flatMap((c) => [c.id, c.slug]));
+  for (const s of seedRows) {
+    if (!seen.has(s.id) && !seen.has(s.slug)) {
+      dbItems.push(s);
+      seen.add(s.id);
+      seen.add(s.slug);
+    }
+  }
+  return dbItems;
 }
 
 export async function getContent(id: ID): Promise<ContentItem | null> {
@@ -317,7 +327,8 @@ export async function getContent(id: ID): Promise<ContentItem | null> {
     .from(schema.contents)
     .where(eq(schema.contents.id, id))
     .limit(1);
-  return rows[0] ? row<ContentItem>(rows[0]) : null;
+  if (rows[0]) return row<ContentItem>(rows[0]);
+  return fixtures.getContent(id);
 }
 
 /* ------------------------------------------------------------------ */
@@ -396,10 +407,20 @@ export async function listEvents(opts?: {
     .select()
     .from(schema.events)
     .orderBy(asc(schema.events.startsAt));
-  const rows = await (filters.length
-    ? query.where(and(...filters))
-    : query);
-  return rows.map((r) => row<Event>(r));
+  const [rows, seedEvents] = await Promise.all([
+    filters.length ? query.where(and(...filters)) : query,
+    fixtures.listEvents(opts),
+  ]);
+  const dbEvents = rows.map((r) => row<Event>(r));
+  const seen = new Set(dbEvents.flatMap((e) => [e.id, e.slug]));
+  for (const s of seedEvents) {
+    if (!seen.has(s.id) && !seen.has(s.slug)) {
+      dbEvents.push(s);
+      seen.add(s.id);
+      seen.add(s.slug);
+    }
+  }
+  return dbEvents.sort((a, b) => a.startsAt.localeCompare(b.startsAt));
 }
 
 export async function getEvent(id: ID): Promise<Event | null> {
@@ -408,7 +429,8 @@ export async function getEvent(id: ID): Promise<Event | null> {
     .from(schema.events)
     .where(eq(schema.events.id, id))
     .limit(1);
-  return rows[0] ? row<Event>(rows[0]) : null;
+  if (rows[0]) return row<Event>(rows[0]);
+  return fixtures.getEvent(id);
 }
 
 /* ------------------------------------------------------------------ */

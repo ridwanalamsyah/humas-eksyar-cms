@@ -84,7 +84,9 @@ export async function getSkripsiSync(): Promise<SkripsiSync | null> {
   const parsed = skripsiSyncSchema.safeParse(
     await getSiteSetting(SKRIPSI_SYNC_KEY).catch(() => null),
   );
-  if (parsed.success) return parsed.data;
+  if (parsed.success && parsed.data.total >= defaultSkripsi.length) {
+    return parsed.data;
+  }
   return {
     at: "2026-10-28T09:50:00.000Z",
     total: defaultSkripsi.length,
@@ -109,7 +111,20 @@ export async function getSkripsi(): Promise<SkripsiItem[]> {
   const stored = await getSiteSetting(SKRIPSI_KEY).catch(() => null);
   if (stored == null) return defaultSkripsi;
   const parsed = skripsiListSchema.safeParse(stored);
-  return parsed.success ? parsed.data : defaultSkripsi;
+  if (!parsed.success || parsed.data.length === 0) return defaultSkripsi;
+  if (parsed.data.length >= defaultSkripsi.length) return parsed.data;
+  const seen = new Set(
+    parsed.data.map((s) => (s.id ?? s.judul).toLowerCase()),
+  );
+  const merged = [...parsed.data];
+  for (const item of defaultSkripsi) {
+    const key = (item.id ?? item.judul).toLowerCase();
+    if (!seen.has(key)) {
+      merged.push(item);
+      seen.add(key);
+    }
+  }
+  return merged;
 }
 
 /**

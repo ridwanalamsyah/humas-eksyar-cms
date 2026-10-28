@@ -104,5 +104,8 @@ export async function getAkademik(): Promise<AkademikSync | null> {
   const parsed = akademikSchema.safeParse(
     await getSiteSetting(AKADEMIK_KEY).catch(() => null),
   );
-  return parsed.success ? parsed.data : defaultAkademikSync;
+  if (parsed.success && parsed.data.mataKuliah.length > 0) {
+    return parsed.data;
+  }
+  return defaultAkademikSync;
 }
