@@ -34,21 +34,32 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
         result[key] = defVal;
         continue;
       }
-      // Untuk daftar seperti sorotan, prestasi, jurnal, timeline: jika yang tersimpan jauh lebih sedikit dari hasil impor, gabungkan.
-      if (
-        ["sorotan", "prestasi", "jurnal", "publikasi", "timeline", "fasilitas", "dosen"].includes(key) &&
-        data.length < defVal.length
-      ) {
-        const seen = new Set(
-          data.map((item: Record<string, unknown>) =>
-            String(item.name ?? item.title ?? item.judul ?? item.year ?? JSON.stringify(item)).toLowerCase(),
-          ),
-        );
-        const merged = [...data];
-        for (const dItem of defVal as Record<string, unknown>[]) {
-          const idKey = String(
-            dItem.name ?? dItem.title ?? dItem.judul ?? dItem.year ?? JSON.stringify(dItem),
+      // Untuk semua daftar utama: jika yang tersimpan di DB lebih sedikit dari hasil impor default, gabungkan tanpa duplikat.
+      if (data.length < defVal.length) {
+        const getKey = (item: unknown) => {
+          if (!item || typeof item !== "object") return String(item).toLowerCase();
+          const obj = item as Record<string, unknown>;
+          return String(
+            obj.kode ??
+              obj.url ??
+              obj.image ??
+              obj.name ??
+              obj.nama ??
+              obj.title ??
+              obj.judul ??
+              obj.topik ??
+              obj.mk ??
+              obj.kegiatan ??
+              obj.year ??
+              obj.tahun ??
+              obj.q ??
+              JSON.stringify(obj),
           ).toLowerCase();
+        };
+        const seen = new Set(data.map(getKey));
+        const merged = [...data];
+        for (const dItem of defVal) {
+          const idKey = getKey(dItem);
           if (!seen.has(idKey)) {
             merged.push(dItem);
             seen.add(idKey);
@@ -59,7 +70,7 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
       }
     }
 
-    // Untuk objek profil: pastikan sejarah, visi, misi, atau akreditasi yang kosong di DB terisi dari default.
+    // Untuk objek profil: pastikan sejarah, visi, misi, atau tujuan yang kosong di DB terisi dari default.
     if (key === "profil" && data && typeof data === "object" && defVal && typeof defVal === "object") {
       const pData = data as Record<string, unknown>;
       const pDef = defVal as Record<string, unknown>;
@@ -74,15 +85,36 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
           Array.isArray(pData.misi) && pData.misi.length > 0
             ? pData.misi
             : pDef.misi,
+        tujuan:
+          Array.isArray(pData.tujuan) && pData.tujuan.length > 0
+            ? pData.tujuan
+            : pDef.tujuan,
         visi:
           typeof pData.visi === "string" && pData.visi.trim().length > 0
             ? pData.visi
             : pDef.visi,
-        akreditasi:
-          typeof pData.akreditasi === "string" && pData.akreditasi.trim().length > 0
-            ? pData.akreditasi
-            : pDef.akreditasi,
       };
+      continue;
+    }
+
+    // Untuk objek medsos, mutu, dan kontak: jika field string di DB kosong (""), gunakan nilai default.
+    if (
+      ["medsos", "mutu", "kontak"].includes(key) &&
+      data &&
+      typeof data === "object" &&
+      defVal &&
+      typeof defVal === "object"
+    ) {
+      const oData = data as Record<string, unknown>;
+      const oDef = defVal as Record<string, unknown>;
+      const mergedObj: Record<string, unknown> = { ...oDef, ...oData };
+      for (const [k, v] of Object.entries(oDef)) {
+        const cur = oData[k];
+        if (typeof cur === "string" && cur.trim() === "" && typeof v === "string" && v.trim() !== "") {
+          mergedObj[k] = v;
+        }
+      }
+      result[key] = mergedObj;
       continue;
     }
 

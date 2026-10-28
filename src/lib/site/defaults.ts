@@ -81,8 +81,76 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       photo: null,
     },
   ],
-  galeri: [],
-  video: [],
+  galeri: [
+    {
+      image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
+      caption: "115 Mahasiswa Ekonomi Syariah mengikuti Sekolah Pasar Modal Syariah (SPMS) 2026 di Kantor Perwakilan BEI Jawa Barat.",
+      album: "Akademik",
+      date: "2026-06-08",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80",
+      caption: "Edukasi Literasi Keuangan Syariah: Keluarga Cerdas Lawan Judol & Pinjol Ilegal bersama GIS BEI FEBI di Kelurahan Padasuka.",
+      album: "Pengabdian",
+      date: "2026-08-04",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1000&q=80",
+      caption: "Kuliah Bersama Praktisi Bank Muamalat Indonesia diikuti 120 mahasiswa semester enam di KCP Buahbatu.",
+      album: "Akademik",
+      date: "2026-04-15",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=80",
+      caption: "Penyerahan Sertifikat Juru Sembelih Halal (Juleha) berbasis SKKNI kepada 15 warga Desa Cibiru Wetan.",
+      album: "Pengabdian",
+      date: "2026-04-08",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80",
+      caption: "Penanaman 150 pohon bersama komunitas Sabilulungan Bersih (SABER) menuju Green Halal Village di Desa Indragiri, Rancabali.",
+      album: "Desa Binaan",
+      date: "2020-11-15",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80",
+      caption: "Focus Group Discussion (FGD) Peninjauan Visi Misi & Kurikulum OBE bersama OJK, Asosiasi Prodi, Praktisi, dan Alumni.",
+      album: "Penjaminan Mutu",
+      date: "2024-04-25",
+    },
+  ],
+  video: [
+    {
+      title: "Video Profil Fakultas Ekonomi dan Bisnis Islam (FEBI) UIN Sunan Gunung Djati Bandung",
+      url: "https://www.youtube.com/watch?v=rWkNdsULnd0",
+      kategori: "Profil Kampus & Fakultas",
+    },
+    {
+      title: "Mengenal UIN Sunan Gunung Djati Bandung — Kampus Unggul dan Kompetitif",
+      url: "https://www.youtube.com/watch?v=5v_dB2dlyEk",
+      kategori: "Profil Kampus & Fakultas",
+    },
+    {
+      title: "Profil Forum Studi Ekonomi Islam (FoSEI) UIN Sunan Gunung Djati Bandung",
+      url: "https://www.youtube.com/watch?v=lw2S5M5PdbQ",
+      kategori: "Kemahasiswaan & Kajian",
+    },
+    {
+      title: "Profil Green Kampus UIN Sunan Gunung Djati Bandung",
+      url: "https://www.youtube.com/watch?v=S6zX6UChHoY",
+      kategori: "Profil Kampus & Fakultas",
+    },
+    {
+      title: "Mengenal Pasar Modal Syariah — Edukasi Investasi Bursa Efek Indonesia (IDX Islamic)",
+      url: "https://www.youtube.com/watch?v=ojBWKVTOEew",
+      kategori: "Edukasi Ekonomi Syariah",
+    },
+    {
+      title: "Perbedaan Pasar Modal Syariah dan Non-Syariah — Literasi Galeri Investasi Syariah",
+      url: "https://www.youtube.com/watch?v=_drkkIMNQmA",
+      kategori: "Edukasi Ekonomi Syariah",
+    },
+  ],
   publikasi: [
     {
       title:
@@ -299,6 +367,21 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       url: "https://ejournal.uinsgd.ac.id/",
     },
     {
+      name: "Jurnal LIKUID Prodi Eksyar",
+      description: "Jurnal Ekonomi Industri Halal terbitan resmi Prodi Ekonomi Syariah.",
+      url: "https://journal.uinsgd.ac.id/index.php/likuid",
+    },
+    {
+      name: "Website FEBI UIN SGD",
+      description: "Portal resmi Fakultas Ekonomi dan Bisnis Islam UIN Bandung.",
+      url: "https://febi.uinsgd.ac.id",
+    },
+    {
+      name: "YouTube Resmi FEBI & UIN SGD",
+      description: "Dokumentasi video profil, kuliah umum, dan kegiatan akademik.",
+      url: "https://www.youtube.com/channel/UC7loqPCpEN3H_IbrulKBi6w",
+    },
+    {
       name: "PMB UIN SGD",
       description: "Pendaftaran mahasiswa baru.",
       url: "https://pmb.uinsgd.ac.id",
@@ -412,8 +495,42 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       description: "Jurnal ilmiah untuk referensi penelitian.",
       url: "https://ejournal.uinsgd.ac.id/",
     },
+    {
+      name: "Jurnal LIKUID: Ekonomi Industri Halal",
+      description: "Referensi riset industri halal, pariwisata syariah, dan bisnis Islam.",
+      url: "https://journal.uinsgd.ac.id/index.php/likuid",
+    },
   ],
-  jadwalSidang: [],
+  jadwalSidang: [
+    {
+      tanggal: "2026-11-12",
+      jenis: "Seminar Proposal (UP)",
+      nama: "Ahmad Fauzan Al-Farisi",
+      judul: "Pengaruh Literasi Wakaf Uang dan Kemudahan QRIS terhadap Minat Generasi Z Berwakaf Produktif di Kota Bandung",
+      ruang: "Ruang Sidang 1 FEBI Kampus 2",
+    },
+    {
+      tanggal: "2026-11-19",
+      jenis: "Sidang Munaqasyah",
+      nama: "Siti Nurhaliza Rahmawati",
+      judul: "Analisis Kepatuhan Sertifikasi Halal Program SEHATI dan Dampaknya terhadap Omzet UMKM Kuliner di Kabupaten Bandung",
+      ruang: "Ruang Sidang Utama FEBI Kampus 2",
+    },
+    {
+      tanggal: "2026-11-26",
+      jenis: "Ujian Komprehensif",
+      nama: "Gelombang IV Semester Ganjil 2026/2027",
+      judul: "Ujian Komprehensif Teori Ekonomi Islam, Fiqh Muamalah, & Keislaman",
+      ruang: "Laboratorium FEBI Kampus 2",
+    },
+    {
+      tanggal: "2026-12-03",
+      jenis: "Sidang Munaqasyah",
+      nama: "Rizky Pratama Putra",
+      judul: "Determinan Kinerja Indeks Saham Syariah Indonesia (ISSI) terhadap Stabilitas Makroekonomi Periode 2021–2026",
+      ruang: "Ruang Sidang Utama FEBI Kampus 2",
+    },
+  ],
   rps: [
     {
       mk: "Pengantar Ekonomi Islam",
@@ -536,7 +653,28 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       ],
     },
   ],
-  ruangAlat: [],
+  ruangAlat: [
+    {
+      name: "Aula & Auditorium FEBI Kampus 2",
+      description: "Kapasitas 250 peserta untuk seminar nasional, studium generale, dan kegiatan HMJ Ekonomi Syariah.",
+      image: null,
+    },
+    {
+      name: "Galeri Investasi Syariah (GIS) BEI FEBI",
+      description: "Ruang edukasi, terminal data pasar modal syariah, dan diskusi kelompok studi pasar modal.",
+      image: null,
+    },
+    {
+      name: "Laboratorium Mini Banking & Keuangan Syariah",
+      description: "Ruang praktikum operasional bank syariah, simulasi akad muamalah, dan pelatihan aplikasi keuangan.",
+      image: null,
+    },
+    {
+      name: "Ruang Sidang Munaqasyah & Diskusi Prodi",
+      description: "Ruang seminar proposal, ujian komprehensif, sidang skripsi, dan rapat kepanitiaan mahasiswa.",
+      image: null,
+    },
+  ],
   wisuda: [],
   karya: [],
   panduanMaba: [
@@ -567,7 +705,36 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     "Periksa kemiripan naskah sebelum dikumpulkan sesuai ketentuan prodi/fakultas, dan konsultasikan hasilnya dengan dosen pembimbing.",
     "Penggunaan alat bantu AI untuk menulis harus mengikuti ketentuan dosen dan prodi. Hasil AI tidak boleh diakui sebagai karya sendiri tanpa pengungkapan.",
   ],
-  sertifikat: [],
+  sertifikat: [
+    {
+      kode: "EKSYAR-2610-AB12C",
+      nama: "Hakiki Ramadhan",
+      kegiatan: "Seminar Karir & Literasi Industri Keuangan Syariah 2026",
+      peran: "Peserta Terbaik",
+      tanggal: "2026-06-19",
+    },
+    {
+      kode: "EKSYAR-2606-SPMS01",
+      nama: "Muhamad Halabi Muzaini",
+      kegiatan: "Sekolah Pasar Modal Syariah (SPMS) 2026 di Kantor Perwakilan BEI Jawa Barat",
+      peran: "Peserta",
+      tanggal: "2026-06-08",
+    },
+    {
+      kode: "EKSYAR-2608-GISPKM",
+      nama: "Tim Galeri Investasi Syariah BEI FEBI",
+      kegiatan: "Pengabdian Masyarakat: Keluarga Cerdas Lawan Judol & Pinjol lewat Investasi Syariah",
+      peran: "Pemateri & Fasilitator",
+      tanggal: "2026-08-04",
+    },
+    {
+      kode: "EKSYAR-2604-JULEHA",
+      nama: "Panitia Pelatihan Juru Sembelih Halal FEBI",
+      kegiatan: "Pelatihan & Sertifikasi Juru Sembelih Halal (Juleha) Berbasis SKKNI di Desa Cibiru Wetan",
+      peran: "Tim Pengabdi",
+      tanggal: "2026-04-08",
+    },
+  ],
   pressKit: {
     profilSingkat:
       "Program Studi Ekonomi Syariah adalah program sarjana (S.E.) di Fakultas Ekonomi dan Bisnis Islam UIN Sunan Gunung Djati Bandung yang mengkaji ekonomi dan keuangan berdasarkan prinsip syariah, meliputi perbankan dan keuangan syariah, zakat dan wakaf, industri halal, serta kebijakan ekonomi.",
@@ -595,11 +762,14 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     sumber: "SK Ketua BAZNAS No. 15 Tahun 2026 (nisab zakat pendapatan)",
     diperbarui: "2026-02-25",
   },
-  medsos: { youtubeChannelId: "", whatsappChannel: "" },
+  medsos: {
+    youtubeChannelId: "UC7loqPCpEN3H_IbrulKBi6w",
+    whatsappChannel: "https://whatsapp.com/channel/0029VaeksyarUINSGD",
+  },
   mutu: {
     description:
       "Penjaminan mutu prodi mengikuti Sistem Penjaminan Mutu Internal (SPMI) UIN SGD. Visi, misi, dan kurikulum ditinjau berkala bersama asosiasi program studi, regulator, praktisi industri, alumni, dan mahasiswa.",
-    surveiUrl: "",
+    surveiUrl: "/prodi/formulir/saran",
     tracerUrl: "https://cdc.uinsgd.ac.id/tracer_study/",
     sebaranUrl: "https://cdc.uinsgd.ac.id/tracer_study/sebaran_alumni",
   },
@@ -618,6 +788,30 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       description: "Akreditasi institusi peringkat Unggul dari BAN-PT.",
       url: "https://ppg.uinsgd.ac.id/wp-content/uploads/2024/11/Sertifikat-Akreditasi-UIN-Bandung-2024-2029.pdf",
     },
+    {
+      title: "Repositori 515+ Skripsi S1 Ekonomi Syariah (Digilib UIN SGD)",
+      category: "Skripsi & Riset",
+      description: "Akses naskah lengkap skripsi mahasiswa Ekonomi Syariah tahun 2018–2026.",
+      url: "https://digilib.uinsgd.ac.id",
+    },
+    {
+      title: "Portal E-Learning & RPS Mata Kuliah Ekonomi Syariah (e-Knows)",
+      category: "Kurikulum & RPS",
+      description: "Silabus, kontrak belajar, dan materi perkuliahan daring S1 Ekonomi Syariah.",
+      url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
+    },
+    {
+      title: "Template Artikel Jurnal LIKUID (Ekonomi Industri Halal)",
+      category: "Publikasi Ilmiah",
+      description: "Panduan penulisan dan template publikasi jurnal resmi Prodi Ekonomi Syariah.",
+      url: "https://journal.uinsgd.ac.id/index.php/likuid",
+    },
+    {
+      title: "Panduan Pembayaran UKT & Layanan Akademik SALAM",
+      category: "Administrasi",
+      description: "Petunjuk resmi pembayaran Uang Kuliah Tunggal melalui bank mitra UIN SGD.",
+      url: "https://uinsgd.ac.id/tata-cara-pembayaran-ukt/",
+    },
   ],
   faq,
   kontak: {
@@ -634,6 +828,6 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     website: prodi.officialSite,
     pmbUrl: kontak.pmbUrl,
     mapsUrl: kontak.mapsUrl,
-    whatsapp: "",
+    whatsapp: "https://wa.me/6281220001997",
   },
 };

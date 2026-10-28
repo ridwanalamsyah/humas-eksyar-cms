@@ -13,16 +13,30 @@ export const metadata: Metadata = {
 };
 
 export default async function KontakPage() {
-  const { faq, kontak, statusLayanan } = await getSite();
+  const { faq, kontak, medsos, statusLayanan } = await getSite();
   const mapsEmbed = `https://www.google.com/maps?q=${encodeURIComponent(`${kontak.address}, ${kontak.street}`)}&output=embed`;
+  const youtubeHref = medsos.youtubeChannelId
+    ? `https://www.youtube.com/channel/${medsos.youtubeChannelId}`
+    : "https://www.youtube.com/channel/UC7loqPCpEN3H_IbrulKBi6w";
   const sosial = [
     {
       label: "Instagram Prodi",
-      handle: kontak.instagramHandle,
+      handle: kontak.instagramHandle || "@eksyaruinsgd",
       href: kontak.instagram,
     },
-    { label: "TikTok Prodi", handle: "TikTok", href: kontak.tiktok },
+    {
+      label: "YouTube Resmi",
+      handle: "FEBI & Eksyar UIN SGD",
+      href: youtubeHref,
+    },
+    { label: "TikTok Prodi", handle: "@eksyaruinsgd", href: kontak.tiktok },
+    {
+      label: "Saluran WhatsApp",
+      handle: "Info & Agenda Prodi",
+      href: medsos.whatsappChannel,
+    },
     { label: "Linktree", handle: "Semua tautan", href: kontak.linktree },
+    { label: "Jurnal Ilmiah", handle: "Jurnal LIKUID", href: "https://journal.uinsgd.ac.id/index.php/likuid" },
   ].filter((s) => s.href);
   return (
     <>

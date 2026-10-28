@@ -16,11 +16,16 @@ const LINKS = [
 export async function SiteFooter() {
   const { kontak, medsos } = await getSite();
   const year = new Date().getFullYear();
+  const youtubeHref = medsos.youtubeChannelId
+    ? `https://www.youtube.com/channel/${medsos.youtubeChannelId}`
+    : "https://www.youtube.com/channel/UC7loqPCpEN3H_IbrulKBi6w";
   const sosial = [
     { href: kontak.instagram, label: "Instagram" },
+    { href: youtubeHref, label: "YouTube" },
     { href: kontak.tiktok, label: "TikTok" },
     { href: kontak.x, label: "X" },
     { href: medsos.whatsappChannel, label: "WhatsApp" },
+    { href: kontak.linktree, label: "Linktree" },
   ].filter((s) => s.href);
 
   return (

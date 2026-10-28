@@ -37,6 +37,7 @@ import { Reveal } from "@/components/site/reveal";
 import { ScrollWords } from "@/components/site/scroll-words";
 import { SectionHeading } from "@/components/site/section-heading";
 import { StickyStack } from "@/components/site/sticky-stack";
+import { VideoEmbed } from "@/components/site/video-embed";
 
 // Halaman publik: render ulang paling lama tiap 5 menit agar berita & agenda
 // dari CMS ikut ter-update tanpa rebuild.
@@ -162,7 +163,14 @@ export default async function ProdiHomePage() {
             email: kontak.email,
             address: `${kontak.address}, ${kontak.street}`,
             url: kontak.website || undefined,
-            sameAs: [kontak.instagram, kontak.tiktok, kontak.x].filter(Boolean),
+            sameAs: [
+              kontak.instagram,
+              kontak.tiktok,
+              kontak.x,
+              site.medsos.youtubeChannelId
+                ? `https://www.youtube.com/channel/${site.medsos.youtubeChannelId}`
+                : undefined,
+            ].filter(Boolean),
           }).replace(/</g, "\\u003c"),
         }}
       />
@@ -376,8 +384,8 @@ export default async function ProdiHomePage() {
               )}
             </Reveal>
             <ul className="mt-8 grid grid-cols-3 gap-2 sm:gap-3">
-              {ig.map((p) => (
-                <li key={p.permalink}>
+              {ig.map((p, i) => (
+                <li key={`${p.permalink}-${i}`}>
                   <a
                     href={p.permalink}
                     target="_blank"
@@ -395,6 +403,44 @@ export default async function ProdiHomePage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </section>
+      )}
+
+      {/* ─── Video & YouTube ──────────────────────────────── */}
+      {site.video.length > 0 && (
+        <section className="border-t border-hairline px-4 py-24 sm:px-6 sm:py-28">
+          <div className="mx-auto max-w-[1024px]">
+            <Reveal className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading
+                align="left"
+                eyebrow="YouTube & Dokumentasi"
+                title="Video profil & edukasi syariah"
+              />
+              <div className="flex flex-wrap items-center gap-5">
+                {site.medsos.youtubeChannelId && (
+                  <a
+                    href={`https://www.youtube.com/channel/${site.medsos.youtubeChannelId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[15px] font-semibold text-accent hover:underline"
+                  >
+                    Kanal YouTube FEBI ↗
+                  </a>
+                )}
+                <Link
+                  href="/prodi/galeri"
+                  className="text-[15px] font-semibold text-accent hover:underline"
+                >
+                  Semua foto & video ›
+                </Link>
+              </div>
+            </Reveal>
+            <div className="mt-8 grid gap-5 md:grid-cols-2">
+              {site.video.slice(0, 4).map((v) => (
+                <VideoEmbed key={v.url} url={v.url} title={v.title} />
+              ))}
+            </div>
           </div>
         </section>
       )}

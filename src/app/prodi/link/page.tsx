@@ -11,6 +11,9 @@ export const metadata: Metadata = {
 
 export default async function LinkPage() {
   const { kontak, medsos, kampanyePmb } = await getSite();
+  const youtubeHref = medsos.youtubeChannelId
+    ? `https://www.youtube.com/channel/${medsos.youtubeChannelId}`
+    : "https://www.youtube.com/channel/UC7loqPCpEN3H_IbrulKBi6w";
   const links: {
     href: string;
     label: string;
@@ -26,19 +29,58 @@ export default async function LinkPage() {
           },
         ]
       : []),
-    { href: "/", label: "Website Prodi Ekonomi Syariah" },
-    { href: "/prodi/skripsi", label: "Direktori & cek judul skripsi" },
-    { href: "/prodi/kalender", label: "Kalender akademik" },
-    { href: "/prodi/beasiswa", label: "Info beasiswa" },
-    { href: "/prodi/kalender#agenda", label: "Agenda & pendaftaran acara" },
-    { href: "/prodi/layanan#formulir", label: "Formulir online" },
-    { href: "/prodi/alat/zakat", label: "Kalkulator zakat" },
-    { href: "/prodi/mahasiswa-baru", label: "Info mahasiswa baru" },
+    { href: "/", label: "Website Prodi Ekonomi Syariah", primary: !kampanyePmb.aktif },
+    { href: "/prodi/skripsi", label: "Direktori 515+ Skripsi & Cek Judul" },
+    { href: "/prodi/galeri", label: "Galeri Foto & Video YouTube" },
+    { href: "/prodi/kalender", label: "Kalender Akademik & Agenda" },
+    { href: "/prodi/beasiswa", label: "Info Beasiswa Mahasiswa" },
+    { href: "/prodi/layanan#formulir", label: "Formulir Layanan Online" },
+    { href: "/prodi/verifikasi", label: "Verifikasi Sertifikat Kegiatan" },
+    { href: "/prodi/alat/zakat", label: "Kalkulator Zakat & Kamus Syariah" },
+    { href: "/prodi/mahasiswa-baru", label: "Info Mahasiswa Baru (PMB)" },
+    {
+      href: youtubeHref,
+      label: "YouTube Resmi FEBI & Eksyar UIN SGD",
+      external: true,
+    },
+    ...(kontak.instagram
+      ? [
+          {
+            href: kontak.instagram,
+            label: `Instagram Resmi (${kontak.instagramHandle || "@eksyaruinsgd"})`,
+            external: true,
+          },
+        ]
+      : []),
+    ...(kontak.tiktok
+      ? [
+          {
+            href: kontak.tiktok,
+            label: "TikTok Resmi (@eksyaruinsgd)",
+            external: true,
+          },
+        ]
+      : []),
+    {
+      href: "https://journal.uinsgd.ac.id/index.php/likuid",
+      label: "Jurnal LIKUID: Ekonomi Industri Halal",
+      external: true,
+    },
+    {
+      href: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
+      label: "LMS e-Knows Ekonomi Syariah",
+      external: true,
+    },
+    {
+      href: "https://simak.uinsgd.ac.id/beranda/",
+      label: "Portal Akademik SALAM UIN SGD",
+      external: true,
+    },
     ...(kontak.whatsapp
       ? [
           {
             href: kontak.whatsapp,
-            label: "Tanya prodi via WhatsApp",
+            label: "Tanya Prodi via WhatsApp",
             external: true,
           },
         ]
@@ -47,7 +89,7 @@ export default async function LinkPage() {
       ? [
           {
             href: medsos.whatsappChannel,
-            label: "Saluran WhatsApp prodi",
+            label: "Saluran WhatsApp Prodi",
             external: true,
           },
         ]

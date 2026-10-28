@@ -924,8 +924,26 @@ export async function getBioConfig(): Promise<BioConfig> {
     .from(schema.siteSettings)
     .where(eq(schema.siteSettings.key, "bio"))
     .limit(1);
-  if (!rows[0]) return defaultBioConfig;
-  return rows[0].value as BioConfig;
+  if (!rows[0] || !rows[0].value || typeof rows[0].value !== "object") {
+    return defaultBioConfig;
+  }
+  const stored = rows[0].value as Partial<BioConfig>;
+  const storedLinks = Array.isArray(stored.links) ? stored.links : [];
+  const seenIds = new Set(storedLinks.map((l) => l.id));
+  const mergedLinks = [
+    ...storedLinks,
+    ...defaultBioConfig.links.filter((l) => !seenIds.has(l.id)),
+  ];
+  const storedMag = Array.isArray(stored.magazineIssues)
+    ? stored.magazineIssues
+    : [];
+  return {
+    ...defaultBioConfig,
+    ...stored,
+    links: mergedLinks,
+    magazineIssues:
+      storedMag.length > 0 ? storedMag : defaultBioConfig.magazineIssues,
+  };
 }
 
 export async function setBioConfig(value: BioConfig): Promise<BioConfig> {
