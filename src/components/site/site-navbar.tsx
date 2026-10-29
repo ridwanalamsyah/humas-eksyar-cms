@@ -4,22 +4,35 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpRight, ChevronDown, Moon, Search, Sun } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Search } from "lucide-react";
 import { ProdiLogo } from "./prodi-logo";
 import { ProdiCommandPalette } from "./prodi-command-palette";
 import { cn } from "@/lib/utils";
 import { navGroups, prodi, type NavGroup } from "@/lib/site/prodi";
 
+function cleanPath(href: string) {
+  return href.split(/[?#]/)[0] || "/";
+}
+
+function isHomeActive(pathname: string) {
+  return pathname === "/" || pathname === "/prodi";
+}
+
 function groupActive(pathname: string, g: NavGroup) {
-  const hrefs = [g.href, ...(g.items ?? []).map((i) => i.href)].map(
-    (h) => h.split(/[?#]/)[0],
+  const hrefs = [g.href, ...(g.items ?? []).map((i) => i.href)].map(cleanPath);
+  return hrefs.some(
+    (h) => h !== "/" && h !== "/prodi" && (pathname === h || pathname.startsWith(h + "/")),
   );
-  return hrefs.some((h) => pathname === h || pathname.startsWith(h + "/"));
+}
+
+function itemActive(pathname: string, href: string) {
+  const h = cleanPath(href);
+  return pathname === h || (h !== "/prodi" && pathname.startsWith(h + "/"));
 }
 
 /**
  * Navbar website prodi: mega menu bersih di desktop, akordeon layar penuh di ponsel,
- * dilengkapi Command Palette (⌘K / Ctrl+K) dan pengalih tema Terang/Gelap.
+ * dengan indikator halaman aktif yang jelas dan Command Palette (⌘K / Ctrl+K).
  */
 export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
   const pathname = usePathname();
@@ -27,7 +40,6 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
   const [menu, setMenu] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [cmdOpen, setCmdOpen] = useState(false);
-  const [isDark, setIsDark] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const groups = navGroups.map((g) => ({
@@ -43,27 +55,6 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
     setMenu(null);
     setCmdOpen(false);
   }, [pathname]);
-
-  useEffect(() => {
-    const saved = window.localStorage.getItem("eksyar-prodi-theme");
-    if (saved === "dark") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsDark(true);
-    } else if (saved === "light") {
-      setIsDark(false);
-    } else {
-      setIsDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const next = isDark ? "light" : "dark";
-    setIsDark(!isDark);
-    window.localStorage.setItem("eksyar-prodi-theme", next);
-    window.dispatchEvent(
-      new CustomEvent("eksyar-prodi-theme", { detail: next }),
-    );
-  };
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? "hidden" : "";
@@ -97,55 +88,68 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
     closeTimer.current = setTimeout(() => setMenu(null), 130);
   };
 
+  const homeCurrent = isHomeActive(pathname);
+  const layananCurrent =
+    pathname === "/prodi/layanan" || pathname.startsWith("/prodi/formulir");
+
   return (
     <>
       <header className="sticky top-0 z-50" onMouseLeave={scheduleClose}>
         <div
           className={cn(
             "relative z-10 border-b border-hairline backdrop-blur-xl backdrop-saturate-150 transition-colors",
-            open || menu ? "bg-canvas" : "bg-canvas/85",
+            open || menu ? "bg-canvas" : "bg-canvas/90",
           )}
         >
           <nav
             aria-label="Navigasi utama"
-            className="mx-auto flex h-16 max-w-[1060px] items-center justify-between gap-3 px-4 sm:px-6"
+            className="mx-auto flex h-16 max-w-[1080px] items-center justify-between gap-3 px-4 sm:px-6"
           >
             <Link
-              href="/"
+              href="/prodi"
               className="group flex shrink-0 items-center gap-2.5 rounded-full py-1 pr-2 transition-opacity hover:opacity-95"
               aria-label={`${prodi.fullName}, beranda`}
             >
               <ProdiLogo
-                size={36}
+                size={38}
                 priority
                 className="transition-transform duration-300 group-hover:scale-[1.04]"
               />
               <span className="leading-none">
-                <span className="flex items-center gap-1.5">
-                  <span className="text-[14.5px] font-bold tracking-[-0.015em] text-label">
-                    Ekonomi Syariah
-                  </span>
-                  <span className="rounded-md bg-accent-soft px-1.5 py-0.5 text-[10px] font-bold tracking-wide text-accent">
-                    S1
-                  </span>
+                <span className="block text-[15px] font-bold tracking-[-0.015em] text-label">
+                  {prodi.name}
                 </span>
                 <span className="mt-1 block text-[11px] font-medium text-label-2">
-                  FEBI · UIN SGD Bandung
+                  FEBI · {prodi.universityShort}
                 </span>
               </span>
             </Link>
 
-            <ul className="hidden items-center gap-0.5 lg:flex">
+            <ul className="hidden items-center gap-1 lg:flex">
+              <li onMouseEnter={() => openMenu(null)}>
+                <Link
+                  href="/prodi"
+                  aria-current={homeCurrent ? "page" : undefined}
+                  className={cn(
+                    "relative flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13.5px] transition-all",
+                    homeCurrent
+                      ? "bg-accent font-semibold text-white shadow-xs"
+                      : "font-medium text-label/80 hover:bg-mist hover:text-label",
+                  )}
+                >
+                  Beranda
+                </Link>
+              </li>
               {groups.map((g) => {
                 const isActive = groupActive(pathname, g);
                 const isOpen = menu === g.label;
                 const cls = cn(
-                  "flex items-center gap-1 rounded-full px-3.5 py-1.5 text-[13.5px] font-medium transition-colors",
+                  "relative flex items-center gap-1 rounded-full px-3.5 py-1.5 text-[13.5px] transition-all",
                   isActive
-                    ? "bg-accent-soft/80 font-semibold text-accent"
+                    ? "bg-accent font-semibold text-white shadow-xs"
                     : isOpen
-                      ? "bg-mist text-label"
-                      : "text-label/75 hover:bg-mist/70 hover:text-label",
+                      ? "bg-mist font-semibold text-label"
+                      : "font-medium text-label/80 hover:bg-mist hover:text-label",
                 );
                 return (
                   <li
@@ -185,12 +189,12 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
               })}
             </ul>
 
-            <div className="flex shrink-0 items-center gap-1.5 sm:gap-2">
+            <div className="flex shrink-0 items-center gap-2">
               <button
                 type="button"
                 onClick={() => setCmdOpen(true)}
                 aria-label="Cari cepat di website (⌘K)"
-                className="inline-flex h-9 items-center gap-1.5 rounded-full border border-hairline bg-mist/60 px-3 text-[12.5px] font-medium text-label-2 transition-colors hover:border-accent/30 hover:bg-mist hover:text-label"
+                className="inline-flex h-9 items-center gap-1.5 rounded-full border border-hairline bg-mist/70 px-3 text-[12.5px] font-medium text-label-2 transition-colors hover:border-accent/40 hover:bg-mist hover:text-label"
               >
                 <Search className="size-3.5 text-label-2" />
                 <span className="hidden sm:inline">Cari</span>
@@ -198,22 +202,15 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                   ⌘K
                 </kbd>
               </button>
-              <button
-                type="button"
-                onClick={toggleTheme}
-                aria-label={isDark ? "Ubah ke mode terang" : "Ubah ke mode gelap"}
-                title={isDark ? "Mode terang" : "Mode gelap"}
-                className="grid size-9 place-items-center rounded-full border border-hairline bg-mist/60 text-label-2 transition-colors hover:border-accent/30 hover:bg-mist hover:text-label"
-              >
-                {isDark ? (
-                  <Sun className="size-4 text-amber" />
-                ) : (
-                  <Moon className="size-4" />
-                )}
-              </button>
               <Link
                 href="/prodi/layanan"
-                className="hidden h-9 items-center gap-1 rounded-full bg-accent px-3.5 text-[12.5px] font-semibold text-white shadow-xs transition-colors hover:bg-accent-strong md:inline-flex"
+                aria-current={layananCurrent ? "page" : undefined}
+                className={cn(
+                  "hidden h-9 items-center gap-1 rounded-full px-3.5 text-[12.5px] font-semibold shadow-xs transition-colors md:inline-flex",
+                  layananCurrent
+                    ? "bg-navy text-white ring-2 ring-accent/35"
+                    : "bg-accent text-white hover:bg-accent-strong",
+                )}
               >
                 Layanan
                 <ArrowUpRight className="size-3.5" />
@@ -260,7 +257,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: 0.03 }}
-                  className="mx-auto grid max-w-[1060px] grid-cols-[220px_1fr] gap-10 px-6 pb-8 pt-6"
+                  className="mx-auto grid max-w-[1080px] grid-cols-[220px_1fr] gap-10 px-6 pb-8 pt-6"
                 >
                   <div className="flex flex-col justify-between rounded-2xl bg-mist/70 p-5">
                     <div>
@@ -275,27 +272,48 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                       </Link>
                     </div>
                     <p className="mt-4 text-[12px] leading-relaxed text-label-2">
-                      Program Studi S1 Ekonomi Syariah · FEBI UIN Sunan Gunung Djati Bandung
+                      {prodi.fullName} · FEBI {prodi.university}
                     </p>
                   </div>
                   <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5 self-start">
-                    {active.items.map((i) => (
-                      <li key={i.href}>
-                        <Link
-                          href={i.href}
-                          className="group block rounded-xl border border-transparent px-3.5 py-2.5 transition-colors hover:border-hairline hover:bg-mist/70"
-                        >
-                          <span className="block text-[14.5px] font-semibold text-label group-hover:text-accent">
-                            {i.label}
-                          </span>
-                          {i.description && (
-                            <span className="mt-0.5 block text-[12.5px] leading-snug text-label-2">
-                              {i.description}
+                    {active.items.map((i) => {
+                      const subActive =
+                        !i.href.includes("#") && itemActive(pathname, i.href);
+                      return (
+                        <li key={i.href}>
+                          <Link
+                            href={i.href}
+                            aria-current={subActive ? "page" : undefined}
+                            className={cn(
+                              "group block rounded-xl border px-3.5 py-2.5 transition-colors",
+                              subActive
+                                ? "border-accent/35 bg-accent-soft/75"
+                                : "border-transparent hover:border-hairline hover:bg-mist/70",
+                            )}
+                          >
+                            <span
+                              className={cn(
+                                "flex items-center gap-2 text-[14.5px] font-semibold group-hover:text-accent",
+                                subActive ? "text-accent" : "text-label",
+                              )}
+                            >
+                              {subActive && (
+                                <span
+                                  aria-hidden
+                                  className="size-1.5 rounded-full bg-accent"
+                                />
+                              )}
+                              {i.label}
                             </span>
-                          )}
-                        </Link>
-                      </li>
-                    ))}
+                            {i.description && (
+                              <span className="mt-0.5 block text-[12.5px] leading-snug text-label-2">
+                                {i.description}
+                              </span>
+                            )}
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </motion.div>
               </motion.div>
@@ -335,69 +353,94 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                   animate={{ opacity: 1, y: 0 }}
                 >
                   <Link
-                    href="/"
-                    className="block py-3 text-[22px] font-semibold tracking-[-0.02em] text-label"
+                    href="/prodi"
+                    aria-current={homeCurrent ? "page" : undefined}
+                    className={cn(
+                      "block py-3 text-[21px] font-semibold tracking-[-0.02em]",
+                      homeCurrent ? "text-accent" : "text-label",
+                    )}
                   >
                     Beranda
                   </Link>
                 </motion.li>
-                {groups.map((g, idx) => (
-                  <motion.li
-                    key={g.label}
-                    initial={{ opacity: 0, y: -6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.03 * (idx + 1), duration: 0.25 }}
-                  >
-                    {g.items?.length ? (
-                      <>
-                        <button
-                          type="button"
-                          aria-expanded={expanded === g.label}
-                          onClick={() =>
-                            setExpanded(expanded === g.label ? null : g.label)
-                          }
-                          className="flex w-full items-center justify-between py-3 text-left text-[22px] font-semibold tracking-[-0.02em] text-label"
+                {groups.map((g, idx) => {
+                  const isActive = groupActive(pathname, g);
+                  return (
+                    <motion.li
+                      key={g.label}
+                      initial={{ opacity: 0, y: -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.03 * (idx + 1), duration: 0.25 }}
+                    >
+                      {g.items?.length ? (
+                        <>
+                          <button
+                            type="button"
+                            aria-expanded={expanded === g.label}
+                            onClick={() =>
+                              setExpanded(
+                                expanded === g.label ? null : g.label,
+                              )
+                            }
+                            className={cn(
+                              "flex w-full items-center justify-between py-3 text-left text-[21px] font-semibold tracking-[-0.02em]",
+                              isActive ? "text-accent" : "text-label",
+                            )}
+                          >
+                            {g.label}
+                            <ChevronDown
+                              className={cn(
+                                "size-5 text-label-3 transition-transform",
+                                expanded === g.label && "rotate-180",
+                              )}
+                            />
+                          </button>
+                          <AnimatePresence initial={false}>
+                            {expanded === g.label && (
+                              <motion.ul
+                                initial={{ height: 0, opacity: 0 }}
+                                animate={{ height: "auto", opacity: 1 }}
+                                exit={{ height: 0, opacity: 0 }}
+                                className="overflow-hidden pb-3"
+                              >
+                                {g.items.map((i) => {
+                                  const subActive =
+                                    !i.href.includes("#") &&
+                                    itemActive(pathname, i.href);
+                                  return (
+                                    <li key={i.href}>
+                                      <Link
+                                        href={i.href}
+                                        className={cn(
+                                          "block rounded-xl py-2 pl-3 text-[16px] font-medium hover:text-accent",
+                                          subActive
+                                            ? "bg-accent-soft/75 font-semibold text-accent"
+                                            : "text-label-2",
+                                        )}
+                                      >
+                                        {i.label}
+                                      </Link>
+                                    </li>
+                                  );
+                                })}
+                              </motion.ul>
+                            )}
+                          </AnimatePresence>
+                        </>
+                      ) : (
+                        <Link
+                          href={g.href}
+                          className={cn(
+                            "block py-3 text-[21px] font-semibold tracking-[-0.02em]",
+                            isActive ? "text-accent" : "text-label",
+                          )}
                         >
                           {g.label}
-                          <ChevronDown
-                            className={cn(
-                              "size-5 text-label-3 transition-transform",
-                              expanded === g.label && "rotate-180",
-                            )}
-                          />
-                        </button>
-                        <AnimatePresence initial={false}>
-                          {expanded === g.label && (
-                            <motion.ul
-                              initial={{ height: 0, opacity: 0 }}
-                              animate={{ height: "auto", opacity: 1 }}
-                              exit={{ height: 0, opacity: 0 }}
-                              className="overflow-hidden pb-3"
-                            >
-                              {g.items.map((i) => (
-                                <li key={i.href}>
-                                  <Link
-                                    href={i.href}
-                                    className="block rounded-xl py-2 pl-2 text-[16px] font-medium text-label-2 hover:text-accent"
-                                  >
-                                    {i.label}
-                                  </Link>
-                                </li>
-                              ))}
-                            </motion.ul>
-                          )}
-                        </AnimatePresence>
-                      </>
-                    ) : (
-                      <Link
-                        href={g.href}
-                        className="block py-3 text-[22px] font-semibold tracking-[-0.02em] text-label"
-                      >
-                        {g.label}
-                      </Link>
-                    )}
-                  </motion.li>
-                ))}
+                        </Link>
+                      )}
+                    </motion.li>
+                  );
+                })}
               </ul>
               <div className="flex flex-wrap gap-3 px-6 pb-10">
                 <button

@@ -97,6 +97,7 @@ export const mitraSchema = z.object({
   name: text(120),
   description: text(300),
   url: url,
+  logo: image,
 });
 
 export const galeriSchema = z.object({

@@ -51,7 +51,7 @@ export const hero = {
    * dari Media Library CMS). Kosongkan untuk memakai kartu sorotan.
    */
   image:
-    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=85" as
+    "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg" as
       | string
       | null,
   imageAlt:
@@ -369,18 +369,18 @@ export const sorotan = [
     source:
       "https://uinsgd.ac.id/dorong-keluarga-lawan-judol-dan-pinjol-lewat-investasi-syariah-gis-uin-bandung-edukasi-pkk-padasuka/",
     image:
-      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0020.jpg",
   },
   {
     date: "2026-06-08",
     category: "Akademik",
     title: "Sekolah Pasar Modal Syariah 2026 di IDX Jawa Barat",
     summary:
-      "115 mahasiswa semester enam Ekonomi Syariah belajar konsep pasar modal syariah, instrumen investasi, hingga pengelolaan portofolio di Kantor Perwakilan BEI Jawa Barat.",
+      "115 mahasiswa Program Studi Ekonomi Syariah mendalami konsep pasar modal syariah, instrumen investasi saham syariah, hingga pengelolaan portofolio di Kantor Perwakilan BEI Jawa Barat.",
     source:
       "https://uinsgd.ac.id/spms-2026-di-idx-jabar-mahasiswa-ekonomi-syariah-didorong-melek-investasi-islam/",
     image:
-      "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
   },
   {
     date: "2026-09-24",
@@ -390,28 +390,28 @@ export const sorotan = [
       "Program pengabdian kepada masyarakat menuju tata kelola aset masjid yang akuntabel, bekerja sama dengan Bank Indonesia dan Bank Muamalat.",
     source: "https://www.instagram.com/eksyaruinsgd/",
     image:
-      "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/10/IMG-20261027-WA0010.jpg",
   },
   {
     date: "2026-06-19",
     category: "Karir",
-    title: "Seminar Karir 2026",
+    title: "Seminar Karir & Kerja Sama Muamalat Institute 2026",
     summary:
-      "“Menjadi SDM Unggul dan Kompetitif dalam Industri Keuangan Syariah” — menghadirkan Dekan FEBI, Kaprodi, dan praktisi Bank Muamalat di Aula FEBI Kampus 2.",
+      "“Menjadi SDM Unggul dan Kompetitif dalam Industri Keuangan Syariah” — menghadirkan Dekan FEBI, Kaprodi Ekonomi Syariah, dan praktisi Bank Muamalat di Aula FEBI Kampus 2.",
     source: "https://www.instagram.com/eksyaruinsgd/",
     image:
-      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260624-WA0016.jpg",
   },
   {
     date: "2026-04-15",
     category: "Akademik",
-    title: "Kuliah Bersama Praktisi Bank Muamalat",
+    title: "Kuliah Bersama Praktisi Bank Muamalat Indonesia",
     summary:
-      "120 mahasiswa semester enam belajar langsung dari praktisi Bank Muamalat Indonesia di KCP Buahbatu tentang operasional bank syariah, layanan nasabah, dan peluang industri keuangan syariah di era digital.",
+      "120 mahasiswa Ekonomi Syariah belajar langsung dari praktisi Bank Muamalat Indonesia di KCP Buahbatu tentang operasional bank syariah, layanan nasabah, dan peluang industri keuangan syariah di era digital.",
     source:
       "https://uinsgd.ac.id/tingkatkan-wawasan-prodi-ekonomi-syariah-uin-bandung-gelar-kuliah-bersama-praktisi-bank-muamalat/",
     image:
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202807-scaled.jpg",
   },
   {
     date: "2026-04-08",
@@ -422,40 +422,40 @@ export const sorotan = [
     source:
       "https://uinsgd.ac.id/prodi-ekonomi-syariah-uin-bandung-serahkan-sertifikat-juleha-di-cibiru-wetan/",
     image:
-      "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
+  },
+  {
+    date: "2026-04-16",
+    category: "Kemahasiswaan",
+    title: "HMJ Ekonomi Syariah Gelar Eksphoria & Pengembangan Potensi Mahasiswa",
+    summary:
+      "Himpunan Mahasiswa Jurusan (HMJ) Ekonomi Syariah menggelar rangkaian Eksphoria untuk mengasah daya kritis, karya tulis buletin artikel, kreativitas bisnis halal, dan kepemimpinan mahasiswa.",
+    source:
+      "https://uinsgd.ac.id/kembangkan-potensi-diri-hmj-ekonomi-syariah-gelar-eksphoria/",
+    image:
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
   },
   {
     date: "2024-04-25",
     category: "Penjaminan Mutu",
-    title: "FGD Penyusunan Visi Misi & Review Kurikulum",
+    title: "FGD Penyusunan Visi Misi & Review Kurikulum OBE",
     summary:
       "Prodi melibatkan asosiasi program studi, OJK, praktisi industri, alumni, dan mahasiswa untuk meninjau visi, misi, dan kurikulum menuju akreditasi unggul.",
     source:
       "https://uinsgd.ac.id/tingkatkan-kualitas-prodi-ekonomi-syariah-gelar-fgd-penyusunan-visi-misi-dan-review-kurikulum/",
     image:
-      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
   },
   {
-    date: "2020-11-15",
-    category: "Pengabdian",
-    title: "Tanam 150 Pohon Upaya Mewujudkan Green Halal Village di Desa Indragiri",
+    date: "2023-12-12",
+    category: "Kewirausahaan",
+    title: "Ekspos Produk Kewirausahaan & Lomba Business Plan Mahasiswa",
     summary:
-      "Kaprodi dan dosen Ekonomi Syariah bersama komunitas Sabilulungan Bersih (SABER) serta masyarakat Desa Indragiri Kabupaten Bandung menanam 150 pohon untuk menjaga ekosistem desa ekowisata halal.",
+      "Mahasiswa memamerkan inovasi produk kreatif halal dan proposal bisnis syariah pada kegiatan Ekspos Kewirausahaan FEBI UIN Sunan Gunung Djati Bandung.",
     source:
-      "https://web.archive.org/web/20210212212000/https://es.uinsgd.ac.id/tanam-pohon-upaya-mewujudkan-green-halal-village/",
+      "https://uinsgd.ac.id/asah-jiwa-wirausaha-mahasiswa-febi-gelar-ekspos-produk-kewirausahaan-dan-lomba-business-plan/",
     image:
-      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80",
-  },
-  {
-    date: "2020-09-15",
-    category: "Akademik",
-    title: "Desa Wisata Halal: Kajian Focus Group Discussion dari Berbagai Aspek",
-    summary:
-      "Diskusi lintas disiplin membedah konsep praksis pemberdayaan masyarakat desa berbasis ekowisata halal, kearifan lokal, dan keuangan mikro syariah.",
-    source:
-      "https://web.archive.org/web/20210212213645/https://es.uinsgd.ac.id/desa-wisata-halal-kajian-focus-group-discussion-dari-berbagai-aspek/",
-    image:
-      "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2023/12/IMG-20231212-WA0017.jpg",
   },
   {
     date: "2019-12-18",
@@ -466,7 +466,7 @@ export const sorotan = [
     source:
       "https://web.archive.org/web/20210212190710/https://es.uinsgd.ac.id/kembangkan-ecowisata-halal-rektor-uin-sgd-raih-penghargaan-dari-bupati-bandung/",
     image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0022.jpg",
   },
 ];
 
@@ -478,7 +478,7 @@ export const prestasi = [
     achievement: "Artikel terbit di jurnal internasional terindeks Scopus Q2",
     group: "Dosen",
     photo:
-      "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
   },
   {
     name: "Hakiki Ramadhan",
@@ -486,7 +486,7 @@ export const prestasi = [
     achievement: "Tulisan dimuat di Islamic Finance News (IFN)",
     group: "Eksyar Appreciation",
     photo:
-      "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00131-scaled.jpg",
   },
   {
     name: "Muhammad Azzam Abdillah",
@@ -494,7 +494,7 @@ export const prestasi = [
     achievement: "Juara 1 Bandung Open Tournament Pencak Silat",
     group: "Mahasiswa",
     photo:
-      "https://images.unsplash.com/photo-1578269174936-2709b6aeb913?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
   },
   {
     name: "Muhamad Halabi Muzaini",
@@ -502,7 +502,7 @@ export const prestasi = [
     achievement: "Ketua DEMA Fakultas Ekonomi dan Bisnis Islam 2026",
     group: "Mahasiswa",
     photo:
-      "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0027.jpg",
   },
   {
     name: "Raditya Fitra",
@@ -510,7 +510,7 @@ export const prestasi = [
     achievement: "Wakil Ketua DEMA Universitas 2026",
     group: "Mahasiswa",
     photo:
-      "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260608-WA0010.jpg",
   },
   {
     name: "Dr. H. Muhammad Hasanuddin, M.Ag. & Dr. Sofian Al Hakim, M.Ag.",
@@ -518,7 +518,7 @@ export const prestasi = [
     achievement: "Inisiator Desa Ekowisata Halal Indragiri — Penghargaan Bupati Bandung",
     group: "Dosen",
     photo:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
   },
   {
     name: "Evita Farcha",
@@ -526,7 +526,7 @@ export const prestasi = [
     achievement: "Delegasi Mahasiswa Ekonomi Syariah di Universiti Teknologi MARA (UiTM) Malaysia",
     group: "Mahasiswa",
     photo:
-      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202659-scaled.jpg",
   },
   {
     name: "Tim Mahasiswa Ekonomi Syariah UIN Bandung",
@@ -534,7 +534,7 @@ export const prestasi = [
     achievement: "Juara 1 Indonesia Sharia Economic Festival (ISEF) Bank Indonesia",
     group: "Mahasiswa",
     photo:
-      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2023/12/IMG-20231212-WA0017.jpg",
   },
   {
     name: "Delegasi Mahasiswa Eksyar UIN SGD",
@@ -542,7 +542,7 @@ export const prestasi = [
     achievement: "Peserta Student Exchange di Universiti Malaya (UM) Kuala Lumpur",
     group: "Mahasiswa",
     photo:
-      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0022.jpg",
   },
 ];
 
@@ -553,43 +553,59 @@ export const prestasi = [
 export const mitra = [
   {
     name: "Bursa Efek Indonesia",
+    logo: "/prodi/mitra/idx.png",
     description:
       "Galeri Investasi Syariah BEI FEBI (bersama MNC Sekuritas, 2021) dan Sekolah Pasar Modal Syariah.",
     url: "https://www.idx.co.id/",
   },
   {
     name: "Bank Muamalat Indonesia",
+    logo: "/prodi/mitra/muamalat.svg",
     description:
-      "Kuliah praktisi, seminar karir, dan kesempatan magang di jaringan kantor cabang.",
+      "Kuliah praktisi, seminar karir, kerja sama Muamalat Institute, dan magang di jaringan kantor cabang.",
     url: "https://www.bankmuamalat.co.id/",
   },
   {
     name: "Bank Indonesia Jawa Barat",
+    logo: "/prodi/mitra/bi.png",
     description:
-      "Kolaborasi edukasi ekonomi syariah dan program Beasiswa Bank Indonesia.",
+      "Kolaborasi edukasi ekonomi syariah, ISEF/FESyar, dan program Beasiswa Bank Indonesia (GenBI).",
     url: "https://www.bi.go.id/",
   },
   {
     name: "bank bjb syariah",
+    logo: "/prodi/mitra/bjbsyariah.png",
     description:
-      "Perjanjian kerja sama Program Duta Maslahah dengan UIN SGD (Agustus 2025).",
+      "Perjanjian kerja sama Program Duta Maslahah dan literasi perbankan syariah dengan UIN SGD.",
     url: "https://www.bjbsyariah.co.id/",
   },
   {
     name: "Otoritas Jasa Keuangan",
+    logo: "/prodi/mitra/ojk.png",
     description:
-      "Narasumber FGD kurikulum dan seminar literasi keuangan syariah.",
+      "Narasumber FGD kurikulum, pengawasan industri keuangan non-bank syariah, dan edukasi konsumen.",
     url: "https://www.ojk.go.id/",
   },
   {
     name: "BAZNAS",
-    description: "UIN SGD termasuk kampus mitra Beasiswa Cendekia BAZNAS.",
+    logo: "/prodi/mitra/baznas.svg",
+    description:
+      "Mitra riset manajemen ZISWAF dan program Beasiswa Cendekia BAZNAS bagi mahasiswa UIN SGD.",
     url: "https://baznas.go.id/",
   },
   {
-    name: "Bank Tabungan Negara",
-    description: "Mitra kerja sama UIN Sunan Gunung Djati Bandung.",
+    name: "Bank Tabungan Negara (BTN Syariah)",
+    logo: "/prodi/mitra/btn.svg",
+    description:
+      "Mitra strategis layanan perbankan kampus dan pengembangan ekosistem pembiayaan perumahan syariah.",
     url: "https://www.btn.co.id/",
+  },
+  {
+    name: "MNC Sekuritas",
+    logo: "/prodi/mitra/mncsekuritas.png",
+    description:
+      "Mitra pendiri Galeri Investasi Syariah (GIS) BEI FEBI UIN SGD dan fasilitator akun saham syariah.",
+    url: "https://www.mncsekuritas.id/",
   },
 ];
 
@@ -975,42 +991,42 @@ export const fasilitas = [
     description:
       "Diresmikan 13 Oktober 2021 bersama MNC Sekuritas — pusat edukasi, riset data pasar modal, dan praktik investasi saham syariah serta Sekolah Pasar Modal Syariah.",
     image:
-      "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
   },
   {
     title: "Laboratorium Perbankan & Keuangan Syariah",
     description:
       "Fasilitas praktikum mini banking syariah, simulasi akad muamalah, layanan teller/customer service, dan analisis pembiayaan.",
     image:
-      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202807-scaled.jpg",
   },
   {
     title: "Gedung FEBI Kampus 2 Gedebage",
     description:
       "Ruang perkuliahan terpadu, ruang diskusi mahasiswa, dan Aula FEBI untuk seminar nasional, kuliah praktisi, serta kegiatan kemahasiswaan.",
     image:
-      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260624-WA0016.jpg",
   },
   {
     title: "Perpustakaan & Digital Library (Digilib)",
     description:
       "Akses koleksi literatur ekonomi Islam, jurnal terakreditasi SINTA, serta 515+ repositori digital skripsi Ekonomi Syariah.",
     image:
-      "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
   },
   {
     title: "Pembelajaran Daring e-Knows",
     description:
       "Learning management system terintegrasi untuk perkuliahan, modul RPS, penugasan, dan evaluasi akademik.",
     image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/10/IMG-20261006-WA0030-scaled.jpg",
   },
   {
     title: "Desa Binaan Ekowisata Halal Indragiri",
     description:
       "Laboratorium pengabdian masyarakat inklusif di Kecamatan Rancabali, Kabupaten Bandung untuk riset ekosistem halal dan pemberdayaan desa.",
     image:
-      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
   },
 ];
 
@@ -1112,9 +1128,9 @@ export const kontak = {
   x: "https://x.com/eksyaruinsgd",
   febiInstagram: "https://www.instagram.com/febiuinsgdbdg/",
   pmbUrl: "https://pmb.uinsgd.ac.id",
-  mapsUrl: "https://maps.google.com/?q=UIN+Sunan+Gunung+Djati+Bandung",
+  mapsUrl: "https://www.google.com/maps?q=-6.935585,107.717612",
   mapsEmbed:
-    "https://www.google.com/maps?q=UIN+Sunan+Gunung+Djati+Bandung&output=embed",
+    "https://maps.google.com/maps?q=-6.935585,107.717612+(Gedung+FEBI+Kampus+2+UIN+Sunan+Gunung+Djati+Bandung)&t=&z=16&ie=UTF8&iwloc=B&output=embed",
 };
 
 export type NavItem = { href: string; label: string; description?: string };
@@ -1154,8 +1170,8 @@ export const navGroups: NavGroup[] = [
     items: [
       {
         href: "/prodi/akademik",
-        label: "Kurikulum",
-        description: "Mata kuliah, peminatan, RPS",
+        label: "Kurikulum & Mata Kuliah",
+        description: "Kurikulum Semester 1–8, peminatan, RPS",
       },
       {
         href: "/prodi/kalender",
@@ -1164,13 +1180,8 @@ export const navGroups: NavGroup[] = [
       },
       {
         href: "/prodi/skripsi",
-        label: "Direktori skripsi",
-        description: "Telusuri skripsi & cek kemiripan judul",
-      },
-      {
-        href: "/prodi/skripsi/pojok",
-        label: "Pojok skripsi",
-        description: "Topik, jadwal sidang, panduan",
+        label: "Direktori & Pojok Skripsi",
+        description: "Telusuri 515+ skripsi, cek judul, topik & sidang",
       },
       {
         href: "/prodi/penelitian",
@@ -1188,6 +1199,11 @@ export const navGroups: NavGroup[] = [
     label: "Mahasiswa",
     href: "/prodi/kemahasiswaan",
     items: [
+      {
+        href: "/prodi/kemahasiswaan",
+        label: "Kegiatan & HMJ Eksyar",
+        description: "HMJ, FoSEI, GIS BEI, dan apresiasi mahasiswa",
+      },
       {
         href: "/prodi/mahasiswa-baru",
         label: "Calon mahasiswa baru",
@@ -1217,22 +1233,22 @@ export const navGroups: NavGroup[] = [
       {
         href: "/prodi/berita",
         label: "Berita & pengumuman",
-        description: "Kabar dan informasi resmi",
+        description: "Kabar dan informasi resmi prodi",
+      },
+      {
+        href: "/prodi/berita?kategori=buletin_hmj",
+        label: "Buletin Artikel HMJ",
+        description: "Program kolaborasi artikel bersama HMJ Eksyar",
       },
       {
         href: "/prodi/galeri",
-        label: "Galeri",
-        description: "Foto dan video kegiatan",
+        label: "Galeri & Video",
+        description: "Dokumentasi foto dan video kegiatan Eksyar",
       },
       {
         href: "/prodi/layanan",
         label: "Layanan & formulir",
-        description: "Formulir, unduhan, FAQ",
-      },
-      {
-        href: "/prodi/verifikasi",
-        label: "Verifikasi sertifikat",
-        description: "Cek keaslian sertifikat kegiatan",
+        description: "Formulir layanan, unduhan, FAQ",
       },
     ],
   },

@@ -383,8 +383,9 @@ body {
   --color-navy: #1d3d55;
 }
 
-/* Mode gelap website prodi: mengikuti pengaturan sistem pengunjung atau pilihan manual */
+/* Mode gelap website prodi: otomatis mengikuti pengaturan sistem perangkat pengunjung */
 @media (prefers-color-scheme: dark) {
+  .prodi-site,
   [data-site-theme="system"],
   [data-site-theme=""] {
     --color-canvas: #0f1c21;
@@ -400,21 +401,6 @@ body {
     --color-sand: #e9cf98;
     --color-navy: #0b2433;
   }
-}
-
-[data-site-theme="dark"] {
-  --color-canvas: #0f1c21;
-  --color-mist: #16282e;
-  --color-sky: #1b3139;
-  --color-label: #e6f0f2;
-  --color-label-2: #a9bec4;
-  --color-label-3: #829aa1;
-  --color-hairline: #26404a;
-  --color-accent: #2f8f87;
-  --color-accent-strong: #3aa59c;
-  --color-accent-soft: #173a3c;
-  --color-sand: #e9cf98;
-  --color-navy: #0b2433;
 }
 
 /* Cetak: tanpa navigasi, warna hemat tinta, tautan tetap terbaca */

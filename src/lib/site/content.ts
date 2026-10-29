@@ -14,9 +14,14 @@ export async function listPublishedNews(): Promise<ContentItem[]> {
 
 /** Rubrik CMS yang ditampilkan sebagai "Pengumuman", bukan berita. */
 export const ANNOUNCEMENT_RUBRIC = "pengumuman";
+export const BULETIN_HMJ_RUBRIC = "buletin_hmj";
 
 export function isAnnouncement(item: ContentItem) {
   return item.rubric === ANNOUNCEMENT_RUBRIC;
+}
+
+export function isBuletinHmj(item: ContentItem) {
+  return item.rubric === BULETIN_HMJ_RUBRIC;
 }
 
 export async function findPublishedNews(
@@ -53,6 +58,7 @@ export function contentExcerpt(item: ContentItem, max = 180): string {
 }
 
 const RUBRIC_LABELS: Record<string, string> = {
+  buletin_hmj: "Buletin Artikel HMJ",
   pengumuman: "Pengumuman",
   rilis_pers: "Rilis Pers",
   dokumentasi: "Kegiatan",

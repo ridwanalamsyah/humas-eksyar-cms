@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, ChevronRight, Search } from "lucide-react";
+import { ArrowUpRight, ChevronRight, RefreshCw, Search } from "lucide-react";
 import { PageHeader } from "@/components/site/page-header";
+import { SectionHeading } from "@/components/site/section-heading";
+import { getSite } from "@/lib/site/get-site";
+import { todayJakarta } from "@/lib/site/kalender";
+import { normName } from "@/lib/site/names";
 import { prodi } from "@/lib/site/prodi";
 import {
   getSkripsi,
@@ -11,11 +15,10 @@ import {
   type SkripsiItem,
 } from "@/lib/site/skripsi";
 import { cn } from "@/lib/utils";
-import { normName } from "@/lib/site/names";
 
 export const metadata: Metadata = {
-  title: "Direktori Skripsi",
-  description: `Telusuri skripsi mahasiswa ${prodi.fullName} ${prodi.university} dan periksa kemiripan rencana judul.`,
+  title: "Direktori & Pojok Skripsi",
+  description: `Telusuri 515+ skripsi mahasiswa ${prodi.fullName} ${prodi.university}, periksa kemiripan judul, serta lihat rekomendasi topik dan jadwal sidang.`,
 };
 
 export const revalidate = 300;
@@ -39,7 +42,6 @@ function level(score: number) {
   return { label: "Terkait", cls: "bg-mist text-label-2" };
 }
 
-/** Bangun URL halaman ini dengan parameter yang diganti. */
 function href(params: Record<string, string | number | undefined>) {
   const sp = new URLSearchParams();
   for (const [k, v] of Object.entries(params))
@@ -51,8 +53,14 @@ function href(params: Record<string, string | number | undefined>) {
 export default async function SkripsiPage({ searchParams }: Props) {
   const sp = await searchParams;
   const q = (sp.q ?? "").slice(0, 300).trim();
-  const mode = sp.mode === "cek" ? "cek" : "telusuri";
-  const [list, sync] = await Promise.all([getSkripsi(), getSkripsiSync()]);
+  const mode =
+    sp.mode === "cek" ? "cek" : sp.mode === "pojok" ? "pojok" : "telusuri";
+  const [list, sync, site] = await Promise.all([
+    getSkripsi(),
+    getSkripsiSync(),
+    getSite(),
+  ]);
+  const { topikSkripsi, jadwalSidang, panduanSkripsi, integritas } = site;
 
   const years = [...new Set(list.map((s) => s.tahun))].sort((a, b) => b - a);
   const counts = new Map<number, number>();
@@ -61,7 +69,6 @@ export default async function SkripsiPage({ searchParams }: Props) {
   const pb = (sp.pembimbing ?? "").slice(0, 160).trim();
   const pbKey = normName(pb);
 
-  // Mode telusuri: filter kata kunci (semua kata harus muncul) + tahun.
   let browse: SkripsiItem[] = [];
   if (mode === "telusuri") {
     const words = q.toLowerCase().split(/\s+/).filter(Boolean);
@@ -83,32 +90,69 @@ export default async function SkripsiPage({ searchParams }: Props) {
   const results = mode === "cek" && q ? searchSkripsi(list, q) : [];
   const tooShort = mode === "cek" && q && tokens(q).size < 2;
 
+  const today = todayJakarta();
+  const sidang = [...jadwalSidang]
+    .filter((j) => j.tanggal >= today)
+    .sort((a, b) => a.tanggal.localeCompare(b.tanggal));
+  const perDosen = new Map<string, typeof topikSkripsi>();
+  for (const t of topikSkripsi)
+    perDosen.set(t.dosen || "Prodi", [
+      ...(perDosen.get(t.dosen || "Prodi") ?? []),
+      t,
+    ]);
+
   return (
     <>
       <PageHeader
-        crumb="Direktori skripsi"
-        title="Direktori skripsi"
-        description="Telusuri skripsi mahasiswa Ekonomi Syariah dari Digital Library UIN SGD, atau cek kemiripan rencana judulmu sebelum mengajukan proposal."
+        crumb="Direktori & Pojok Skripsi"
+        title="Direktori & Pojok Skripsi"
+        description="Pusat terpadu 515+ arsip skripsi Digilib UIN SGD, pengecekan kemiripan judul baru, rekomendasi topik pembimbing, dan jadwal sidang."
       />
 
-      <section className="px-4 pb-24 sm:px-6 sm:pb-32">
-        <div className="mx-auto max-w-[860px]">
-          {/* Tab mode */}
-          <div className="mx-auto flex w-fit rounded-full bg-mist p-1">
+      <section className="px-4 pb-24 sm:px-6 sm:pb-28">
+        <div className="mx-auto max-w-[960px]">
+          {/* Indikator Sinkronisasi Otomatis Berkelanjutan */}
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[16px] border border-accent/25 bg-accent-soft/45 px-4 py-3 text-[13px] text-label-2">
+            <div className="flex items-center gap-2">
+              <RefreshCw className="size-4 shrink-0 text-accent" />
+              <span>
+                <strong className="font-semibold text-label">
+                  Sinkronisasi Otomatis Aktif:
+                </strong>{" "}
+                Terhubung ke repositori{" "}
+                <code className="rounded bg-canvas px-1.5 py-0.5 text-[11.5px] font-semibold text-accent">
+                  digilib.uinsgd.ac.id
+                </code>{" "}
+                (Cron harian 02:17 UTC & tombol sinkron di CMS).
+              </span>
+            </div>
+            <span className="font-semibold text-accent">
+              {list.length.toLocaleString("id-ID")} Skripsi Terindeks
+              {sync
+                ? ` · ${new Date(sync.at).toLocaleDateString("id-ID", { dateStyle: "medium" })}`
+                : ""}
+            </span>
+          </div>
+
+          {/* 3 Tab Terpadu: Telusuri Skripsi, Cek Kemiripan Judul, & Pojok Skripsi */}
+          <div className="mx-auto flex w-fit flex-wrap justify-center gap-1 rounded-full bg-mist p-1">
             {(
               [
-                ["telusuri", "Telusuri skripsi"],
-                ["cek", "Cek kemiripan judul"],
+                ["telusuri", "Telusuri Direktori Skripsi"],
+                ["cek", "Cek Kemiripan Judul"],
+                ["pojok", "Pojok Skripsi (Topik & Sidang)"],
               ] as const
             ).map(([m, label]) => (
               <Link
                 key={m}
-                href={href({ mode: m === "cek" ? "cek" : undefined })}
+                href={href({
+                  mode: m === "telusuri" ? undefined : m,
+                })}
                 aria-current={mode === m ? "page" : undefined}
                 className={cn(
-                  "rounded-full px-5 py-2 text-[14px] font-semibold transition-colors",
+                  "rounded-full px-5 py-2 text-[13.5px] font-semibold transition-colors",
                   mode === m
-                    ? "bg-canvas text-label shadow-sm"
+                    ? "bg-accent text-white shadow-xs"
                     : "text-label-2 hover:text-label",
                 )}
               >
@@ -117,184 +161,339 @@ export default async function SkripsiPage({ searchParams }: Props) {
             ))}
           </div>
 
-          <form
-            action="/prodi/skripsi"
-            className="mt-6 flex items-center gap-2 rounded-full border border-hairline bg-canvas p-2 pl-5 focus-within:border-accent focus-within:ring-4 focus-within:ring-accent/10"
-          >
-            {mode === "cek" && <input type="hidden" name="mode" value="cek" />}
-            {mode === "telusuri" && tahun && (
-              <input type="hidden" name="tahun" value={tahun} />
-            )}
-            {mode === "telusuri" && pb && (
-              <input type="hidden" name="pembimbing" value={pb} />
-            )}
-            <Search className="size-5 shrink-0 text-label-3" />
-            <input
-              name="q"
-              defaultValue={q}
-              maxLength={300}
-              placeholder={
-                mode === "cek"
-                  ? "Tulis rencana judul, mis. pengaruh literasi keuangan syariah terhadap minat menabung"
-                  : "Cari judul, nama, atau kata kunci (mis. zakat, BSI, halal)"
-              }
-              className="min-w-0 flex-1 bg-transparent py-2 text-[16px] text-label outline-none placeholder:text-label-3"
-            />
-            <button
-              type="submit"
-              className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-[15px] font-semibold text-white hover:bg-accent-strong"
-            >
-              {mode === "cek" ? "Cek" : "Cari"}
-            </button>
-          </form>
-          <p className="mt-3 text-center text-[13px] text-label-3">
-            {list.length.toLocaleString("id-ID")} skripsi
-            {sync
-              ? ` · diperbarui dari Digilib ${new Date(sync.at).toLocaleDateString("id-ID", { dateStyle: "long" })}`
-              : ""}
-          </p>
-
-          {mode === "telusuri" ? (
+          {mode !== "pojok" ? (
             <>
-              {years.length > 1 && (
-                <div className="-mx-4 mt-8 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
-                  <YearChip
-                    href={href({ pembimbing: pb, q })}
-                    active={!tahun}
-                    label="Semua"
-                    count={list.length}
-                  />
-                  {years.map((y) => (
-                    <YearChip
-                      key={y}
-                      href={href({ pembimbing: pb, q, tahun: y })}
-                      active={tahun === y}
-                      label={String(y)}
-                      count={counts.get(y) ?? 0}
-                    />
-                  ))}
-                </div>
-              )}
-
-              {pb && (
-                <p className="mt-6 flex flex-wrap items-center gap-2 rounded-[16px] bg-accent-soft px-4 py-3 text-[14px] text-label">
-                  Skripsi bimbingan <span className="font-bold">{pb}</span>
-                  <Link
-                    href={href({ q, tahun })}
-                    className="ml-auto font-semibold text-accent hover:underline"
-                  >
-                    Hapus filter ×
-                  </Link>
-                </p>
-              )}
-              <p className="mt-8 text-[14px] text-label-3">
-                {browse.length.toLocaleString("id-ID")} hasil
-                {pages > 1 && ` · halaman ${page} dari ${pages}`}
-              </p>
-              {pageItems.length ? (
-                <ul className="mt-3 divide-y divide-hairline overflow-hidden rounded-[20px] border border-hairline bg-canvas">
-                  {pageItems.map((s, i) => (
-                    <SkripsiRow key={`${s.url ?? s.judul}-${i}`} item={s} />
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-3 rounded-[20px] border border-dashed border-hairline p-10 text-center text-[16px] text-label-2">
-                  Tidak ada skripsi yang cocok. Coba kata kunci lain.
-                </p>
-              )}
-
-              {pages > 1 && (
-                <nav
-                  aria-label="Halaman"
-                  className="mt-6 flex items-center justify-center gap-2"
+              <form
+                action="/prodi/skripsi"
+                className="mt-6 flex items-center gap-2 rounded-full border border-hairline bg-canvas p-2 pl-5 focus-within:border-accent focus-within:ring-4 focus-within:ring-accent/10"
+              >
+                {mode === "cek" && (
+                  <input type="hidden" name="mode" value="cek" />
+                )}
+                {mode === "telusuri" && tahun && (
+                  <input type="hidden" name="tahun" value={tahun} />
+                )}
+                {mode === "telusuri" && pb && (
+                  <input type="hidden" name="pembimbing" value={pb} />
+                )}
+                <Search className="size-5 shrink-0 text-label-3" />
+                <input
+                  name="q"
+                  defaultValue={q}
+                  maxLength={300}
+                  placeholder={
+                    mode === "cek"
+                      ? "Tulis rencana judul, mis. pengaruh literasi keuangan syariah terhadap minat menabung"
+                      : "Cari judul, nama penulis, dosen pembimbing, atau kata kunci (mis. zakat, BSI, halal)"
+                  }
+                  className="min-w-0 flex-1 bg-transparent py-2 text-[15.5px] text-label outline-none placeholder:text-label-3"
+                />
+                <button
+                  type="submit"
+                  className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-[14.5px] font-semibold text-white hover:bg-accent-strong"
                 >
-                  <PageLink
-                    href={
-                      page > 1
-                        ? href({ pembimbing: pb, q, tahun, hal: page - 1 })
-                        : undefined
-                    }
-                    label="‹ Sebelumnya"
-                  />
-                  <span className="px-3 text-[14px] tabular-nums text-label-2">
-                    {page} / {pages}
-                  </span>
-                  <PageLink
-                    href={
-                      page < pages
-                        ? href({ pembimbing: pb, q, tahun, hal: page + 1 })
-                        : undefined
-                    }
-                    label="Berikutnya ›"
-                  />
-                </nav>
+                  {mode === "cek" ? "Cek Judul" : "Cari"}
+                </button>
+              </form>
+
+              {mode === "telusuri" ? (
+                <>
+                  {years.length > 1 && (
+                    <div className="-mx-4 mt-7 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
+                      <YearChip
+                        href={href({ pembimbing: pb, q })}
+                        active={!tahun}
+                        label="Semua"
+                        count={list.length}
+                      />
+                      {years.map((y) => (
+                        <YearChip
+                          key={y}
+                          href={href({ pembimbing: pb, q, tahun: y })}
+                          active={tahun === y}
+                          label={String(y)}
+                          count={counts.get(y) ?? 0}
+                        />
+                      ))}
+                    </div>
+                  )}
+
+                  {pb && (
+                    <p className="mt-6 flex flex-wrap items-center gap-2 rounded-[16px] bg-accent-soft px-4 py-3 text-[14px] text-label">
+                      Skripsi bimbingan <span className="font-bold">{pb}</span>
+                      <Link
+                        href={href({ q, tahun })}
+                        className="ml-auto font-semibold text-accent hover:underline"
+                      >
+                        Hapus filter ×
+                      </Link>
+                    </p>
+                  )}
+                  <p className="mt-6 text-[13.5px] text-label-3">
+                    {browse.length.toLocaleString("id-ID")} hasil ditemukan
+                    {pages > 1 && ` · halaman ${page} dari ${pages}`}
+                  </p>
+                  {pageItems.length ? (
+                    <ul className="mt-3 divide-y divide-hairline overflow-hidden rounded-[20px] border border-hairline bg-canvas">
+                      {pageItems.map((s, i) => (
+                        <SkripsiRow key={`${s.url ?? s.judul}-${i}`} item={s} />
+                      ))}
+                    </ul>
+                  ) : (
+                    <p className="mt-3 rounded-[20px] border border-dashed border-hairline p-10 text-center text-[16px] text-label-2">
+                      Tidak ada skripsi yang cocok. Coba kata kunci lain.
+                    </p>
+                  )}
+
+                  {pages > 1 && (
+                    <nav
+                      aria-label="Halaman"
+                      className="mt-6 flex items-center justify-center gap-2"
+                    >
+                      <PageLink
+                        href={
+                          page > 1
+                            ? href({ pembimbing: pb, q, tahun, hal: page - 1 })
+                            : undefined
+                        }
+                        label="‹ Sebelumnya"
+                      />
+                      <span className="px-3 text-[14px] tabular-nums text-label-2">
+                        {page} / {pages}
+                      </span>
+                      <PageLink
+                        href={
+                          page < pages
+                            ? href({ pembimbing: pb, q, tahun, hal: page + 1 })
+                            : undefined
+                        }
+                        label="Berikutnya ›"
+                      />
+                    </nav>
+                  )}
+                </>
+              ) : (
+                <div className="mt-8">
+                  {!q ? (
+                    <p className="rounded-[20px] bg-mist p-6 text-[15px] leading-relaxed text-label-2">
+                      Tulis rencana judul lengkap di kotak pencarian di atas.
+                      Sistem membandingkan kata kunci judulmu dengan{" "}
+                      {list.length.toLocaleString("id-ID")} skripsi di direktori
+                      dan menampilkan tingkat kemiripannya.
+                    </p>
+                  ) : (
+                    <>
+                      <h2 className="text-[19px] font-bold text-label">
+                        {results.length
+                          ? `${results.length} judul serupa ditemukan`
+                          : "Tidak ada judul yang mirip di direktori."}
+                      </h2>
+                      {tooShort && (
+                        <p className="mt-1 text-[14px] text-label-2">
+                          Tulis judul lebih lengkap agar hasilnya lebih akurat.
+                        </p>
+                      )}
+                      <ul className="mt-4 grid gap-3">
+                        {results.map(({ item, score }, i) => {
+                          const lv = level(score);
+                          return (
+                            <li
+                              key={i}
+                              className="rounded-[20px] border border-hairline bg-canvas p-5"
+                            >
+                              <div className="flex items-start justify-between gap-4">
+                                <p className="text-[16px] font-semibold leading-snug text-label">
+                                  {item.judul}
+                                </p>
+                                <span
+                                  className={cn(
+                                    "shrink-0 rounded-full px-3 py-1 text-[12px] font-bold",
+                                    lv.cls,
+                                  )}
+                                >
+                                  {Math.round(score * 100)}% · {lv.label}
+                                </span>
+                              </div>
+                              <p className="mt-1.5 text-[14px] text-label-2">
+                                {item.tahun}
+                                {item.nama ? ` · ${item.nama}` : ""}
+                                {item.url && (
+                                  <>
+                                    {" · "}
+                                    <a
+                                      href={item.url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className="font-semibold text-accent hover:underline"
+                                    >
+                                      Lihat di Digilib ↗
+                                    </a>
+                                  </>
+                                )}
+                              </p>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </>
+                  )}
+                </div>
               )}
             </>
           ) : (
-            <div className="mt-10">
-              {!q ? (
-                <p className="rounded-[20px] bg-mist p-6 text-[15px] leading-relaxed text-label-2">
-                  Tulis rencana judul lengkap. Sistem membandingkan kata kunci
-                  judulmu dengan {list.length.toLocaleString("id-ID")} skripsi
-                  di direktori dan menampilkan yang paling mirip. Hasil bersifat
-                  indikatif; keputusan tetap di dosen pembimbing.
-                </p>
-              ) : (
-                <>
-                  <h2 className="text-[19px] font-bold text-label">
-                    {results.length
-                      ? `${results.length} judul serupa`
-                      : "Tidak ada judul yang mirip di direktori."}
-                  </h2>
-                  {tooShort && (
-                    <p className="mt-1 text-[14px] text-label-2">
-                      Tulis judul lebih lengkap agar hasilnya lebih akurat.
-                    </p>
-                  )}
-                  <ul className="mt-4 grid gap-3">
-                    {results.map(({ item, score }, i) => {
-                      const lv = level(score);
-                      return (
+            /* Tab 3: Pojok Skripsi (Topik, Jadwal Sidang, Panduan & Integritas) */
+            <div className="mt-10 space-y-14">
+              {topikSkripsi.length > 0 && (
+                <div>
+                  <SectionHeading
+                    align="left"
+                    eyebrow="Inspirasi Riset"
+                    title="Topik skripsi & dosen pembimbing"
+                  />
+                  <div className="mt-6 grid gap-4 md:grid-cols-2">
+                    {[...perDosen].map(([dosen, listTopik]) => (
+                      <div
+                        key={dosen}
+                        className="rounded-[20px] border border-hairline bg-canvas p-5"
+                      >
+                        <p className="text-[12.5px] font-semibold text-accent">
+                          {dosen}
+                        </p>
+                        <ul className="mt-2.5 grid gap-3">
+                          {listTopik.map((t) => (
+                            <li key={t.topik}>
+                              <p className="text-[15.5px] font-bold leading-snug text-label">
+                                {t.topik}
+                              </p>
+                              {t.deskripsi && (
+                                <p className="mt-1 text-[13.5px] leading-relaxed text-label-2">
+                                  {t.deskripsi}
+                                </p>
+                              )}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {sidang.length > 0 && (
+                <div>
+                  <SectionHeading
+                    align="left"
+                    eyebrow="Jadwal Akademik"
+                    title="Seminar proposal, komprehensif & sidang munaqasyah"
+                  />
+                  <div className="mt-6 overflow-x-auto rounded-[20px] border border-hairline bg-canvas">
+                    <table className="w-full min-w-[640px] text-left text-[14px]">
+                      <thead className="bg-mist/60 text-[12px] uppercase tracking-wide text-label-3">
+                        <tr>
+                          <th className="px-5 py-3 font-semibold">Tanggal</th>
+                          <th className="px-5 py-3 font-semibold">Jenis</th>
+                          <th className="px-5 py-3 font-semibold">
+                            Mahasiswa & Judul
+                          </th>
+                          <th className="px-5 py-3 font-semibold">Ruang</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {sidang.map((j, i) => (
+                          <tr
+                            key={`${j.nama}-${i}`}
+                            className="border-t border-hairline align-top"
+                          >
+                            <td className="whitespace-nowrap px-5 py-3 text-label">
+                              {new Date(
+                                `${j.tanggal}T00:00:00+07:00`,
+                              ).toLocaleDateString("id-ID", {
+                                weekday: "short",
+                                day: "numeric",
+                                month: "short",
+                                timeZone: "Asia/Jakarta",
+                              })}
+                            </td>
+                            <td className="px-5 py-3 font-medium text-accent">
+                              {j.jenis}
+                            </td>
+                            <td className="px-5 py-3">
+                              <span className="font-semibold text-label">
+                                {j.nama}
+                              </span>
+                              <span className="mt-0.5 block text-label-2">
+                                {j.judul}
+                              </span>
+                            </td>
+                            <td className="px-5 py-3 text-label-2">
+                              {j.ruang}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
+
+              <div className="grid gap-10 lg:grid-cols-2">
+                {panduanSkripsi.length > 0 && (
+                  <div>
+                    <SectionHeading
+                      align="left"
+                      eyebrow="Referensi"
+                      title="Panduan & rujukan ilmiah"
+                    />
+                    <ul className="mt-6 grid gap-3">
+                      {panduanSkripsi.map((p) => (
+                        <li key={p.url}>
+                          <a
+                            href={p.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="group flex items-start justify-between gap-4 rounded-[18px] border border-hairline bg-canvas p-4 hover:border-accent/40"
+                          >
+                            <span>
+                              <span className="block text-[15px] font-bold text-label group-hover:text-accent">
+                                {p.name}
+                              </span>
+                              <span className="mt-0.5 block text-[13.5px] text-label-2">
+                                {p.description}
+                              </span>
+                            </span>
+                            <ArrowUpRight className="size-4.5 shrink-0 text-label-3" />
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {integritas.length > 0 && (
+                  <div id="integritas" className="scroll-mt-28">
+                    <SectionHeading
+                      align="left"
+                      eyebrow="Etika Ilmiah"
+                      title="Integritas akademik"
+                    />
+                    <ol className="mt-6 grid gap-3.5">
+                      {integritas.map((t, i) => (
                         <li
                           key={i}
-                          className="rounded-[20px] border border-hairline bg-canvas p-5"
+                          className="flex gap-3.5 rounded-[16px] bg-mist/60 p-4"
                         >
-                          <div className="flex items-start justify-between gap-4">
-                            <p className="text-[16px] font-semibold leading-snug text-label">
-                              {item.judul}
-                            </p>
-                            <span
-                              className={cn(
-                                "shrink-0 rounded-full px-3 py-1 text-[12px] font-bold",
-                                lv.cls,
-                              )}
-                            >
-                              {Math.round(score * 100)}% · {lv.label}
-                            </span>
-                          </div>
-                          <p className="mt-1.5 text-[14px] text-label-2">
-                            {item.tahun}
-                            {item.nama ? ` · ${item.nama}` : ""}
-                            {item.url && (
-                              <>
-                                {" · "}
-                                <a
-                                  href={item.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="font-semibold text-accent hover:underline"
-                                >
-                                  Lihat di Digilib ↗
-                                </a>
-                              </>
-                            )}
+                          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent">
+                            {i + 1}
+                          </span>
+                          <p className="text-[14px] leading-relaxed text-label">
+                            {t}
                           </p>
                         </li>
-                      );
-                    })}
-                  </ul>
-                </>
-              )}
+                      ))}
+                    </ol>
+                  </div>
+                )}
+              </div>
             </div>
           )}
 

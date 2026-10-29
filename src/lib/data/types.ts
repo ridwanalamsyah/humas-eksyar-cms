@@ -53,6 +53,7 @@ export type ContentStatus =
 export type ContentChannel = "instagram" | "twitter" | "facebook" | "tiktok" | "linktree" | "internal";
 
 export type ContentRubric =
+  | "buletin_hmj"
   | "tausiyah_senin"
   | "eksyar_talks"
   | "bisnis_halal"

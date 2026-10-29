@@ -72,7 +72,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   kegiatanMahasiswa,
   beasiswa,
   timeline,
-  mitra,
+  mitra: mitra.map((m) => ({ ...m, logo: m.logo ?? null })),
   tendik: [
     {
       name: "Adi Suharyo, S.HI., M.Ag.",
@@ -92,70 +92,103 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   ],
   galeri: [
     {
-      image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
       caption: "115 Mahasiswa Ekonomi Syariah mengikuti Sekolah Pasar Modal Syariah (SPMS) 2026 di Kantor Perwakilan BEI Jawa Barat.",
       album: "Akademik",
       date: "2026-06-08",
     },
     {
-      image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1000&q=80",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00131-scaled.jpg",
+      caption: "Sesi pemaparan instrumen investasi saham syariah pada Sekolah Pasar Modal Syariah (SPMS) 2026 di IDX Jawa Barat.",
+      album: "Akademik",
+      date: "2026-06-08",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0020.jpg",
       caption: "Edukasi Literasi Keuangan Syariah: Keluarga Cerdas Lawan Judol & Pinjol Ilegal bersama GIS BEI FEBI di Kelurahan Padasuka.",
       album: "Pengabdian",
       date: "2026-08-04",
     },
     {
-      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1000&q=80",
-      caption: "Kuliah Bersama Praktisi Bank Muamalat Indonesia diikuti 120 mahasiswa semester enam di KCP Buahbatu.",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0022.jpg",
+      caption: "Interaksi warga bersama Tim Galeri Investasi Syariah FEBI dalam penyuluhan perencanaan keuangan keluarga Islami.",
+      album: "Pengabdian",
+      date: "2026-08-04",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202807-scaled.jpg",
+      caption: "Kuliah Bersama Praktisi Bank Muamalat Indonesia diikuti 120 mahasiswa Ekonomi Syariah di KCP Buahbatu.",
       album: "Akademik",
       date: "2026-04-15",
     },
     {
-      image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=80",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202659-scaled.jpg",
+      caption: "Diskusi operasional perbankan syariah dan layanan nasabah bersama praktisi Bank Muamalat Indonesia.",
+      album: "Akademik",
+      date: "2026-04-15",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
       caption: "Penyerahan Sertifikat Juru Sembelih Halal (Juleha) berbasis SKKNI kepada 15 warga Desa Cibiru Wetan.",
       album: "Pengabdian",
       date: "2026-04-08",
     },
     {
-      image: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80",
-      caption: "Penanaman 150 pohon bersama komunitas Sabilulungan Bersih (SABER) menuju Green Halal Village di Desa Indragiri, Rancabali.",
-      album: "Desa Binaan",
-      date: "2020-11-15",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
+      caption: "HMJ Ekonomi Syariah menyelenggarakan Eksphoria untuk mengembangkan potensi akademik, seni, dan kepemimpinan mahasiswa.",
+      album: "Kemahasiswaan",
+      date: "2026-04-16",
     },
     {
-      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260624-WA0016.jpg",
+      caption: "Penandatanganan kerja sama peningkatan kualitas SDM dengan Muamalat Institute & Seminar Karir di Aula FEBI Kampus 2.",
+      album: "Kemitraan",
+      date: "2026-06-19",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/10/IMG-20261027-WA0010.jpg",
+      caption: "Kuliah Praktisi Industri Keuangan & Asuransi Syariah di lingkungan Fakultas Ekonomi dan Bisnis Islam UIN SGD.",
+      album: "Akademik",
+      date: "2026-10-27",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
       caption: "Focus Group Discussion (FGD) Peninjauan Visi Misi & Kurikulum OBE bersama OJK, Asosiasi Prodi, Praktisi, dan Alumni.",
       album: "Penjaminan Mutu",
       date: "2024-04-25",
     },
     {
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
-      caption: "Seminar Karir 2026: Menjadi SDM Unggul dan Kompetitif dalam Industri Keuangan Syariah di Aula FEBI Kampus 2.",
-      album: "Akademik",
-      date: "2026-06-19",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80",
-      caption: "Desa Binaan Ekowisata Halal Indragiri Kecamatan Rancabali — Peraih Penghargaan Konservasi Bupati Bandung.",
-      album: "Desa Binaan",
-      date: "2019-12-18",
-    },
-    {
-      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1000&q=80",
-      caption: "Kajian Ekonomi Islam & Diskusi Tematik FoSEI serta HMJ Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2023/12/IMG-20231212-WA0017.jpg",
+      caption: "Ekspos Produk Kewirausahaan Halal & Lomba Business Plan Mahasiswa di Kampus 2 UIN Sunan Gunung Djati Bandung.",
       album: "Kemahasiswaan",
-      date: "2026-05-12",
+      date: "2023-12-12",
     },
   ],
   video: [
     {
-      title: "Video Profil Fakultas Ekonomi dan Bisnis Islam (FEBI) UIN Sunan Gunung Djati Bandung",
-      url: "https://www.youtube.com/watch?v=rWkNdsULnd0",
-      kategori: "Profil Kampus & Fakultas",
+      title: "Video Profil Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
+      url: "https://www.youtube.com/watch?v=-jZSH9829NM",
+      kategori: "Profil Prodi Ekonomi Syariah",
     },
     {
-      title: "Mengenal UIN Sunan Gunung Djati Bandung — Kampus Unggul dan Kompetitif",
-      url: "https://www.youtube.com/watch?v=5v_dB2dlyEk",
-      kategori: "Profil Kampus & Fakultas",
+      title: "Profil Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung",
+      url: "https://www.youtube.com/watch?v=_ynD4oUWUzg",
+      kategori: "Profil Prodi Ekonomi Syariah",
+    },
+    {
+      title: "Profil Jurusan Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
+      url: "https://www.youtube.com/watch?v=FmzR32_ql5s",
+      kategori: "Profil Prodi Ekonomi Syariah",
+    },
+    {
+      title: "Sarana dan Prasarana Program Studi Ekonomi Syariah UIN Bandung",
+      url: "https://www.youtube.com/watch?v=iBbRp8X8YLM",
+      kategori: "Fasilitas & Laboratorium",
+    },
+    {
+      title: "After Movie Pelatihan Kepemimpinan Mahasiswa (PAKEM) HMJ Ekonomi Syariah UIN SGD",
+      url: "https://www.youtube.com/watch?v=FxnZq7AQc8E",
+      kategori: "HMJ Ekonomi Syariah",
     },
     {
       title: "Profil Forum Studi Ekonomi Islam (FoSEI) UIN Sunan Gunung Djati Bandung",
@@ -163,19 +196,24 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       kategori: "Kemahasiswaan & Kajian",
     },
     {
-      title: "Profil Green Kampus UIN Sunan Gunung Djati Bandung",
-      url: "https://www.youtube.com/watch?v=S6zX6UChHoY",
+      title: "A Legacy Speech as the Stamp of Ekonomi Syariah UIN SGD Bandung",
+      url: "https://www.youtube.com/watch?v=Or7_IIAqdP4",
+      kategori: "Kemahasiswaan & Kajian",
+    },
+    {
+      title: "Juara 1 Lomba Video Content PORSENI Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
+      url: "https://www.youtube.com/watch?v=da-QQvVXPyA",
+      kategori: "Prestasi & Karya Mahasiswa",
+    },
+    {
+      title: "Lomba Dakwah Ekonomi Syariah FESyar Regional Jawa — Mahasiswa Ekonomi Syariah UIN SGD",
+      url: "https://www.youtube.com/watch?v=ibtuNyZyvs8",
+      kategori: "Prestasi & Karya Mahasiswa",
+    },
+    {
+      title: "Video Profil Fakultas Ekonomi dan Bisnis Islam (FEBI) UIN Sunan Gunung Djati Bandung",
+      url: "https://www.youtube.com/watch?v=rWkNdsULnd0",
       kategori: "Profil Kampus & Fakultas",
-    },
-    {
-      title: "Mengenal Pasar Modal Syariah — Edukasi Investasi Bursa Efek Indonesia (IDX Islamic)",
-      url: "https://www.youtube.com/watch?v=ojBWKVTOEew",
-      kategori: "Edukasi Ekonomi Syariah",
-    },
-    {
-      title: "Perbedaan Pasar Modal Syariah dan Non-Syariah — Literasi Galeri Investasi Syariah",
-      url: "https://www.youtube.com/watch?v=_drkkIMNQmA",
-      kategori: "Edukasi Ekonomi Syariah",
     },
   ],
   publikasi: [
@@ -332,7 +370,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
         "Ajukan draf proposal dan berkas persyaratan (KHS, bukti lulus Metodologi Penelitian) ke Sekretariat Prodi.",
         "Ikuti jadwal Seminar Proposal (UP) sesuai penetapan prodi dan lakukan perbaikan naskah bersama dosen pembimbing.",
       ],
-      url: "/prodi/skripsi/pojok",
+      url: "/prodi/skripsi?mode=pojok",
     },
     {
       title: "Alur Praktik Kerja Lapangan (PKL) & Magang Industri",
@@ -560,39 +598,75 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   ],
   rps: [
     {
-      mk: "Pengantar Ekonomi Islam",
-      semester: "Semester 1",
+      mk: "Pengantar Ekonomi Islam & Matematika Ekonomi",
+      semester: "1",
       url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
       referensi: [
         "Prinsip dasar dan filosofi ekonomi Islam (Wahyu Memandu Ilmu)",
-        "Sejarah pemikiran dan sistem ekonomi Islam vs konvensional",
+        "Fungsi matematis permintaan, penawaran, dan keseimbangan pasar",
       ],
     },
     {
-      mk: "Fiqh Muamalah & Ushul Fiqh Ekonomi",
-      semester: "Semester 2–3",
+      mk: "Fiqh Muamalah & Sejarah Pemikiran Ekonomi Islam",
+      semester: "2",
       url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
       referensi: [
         "Teori akad tijarah dan tabarru dalam transaksi keuangan kontemporer",
-        "Fatwa DSN-MUI terkait lembaga keuangan dan bisnis syariah",
+        "Evolusi pemikiran ekonomi ulama klasik hingga ekonom muslim modern",
       ],
     },
     {
-      mk: "Ekonomi Mikro & Makro Islam",
-      semester: "Semester 3–4",
+      mk: "Ekonomi Mikro Islam & Akuntansi Syariah",
+      semester: "3",
       url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
       referensi: [
-        "Teori konsumsi, produksi, dan mekanisme pasar berkeadilan dalam Islam",
-        "Kebijakan fiskal, moneter bebas riba, dan stabilitas ekonomi makro",
+        "Teori perilaku konsumen muslim, maslahah, dan produksi islami",
+        "Standar Akuntansi Keuangan Syariah (PSAK 101–112) pada LKS",
       ],
     },
     {
-      mk: "Manajemen ZISWAF & Industri Halal",
-      semester: "Semester 4–5",
+      mk: "Ekonomi Makro Islam, Ekonometrika & Pasar Modal Syariah",
+      semester: "4",
       url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
       referensi: [
-        "Tata kelola penghimpunan dan pendayagunaan zakat & wakaf produktif",
-        "Regulasi jaminan produk halal, sertifikasi halal UMKM, dan ekowisata halal",
+        "Kebijakan fiskal-moneter Islam, indeks saham syariah (ISSI/JII), dan sukuk",
+        "Pemodelan regresi data cross-section, time-series, dan data panel",
+      ],
+    },
+    {
+      mk: "Ekonomi Pembangunan Islam, Industri Halal & Metodologi Penelitian",
+      semester: "5",
+      url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
+      referensi: [
+        "Pembangunan berkeadilan berbasis Maqashid Syariah dan ekosistem halal",
+        "Penyusunan desain riset kuantitatif dan kualitatif ekonomi syariah",
+      ],
+    },
+    {
+      mk: "Fintech Syariah, Kewirausahaan Syariah & Kebijakan Fiskal-Moneter",
+      semester: "6",
+      url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
+      referensi: [
+        "Inovasi keuangan digital syariah, regulasi OJK/BI, dan rintisan bisnis halal",
+        "Instrumen moneter syariah, operasi pasar terbuka, dan pengelolaan APBN",
+      ],
+    },
+    {
+      mk: "Praktik Kerja Lapangan (PKL), KKN & Seminar Proposal Skripsi",
+      semester: "7",
+      url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
+      referensi: [
+        "Magang profesi di bank syariah, BEI, BAZNAS, OJK, atau industri halal",
+        "Penyusunan dan seminar proposal tugas akhir mahasiswa",
+      ],
+    },
+    {
+      mk: "Skripsi, Sidang Munaqasyah & Ujian Komprehensif",
+      semester: "8",
+      url: "https://digilib.uinsgd.ac.id",
+      referensi: [
+        "Penulisan karya ilmiah skripsi Sarjana Ekonomi (S.E.) dan publikasi jurnal",
+        "Evaluasi komprehensif keislaman, fiqh muamalah, dan teori ekonomi syariah",
       ],
     },
   ],
@@ -656,7 +730,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       alasan:
         "Artikel ilmiah terbit di jurnal internasional bereputasi terindeks Scopus Q2 pada bidang Akuntabilitas & Kepatuhan Syariah Lembaga ZISWAF.",
       photo:
-        "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80",
+        "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
     },
     {
       bulan: "April 2026",
@@ -665,7 +739,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       alasan:
         "Artikel analisis ekonomi dan keuangan syariah dimuat di publikasi internasional Islamic Finance News (IFN).",
       photo:
-        "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+        "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00131-scaled.jpg",
     },
     {
       bulan: "Desember 2019",
@@ -674,7 +748,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       alasan:
         "Meraih Penghargaan Bupati Bandung atas sinergi konservasi lingkungan dan pengembangan Desa Ekowisata Halal di Kecamatan Rancabali.",
       photo:
-        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+        "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
     },
   ],
   statusLayanan: {
@@ -754,22 +828,22 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     {
       name: "Aula & Auditorium FEBI Kampus 2",
       description: "Kapasitas 250 peserta untuk seminar nasional, studium generale, dan kegiatan HMJ Ekonomi Syariah.",
-      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260624-WA0016.jpg",
     },
     {
       name: "Galeri Investasi Syariah (GIS) BEI FEBI",
       description: "Ruang edukasi, terminal data pasar modal syariah, dan diskusi kelompok studi pasar modal.",
-      image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
     },
     {
       name: "Laboratorium Mini Banking & Keuangan Syariah",
       description: "Ruang praktikum operasional bank syariah, simulasi akad muamalah, dan pelatihan aplikasi keuangan.",
-      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202807-scaled.jpg",
     },
     {
       name: "Ruang Sidang Munaqasyah & Diskusi Prodi",
       description: "Ruang seminar proposal, ujian komprehensif, sidang skripsi, dan rapat kepanitiaan mahasiswa.",
-      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/10/IMG-20261006-WA0030-scaled.jpg",
     },
   ],
   wisuda: [
@@ -777,7 +851,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       periode: "Wisuda Ke-102 UIN Sunan Gunung Djati Bandung (2026)",
       tanggal: "2026-08-22",
       image:
-        "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1000&q=80",
+        "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
       wisudawan: [
         "Lulusan Terbaik Program Studi Ekonomi Syariah FEBI (Predikat Cum Laude)",
         "Sarjana Ekonomi (S.E.) Angkatan Wisuda Semester Genap & Ganjil 2025/2026",
@@ -794,7 +868,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
         "Analisis perkembangan instrumen keuangan Islam dan dinamika pasar modal syariah Indonesia.",
       url: "https://www.islamicfinancenews.com/",
       image:
-        "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
+        "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00131-scaled.jpg",
     },
     {
       judul: "Model Pemberdayaan Desa Ekowisata Halal Indragiri Kecamatan Rancabali",
@@ -804,7 +878,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
         "Kajian terpadu pengembangan destinasi wisata ramah muslim dan konservasi lingkungan Green Halal Village.",
       url: "https://journal.uinsgd.ac.id/index.php/likuid",
       image:
-        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+        "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
     },
   ],
   panduanMaba: [

@@ -597,12 +597,13 @@ export async function setWebsiteContent(value: Record<string, unknown>): Promise
 
 const nowIso = new Date().toISOString();
 const rubricsStore: Rubric[] = [
-  { id: "rub-refleksi-harian", slug: "refleksi_harian", label: "Refleksi harian", description: "Kutipan / refleksi pagi singkat.", emoji: "\u{1F305}", isActive: true, sortOrder: 1, createdAt: nowIso, updatedAt: nowIso },
-  { id: "rub-pengumuman", slug: "pengumuman", label: "Pengumuman resmi", description: "Announcement resmi prodi.", emoji: "\u{1F4E3}", isActive: true, sortOrder: 2, createdAt: nowIso, updatedAt: nowIso },
-  { id: "rub-kajian", slug: "kajian", label: "Kajian akademik", description: "Tema diskusi / kajian / seminar.", emoji: "\u{1F4D6}", isActive: true, sortOrder: 3, createdAt: nowIso, updatedAt: nowIso },
-  { id: "rub-ucapan", slug: "selamat_sukses", label: "Ucapan & Hari Besar", description: "Ucapan selamat / hari besar / kondolensi.", emoji: "\u{1F337}", isActive: true, sortOrder: 4, createdAt: nowIso, updatedAt: nowIso },
-  { id: "rub-dokumentasi", slug: "dokumentasi", label: "Dokumentasi kegiatan", description: "Recap kegiatan yang sudah berlangsung.", emoji: "\u{1F4F8}", isActive: true, sortOrder: 5, createdAt: nowIso, updatedAt: nowIso },
-  { id: "rub-campaign", slug: "campaign", label: "Campaign / mobilisasi", description: "Ajakan, gerakan, atau open call.", emoji: "\u{1F4E2}", isActive: true, sortOrder: 6, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-buletin-hmj", slug: "buletin_hmj", label: "Buletin Artikel HMJ", description: "Program kolaborasi Buletin Artikel bersama HMJ Ekonomi Syariah yang tayang di website prodi.", emoji: "\u{1F4F0}", isActive: true, sortOrder: 1, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-refleksi-harian", slug: "refleksi_harian", label: "Refleksi harian", description: "Kutipan / refleksi pagi singkat.", emoji: "\u{1F305}", isActive: true, sortOrder: 2, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-pengumuman", slug: "pengumuman", label: "Pengumuman resmi", description: "Announcement resmi prodi.", emoji: "\u{1F4E3}", isActive: true, sortOrder: 3, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-kajian", slug: "kajian", label: "Kajian akademik", description: "Tema diskusi / kajian / seminar.", emoji: "\u{1F4D6}", isActive: true, sortOrder: 4, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-ucapan", slug: "selamat_sukses", label: "Ucapan & Hari Besar", description: "Ucapan selamat / hari besar / kondolensi.", emoji: "\u{1F337}", isActive: true, sortOrder: 5, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-dokumentasi", slug: "dokumentasi", label: "Dokumentasi kegiatan", description: "Recap kegiatan yang sudah berlangsung.", emoji: "\u{1F4F8}", isActive: true, sortOrder: 6, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-campaign", slug: "campaign", label: "Campaign / mobilisasi", description: "Ajakan, gerakan, atau open call.", emoji: "\u{1F4E2}", isActive: true, sortOrder: 7, createdAt: nowIso, updatedAt: nowIso },
 ];
 
 export async function listRubrics(opts: { includeInactive?: boolean } = {}): Promise<Rubric[]> {

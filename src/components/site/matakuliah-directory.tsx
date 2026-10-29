@@ -16,12 +16,14 @@ type MK = { nama: string; dosen: string[]; kelas: number; kategori: string[] };
 export function MataKuliahDirectory({ items }: { items: MK[] }) {
   const [q, setQ] = useState("");
   const [grp, setGrp] = useState(ALL);
-  const top = (k: string) => k.split(" › ")[0];
+  const top = (k: string) => k.split(" · ")[0].split(" › ")[0].trim();
   const groups = useMemo(() => {
     const set = new Set(
-      items.flatMap((m) => m.kategori.map(top)).filter(Boolean),
+      items
+        .flatMap((m) => m.kategori.map(top))
+        .filter((g) => g.startsWith("Semester ")),
     );
-    return set.size > 1 && set.size <= 16
+    return set.size > 1
       ? [
           ALL,
           ...[...set].sort((a, b) =>

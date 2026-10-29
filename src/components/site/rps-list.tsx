@@ -33,7 +33,9 @@ export function RpsList({ items }: { items: Rps[] }) {
                   <p className="text-[16px] font-bold text-label">{r.mk}</p>
                   {r.semester && (
                     <p className="text-[13px] text-label-3">
-                      Semester {r.semester}
+                      {r.semester.toLowerCase().startsWith("semester")
+                        ? r.semester
+                        : `Semester ${r.semester}`}
                     </p>
                   )}
                 </div>

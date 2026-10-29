@@ -12,6 +12,122 @@ export const HASHTAG_BLOCK =
  */
 export const contents: ContentItem[] = [
   {
+    id: "cnt-buletin-hmj-sertifikasi-halal-2026",
+    title: "[Buletin Artikel HMJ] Akselerasi Sertifikasi Halal UMKM Jawa Barat: Peluang Mahasiswa Ekonomi Syariah sebagai Pendamping PPH",
+    slug: "buletin-artikel-hmj-akselerasi-sertifikasi-halal-umkm-jawa-barat",
+    rubric: "buletin_hmj",
+    status: "published",
+    divisionId: "div-humas-eksyar",
+    authorId: "mbr-husen",
+    body: `*Program Kolaborasi Buletin Artikel — Himpunan Mahasiswa Jurusan (HMJ) Ekonomi Syariah & Humas Prodi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.*
+
+Implementasi kewajiban sertifikasi halal bagi produk makanan dan minuman usaha mikro dan kecil (UMK) membuka ruang kontribusi yang sangat luas bagi mahasiswa Ekonomi Syariah. Melalui skema *self-declare* pada program Sertifikasi Halal Gratis (SEHATI) BPJPH, keberadaan Pendamping Proses Produk Halal (P3H) menjadi kunci utama percepatan ekosistem halal di daerah.
+
+## Tiga Peran Strategis Mahasiswa Ekonomi Syariah
+1. **Edukasi Titik Kritis Kehalalan Bahan**: Membantu pelaku UMKM mengidentifikasi bahan baku, bahan tambahan pangan, dan proses produksi yang bebas dari unsur non-halal sesuai standar SJPH.
+2. **Digitalisasi Pendaftaran SIHALAL**: Mendampingi pelaku usaha mikro yang belum terbiasa dengan administrasi digital dalam mengunggah dokumen Nomor Induk Berusaha (NIB) dan pengajuan sertifikat halal.
+3. **Penguatan Branding & Pemasaran Bisnis Halal**: Mengintegrasikan label halal resmi dengan strategi pemasaran digital dan pengemasan produk agar UMKM lokal naik kelas.
+
+Melalui program **Buletin Artikel HMJ Ekonomi Syariah**, mahasiswa didorong untuk terus menuangkan gagasan riset lapangan dan analisis kebijakan ekonomi Islam yang langsung dipublikasikan di portal resmi program studi.`,
+    caption:
+      "Buletin Artikel HMJ Ekonomi Syariah Edisi III: Mengulas peran strategis mahasiswa Ekonomi Syariah dalam mengakselerasi sertifikasi halal UMKM di Jawa Barat.",
+    hashtags: "#BuletinArtikelHMJ #HMJEksyar #EkonomiSyariahUINSGD #IndustriHalal",
+    channels: ["instagram", "linktree"],
+    mediaIds: ["med-buletin-hmj-3"],
+    scheduledFor: "2026-10-27T08:00:00.000Z",
+    publishedAt: "2026-10-27T09:00:00.000Z",
+    approvers: ["mbr-ridwan"],
+    waitingOn: [],
+    createdAt: "2026-10-26T14:00:00.000Z",
+    updatedAt: "2026-10-27T09:00:00.000Z",
+    metrics: {
+      views: 1540,
+      likes: 245,
+      comments: 22,
+      shares: 78,
+      saves: 112,
+      reach: 3100,
+      engagementRate: 0.147,
+      sentiment: 0.94,
+    },
+  },
+  {
+    id: "cnt-buletin-hmj-sukuk-hijau-2026",
+    title: "[Buletin Artikel HMJ] Menakar Prospek Green Sukuk dan Saham Syariah sebagai Instrumen Investasi Berkelanjutan Generasi Muda",
+    slug: "buletin-artikel-hmj-prospek-green-sukuk-dan-saham-syariah",
+    rubric: "buletin_hmj",
+    status: "published",
+    divisionId: "div-humas-eksyar",
+    authorId: "mbr-alya",
+    body: `*Program Kolaborasi Buletin Artikel — Bidang Kajian Keilmuan HMJ Ekonomi Syariah, KSPM GIS BEI FEBI, & Prodi Ekonomi Syariah UIN Sunan Gunung Djati Bandung.*
+
+Perkembangan pasar modal syariah di Indonesia menunjukkan tren positif seiring meningkatnya jumlah investor muda dari kalangan mahasiswa. Dua instrumen yang kini menjadi sorotan utama dalam arsitektur keuangan berkelanjutan (*sustainable finance*) adalah **Green Sukuk** (Sukuk Hijau) dan **Saham Syariah** yang tergabung dalam Indeks Saham Syariah Indonesia (ISSI).
+
+## Mengapa Green Sukuk Relevan dengan Maqashid Syariah?
+Penerbitan Green Sukuk tidak hanya memenuhi prinsip bebas *riba*, *gharar*, dan *maisir*, tetapi juga secara langsung membiayai proyek energi terbarukan, transportasi ramah lingkungan, serta pengelolaan limbah berkelanjutan. Hal ini sejalan dengan penjagaan lingkungan hidup (*hifzh al-bi'ah*) sebagai bagian tak terpisahkan dari *Maqashid Syariah*.
+
+Di lingkungan FEBI UIN SGD Bandung, mahasiswa dapat mempelajari analisis fundamental saham syariah dan sukuk secara langsung melalui Galeri Investasi Syariah (GIS) BEI bersama MNC Sekuritas.`,
+    caption:
+      "Buletin Artikel HMJ Ekonomi Syariah Edisi II: Menakar prospek Green Sukuk & Saham Syariah sebagai instrumen investasi berkelanjutan berbasis Maqashid Syariah.",
+    hashtags: "#BuletinArtikelHMJ #HMJEksyar #PasarModalSyariah #GreenSukuk #GISBEI",
+    channels: ["instagram", "linktree"],
+    mediaIds: ["med-buletin-hmj-2"],
+    scheduledFor: "2026-10-24T08:00:00.000Z",
+    publishedAt: "2026-10-24T09:00:00.000Z",
+    approvers: ["mbr-ridwan"],
+    waitingOn: [],
+    createdAt: "2026-10-23T15:00:00.000Z",
+    updatedAt: "2026-10-24T09:00:00.000Z",
+    metrics: {
+      views: 1380,
+      likes: 210,
+      comments: 18,
+      shares: 65,
+      saves: 98,
+      reach: 2760,
+      engagementRate: 0.141,
+      sentiment: 0.93,
+    },
+  },
+  {
+    id: "cnt-buletin-hmj-wakaf-digital-2026",
+    title: "[Buletin Artikel HMJ] Transformasi Wakaf Uang Digital Melalui QRIS: Menggerakkan Filantropi Islam di Kampus",
+    slug: "buletin-artikel-hmj-transformasi-wakaf-uang-digital-qris",
+    rubric: "buletin_hmj",
+    status: "published",
+    divisionId: "div-humas-eksyar",
+    authorId: "mbr-ridwan",
+    body: `*Program Kolaborasi Buletin Artikel — Departemen Keilmuan & Jurnalistik HMJ Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.*
+
+Wakaf uang (*cash waqf*) memiliki potensi besar sebagai sumber pembiayaan sosial-ekonomi umat yang abadi pokoknya dan produktif manfaatnya. Di era pembayaran digital, integrasi kanal QRIS pada lembaga nazhir wakaf memungkinkan mahasiswa dan masyarakat berwakaf mulai dari nominal terjangkau secara transparan dan *real-time*.
+
+## Kunci Kepercayaan Muzakki dan Wakif Muda
+1. **Transparansi Laporan Dampak (*Impact Reporting*)**: Wakif generasi Z membutuhkan pembaruan berkala mengenai penyaluran hasil investasi wakaf, baik untuk beasiswa pendidikan maupun pemberdayaan usaha mikro.
+2. **Tata Kelola Nazhir Profesional**: Sinergi antara nazhir tersertifikasi BWI dengan lembaga keuangan syariah penerima wakaf uang (LKS-PWU).
+3. **Literasi Kampus**: Melalui kolaborasi Buletin Artikel HMJ dan mata kuliah Manajemen ZISWAF, mahasiswa Ekonomi Syariah UIN SGD terus mengampanyekan gerakan sadar wakaf produktif.`,
+    caption:
+      "Buletin Artikel HMJ Ekonomi Syariah Edisi I: Transformasi Wakaf Uang Digital melalui QRIS dan peran generasi muda dalam filantropi Islam.",
+    hashtags: "#BuletinArtikelHMJ #HMJEksyar #WakafProduktif #ZISWAF #UINSGD",
+    channels: ["instagram", "linktree"],
+    mediaIds: ["med-buletin-hmj-1"],
+    scheduledFor: "2026-10-20T08:00:00.000Z",
+    publishedAt: "2026-10-20T09:00:00.000Z",
+    approvers: ["mbr-evi"],
+    waitingOn: [],
+    createdAt: "2026-10-19T14:00:00.000Z",
+    updatedAt: "2026-10-20T09:00:00.000Z",
+    metrics: {
+      views: 1290,
+      likes: 196,
+      comments: 15,
+      shares: 54,
+      saves: 89,
+      reach: 2580,
+      engagementRate: 0.137,
+      sentiment: 0.92,
+    },
+  },
+  {
     id: "cnt-spms-2026",
     title: "Mahasiswa Ekonomi Syariah UIN SGD Ikuti Sekolah Pasar Modal Syariah 2026 di BEI Jawa Barat",
     slug: "sekolah-pasar-modal-syariah-2026-bei-jawa-barat",

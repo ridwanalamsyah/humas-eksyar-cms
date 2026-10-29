@@ -71,6 +71,65 @@ const nim: FormField = { name: "nim", label: "NIM", type: "text", max: 20 };
 
 export const FORMS: FormDef[] = [
   {
+    slug: "buletin-artikel",
+    title: "Kirim Buletin Artikel HMJ",
+    description:
+      "Program kolaborasi HMJ Ekonomi Syariah & Prodi: kirimkan naskah Buletin Artikel, opini ilmiah populer, atau liputan kajian mahasiswa untuk diterbitkan di website resmi prodi.",
+    group: "Mahasiswa",
+    titleField: "judul",
+    success:
+      "Naskah Buletin Artikel berhasil dikirim ke redaksi Humas & Prodi Ekonomi Syariah untuk ditinjau dan dipublikasikan.",
+    consent:
+      "Saya menyatakan artikel ini karya asli dan menyetujui publikasinya di rubrik Buletin Artikel HMJ pada website Prodi Ekonomi Syariah.",
+    fields: [
+      nama,
+      nim,
+      {
+        name: "departemen",
+        label: "Departemen HMJ / Kelompok Studi / Angkatan",
+        type: "text",
+        required: true,
+        placeholder: "Mis. Dept. Keilmuan HMJ Eksyar / KSPM GIS BEI / FoSEI",
+        max: 160,
+      },
+      {
+        name: "judul",
+        label: "Judul Artikel Buletin",
+        type: "text",
+        required: true,
+        max: 200,
+      },
+      {
+        name: "tema",
+        label: "Tema Kajian",
+        type: "select",
+        required: true,
+        options: [
+          "Perbankan & Keuangan Syariah",
+          "Pasar Modal Syariah & Investasi",
+          "ZISWAF & Filantropi Islam",
+          "Industri Halal & Kewirausahaan",
+          "Kebijakan Ekonomi & Pembangunan Islam",
+          "Liputan Kegiatan HMJ Eksyar",
+        ],
+      },
+      {
+        name: "ringkasan",
+        label: "Ringkasan / Isi Artikel",
+        type: "textarea",
+        required: true,
+        max: 3000,
+      },
+      {
+        name: "tautan_naskah",
+        label: "Tautan Naskah Lengkap / Poster / Foto (Google Drive, opsional)",
+        type: "url",
+      },
+      email,
+      wa,
+    ],
+  },
+  {
     slug: "saran",
     title: "Kritik & saran",
     description:

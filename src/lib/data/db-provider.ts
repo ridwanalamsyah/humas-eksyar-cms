@@ -382,7 +382,15 @@ export async function listMedia(opts?: {
     filters.length ? query.where(and(...filters)) : query,
     fixtures.listMedia(opts),
   ]);
-  const dbMedia = rows.map((r) => row<MediaAsset>(r));
+  const seedById = new Map(seedMedia.map((m) => [m.id, m]));
+  const dbMedia = rows.map((r) => {
+    const m = row<MediaAsset>(r);
+    if (m.url.includes("images.unsplash.com")) {
+      const seedMatch = seedById.get(m.id);
+      if (seedMatch) return { ...m, url: seedMatch.url };
+    }
+    return m;
+  });
   const seen = new Set(dbMedia.map((m) => m.id));
   for (const s of seedMedia) {
     if (!seen.has(s.id)) {
@@ -410,7 +418,14 @@ export async function getMedia(id: ID): Promise<MediaAsset | null> {
     .from(schema.media)
     .where(eq(schema.media.id, id))
     .limit(1);
-  if (rows[0]) return row<MediaAsset>(rows[0]);
+  if (rows[0]) {
+    const m = row<MediaAsset>(rows[0]);
+    if (m.url.includes("images.unsplash.com")) {
+      const seedMatch = await fixtures.getMedia(id);
+      if (seedMatch) return { ...m, url: seedMatch.url };
+    }
+    return m;
+  }
   return fixtures.getMedia(id);
 }
 
@@ -1060,14 +1075,26 @@ function toRubric(r: typeof schema.rubrics.$inferSelect): Rubric {
 export async function listRubrics({
   includeInactive = false,
 }: { includeInactive?: boolean } = {}): Promise<Rubric[]> {
-  const rows = includeInactive
-    ? await client().select().from(schema.rubrics).orderBy(asc(schema.rubrics.sortOrder))
-    : await client()
-        .select()
-        .from(schema.rubrics)
-        .where(eq(schema.rubrics.isActive, true))
-        .orderBy(asc(schema.rubrics.sortOrder));
-  return rows.map(toRubric);
+  const [rows, seedRubrics] = await Promise.all([
+    includeInactive
+      ? client().select().from(schema.rubrics).orderBy(asc(schema.rubrics.sortOrder))
+      : client()
+          .select()
+          .from(schema.rubrics)
+          .where(eq(schema.rubrics.isActive, true))
+          .orderBy(asc(schema.rubrics.sortOrder)),
+    fixtures.listRubrics({ includeInactive }),
+  ]);
+  const dbRubrics = rows.map(toRubric);
+  const seen = new Set(dbRubrics.flatMap((r) => [r.id, r.slug]));
+  for (const s of seedRubrics) {
+    if (!seen.has(s.id) && !seen.has(s.slug)) {
+      dbRubrics.push(s);
+      seen.add(s.id);
+      seen.add(s.slug);
+    }
+  }
+  return dbRubrics.sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
 export async function getRubric(idOrSlug: ID): Promise<Rubric | null> {
@@ -1076,7 +1103,8 @@ export async function getRubric(idOrSlug: ID): Promise<Rubric | null> {
     .from(schema.rubrics)
     .where(or(eq(schema.rubrics.id, idOrSlug), eq(schema.rubrics.slug, idOrSlug)))
     .limit(1);
-  return rows[0] ? toRubric(rows[0]) : null;
+  if (rows[0]) return toRubric(rows[0]);
+  return fixtures.getRubric(idOrSlug);
 }
 
 export interface RubricInput {

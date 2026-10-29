@@ -35,7 +35,7 @@ export default async function LinkPage() {
     { href: "/prodi/kalender", label: "Kalender Akademik & Agenda" },
     { href: "/prodi/beasiswa", label: "Info Beasiswa Mahasiswa" },
     { href: "/prodi/layanan#formulir", label: "Formulir Layanan Online" },
-    { href: "/prodi/verifikasi", label: "Verifikasi Sertifikat Kegiatan" },
+    { href: "/prodi/berita?kategori=buletin_hmj", label: "Buletin Artikel — Kolaborasi HMJ" },
     { href: "/prodi/alat/zakat", label: "Kalkulator Zakat & Kamus Syariah" },
     { href: "/prodi/mahasiswa-baru", label: "Info Mahasiswa Baru (PMB)" },
     {

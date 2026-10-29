@@ -14,6 +14,7 @@ import {
   coverFor,
   getMediaMap,
   isAnnouncement,
+  isBuletinHmj,
   listPublishedNews,
 } from "@/lib/site/content";
 import { defaultWebsiteConfig } from "@/lib/site/defaults";
@@ -27,12 +28,10 @@ import { AnnouncementList } from "@/components/site/announcement-list";
 import { Carousel } from "@/components/site/carousel";
 import { CountUp } from "@/components/site/count-up";
 import { HighlightCard } from "@/components/site/highlight-card";
+import { InteractiveHero, type HeroSlide } from "@/components/site/interactive-hero";
+import { MitraList } from "@/components/site/mitra-list";
 import { NewsCard } from "@/components/site/news-card";
-import { HeroTitle, ParallaxHero } from "@/components/site/parallax-hero";
-import { HeroNow, type HeroNowItem } from "@/components/site/hero-now";
-import { HeroPhoto } from "@/components/site/hero-photo";
 import { PrestasiCard } from "@/components/site/prestasi-card";
-import { ProdiLogo } from "@/components/site/prodi-logo";
 import { Reveal } from "@/components/site/reveal";
 import { ScrollWords } from "@/components/site/scroll-words";
 import { SectionHeading } from "@/components/site/section-heading";
@@ -99,50 +98,58 @@ export default async function ProdiHomePage() {
   const { identity, kontak } = site;
 
   const announcements = news.filter(isAnnouncement).slice(0, 4);
-  const articles = news.filter((n) => !isAnnouncement(n)).slice(0, 3);
+  const buletinItems = news.filter(isBuletinHmj).slice(0, 3);
+  const articles = news
+    .filter((n) => !isAnnouncement(n) && !isBuletinHmj(n))
+    .slice(0, 3);
   const upcoming = events
     .filter((e) => PUBLIC_EVENT_CATEGORIES.includes(e.category))
     .slice(0, 3);
   const kegiatan = [...site.kegiatan]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 8);
-  // Foto hero: gambar hero dari CMS, atau foto terbaru di Galeri.
-  const galeriTerbaru = [...site.galeri].sort((a, b) =>
-    (b.date ?? "").localeCompare(a.date ?? ""),
-  )[0];
-  const heroFoto = identity.heroImage
-    ? { src: identity.heroImage, caption: `Kegiatan ${prodi.fullName}` }
-    : galeriTerbaru
-      ? { src: galeriTerbaru.image, caption: galeriTerbaru.caption }
-      : null;
-  const sekarang: HeroNowItem[] = [];
-  if (jadwal[0])
-    sekarang.push({
-      label: "Kalender akademik",
-      title: jadwal[0].kegiatan,
-      meta: rentang(jadwal[0]),
-      href: "/prodi/kalender",
-    });
-  const terbaru = announcements[0] ?? articles[0];
-  if (terbaru)
-    sekarang.push({
-      label: announcements[0] ? "Pengumuman terbaru" : "Berita terbaru",
-      title: terbaru.title,
-      href: `/prodi/berita/${terbaru.slug}`,
-    });
-  if (skripsi.length)
-    sekarang.push({
-      label: "Direktori skripsi",
-      title: `${skripsi.length.toLocaleString("id-ID")} judul skripsi Eksyar`,
-      meta: "Cari judul, pembimbing, dan abstrak",
-      href: "/prodi/skripsi",
-    });
-  else if (upcoming[0])
-    sekarang.push({
-      label: "Agenda",
-      title: upcoming[0].title,
-      href: "/prodi/kalender#agenda",
-    });
+
+  const heroSlides: HeroSlide[] = [
+    ...kegiatan
+      .filter((k) => Boolean(k.image))
+      .slice(0, 3)
+      .map((k) => ({
+        category: k.category,
+        title: k.title,
+        summary: k.summary,
+        date: k.date,
+        image: k.image!,
+        href: k.source || "/prodi/berita#kegiatan",
+        external: Boolean(k.source && k.source.startsWith("http")),
+      })),
+    ...(buletinItems[0]
+      ? [
+          {
+            category: "Buletin Artikel HMJ",
+            title: buletinItems[0].title,
+            summary: buletinItems[0].caption,
+            image:
+              coverFor(buletinItems[0], media)?.url ??
+              "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
+            href: `/prodi/berita/${buletinItems[0].slug}`,
+            external: false,
+          },
+        ]
+      : []),
+  ];
+
+  const heroStats = [
+    { value: `${identity.totalCredits} SKS`, label: "Kurikulum OBE (S.E.)" },
+    { value: "Semester 1–8", label: "Struktur Mata Kuliah" },
+    {
+      value: `${Math.max(skripsi.length, 515).toLocaleString("id-ID")}+`,
+      label: "Skripsi Digilib Sinkron",
+    },
+    {
+      value: identity.universityAccreditation || "Unggul",
+      label: "Akreditasi UIN SGD",
+    },
+  ];
   const statement =
     identity.statement || defaultWebsiteConfig.identity.statement || "";
 
@@ -175,71 +182,14 @@ export default async function ProdiHomePage() {
         }}
       />
 
-      {/* ─── Hero ─────────────────────────────────────────── */}
-      <ParallaxHero>
-        <Reveal>
-          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent-soft/75 px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-accent">
-            <span className="size-1.5 rounded-full bg-accent" aria-hidden />
-            <span>
-              {prodi.level} · {prodi.faculty}
-            </span>
-          </div>
-          <div className="mt-5 flex justify-center">
-            <ProdiLogo size={76} priority />
-          </div>
-          <HeroTitle
-            text={identity.heroTitle}
-            className="mt-5 text-[clamp(2.65rem,1.6rem+5vw,6rem)] font-extrabold leading-[1.04] tracking-[-0.04em] text-label"
-          />
-          <p className="mt-3 text-[15.5px] font-semibold text-label-2">
-            {prodi.university}
-          </p>
-          <p className="mx-auto mt-5 max-w-2xl text-[clamp(1.02rem,0.98rem+0.3vw,1.24rem)] leading-[1.6] text-label-2">
-            {identity.heroDescription}
-          </p>
-
-          {/* Indikator ringkas identitas akademik */}
-          <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-2 text-[12.5px] font-medium text-label-2">
-            <span className="rounded-full border border-hairline bg-canvas/85 px-3.5 py-1">
-              Kurikulum OBE {identity.totalCredits} SKS · Gelar {identity.degree}
-            </span>
-            <span className="rounded-full border border-hairline bg-canvas/85 px-3.5 py-1">
-              UIN SGD Terakreditasi {identity.universityAccreditation}
-            </span>
-            <span className="rounded-full border border-hairline bg-canvas/85 px-3.5 py-1">
-              Kampus II Gedebage · Bandung
-            </span>
-          </div>
-
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Link
-              href="/prodi/profil"
-              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-[14.5px] font-semibold text-white shadow-xs transition-colors hover:bg-accent-hover"
-            >
-              Kenali Profil Prodi
-              <ArrowRight className="size-4" />
-            </Link>
-            <Link
-              href="/prodi/akademik"
-              className="rounded-full border border-hairline bg-canvas px-6 py-3 text-[14.5px] font-semibold text-label transition-colors hover:border-accent hover:text-accent"
-            >
-              Kurikulum & Akademik
-            </Link>
-            <Link
-              href="/prodi/skripsi"
-              className="rounded-full border border-hairline bg-mist/70 px-5 py-3 text-[14.5px] font-semibold text-label-2 transition-colors hover:border-accent/40 hover:text-label"
-            >
-              Direktori Skripsi ›
-            </Link>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.2}>
-          <HeroNow items={sekarang} />
-        </Reveal>
-      </ParallaxHero>
-
-      {heroFoto && <HeroPhoto src={heroFoto.src} caption={heroFoto.caption} />}
+      {/* ─── Hero Interaktif (Satu Section Terpadu) ───────── */}
+      <InteractiveHero
+        title={identity.heroTitle}
+        subtitle={`${prodi.faculty} · ${prodi.university}`}
+        description={identity.heroDescription}
+        stats={heroStats}
+        slides={heroSlides}
+      />
 
       {/* ─── Pengantar (kata menyala saat digulir) ────────── */}
       {statement && (
@@ -466,6 +416,68 @@ export default async function ProdiHomePage() {
               {site.video.slice(0, 4).map((v) => (
                 <VideoEmbed key={v.url} url={v.url} title={v.title} />
               ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ─── Kolaborasi Buletin Artikel HMJ Ekonomi Syariah ── */}
+      {buletinItems.length > 0 && (
+        <section className="border-t border-hairline bg-canvas px-4 py-20 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-[1024px]">
+            <Reveal className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading
+                align="left"
+                eyebrow="Kolaborasi Prodi × HMJ Ekonomi Syariah"
+                title="Buletin Artikel HMJ"
+                description="Publikasi berkala kajian ekonomi Islam, pasar modal syariah, ZISWAF, dan industri halal karya mahasiswa & HMJ Ekonomi Syariah."
+              />
+              <div className="flex flex-wrap items-center gap-3">
+                <Link
+                  href="/prodi/formulir/buletin-artikel"
+                  className="rounded-full border border-hairline bg-mist px-4 py-2 text-[14px] font-semibold text-label transition-colors hover:border-accent/40 hover:text-accent"
+                >
+                  Kirim Artikel Buletin
+                </Link>
+                <Link
+                  href="/prodi/berita?kategori=buletin_hmj"
+                  className="text-[15px] font-semibold text-accent hover:underline"
+                >
+                  Semua edisi ›
+                </Link>
+              </div>
+            </Reveal>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {buletinItems.map((n, i) => (
+                <Reveal key={n.id} delay={i * 0.05}>
+                  <NewsCard item={n} cover={coverFor(n, media)} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ─── Mitra Kerja Sama Resmi ───────────────────────── */}
+      {site.mitra.length > 0 && (
+        <section className="border-t border-hairline bg-mist/60 px-4 py-20 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-[1024px]">
+            <Reveal className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading
+                align="left"
+                eyebrow="Jejaring Industri & Regulator"
+                title="Mitra kerja sama strategis"
+                description="Kolaborasi kuliah praktisi, Galeri Investasi Syariah BEI, magang industri, dan beasiswa mahasiswa."
+              />
+              <Link
+                href="/prodi/profil#mitra"
+                className="text-[15px] font-semibold text-accent hover:underline"
+              >
+                Detail kemitraan ›
+              </Link>
+            </Reveal>
+            <div className="mt-8">
+              <MitraList items={site.mitra} />
             </div>
           </div>
         </section>

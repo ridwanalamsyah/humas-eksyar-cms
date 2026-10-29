@@ -78,7 +78,7 @@ export const defaultBioConfig: BioConfig = {
       title: "Buletin Eksyar Insight — Edisi Literasi Pasar Modal & Industri Halal",
       period: "Semester Ganjil 2026/2027",
       publishedAt: "2026-10-01",
-      coverUrl: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80",
+      coverUrl: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
       readUrl: "https://journal.uinsgd.ac.id/index.php/likuid",
       blurb: "Liputan Sekolah Pasar Modal Syariah BEI, Edukasi Anti-Judol & Pinjol, serta riset ekosistem halal Jawa Barat.",
     },

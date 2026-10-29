@@ -27,6 +27,15 @@ function itemKey(item: unknown): string {
     .trim();
 }
 
+function isLegacyTemplateValue(v: unknown): boolean {
+  if (typeof v !== "string") return false;
+  return (
+    v.includes("images.unsplash.com") ||
+    v.includes("maps.google.com/?q=UIN+Sunan+Gunung+Djati+Bandung") ||
+    v === "/prodi/skripsi/pojok"
+  );
+}
+
 function backfillObject(
   storedItem: Record<string, unknown>,
   defaultItem: Record<string, unknown>,
@@ -36,10 +45,23 @@ function backfillObject(
     const curV = storedItem[k];
     const isEmptyString = typeof curV === "string" && curV.trim() === "";
     const isEmptyArray = Array.isArray(curV) && curV.length === 0;
-    if (curV === null || curV === undefined || isEmptyString || isEmptyArray) {
+    if (
+      curV === null ||
+      curV === undefined ||
+      isEmptyString ||
+      isEmptyArray ||
+      isLegacyTemplateValue(curV)
+    ) {
       if (defV !== null && defV !== undefined && defV !== "") {
         out[k] = defV;
       }
+    }
+    if (
+      typeof curV === "string" &&
+      typeof defV === "string" &&
+      curV.includes("mahasiswa semester enam")
+    ) {
+      out[k] = defV;
     }
   }
   return out;
@@ -84,6 +106,69 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
             x &&
             typeof x === "object" &&
             (x as { title?: string }).title === "Kajian & Diskusi Ekonomi Islam",
+        )
+      ) {
+        result[key] = defVal;
+        continue;
+      }
+
+      // Jika galeri atau rps di DB masih memakai foto Unsplash / format lama, utamakan default resmi ditambah item baru non-Unsplash.
+      if (key === "galeri") {
+        const cleanStored = data.filter(
+          (x) =>
+            x &&
+            typeof x === "object" &&
+            !isLegacyTemplateValue((x as { image?: unknown }).image),
+        );
+        const seenCaptions = new Set(
+          cleanStored.map((x) =>
+            String((x as { caption?: unknown }).caption ?? "").toLowerCase(),
+          ),
+        );
+        const combined = [...cleanStored];
+        for (const dItem of defVal) {
+          const cap = String(
+            (dItem as { caption?: unknown }).caption ?? "",
+          ).toLowerCase();
+          if (!seenCaptions.has(cap)) {
+            combined.push(dItem);
+            seenCaptions.add(cap);
+          }
+        }
+        result[key] = combined;
+        continue;
+      }
+
+      if (key === "video") {
+        const seenUrls = new Set<string>();
+        const combined: unknown[] = [];
+        for (const dItem of defVal) {
+          const u = itemKey(dItem);
+          if (!seenUrls.has(u)) {
+            combined.push(dItem);
+            seenUrls.add(u);
+          }
+        }
+        for (const sItem of data) {
+          const u = itemKey(sItem);
+          if (!seenUrls.has(u)) {
+            combined.push(sItem);
+            seenUrls.add(u);
+          }
+        }
+        result[key] = combined;
+        continue;
+      }
+
+      if (
+        key === "rps" &&
+        data.some(
+          (x) =>
+            x &&
+            typeof x === "object" &&
+            String((x as { semester?: unknown }).semester ?? "").startsWith(
+              "Semester",
+            ),
         )
       ) {
         result[key] = defVal;

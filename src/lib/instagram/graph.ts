@@ -111,33 +111,33 @@ export async function listInstagramPosts(limit = 25): Promise<IgPost[]> {
 export const DEFAULT_IG_FEED: { permalink: string; image: string; caption: string }[] = [
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80",
-    caption: "Sekolah Pasar Modal Syariah (SPMS) bersama BEI Perwakilan Jawa Barat & GIS FEBI UIN SGD.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
+    caption: "Sekolah Pasar Modal Syariah (SPMS) 2026 bersama BEI Perwakilan Jawa Barat & GIS FEBI UIN SGD.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=800&q=80",
-    caption: "Edukasi Literasi Keuangan Syariah: Keluarga Cerdas Lawan Judol & Pinjol Ilegal di Kabupaten Bandung.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0020.jpg",
+    caption: "Edukasi Literasi Keuangan Syariah: Keluarga Cerdas Lawan Judol & Pinjol Ilegal di Kelurahan Padasuka.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202807-scaled.jpg",
     caption: "Kuliah Praktisi Bank Muamalat Indonesia: Transformasi Digital & Manajemen Risiko Perbankan Syariah.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80",
-    caption: "Pelatihan & Pendampingan Sertifikasi Juru Sembelih Halal (Juleha) bersama LP3H UIN SGD.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
+    caption: "Penyerahan Sertifikat Juru Sembelih Halal (Juleha) berbasis SKKNI di Desa Cibiru Wetan.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80",
-    caption: "Studium Generale FEBI: Inovasi Wakaf Produktif & Green Sukuk untuk Pembangunan Berkelanjutan.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
+    caption: "HMJ Ekonomi Syariah Gelar Eksphoria & Kolaborasi Buletin Artikel Mahasiswa FEBI UIN SGD.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&w=800&q=80",
-    caption: "Klinik Metodologi Riset & Penulisan Artikel Jurnal LIKUID Terakreditasi SINTA bagi Mahasiswa.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260624-WA0016.jpg",
+    caption: "Kerja Sama Peningkatan Kompetensi SDM bersama Muamalat Institute & Seminar Karir di Aula FEBI Kampus 2.",
   },
 ];
 
