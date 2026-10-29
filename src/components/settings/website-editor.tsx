@@ -2324,6 +2324,7 @@ function ImageInput({
   onChange: (v: string) => void;
 }) {
   const [uploading, setUploading] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
 
   async function upload(file: File) {
@@ -2350,9 +2351,28 @@ function ImageInput({
   return (
     <Field
       label={label}
-      hint={hint ?? "Unggah foto atau tempel URL gambar (https://…)."}
+      hint={
+        hint ??
+        "Tarik & lepas (drag & drop) foto ke kotak ini, klik Unggah, atau tempel URL gambar (https://…)."
+      }
     >
-      <div className="flex items-center gap-3">
+      <div
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragging(true);
+        }}
+        onDragLeave={() => setDragging(false)}
+        onDrop={(e) => {
+          e.preventDefault();
+          setDragging(false);
+          const f = e.dataTransfer?.files?.[0];
+          if (f) upload(f);
+        }}
+        className={cn(
+          "flex items-center gap-3 rounded-xl transition-colors",
+          dragging && "bg-brand-500/10 ring-2 ring-brand-500/40",
+        )}
+      >
         <div className="relative size-14 shrink-0 overflow-hidden rounded-xl bg-foreground/5">
           {value ? (
             // eslint-disable-next-line @next/next/no-img-element
@@ -2371,7 +2391,7 @@ function ImageInput({
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          placeholder="https://…"
+          placeholder="https://… (atau tarik file foto ke sini)"
           className={cn(inputCls, "min-w-0 flex-1")}
         />
         <input
@@ -2523,6 +2543,41 @@ function ListEditor({
               <span className="mr-2 text-foreground/40">{i + 1}.</span>
               {itemTitle(item, i)}
             </button>
+            {(() => {
+              const posterTitle =
+                item.achievement && item.name
+                  ? `${item.name} — ${item.achievement}`
+                  : item.alasan && item.nama
+                    ? `${item.nama} — ${item.alasan}`
+                    : item.judul && item.nama
+                      ? `${item.nama}: ${item.judul}`
+                      : item.title && item.category
+                        ? String(item.title)
+                        : null;
+              const posterCat = String(
+                item.group ??
+                  item.peran ??
+                  item.jenis ??
+                  item.category ??
+                  "Selamat & Sukses",
+              );
+              const posterDate = String(
+                item.date ?? item.tanggal ?? item.bulan ?? "",
+              );
+              if (!posterTitle) return null;
+              const href = `/api/og/instagram?judul=${encodeURIComponent(posterTitle)}&kategori=${encodeURIComponent(posterCat)}&tanggal=${encodeURIComponent(posterDate)}`;
+              return (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Unduh Poster Instagram (1080×1350)"
+                  className="hidden items-center gap-1 rounded-lg border border-foreground/10 px-2 py-1 text-[11px] font-medium text-foreground/65 transition-colors hover:border-brand-500/40 hover:text-brand-600 sm:inline-flex"
+                >
+                  Poster IG ↗
+                </a>
+              );
+            })()}
             <IconBtn
               label="Naikkan"
               onClick={() => move(i, -1)}

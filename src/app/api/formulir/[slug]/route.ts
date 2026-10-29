@@ -80,6 +80,15 @@ export async function POST(
   const data = Object.fromEntries(
     Object.entries(parsed.data).filter(([, v]) => v !== undefined && v !== ""),
   );
+  // Blokir injeksi kata kunci spam/judi/skrip berbahaya pada isian formulir publik.
+  const SPAM_RE =
+    /(slot\s*gacor|maxwin|judol|togel|sbobet|pragmatic\s*play|casino|<script\b|javascript:)/i;
+  const combinedText = Object.values(data)
+    .map((v) => String(v))
+    .join(" ");
+  if (SPAM_RE.test(combinedText)) {
+    return NextResponse.json({ ok: true, message: def.success });
+  }
   if (def.consent) data._persetujuan = true;
   await createSubmission({ type: def.slug, data, refId });
   return NextResponse.json({ ok: true, message: def.success });

@@ -6,6 +6,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import {
   listContents,
@@ -66,5 +67,7 @@ export async function POST(req: NextRequest) {
     scheduledFor: body.scheduledFor ?? null,
     captionStyle: body.captionStyle ?? null,
   });
+  revalidatePath("/", "layout");
+  revalidatePath("/prodi", "layout");
   return NextResponse.json({ content }, { status: 201 });
 }

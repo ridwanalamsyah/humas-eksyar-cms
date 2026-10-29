@@ -53,6 +53,7 @@ export async function PUT(req: NextRequest) {
   const session = await auth();
   await snapshotBeforeSave(session?.user?.name ?? session?.user?.email ?? "admin");
   const saved = await setWebsiteContent(parsed.data);
+  revalidatePath("/", "layout");
   revalidatePath("/prodi", "layout");
   revalidatePath("/settings/website");
   return NextResponse.json({ website: saved });

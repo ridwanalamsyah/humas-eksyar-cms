@@ -7,6 +7,7 @@
  */
 
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
 import {
   getContent,
@@ -85,6 +86,8 @@ export async function PATCH(req: NextRequest, { params }: Params) {
       console.warn("[approval-email] notify failed", err);
     });
   }
+  revalidatePath("/", "layout");
+  revalidatePath("/prodi", "layout");
   return NextResponse.json({ content });
 }
 
@@ -153,5 +156,7 @@ export async function DELETE(_req: NextRequest, { params }: Params) {
   if (!ok) {
     return NextResponse.json({ error: "Data tidak ditemukan." }, { status: 404 });
   }
+  revalidatePath("/", "layout");
+  revalidatePath("/prodi", "layout");
   return NextResponse.json({ ok: true });
 }
