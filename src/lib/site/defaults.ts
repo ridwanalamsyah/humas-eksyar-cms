@@ -650,22 +650,31 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   ],
   apresiasi: [
     {
-      judul: "Apresiasi Publikasi Internasional Bereputasi (Scopus Q2)",
-      penerima: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
-      tanggal: "2026-03-10",
-      isi: "Selamat dan sukses atas terbitnya artikel ilmiah di jurnal internasional terindeks Scopus Q2 pada bidang Akuntabilitas & Kepatuhan Syariah Lembaga ZISWAF.",
+      bulan: "Maret 2026",
+      nama: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
+      peran: "Dosen Tetap Ekonomi Syariah",
+      alasan:
+        "Artikel ilmiah terbit di jurnal internasional bereputasi terindeks Scopus Q2 pada bidang Akuntabilitas & Kepatuhan Syariah Lembaga ZISWAF.",
+      photo:
+        "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80",
     },
     {
-      judul: "Apresiasi Kontributor Media Keuangan Islam Internasional (IFN)",
-      penerima: "Hakiki Ramadhan (Mahasiswa Ekonomi Syariah)",
-      tanggal: "2026-04-22",
-      isi: "Selamat atas dimuatnya artikel analisis ekonomi dan keuangan syariah di publikasi internasional Islamic Finance News (IFN).",
+      bulan: "April 2026",
+      nama: "Hakiki Ramadhan",
+      peran: "Mahasiswa S1 Ekonomi Syariah",
+      alasan:
+        "Artikel analisis ekonomi dan keuangan syariah dimuat di publikasi internasional Islamic Finance News (IFN).",
+      photo:
+        "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
     },
     {
-      judul: "Penghargaan Sinergi Konservasi & Pengembangan Desa Ekowisata Halal",
-      penerima: "Tim Dosen & Mahasiswa Prodi Ekonomi Syariah UIN SGD",
-      tanggal: "2019-12-18",
-      isi: "Penghargaan resmi Bupati Bandung atas inisiasi dan pendampingan Desa Ekowisata Halal Indragiri, Kecamatan Rancabali, Kabupaten Bandung.",
+      bulan: "Desember 2019",
+      nama: "Tim Dosen & Mahasiswa Prodi Ekonomi Syariah UIN SGD",
+      peran: "Inisiator Desa Ekowisata Halal Indragiri",
+      alasan:
+        "Meraih Penghargaan Bupati Bandung atas sinergi konservasi lingkungan dan pengembangan Desa Ekowisata Halal di Kecamatan Rancabali.",
+      photo:
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
     },
   ],
   statusLayanan: {
@@ -766,28 +775,36 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   wisuda: [
     {
       periode: "Wisuda Ke-102 UIN Sunan Gunung Djati Bandung (2026)",
-      nama: "Lulusan Terbaik Program Studi Ekonomi Syariah FEBI",
-      judul: "Analisis Literasi Keuangan Syariah, Wakaf Produktif, dan Ekosistem Industri Halal di Jawa Barat",
-      predikat: "Cum Laude (Dengan Pujian)",
-      foto: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80",
+      tanggal: "2026-08-22",
+      image:
+        "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1000&q=80",
+      wisudawan: [
+        "Lulusan Terbaik Program Studi Ekonomi Syariah FEBI (Predikat Cum Laude)",
+        "Sarjana Ekonomi (S.E.) Angkatan Wisuda Semester Genap & Ganjil 2025/2026",
+      ],
+      url: "https://digilib.uinsgd.ac.id",
     },
   ],
   karya: [
     {
       judul: "Opini & Analisis Pasar Keuangan Syariah di Islamic Finance News (IFN)",
-      penulis: "Hakiki Ramadhan",
       jenis: "Artikel Media Internasional",
-      tahun: "2026",
-      deskripsi: "Analisis perkembangan instrumen keuangan Islam dan dinamika pasar modal syariah Indonesia.",
+      pembuat: "Hakiki Ramadhan (Mahasiswa Ekonomi Syariah)",
+      deskripsi:
+        "Analisis perkembangan instrumen keuangan Islam dan dinamika pasar modal syariah Indonesia.",
       url: "https://www.islamicfinancenews.com/",
+      image:
+        "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
     },
     {
       judul: "Model Pemberdayaan Desa Ekowisata Halal Indragiri Kecamatan Rancabali",
-      penulis: "Tim Riset & Pengabdian Dosen-Mahasiswa Ekonomi Syariah",
       jenis: "Riset & Inovasi Desa Binaan",
-      tahun: "2020",
-      deskripsi: "Kajian terpadu pengembangan destinasi wisata ramah muslim dan konservasi lingkungan Green Halal Village.",
+      pembuat: "Tim Riset & Pengabdian Dosen-Mahasiswa Ekonomi Syariah",
+      deskripsi:
+        "Kajian terpadu pengembangan destinasi wisata ramah muslim dan konservasi lingkungan Green Halal Village.",
       url: "https://journal.uinsgd.ac.id/index.php/likuid",
+      image:
+        "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
     },
   ],
   panduanMaba: [
