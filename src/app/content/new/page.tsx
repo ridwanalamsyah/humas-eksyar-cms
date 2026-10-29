@@ -10,6 +10,7 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata = { title: "Konten Baru" };
+export const dynamic = "force-dynamic";
 
 export default async function NewContentPage() {
   const [media, member, rubrics, branding] = await Promise.all([

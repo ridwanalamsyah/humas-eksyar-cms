@@ -49,17 +49,25 @@ function row<T>(x: unknown): T {
 /* ------------------------------------------------------------------ */
 
 export async function listDivisions(): Promise<Division[]> {
-  const rows = await client().select().from(schema.divisions);
-  return rows.map((r) => row<Division>(r));
+  try {
+    const rows = await client().select().from(schema.divisions);
+    return rows.map((r) => row<Division>(r));
+  } catch {
+    return fixtures.listDivisions();
+  }
 }
 
 export async function getDivision(id: ID): Promise<Division | null> {
-  const rows = await client()
-    .select()
-    .from(schema.divisions)
-    .where(eq(schema.divisions.id, id))
-    .limit(1);
-  return rows[0] ? row<Division>(rows[0]) : null;
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.divisions)
+      .where(eq(schema.divisions.id, id))
+      .limit(1);
+    return rows[0] ? row<Division>(rows[0]) : null;
+  } catch {
+    return fixtures.getDivision(id);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -71,37 +79,45 @@ export async function listMembers(opts?: {
   role?: Member["role"];
   search?: string;
 }): Promise<Member[]> {
-  const filters = [];
-  if (opts?.divisionId) {
-    filters.push(eq(schema.members.divisionId, opts.divisionId));
+  try {
+    const filters = [];
+    if (opts?.divisionId) {
+      filters.push(eq(schema.members.divisionId, opts.divisionId));
+    }
+    if (opts?.role) {
+      filters.push(eq(schema.members.role, opts.role));
+    }
+    if (opts?.search) {
+      const q = `%${opts.search}%`;
+      filters.push(
+        or(
+          ilike(schema.members.name, q),
+          ilike(schema.members.email, q),
+          ilike(schema.members.position, q),
+        )!,
+      );
+    }
+    const query = client().select().from(schema.members);
+    const rows = await (filters.length
+      ? query.where(and(...filters))
+      : query);
+    return rows.map((r) => row<Member>(r));
+  } catch {
+    return fixtures.listMembers(opts);
   }
-  if (opts?.role) {
-    filters.push(eq(schema.members.role, opts.role));
-  }
-  if (opts?.search) {
-    const q = `%${opts.search}%`;
-    filters.push(
-      or(
-        ilike(schema.members.name, q),
-        ilike(schema.members.email, q),
-        ilike(schema.members.position, q),
-      )!,
-    );
-  }
-  const query = client().select().from(schema.members);
-  const rows = await (filters.length
-    ? query.where(and(...filters))
-    : query);
-  return rows.map((r) => row<Member>(r));
 }
 
 export async function getMember(id: ID): Promise<Member | null> {
-  const rows = await client()
-    .select()
-    .from(schema.members)
-    .where(eq(schema.members.id, id))
-    .limit(1);
-  return rows[0] ? row<Member>(rows[0]) : null;
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.members)
+      .where(eq(schema.members.id, id))
+      .limit(1);
+    return rows[0] ? row<Member>(rows[0]) : null;
+  } catch {
+    return fixtures.getMember(id);
+  }
 }
 
 /**
@@ -281,78 +297,86 @@ export async function listContents(opts?: {
   rubric?: string;
   search?: string;
 }): Promise<ContentItem[]> {
-  const filters = [];
-  if (opts?.status) {
-    const set = Array.isArray(opts.status) ? opts.status : [opts.status];
-    filters.push(inArray(schema.contents.status, set));
-  }
-  if (opts?.divisionId) {
-    filters.push(eq(schema.contents.divisionId, opts.divisionId));
-  }
-  if (opts?.authorId) {
-    filters.push(eq(schema.contents.authorId, opts.authorId));
-  }
-  if (opts?.rubric) {
-    filters.push(eq(schema.contents.rubric, opts.rubric));
-  }
-  if (opts?.search) {
-    const q = `%${opts.search}%`;
-    filters.push(
-      or(ilike(schema.contents.title, q), ilike(schema.contents.caption, q))!,
-    );
-  }
-  const query = client()
-    .select()
-    .from(schema.contents)
-    .orderBy(desc(schema.contents.updatedAt));
-  const [rows, seedRows] = await Promise.all([
-    filters.length ? query.where(and(...filters)) : query,
-    fixtures.listContents(opts),
-  ]);
-  const seedByIdOrSlug = new Map<string, ContentItem>();
-  for (const s of seedRows) {
-    seedByIdOrSlug.set(s.id, s);
-    seedByIdOrSlug.set(s.slug, s);
-  }
-  const dbItems = rows.map((r) => {
-    const item = row<ContentItem>(r);
-    if (!item.mediaIds || item.mediaIds.length === 0) {
-      const seedMatch =
-        seedByIdOrSlug.get(item.id) ?? seedByIdOrSlug.get(item.slug);
-      if (seedMatch?.mediaIds?.length) {
-        return { ...item, mediaIds: seedMatch.mediaIds };
+  try {
+    const filters = [];
+    if (opts?.status) {
+      const set = Array.isArray(opts.status) ? opts.status : [opts.status];
+      filters.push(inArray(schema.contents.status, set));
+    }
+    if (opts?.divisionId) {
+      filters.push(eq(schema.contents.divisionId, opts.divisionId));
+    }
+    if (opts?.authorId) {
+      filters.push(eq(schema.contents.authorId, opts.authorId));
+    }
+    if (opts?.rubric) {
+      filters.push(eq(schema.contents.rubric, opts.rubric));
+    }
+    if (opts?.search) {
+      const q = `%${opts.search}%`;
+      filters.push(
+        or(ilike(schema.contents.title, q), ilike(schema.contents.caption, q))!,
+      );
+    }
+    const query = client()
+      .select()
+      .from(schema.contents)
+      .orderBy(desc(schema.contents.updatedAt));
+    const [rows, seedRows] = await Promise.all([
+      filters.length ? query.where(and(...filters)) : query,
+      fixtures.listContents(opts),
+    ]);
+    const seedByIdOrSlug = new Map<string, ContentItem>();
+    for (const s of seedRows) {
+      seedByIdOrSlug.set(s.id, s);
+      seedByIdOrSlug.set(s.slug, s);
+    }
+    const dbItems = rows.map((r) => {
+      const item = row<ContentItem>(r);
+      if (!item.mediaIds || item.mediaIds.length === 0) {
+        const seedMatch =
+          seedByIdOrSlug.get(item.id) ?? seedByIdOrSlug.get(item.slug);
+        if (seedMatch?.mediaIds?.length) {
+          return { ...item, mediaIds: seedMatch.mediaIds };
+        }
+      }
+      return item;
+    });
+    const seen = new Set(dbItems.flatMap((c) => [c.id, c.slug]));
+    for (const s of seedRows) {
+      if (!seen.has(s.id) && !seen.has(s.slug)) {
+        dbItems.push(s);
+        seen.add(s.id);
+        seen.add(s.slug);
       }
     }
-    return item;
-  });
-  const seen = new Set(dbItems.flatMap((c) => [c.id, c.slug]));
-  for (const s of seedRows) {
-    if (!seen.has(s.id) && !seen.has(s.slug)) {
-      dbItems.push(s);
-      seen.add(s.id);
-      seen.add(s.slug);
-    }
+    return dbItems;
+  } catch {
+    return fixtures.listContents(opts);
   }
-  return dbItems;
 }
 
 export async function getContent(id: ID): Promise<ContentItem | null> {
-  const rows = await client()
-    .select()
-    .from(schema.contents)
-    .where(eq(schema.contents.id, id))
-    .limit(1);
-  if (rows[0]) {
-    const item = row<ContentItem>(rows[0]);
-    if (!item.mediaIds || item.mediaIds.length === 0) {
-      const seedMatch = await fixtures.getContent(id);
-      if (seedMatch?.mediaIds?.length) {
-        return { ...item, mediaIds: seedMatch.mediaIds };
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.contents)
+      .where(eq(schema.contents.id, id))
+      .limit(1);
+    if (rows[0]) {
+      const item = row<ContentItem>(rows[0]);
+      if (!item.mediaIds || item.mediaIds.length === 0) {
+        const seedMatch = await fixtures.getContent(id);
+        if (seedMatch?.mediaIds?.length) {
+          return { ...item, mediaIds: seedMatch.mediaIds };
+        }
       }
+      return item;
     }
-    return item;
+    return fixtures.getContent(id);
+  } catch {
+    return fixtures.getContent(id);
   }
-  return fixtures.getContent(id);
 }
 
 /* ------------------------------------------------------------------ */
@@ -364,41 +388,45 @@ export async function listMedia(opts?: {
   search?: string;
   aspect?: MediaAsset["aspect"];
 }): Promise<MediaAsset[]> {
-  const filters = [];
-  if (opts?.tag) {
-    filters.push(drizzleSql`${schema.media.tags} ? ${opts.tag}`);
-  }
-  if (opts?.aspect) {
-    filters.push(eq(schema.media.aspect, opts.aspect));
-  }
-  if (opts?.search) {
-    filters.push(ilike(schema.media.alt, `%${opts.search}%`));
-  }
-  const query = client()
-    .select()
-    .from(schema.media)
-    .orderBy(desc(schema.media.uploadedAt));
-  const [rows, seedMedia] = await Promise.all([
-    filters.length ? query.where(and(...filters)) : query,
-    fixtures.listMedia(opts),
-  ]);
-  const seedById = new Map(seedMedia.map((m) => [m.id, m]));
-  const dbMedia = rows.map((r) => {
-    const m = row<MediaAsset>(r);
-    if (m.url.includes("images.unsplash.com")) {
-      const seedMatch = seedById.get(m.id);
-      if (seedMatch) return { ...m, url: seedMatch.url };
+  try {
+    const filters = [];
+    if (opts?.tag) {
+      filters.push(drizzleSql`${schema.media.tags} ? ${opts.tag}`);
     }
-    return m;
-  });
-  const seen = new Set(dbMedia.map((m) => m.id));
-  for (const s of seedMedia) {
-    if (!seen.has(s.id)) {
-      dbMedia.push(s);
-      seen.add(s.id);
+    if (opts?.aspect) {
+      filters.push(eq(schema.media.aspect, opts.aspect));
     }
+    if (opts?.search) {
+      filters.push(ilike(schema.media.alt, `%${opts.search}%`));
+    }
+    const query = client()
+      .select()
+      .from(schema.media)
+      .orderBy(desc(schema.media.uploadedAt));
+    const [rows, seedMedia] = await Promise.all([
+      filters.length ? query.where(and(...filters)) : query,
+      fixtures.listMedia(opts),
+    ]);
+    const seedById = new Map(seedMedia.map((m) => [m.id, m]));
+    const dbMedia = rows.map((r) => {
+      const m = row<MediaAsset>(r);
+      if (m.url.includes("images.unsplash.com")) {
+        const seedMatch = seedById.get(m.id);
+        if (seedMatch) return { ...m, url: seedMatch.url };
+      }
+      return m;
+    });
+    const seen = new Set(dbMedia.map((m) => m.id));
+    for (const s of seedMedia) {
+      if (!seen.has(s.id)) {
+        dbMedia.push(s);
+        seen.add(s.id);
+      }
+    }
+    return dbMedia;
+  } catch {
+    return fixtures.listMedia(opts);
   }
-  return dbMedia;
 }
 
 /** Simpan aset media baru (mis. foto hasil impor Instagram). */
@@ -413,20 +441,24 @@ export async function createMedia(input: Omit<MediaAsset, "id" | "uploadedAt"> &
 }
 
 export async function getMedia(id: ID): Promise<MediaAsset | null> {
-  const rows = await client()
-    .select()
-    .from(schema.media)
-    .where(eq(schema.media.id, id))
-    .limit(1);
-  if (rows[0]) {
-    const m = row<MediaAsset>(rows[0]);
-    if (m.url.includes("images.unsplash.com")) {
-      const seedMatch = await fixtures.getMedia(id);
-      if (seedMatch) return { ...m, url: seedMatch.url };
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.media)
+      .where(eq(schema.media.id, id))
+      .limit(1);
+    if (rows[0]) {
+      const m = row<MediaAsset>(rows[0]);
+      if (m.url.includes("images.unsplash.com")) {
+        const seedMatch = await fixtures.getMedia(id);
+        if (seedMatch) return { ...m, url: seedMatch.url };
+      }
+      return m;
     }
-    return m;
+    return fixtures.getMedia(id);
+  } catch {
+    return fixtures.getMedia(id);
   }
-  return fixtures.getMedia(id);
 }
 
 /* ------------------------------------------------------------------ */
@@ -439,47 +471,55 @@ export async function listEvents(opts?: {
   toDate?: string;
   category?: Event["category"];
 }): Promise<Event[]> {
-  const filters = [];
-  if (opts?.divisionId) {
-    filters.push(eq(schema.events.divisionId, opts.divisionId));
-  }
-  if (opts?.fromDate) {
-    filters.push(drizzleSql`${schema.events.startsAt} >= ${opts.fromDate}`);
-  }
-  if (opts?.toDate) {
-    filters.push(drizzleSql`${schema.events.startsAt} <= ${opts.toDate}`);
-  }
-  if (opts?.category) {
-    filters.push(eq(schema.events.category, opts.category));
-  }
-  const query = client()
-    .select()
-    .from(schema.events)
-    .orderBy(asc(schema.events.startsAt));
-  const [rows, seedEvents] = await Promise.all([
-    filters.length ? query.where(and(...filters)) : query,
-    fixtures.listEvents(opts),
-  ]);
-  const dbEvents = rows.map((r) => row<Event>(r));
-  const seen = new Set(dbEvents.flatMap((e) => [e.id, e.slug]));
-  for (const s of seedEvents) {
-    if (!seen.has(s.id) && !seen.has(s.slug)) {
-      dbEvents.push(s);
-      seen.add(s.id);
-      seen.add(s.slug);
+  try {
+    const filters = [];
+    if (opts?.divisionId) {
+      filters.push(eq(schema.events.divisionId, opts.divisionId));
     }
+    if (opts?.fromDate) {
+      filters.push(drizzleSql`${schema.events.startsAt} >= ${opts.fromDate}`);
+    }
+    if (opts?.toDate) {
+      filters.push(drizzleSql`${schema.events.startsAt} <= ${opts.toDate}`);
+    }
+    if (opts?.category) {
+      filters.push(eq(schema.events.category, opts.category));
+    }
+    const query = client()
+      .select()
+      .from(schema.events)
+      .orderBy(asc(schema.events.startsAt));
+    const [rows, seedEvents] = await Promise.all([
+      filters.length ? query.where(and(...filters)) : query,
+      fixtures.listEvents(opts),
+    ]);
+    const dbEvents = rows.map((r) => row<Event>(r));
+    const seen = new Set(dbEvents.flatMap((e) => [e.id, e.slug]));
+    for (const s of seedEvents) {
+      if (!seen.has(s.id) && !seen.has(s.slug)) {
+        dbEvents.push(s);
+        seen.add(s.id);
+        seen.add(s.slug);
+      }
+    }
+    return dbEvents.sort((a, b) => a.startsAt.localeCompare(b.startsAt));
+  } catch {
+    return fixtures.listEvents(opts);
   }
-  return dbEvents.sort((a, b) => a.startsAt.localeCompare(b.startsAt));
 }
 
 export async function getEvent(id: ID): Promise<Event | null> {
-  const rows = await client()
-    .select()
-    .from(schema.events)
-    .where(eq(schema.events.id, id))
-    .limit(1);
-  if (rows[0]) return row<Event>(rows[0]);
-  return fixtures.getEvent(id);
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.events)
+      .where(eq(schema.events.id, id))
+      .limit(1);
+    if (rows[0]) return row<Event>(rows[0]);
+    return fixtures.getEvent(id);
+  } catch {
+    return fixtures.getEvent(id);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -487,32 +527,44 @@ export async function getEvent(id: ID): Promise<Event | null> {
 /* ------------------------------------------------------------------ */
 
 export async function listBadges(): Promise<Badge[]> {
-  const tierOrder = drizzleSql`CASE ${schema.badges.tier}
-    WHEN 'legendary' THEN 0
-    WHEN 'platinum' THEN 1
-    WHEN 'gold' THEN 2
-    WHEN 'silver' THEN 3
-    WHEN 'bronze' THEN 4
-    ELSE 5 END`;
-  const rows = await client()
-    .select()
-    .from(schema.badges)
-    .orderBy(tierOrder);
-  return rows.map((r) => row<Badge>(r));
+  try {
+    const tierOrder = drizzleSql`CASE ${schema.badges.tier}
+      WHEN 'legendary' THEN 0
+      WHEN 'platinum' THEN 1
+      WHEN 'gold' THEN 2
+      WHEN 'silver' THEN 3
+      WHEN 'bronze' THEN 4
+      ELSE 5 END`;
+    const rows = await client()
+      .select()
+      .from(schema.badges)
+      .orderBy(tierOrder);
+    return rows.map((r) => row<Badge>(r));
+  } catch {
+    return fixtures.listBadges();
+  }
 }
 
 export async function getBadge(id: ID): Promise<Badge | null> {
-  const rows = await client()
-    .select()
-    .from(schema.badges)
-    .where(eq(schema.badges.id, id))
-    .limit(1);
-  return rows[0] ? row<Badge>(rows[0]) : null;
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.badges)
+      .where(eq(schema.badges.id, id))
+      .limit(1);
+    return rows[0] ? row<Badge>(rows[0]) : null;
+  } catch {
+    return fixtures.getBadge(id);
+  }
 }
 
 export async function listQuests(): Promise<Quest[]> {
-  const rows = await client().select().from(schema.quests);
-  return rows.map((r) => row<Quest>(r));
+  try {
+    const rows = await client().select().from(schema.quests);
+    return rows.map((r) => row<Quest>(r));
+  } catch {
+    return fixtures.listQuests();
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -522,31 +574,43 @@ export async function listQuests(): Promise<Quest[]> {
 export async function listNotifications(
   memberId: ID,
 ): Promise<NotificationItem[]> {
-  const rows = await client()
-    .select()
-    .from(schema.notifications)
-    .where(eq(schema.notifications.memberId, memberId))
-    .orderBy(desc(schema.notifications.at));
-  return rows.map((r) => row<NotificationItem>(r));
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.notifications)
+      .where(eq(schema.notifications.memberId, memberId))
+      .orderBy(desc(schema.notifications.at));
+    return rows.map((r) => row<NotificationItem>(r));
+  } catch {
+    return fixtures.listNotifications(memberId);
+  }
 }
 
 export async function getWeeklyDigest(): Promise<WeeklyDigest> {
-  const rows = await client()
-    .select()
-    .from(schema.weeklyDigests)
-    .orderBy(desc(schema.weeklyDigests.generatedAt))
-    .limit(1);
-  if (rows[0]) return row<WeeklyDigest>(rows[0]);
-  return fixtures.getWeeklyDigest();
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.weeklyDigests)
+      .orderBy(desc(schema.weeklyDigests.generatedAt))
+      .limit(1);
+    if (rows[0]) return row<WeeklyDigest>(rows[0]);
+    return fixtures.getWeeklyDigest();
+  } catch {
+    return fixtures.getWeeklyDigest();
+  }
 }
 
 export async function listXPLogs(memberId: ID): Promise<XPLog[]> {
-  const rows = await client()
-    .select()
-    .from(schema.xpLogs)
-    .where(eq(schema.xpLogs.memberId, memberId))
-    .orderBy(desc(schema.xpLogs.at));
-  return rows.map((r) => row<XPLog>(r));
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.xpLogs)
+      .where(eq(schema.xpLogs.memberId, memberId))
+      .orderBy(desc(schema.xpLogs.at));
+    return rows.map((r) => row<XPLog>(r));
+  } catch {
+    return fixtures.listXPLogs(memberId);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -554,16 +618,24 @@ export async function listXPLogs(memberId: ID): Promise<XPLog[]> {
 /* ------------------------------------------------------------------ */
 
 export async function listCaptionTemplates(): Promise<CaptionTemplate[]> {
-  const rows = await client().select().from(schema.captionTemplates);
-  return rows.map((r) => row<CaptionTemplate>(r));
+  try {
+    const rows = await client().select().from(schema.captionTemplates);
+    return rows.map((r) => row<CaptionTemplate>(r));
+  } catch {
+    return fixtures.listCaptionTemplates();
+  }
 }
 
 export async function listLeaderboard(): Promise<Member[]> {
-  const rows = await client()
-    .select()
-    .from(schema.members)
-    .orderBy(desc(schema.members.xp));
-  return rows.map((r) => row<Member>(r));
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.members)
+      .orderBy(desc(schema.members.xp));
+    return rows.map((r) => row<Member>(r));
+  } catch {
+    return fixtures.listLeaderboard();
+  }
 }
 
 export async function listDivisionLeaderboard(): Promise<
@@ -928,37 +1000,41 @@ export async function listHolidays(opts?: {
   to?: Date;
   kind?: Holiday["kind"][];
 }): Promise<Holiday[]> {
-  const conditions = [];
-  if (opts?.from) {
-    conditions.push(
-      drizzleSql`${schema.holidays.date} >= ${opts.from.toISOString().slice(0, 10)}`,
-    );
-  }
-  if (opts?.to) {
-    conditions.push(
-      drizzleSql`${schema.holidays.date} <= ${opts.to.toISOString().slice(0, 10)}`,
-    );
-  }
-  if (opts?.kind && opts.kind.length > 0) {
-    conditions.push(inArray(schema.holidays.kind, opts.kind));
-  }
+  try {
+    const conditions = [];
+    if (opts?.from) {
+      conditions.push(
+        drizzleSql`${schema.holidays.date} >= ${opts.from.toISOString().slice(0, 10)}`,
+      );
+    }
+    if (opts?.to) {
+      conditions.push(
+        drizzleSql`${schema.holidays.date} <= ${opts.to.toISOString().slice(0, 10)}`,
+      );
+    }
+    if (opts?.kind && opts.kind.length > 0) {
+      conditions.push(inArray(schema.holidays.kind, opts.kind));
+    }
 
-  const rows = await client()
-    .select()
-    .from(schema.holidays)
-    .where(conditions.length ? and(...conditions) : undefined)
-    .orderBy(asc(schema.holidays.date));
+    const rows = await client()
+      .select()
+      .from(schema.holidays)
+      .where(conditions.length ? and(...conditions) : undefined)
+      .orderBy(asc(schema.holidays.date));
 
-  return rows.map((r) => ({
-    id: r.id,
-    slug: r.slug,
-    name: r.name,
-    date: r.date,
-    kind: r.kind as Holiday["kind"],
-    description: r.description,
-    hijriahLabel: r.hijriahLabel ?? undefined,
-    emoji: r.emoji ?? undefined,
-  }));
+    return rows.map((r) => ({
+      id: r.id,
+      slug: r.slug,
+      name: r.name,
+      date: r.date,
+      kind: r.kind as Holiday["kind"],
+      description: r.description,
+      hijriahLabel: r.hijriahLabel ?? undefined,
+      emoji: r.emoji ?? undefined,
+    }));
+  } catch {
+    return fixtures.listHolidays(opts);
+  }
 }
 
 /* ------------------------------------------------------------------ */
@@ -968,31 +1044,35 @@ export async function listHolidays(opts?: {
 import { type BioConfig, defaultBioConfig } from "@/lib/fixtures/bio";
 
 export async function getBioConfig(): Promise<BioConfig> {
-  const rows = await client()
-    .select()
-    .from(schema.siteSettings)
-    .where(eq(schema.siteSettings.key, "bio"))
-    .limit(1);
-  if (!rows[0] || !rows[0].value || typeof rows[0].value !== "object") {
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.siteSettings)
+      .where(eq(schema.siteSettings.key, "bio"))
+      .limit(1);
+    if (!rows[0] || !rows[0].value || typeof rows[0].value !== "object") {
+      return defaultBioConfig;
+    }
+    const stored = rows[0].value as Partial<BioConfig>;
+    const storedLinks = Array.isArray(stored.links) ? stored.links : [];
+    const seenIds = new Set(storedLinks.map((l) => l.id));
+    const mergedLinks = [
+      ...storedLinks,
+      ...defaultBioConfig.links.filter((l) => !seenIds.has(l.id)),
+    ];
+    const storedMag = Array.isArray(stored.magazineIssues)
+      ? stored.magazineIssues
+      : [];
+    return {
+      ...defaultBioConfig,
+      ...stored,
+      links: mergedLinks,
+      magazineIssues:
+        storedMag.length > 0 ? storedMag : defaultBioConfig.magazineIssues,
+    };
+  } catch {
     return defaultBioConfig;
   }
-  const stored = rows[0].value as Partial<BioConfig>;
-  const storedLinks = Array.isArray(stored.links) ? stored.links : [];
-  const seenIds = new Set(storedLinks.map((l) => l.id));
-  const mergedLinks = [
-    ...storedLinks,
-    ...defaultBioConfig.links.filter((l) => !seenIds.has(l.id)),
-  ];
-  const storedMag = Array.isArray(stored.magazineIssues)
-    ? stored.magazineIssues
-    : [];
-  return {
-    ...defaultBioConfig,
-    ...stored,
-    links: mergedLinks,
-    magazineIssues:
-      storedMag.length > 0 ? storedMag : defaultBioConfig.magazineIssues,
-  };
 }
 
 export async function setBioConfig(value: BioConfig): Promise<BioConfig> {
@@ -1008,13 +1088,17 @@ export async function setBioConfig(value: BioConfig): Promise<BioConfig> {
 }
 
 export async function getBrandingConfig(): Promise<BrandingConfig> {
-  const rows = await client()
-    .select()
-    .from(schema.siteSettings)
-    .where(eq(schema.siteSettings.key, "branding"))
-    .limit(1);
-  if (!rows[0]) return defaultBrandingConfig;
-  return { ...defaultBrandingConfig, ...(rows[0].value as Partial<BrandingConfig>) };
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.siteSettings)
+      .where(eq(schema.siteSettings.key, "branding"))
+      .limit(1);
+    if (!rows[0]) return defaultBrandingConfig;
+    return { ...defaultBrandingConfig, ...(rows[0].value as Partial<BrandingConfig>) };
+  } catch {
+    return defaultBrandingConfig;
+  }
 }
 
 export async function setBrandingConfig(value: BrandingConfig): Promise<BrandingConfig> {
@@ -1034,12 +1118,16 @@ export async function setBrandingConfig(value: BrandingConfig): Promise<Branding
  * penggabungan dengan data awal dilakukan di `lib/site/get-site.ts`.
  */
 export async function getWebsiteContent(): Promise<unknown> {
-  const rows = await client()
-    .select()
-    .from(schema.siteSettings)
-    .where(eq(schema.siteSettings.key, "website"))
-    .limit(1);
-  return rows[0]?.value ?? null;
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.siteSettings)
+      .where(eq(schema.siteSettings.key, "website"))
+      .limit(1);
+    return rows[0]?.value ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export async function setWebsiteContent(value: Record<string, unknown>): Promise<Record<string, unknown>> {
@@ -1075,36 +1163,44 @@ function toRubric(r: typeof schema.rubrics.$inferSelect): Rubric {
 export async function listRubrics({
   includeInactive = false,
 }: { includeInactive?: boolean } = {}): Promise<Rubric[]> {
-  const [rows, seedRubrics] = await Promise.all([
-    includeInactive
-      ? client().select().from(schema.rubrics).orderBy(asc(schema.rubrics.sortOrder))
-      : client()
-          .select()
-          .from(schema.rubrics)
-          .where(eq(schema.rubrics.isActive, true))
-          .orderBy(asc(schema.rubrics.sortOrder)),
-    fixtures.listRubrics({ includeInactive }),
-  ]);
-  const dbRubrics = rows.map(toRubric);
-  const seen = new Set(dbRubrics.flatMap((r) => [r.id, r.slug]));
-  for (const s of seedRubrics) {
-    if (!seen.has(s.id) && !seen.has(s.slug)) {
-      dbRubrics.push(s);
-      seen.add(s.id);
-      seen.add(s.slug);
+  try {
+    const [rows, seedRubrics] = await Promise.all([
+      includeInactive
+        ? client().select().from(schema.rubrics).orderBy(asc(schema.rubrics.sortOrder))
+        : client()
+            .select()
+            .from(schema.rubrics)
+            .where(eq(schema.rubrics.isActive, true))
+            .orderBy(asc(schema.rubrics.sortOrder)),
+      fixtures.listRubrics({ includeInactive }),
+    ]);
+    const dbRubrics = rows.map(toRubric);
+    const seen = new Set(dbRubrics.flatMap((r) => [r.id, r.slug]));
+    for (const s of seedRubrics) {
+      if (!seen.has(s.id) && !seen.has(s.slug)) {
+        dbRubrics.push(s);
+        seen.add(s.id);
+        seen.add(s.slug);
+      }
     }
+    return dbRubrics.sort((a, b) => a.sortOrder - b.sortOrder);
+  } catch {
+    return fixtures.listRubrics({ includeInactive });
   }
-  return dbRubrics.sort((a, b) => a.sortOrder - b.sortOrder);
 }
 
 export async function getRubric(idOrSlug: ID): Promise<Rubric | null> {
-  const rows = await client()
-    .select()
-    .from(schema.rubrics)
-    .where(or(eq(schema.rubrics.id, idOrSlug), eq(schema.rubrics.slug, idOrSlug)))
-    .limit(1);
-  if (rows[0]) return toRubric(rows[0]);
-  return fixtures.getRubric(idOrSlug);
+  try {
+    const rows = await client()
+      .select()
+      .from(schema.rubrics)
+      .where(or(eq(schema.rubrics.id, idOrSlug), eq(schema.rubrics.slug, idOrSlug)))
+      .limit(1);
+    if (rows[0]) return toRubric(rows[0]);
+    return fixtures.getRubric(idOrSlug);
+  } catch {
+    return fixtures.getRubric(idOrSlug);
+  }
 }
 
 export interface RubricInput {
@@ -1295,8 +1391,12 @@ export async function clearContentDraft(contentId: ID): Promise<boolean> {
 /* ------------------------------------------------------------------ */
 
 export async function getSiteSetting(key: string): Promise<unknown> {
-  const rows = await client().select().from(schema.siteSettings).where(eq(schema.siteSettings.key, key)).limit(1);
-  return rows[0]?.value ?? null;
+  try {
+    const rows = await client().select().from(schema.siteSettings).where(eq(schema.siteSettings.key, key)).limit(1);
+    return rows[0]?.value ?? null;
+  } catch {
+    return fixtures.getSiteSetting(key);
+  }
 }
 
 export async function setSiteSetting<T>(key: string, value: T): Promise<T> {
@@ -1369,19 +1469,23 @@ export async function createSubmission(input: {
 }
 
 export async function listSubmissions(f: SubmissionFilter = {}): Promise<import("./types").Submission[]> {
-  await ensureFormTables();
-  const where = [];
-  if (f.type) where.push(eq(schema.submissions.type, f.type));
-  if (f.status) where.push(eq(schema.submissions.status, f.status));
-  if (f.refId) where.push(eq(schema.submissions.refId, f.refId));
-  if (f.published !== undefined) where.push(eq(schema.submissions.published, f.published));
-  const rows = await client()
-    .select()
-    .from(schema.submissions)
-    .where(where.length ? and(...where) : undefined)
-    .orderBy(desc(schema.submissions.createdAt))
-    .limit(f.limit ?? 2000);
-  return rows.map((r) => row<import("./types").Submission>(r));
+  try {
+    await ensureFormTables();
+    const where = [];
+    if (f.type) where.push(eq(schema.submissions.type, f.type));
+    if (f.status) where.push(eq(schema.submissions.status, f.status));
+    if (f.refId) where.push(eq(schema.submissions.refId, f.refId));
+    if (f.published !== undefined) where.push(eq(schema.submissions.published, f.published));
+    const rows = await client()
+      .select()
+      .from(schema.submissions)
+      .where(where.length ? and(...where) : undefined)
+      .orderBy(desc(schema.submissions.createdAt))
+      .limit(f.limit ?? 2000);
+    return rows.map((r) => row<import("./types").Submission>(r));
+  } catch {
+    return fixtures.listSubmissions(f);
+  }
 }
 
 export async function updateSubmission(id: ID, patch: SubmissionPatch): Promise<import("./types").Submission | null> {
@@ -1411,9 +1515,13 @@ export async function recordPageView(path: string, day: string): Promise<void> {
 }
 
 export async function listPageViews(sinceDay: string): Promise<import("./types").PageViewRow[]> {
-  await ensureFormTables();
-  return client()
-    .select()
-    .from(schema.pageViews)
-    .where(drizzleSql`${schema.pageViews.day} >= ${sinceDay}`);
+  try {
+    await ensureFormTables();
+    return await client()
+      .select()
+      .from(schema.pageViews)
+      .where(drizzleSql`${schema.pageViews.day} >= ${sinceDay}`);
+  } catch {
+    return fixtures.listPageViews(sinceDay);
+  }
 }
