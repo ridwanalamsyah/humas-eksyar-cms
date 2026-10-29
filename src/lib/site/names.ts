@@ -21,3 +21,15 @@ export function normName(name: string): string {
 export function dosenSlug(name: string): string {
   return normName(name).replace(/\s+/g, "-");
 }
+
+/** Inisial 2 huruf dari nama tanpa gelar: "Dr. Evi Sopiah, M.Ag." → "ES". */
+export function initials(name: string): string {
+  const words = normName(name).split(/\s+/).filter(Boolean);
+  if (words.length >= 2) {
+    return `${words[0][0]}${words[1][0]}`.toUpperCase();
+  }
+  if (words.length === 1) {
+    return words[0].slice(0, 2).toUpperCase();
+  }
+  return name.slice(0, 2).toUpperCase();
+}
