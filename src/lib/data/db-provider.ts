@@ -408,11 +408,15 @@ export async function listMedia(opts?: {
       fixtures.listMedia(opts),
     ]);
     const seedById = new Map(seedMedia.map((m) => [m.id, m]));
-    const dbMedia = rows.map((r) => {
+    const dbMedia = rows.map((r, idx) => {
       const m = row<MediaAsset>(r);
-      if (m.url.includes("images.unsplash.com")) {
-        const seedMatch = seedById.get(m.id);
-        if (seedMatch) return { ...m, url: seedMatch.url };
+      if (m.url.includes("images.unsplash.com") && seedMedia.length > 0) {
+        const replacement = seedById.get(m.id) ?? seedMedia[idx % seedMedia.length];
+        return {
+          ...m,
+          url: replacement.url,
+          alt: m.alt.includes("kampus") || m.alt.includes("pembicara") || m.alt.includes("business camp") ? replacement.alt : m.alt,
+        };
       }
       return m;
     });
@@ -451,7 +455,9 @@ export async function getMedia(id: ID): Promise<MediaAsset | null> {
       const m = row<MediaAsset>(rows[0]);
       if (m.url.includes("images.unsplash.com")) {
         const seedMatch = await fixtures.getMedia(id);
-        if (seedMatch) return { ...m, url: seedMatch.url };
+        const allSeed = await fixtures.listMedia();
+        const fallback = seedMatch ?? allSeed[0];
+        if (fallback) return { ...m, url: fallback.url };
       }
       return m;
     }
