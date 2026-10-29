@@ -1,23 +1,20 @@
-import { AppShell } from "@/components/layout/app-shell";
-import { GlassCard } from "@/components/ui/glass-card";
-
 export default function Loading() {
   return (
-    <AppShell>
+    <div className="mx-auto max-w-[1024px] px-4 py-12 sm:px-6">
       <div className="space-y-4">
         <Shimmer className="h-8 w-1/2" />
         <Shimmer className="h-4 w-2/3" />
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <GlassCard key={i} className="h-24 animate-pulse" />
+            <Shimmer key={i} className="h-28 rounded-2xl" />
           ))}
         </div>
-        <div className="grid gap-4 lg:grid-cols-[2fr_1fr]">
-          <GlassCard className="h-72 animate-pulse" />
-          <GlassCard className="h-72 animate-pulse" />
+        <div className="grid gap-4 pt-2 lg:grid-cols-[2fr_1fr]">
+          <Shimmer className="h-72 rounded-2xl" />
+          <Shimmer className="h-72 rounded-2xl" />
         </div>
       </div>
-    </AppShell>
+    </div>
   );
 }
 

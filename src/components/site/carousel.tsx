@@ -43,7 +43,7 @@ export function Carousel({
       <div
         ref={ref}
         onScroll={update}
-        className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-6 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         style={{
           paddingInline: "max(1rem, calc((100vw - 1024px) / 2))",
           scrollPaddingInline: "max(1rem, calc((100vw - 1024px) / 2))",
@@ -60,7 +60,7 @@ export function Carousel({
           </div>
         ))}
       </div>
-      <div className="mx-auto mt-4 flex max-w-[1024px] justify-end gap-3 px-4 sm:px-0">
+      <div className="mx-auto mt-2 flex max-w-[1024px] justify-end gap-3 px-4 sm:px-0">
         {([-1, 1] as const).map((dir) => {
           const disabled = dir === -1 ? edge.start : edge.end;
           const Icon = dir === -1 ? ChevronLeft : ChevronRight;
@@ -71,7 +71,7 @@ export function Carousel({
               onClick={() => go(dir)}
               disabled={disabled}
               aria-label={dir === -1 ? "Sebelumnya" : "Berikutnya"}
-              className="grid size-11 place-items-center rounded-full bg-mist text-label transition-colors hover:bg-hairline disabled:opacity-35"
+              className="grid size-11 place-items-center rounded-full border border-hairline bg-mist text-label transition-colors hover:border-accent/35 hover:bg-hairline disabled:opacity-35"
             >
               <Icon className="size-5" />
             </button>

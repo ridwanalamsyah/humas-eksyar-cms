@@ -47,23 +47,23 @@ export function GaleriGrid({ items }: { items: Galeri[] }) {
       {albums.length > 2 && (
         <FilterChips options={albums} value={album} onChange={setAlbum} />
       )}
-      <div className="mt-6 columns-2 gap-4 sm:columns-3 [&>*]:mb-4">
+      <div className="mt-6 columns-1 gap-4 sm:columns-2 lg:columns-3 [&>*]:mb-4">
         {shown.map((g, i) => (
           <button
             key={`${g.image}-${i}`}
             type="button"
             onClick={() => setOpen(i)}
-            className="group relative block w-full overflow-hidden rounded-[20px] bg-mist"
+            className="group relative isolate block w-full break-inside-avoid overflow-hidden rounded-[20px] border border-hairline bg-mist text-left"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={g.image}
               alt={g.caption}
               loading="lazy"
-              className="w-full transition duration-700 group-hover:scale-[1.04]"
+              className="w-full object-cover transition duration-700 group-hover:scale-[1.04]"
             />
             {g.caption && (
-              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-navy/75 px-4 py-2.5 text-left text-[13px] font-medium text-white transition-transform duration-300 group-hover:translate-y-0">
+              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-navy/80 px-4 py-2.5 text-left text-[13px] font-medium leading-snug text-white backdrop-blur-xs transition-transform duration-300 group-hover:translate-y-0">
                 {g.caption}
               </span>
             )}

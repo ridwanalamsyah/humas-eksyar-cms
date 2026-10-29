@@ -3,12 +3,54 @@ import { getWebsiteContent } from "@/lib/data/provider";
 import { defaultWebsiteConfig } from "./defaults";
 import { websiteConfigSchema, type WebsiteConfig } from "./schema";
 
+function itemKey(item: unknown): string {
+  if (!item || typeof item !== "object") return String(item).toLowerCase();
+  const obj = item as Record<string, unknown>;
+  const raw =
+    obj.kode ??
+    obj.name ??
+    obj.nama ??
+    obj.title ??
+    obj.judul ??
+    obj.topik ??
+    obj.mk ??
+    obj.kegiatan ??
+    obj.year ??
+    obj.tahun ??
+    obj.q ??
+    obj.url ??
+    obj.image ??
+    JSON.stringify(obj);
+  return String(raw)
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function backfillObject(
+  storedItem: Record<string, unknown>,
+  defaultItem: Record<string, unknown>,
+): Record<string, unknown> {
+  const out: Record<string, unknown> = { ...defaultItem, ...storedItem };
+  for (const [k, defV] of Object.entries(defaultItem)) {
+    const curV = storedItem[k];
+    const isEmptyString = typeof curV === "string" && curV.trim() === "";
+    const isEmptyArray = Array.isArray(curV) && curV.length === 0;
+    if (curV === null || curV === undefined || isEmptyString || isEmptyArray) {
+      if (defV !== null && defV !== undefined && defV !== "") {
+        out[k] = defV;
+      }
+    }
+  }
+  return out;
+}
+
 /**
- * Gabungkan konten tersimpan dengan data awal, per bagian: bagian yang
- * tidak valid, belum pernah disimpan, atau masih berupa array/teks kosong
- * dari penyimpanan awal memakai data awal (`defaultWebsiteConfig`), sehingga
- * data hasil migrasi `es.uinsgd.ac.id` langsung tampil meskipun database
- * sebelumnya menyimpan nilai kosong.
+ * Gabungkan konten tersimpan dengan data awal (`defaultWebsiteConfig`):
+ * - Jika bagian di DB kosong atau belum ada, gunakan nilai default.
+ * - Untuk daftar (array): lengkapi field yang masih `null`/kosong (seperti `image`,
+ *   `photo`, `pendidikan`, `sinta`, `scholar`, `konsultasi`) dari item default yang cocok,
+ *   serta tambahkan entri baru dari default yang belum ada di DB.
  */
 export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
   const result = structuredClone(defaultWebsiteConfig) as Record<string, unknown>;
@@ -28,50 +70,66 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
     const data = parsed.data;
     const defVal = (defaultWebsiteConfig as Record<string, unknown>)[key];
 
-    // Jika database menyimpan array kosong sedangkan default memiliki data hasil impor, gunakan default.
     if (Array.isArray(data) && Array.isArray(defVal)) {
       if (data.length === 0 && defVal.length > 0) {
         result[key] = defVal;
         continue;
       }
-      // Untuk semua daftar utama: jika yang tersimpan di DB lebih sedikit dari hasil impor default, gabungkan tanpa duplikat.
-      if (data.length < defVal.length) {
-        const getKey = (item: unknown) => {
-          if (!item || typeof item !== "object") return String(item).toLowerCase();
-          const obj = item as Record<string, unknown>;
-          return String(
-            obj.kode ??
-              obj.url ??
-              obj.image ??
-              obj.name ??
-              obj.nama ??
-              obj.title ??
-              obj.judul ??
-              obj.topik ??
-              obj.mk ??
-              obj.kegiatan ??
-              obj.year ??
-              obj.tahun ??
-              obj.q ??
-              JSON.stringify(obj),
-          ).toLowerCase();
-        };
-        const seen = new Set(data.map(getKey));
-        const merged = [...data];
-        for (const dItem of defVal) {
-          const idKey = getKey(dItem);
-          if (!seen.has(idKey)) {
-            merged.push(dItem);
-            seen.add(idKey);
-          }
-        }
-        result[key] = merged;
+
+      // Jika kegiatanMahasiswa di DB masih versi generik lama, gunakan versi resmi HMJ/FoSEI/GIS BEI.
+      if (
+        key === "kegiatanMahasiswa" &&
+        data.some(
+          (x) =>
+            x &&
+            typeof x === "object" &&
+            (x as { title?: string }).title === "Kajian & Diskusi Ekonomi Islam",
+        )
+      ) {
+        result[key] = defVal;
         continue;
       }
+
+      const defMap = new Map<string, Record<string, unknown>>();
+      for (const dItem of defVal) {
+        if (dItem && typeof dItem === "object") {
+          defMap.set(itemKey(dItem), dItem as Record<string, unknown>);
+        }
+      }
+
+      const seen = new Set<string>();
+      const merged = data.map((item) => {
+        const k = itemKey(item);
+        seen.add(k);
+        if (item && typeof item === "object") {
+          const match = defMap.get(k);
+          if (match) {
+            return backfillObject(item as Record<string, unknown>, match);
+          }
+        }
+        return item;
+      });
+
+      for (const dItem of defVal) {
+        const idKey = itemKey(dItem);
+        if (!seen.has(idKey)) {
+          merged.push(dItem);
+          seen.add(idKey);
+        }
+      }
+
+      result[key] = merged;
+      continue;
     }
 
     // Untuk objek profil: pastikan sejarah, visi, misi, atau tujuan yang kosong di DB terisi dari default.
-    if (key === "profil" && data && typeof data === "object" && defVal && typeof defVal === "object") {
+    if (
+      key === "profil" &&
+      data &&
+      typeof data === "object" &&
+      defVal &&
+      typeof defVal === "object"
+    ) {
       const pData = data as Record<string, unknown>;
       const pDef = defVal as Record<string, unknown>;
       result[key] = {
@@ -97,24 +155,18 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
       continue;
     }
 
-    // Untuk objek medsos, mutu, dan kontak: jika field string di DB kosong (""), gunakan nilai default.
+    // Untuk objek identity, medsos, mutu, dan kontak: backfill field null/kosong dari default.
     if (
-      ["medsos", "mutu", "kontak"].includes(key) &&
+      ["identity", "medsos", "mutu", "kontak"].includes(key) &&
       data &&
       typeof data === "object" &&
       defVal &&
       typeof defVal === "object"
     ) {
-      const oData = data as Record<string, unknown>;
-      const oDef = defVal as Record<string, unknown>;
-      const mergedObj: Record<string, unknown> = { ...oDef, ...oData };
-      for (const [k, v] of Object.entries(oDef)) {
-        const cur = oData[k];
-        if (typeof cur === "string" && cur.trim() === "" && typeof v === "string" && v.trim() !== "") {
-          mergedObj[k] = v;
-        }
-      }
-      result[key] = mergedObj;
+      result[key] = backfillObject(
+        data as Record<string, unknown>,
+        defVal as Record<string, unknown>,
+      );
       continue;
     }
 

@@ -3,7 +3,7 @@ import type { ContentItem, MediaAsset } from "@/lib/data/types";
 import { formatLongDate } from "@/lib/format/dates";
 import { contentExcerpt, rubricLabel } from "@/lib/site/content";
 import { cn } from "@/lib/utils";
-import { prodi } from "@/lib/site/prodi";
+import { ProdiLogo } from "./prodi-logo";
 
 /** Kartu berita ala Apple Newsroom. `featured` = kartu lebar dengan gambar di kiri. */
 export function NewsCard({
@@ -20,13 +20,13 @@ export function NewsCard({
     <Link
       href={`/prodi/berita/${item.slug}`}
       className={cn(
-        "group flex h-full overflow-hidden rounded-[20px] bg-canvas border border-hairline transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]",
+        "group relative isolate flex h-full overflow-hidden rounded-[22px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-accent/35 hover:shadow-[0_20px_40px_-20px_rgba(22,58,69,0.28)]",
         featured ? "flex-col md:flex-row" : "flex-col",
       )}
     >
       <div
         className={cn(
-          "relative overflow-hidden bg-mist",
+          "relative isolate overflow-hidden bg-mist",
           featured
             ? "aspect-[16/9] md:aspect-auto md:w-[58%]"
             : "aspect-[16/9]",
@@ -53,25 +53,25 @@ export function NewsCard({
       </div>
       <div
         className={cn(
-          "flex flex-1 flex-col",
-          featured ? "p-8 md:justify-center md:p-10" : "p-6",
+          "flex min-w-0 flex-1 flex-col",
+          featured ? "p-7 md:justify-center md:p-10" : "p-6",
         )}
       >
-        <p className="text-[12px] font-semibold uppercase tracking-[0.04em] text-label-2">
+        <p className="text-[12px] font-semibold uppercase tracking-[0.04em] text-accent">
           {rubricLabel(item.rubric)}
         </p>
         <h3
           className={cn(
-            "mt-2 font-semibold tracking-[-0.015em] text-label",
+            "mt-2 break-words font-semibold tracking-[-0.015em] text-label group-hover:text-accent",
             featured
-              ? "text-[clamp(1.5rem,1.2rem+1vw,2rem)] font-bold leading-[1.15]"
-              : "text-[19px] font-bold leading-[1.25]",
+              ? "text-[clamp(1.4rem,1.15rem+1vw,1.95rem)] font-bold leading-[1.18]"
+              : "text-[18.5px] font-bold leading-[1.28]",
           )}
         >
           {item.title}
         </h3>
         {featured && (
-          <p className="mt-3 line-clamp-3 text-[16px] leading-relaxed text-label-2">
+          <p className="mt-3 line-clamp-3 break-words text-[15.5px] leading-relaxed text-label-2">
             {contentExcerpt(item)}
           </p>
         )}
@@ -85,13 +85,11 @@ export function NewsCard({
 
 export function CoverFallback() {
   return (
-    <div className="absolute inset-0 bg-[#e9f2f3]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={prodi.logo}
-        alt=""
-        className="absolute left-1/2 top-1/2 w-14 -translate-x-1/2 -translate-y-1/2 rounded-full opacity-90"
-      />
+    <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#0f3d33] via-[#165b4c] to-[#0c2340] p-6 text-white">
+      <ProdiLogo size={52} />
+      <span className="mt-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/75">
+        Kabar Ekonomi Syariah · UIN SGD
+      </span>
     </div>
   );
 }

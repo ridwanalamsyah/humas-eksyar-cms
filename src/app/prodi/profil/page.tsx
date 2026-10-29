@@ -60,15 +60,15 @@ export default async function ProfilPage() {
         {timeline.length > 0 && (
           <TimelineProgress>
             {timeline.map((t, i) => (
-              <Reveal
+              <li
                 key={`${t.year}-${i}`}
                 className="relative pb-10 last:pb-0"
               >
-                <li>
-                  <span
-                    aria-hidden
-                    className="absolute -left-[39px] top-1.5 size-4 rounded-full border-[3px] border-canvas bg-accent ring-2 ring-accent/20"
-                  />
+                <span
+                  aria-hidden
+                  className="absolute -left-[35px] top-1.5 size-4 rounded-full border-[3px] border-canvas bg-accent ring-2 ring-accent/20"
+                />
+                <Reveal>
                   <p className="text-[15px] font-bold text-accent">{t.year}</p>
                   <h3 className="mt-1 text-[20px] font-bold tracking-[-0.01em] text-label">
                     {t.title}
@@ -76,8 +76,8 @@ export default async function ProfilPage() {
                   <p className="mt-1.5 text-[16px] leading-[1.5] text-label-2">
                     {t.description}
                   </p>
-                </li>
-              </Reveal>
+                </Reveal>
+              </li>
             ))}
           </TimelineProgress>
         )}
@@ -153,14 +153,14 @@ export default async function ProfilPage() {
                   {i > 0 && (
                     <span aria-hidden className="mb-6 h-6 w-px bg-hairline" />
                   )}
-                  <ul className="flex flex-wrap justify-center gap-3">
+                  <ul className="flex w-full flex-wrap justify-center gap-3">
                     {row.map((x) => (
                       <li
                         key={`${x.jabatan}-${x.nama}`}
                         className={
                           i === 0
-                            ? "min-w-[220px] rounded-[20px] bg-accent px-5 py-4 text-center text-white"
-                            : "min-w-[200px] rounded-[20px] border border-hairline bg-canvas px-5 py-4 text-center"
+                            ? "w-full rounded-[20px] bg-accent px-5 py-4 text-center text-white sm:w-auto sm:min-w-[220px]"
+                            : "w-full rounded-[20px] border border-hairline bg-canvas px-5 py-4 text-center sm:w-auto sm:min-w-[200px]"
                         }
                       >
                         <p
@@ -175,8 +175,8 @@ export default async function ProfilPage() {
                         <p
                           className={
                             i === 0
-                              ? "mt-1 text-[15.5px] font-bold"
-                              : "mt-1 text-[15.5px] font-bold text-label"
+                              ? "mt-1 break-words text-[15.5px] font-bold"
+                              : "mt-1 break-words text-[15.5px] font-bold text-label"
                           }
                         >
                           {x.nama}
@@ -201,10 +201,8 @@ export default async function ProfilPage() {
         <div className="mx-auto mt-14 grid max-w-[1024px] gap-5 sm:grid-cols-2">
           {fasilitas.map((f, i) => (
             <Reveal key={`${f.title}-${i}`} delay={(i % 2) * 0.06}>
-              <div className="group flex h-full flex-col overflow-hidden rounded-[24px] bg-canvas transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
-                {f.image && (
-                  <Photo src={f.image} alt={f.title} ratio="landscape" />
-                )}
+              <div className="group relative isolate flex h-full flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-accent/35 hover:shadow-[0_20px_40px_-20px_rgba(22,58,69,0.28)]">
+                <Photo src={f.image} alt={f.title} ratio="landscape" />
                 <div className="p-8">
                   <h3 className="text-[21px] font-bold tracking-[-0.01em] text-label">
                     {f.title}
@@ -231,17 +229,9 @@ export default async function ProfilPage() {
               {ruangAlat.map((r) => (
                 <div
                   key={r.name}
-                  className="overflow-hidden rounded-[24px] border border-hairline bg-canvas"
+                  className="group relative isolate overflow-hidden rounded-[24px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-accent/35"
                 >
-                  {r.image && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={r.image}
-                      alt=""
-                      loading="lazy"
-                      className="aspect-[16/10] w-full object-cover"
-                    />
-                  )}
+                  <Photo src={r.image} alt={r.name} ratio="landscape" />
                   <div className="p-5">
                     <p className="text-[16px] font-bold text-label">{r.name}</p>
                     <p className="mt-1 text-[14px] text-label-2">

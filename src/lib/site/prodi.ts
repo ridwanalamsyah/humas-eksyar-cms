@@ -50,16 +50,34 @@ export const hero = {
    * Foto utama beranda (mis. "/prodi/hero.jpg" di folder public, atau URL
    * dari Media Library CMS). Kosongkan untuk memakai kartu sorotan.
    */
-  image: null as string | null,
+  image:
+    "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=1600&q=85" as
+      | string
+      | null,
   imageAlt:
     "Mahasiswa Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
 };
 
 export const pimpinan = [
   {
-    name: "Prof. Dr. H. Dudang Gojali, M.Ag.",
+    name: "Prof. Dr. H. Dudang Gojali, S.Ag., M.Ag.",
     role: "Dekan Fakultas Ekonomi dan Bisnis Islam",
     initials: "DG",
+  },
+  {
+    name: "Prof. Dr. Iwan Setiawan, S.Ag., M.Pd., M.E.Sy.",
+    role: "Wakil Dekan I Bidang Akademik FEBI",
+    initials: "IS",
+  },
+  {
+    name: "Dr. Muhammad Zaky, M.Si.",
+    role: "Wakil Dekan II Bidang Administrasi Umum, Perencanaan & Keuangan FEBI",
+    initials: "MZ",
+  },
+  {
+    name: "Dr. H. Kadar Nurjaman, S.E., M.M.",
+    role: "Wakil Dekan III Bidang Kemahasiswaan, Alumni & Kerja Sama FEBI",
+    initials: "KN",
   },
   {
     name: "Dr. Evi Sopiah, M.Ag., CIIQA, CIELP",
@@ -67,7 +85,7 @@ export const pimpinan = [
     initials: "ES",
   },
   {
-    name: "Anisa Ilma, M.E.",
+    name: "Anisa Ilmia, M.E.",
     role: "Sekretaris Program Studi Ekonomi Syariah",
     initials: "AI",
   },
@@ -350,6 +368,8 @@ export const sorotan = [
       "Galeri Investasi Syariah BEI FEBI mengedukasi Tim Penggerak PKK Kelurahan Padasuka tentang bahaya judi online dan pinjol ilegal, perencanaan keuangan keluarga, serta investasi syariah.",
     source:
       "https://uinsgd.ac.id/dorong-keluarga-lawan-judol-dan-pinjol-lewat-investasi-syariah-gis-uin-bandung-edukasi-pkk-padasuka/",
+    image:
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2026-06-08",
@@ -359,6 +379,8 @@ export const sorotan = [
       "115 mahasiswa semester enam Ekonomi Syariah belajar konsep pasar modal syariah, instrumen investasi, hingga pengelolaan portofolio di Kantor Perwakilan BEI Jawa Barat.",
     source:
       "https://uinsgd.ac.id/spms-2026-di-idx-jabar-mahasiswa-ekonomi-syariah-didorong-melek-investasi-islam/",
+    image:
+      "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2026-09-24",
@@ -367,6 +389,8 @@ export const sorotan = [
     summary:
       "Program pengabdian kepada masyarakat menuju tata kelola aset masjid yang akuntabel, bekerja sama dengan Bank Indonesia dan Bank Muamalat.",
     source: "https://www.instagram.com/eksyaruinsgd/",
+    image:
+      "https://images.unsplash.com/photo-1564769625905-50e93615e769?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2026-06-19",
@@ -375,6 +399,8 @@ export const sorotan = [
     summary:
       "“Menjadi SDM Unggul dan Kompetitif dalam Industri Keuangan Syariah” — menghadirkan Dekan FEBI, Kaprodi, dan praktisi Bank Muamalat di Aula FEBI Kampus 2.",
     source: "https://www.instagram.com/eksyaruinsgd/",
+    image:
+      "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2026-04-15",
@@ -384,6 +410,8 @@ export const sorotan = [
       "120 mahasiswa semester enam belajar langsung dari praktisi Bank Muamalat Indonesia di KCP Buahbatu tentang operasional bank syariah, layanan nasabah, dan peluang industri keuangan syariah di era digital.",
     source:
       "https://uinsgd.ac.id/tingkatkan-wawasan-prodi-ekonomi-syariah-uin-bandung-gelar-kuliah-bersama-praktisi-bank-muamalat/",
+    image:
+      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2026-04-08",
@@ -393,6 +421,8 @@ export const sorotan = [
       "Sertifikat Juru Sembelih Halal (Juleha) diserahkan kepada 15 warga Desa Cibiru Wetan yang mengikuti pelatihan berbasis SKKNI pada November 2025. Program pengabdian ini memperkuat ekosistem halal di tingkat desa.",
     source:
       "https://uinsgd.ac.id/prodi-ekonomi-syariah-uin-bandung-serahkan-sertifikat-juleha-di-cibiru-wetan/",
+    image:
+      "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2024-04-25",
@@ -402,6 +432,8 @@ export const sorotan = [
       "Prodi melibatkan asosiasi program studi, OJK, praktisi industri, alumni, dan mahasiswa untuk meninjau visi, misi, dan kurikulum menuju akreditasi unggul.",
     source:
       "https://uinsgd.ac.id/tingkatkan-kualitas-prodi-ekonomi-syariah-gelar-fgd-penyusunan-visi-misi-dan-review-kurikulum/",
+    image:
+      "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2020-11-15",
@@ -411,6 +443,8 @@ export const sorotan = [
       "Kaprodi dan dosen Ekonomi Syariah bersama komunitas Sabilulungan Bersih (SABER) serta masyarakat Desa Indragiri Kabupaten Bandung menanam 150 pohon untuk menjaga ekosistem desa ekowisata halal.",
     source:
       "https://web.archive.org/web/20210212212000/https://es.uinsgd.ac.id/tanam-pohon-upaya-mewujudkan-green-halal-village/",
+    image:
+      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2020-09-15",
@@ -420,6 +454,8 @@ export const sorotan = [
       "Diskusi lintas disiplin membedah konsep praksis pemberdayaan masyarakat desa berbasis ekowisata halal, kearifan lokal, dan keuangan mikro syariah.",
     source:
       "https://web.archive.org/web/20210212213645/https://es.uinsgd.ac.id/desa-wisata-halal-kajian-focus-group-discussion-dari-berbagai-aspek/",
+    image:
+      "https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=1000&q=80",
   },
   {
     date: "2019-12-18",
@@ -429,6 +465,8 @@ export const sorotan = [
       "Program Desa Ekowisata Halal di Kecamatan Rancabali yang diinisiasi dosen Ekonomi Syariah meraih penghargaan Sinergi Kolaborasi Program Konservasi Pengembangan Wisata Halal pada Jambore Lingkungan II.",
     source:
       "https://web.archive.org/web/20210212190710/https://es.uinsgd.ac.id/kembangkan-ecowisata-halal-rektor-uin-sgd-raih-penghargaan-dari-bupati-bandung/",
+    image:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80",
   },
 ];
 
@@ -439,54 +477,72 @@ export const prestasi = [
     initials: "EJ",
     achievement: "Artikel terbit di jurnal internasional terindeks Scopus Q2",
     group: "Dosen",
+    photo:
+      "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Hakiki Ramadhan",
     initials: "HR",
     achievement: "Tulisan dimuat di Islamic Finance News (IFN)",
     group: "Eksyar Appreciation",
+    photo:
+      "https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Muhammad Azzam Abdillah",
     initials: "MA",
     achievement: "Juara 1 Bandung Open Tournament Pencak Silat",
     group: "Mahasiswa",
+    photo:
+      "https://images.unsplash.com/photo-1578269174936-2709b6aeb913?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Muhamad Halabi Muzaini",
     initials: "HM",
     achievement: "Ketua DEMA Fakultas Ekonomi dan Bisnis Islam 2026",
     group: "Mahasiswa",
+    photo:
+      "https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Raditya Fitra",
     initials: "RF",
     achievement: "Wakil Ketua DEMA Universitas 2026",
     group: "Mahasiswa",
+    photo:
+      "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Dr. H. Muhammad Hasanuddin, M.Ag. & Dr. Sofian Al Hakim, M.Ag.",
     initials: "MH",
     achievement: "Inisiator Desa Ekowisata Halal Indragiri — Penghargaan Bupati Bandung",
     group: "Dosen",
+    photo:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Evita Farcha",
     initials: "EF",
     achievement: "Delegasi Mahasiswa Ekonomi Syariah di Universiti Teknologi MARA (UiTM) Malaysia",
     group: "Mahasiswa",
+    photo:
+      "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Tim Mahasiswa Ekonomi Syariah UIN Bandung",
     initials: "TE",
     achievement: "Juara 1 Indonesia Sharia Economic Festival (ISEF) Bank Indonesia",
     group: "Mahasiswa",
+    photo:
+      "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80",
   },
   {
     name: "Delegasi Mahasiswa Eksyar UIN SGD",
     initials: "DM",
     achievement: "Peserta Student Exchange di Universiti Malaya (UM) Kuala Lumpur",
     group: "Mahasiswa",
+    photo:
+      "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
   },
 ];
 
@@ -539,24 +595,24 @@ export const mitra = [
 
 export const kegiatanMahasiswa = [
   {
-    title: "Kajian & Diskusi Ekonomi Islam",
+    title: "HMJ Ekonomi Syariah (SE-FEST & Eksphoria)",
     description:
-      "Forum rutin membedah isu ekonomi dan keuangan syariah terkini.",
+      "Himpunan Mahasiswa Jurusan Ekonomi Syariah yang menyelenggarakan Sharia Economic Festival (SE-FEST), Eksphoria, seminar nasional, dan advokasi mahasiswa.",
   },
   {
-    title: "Kompetisi Nasional",
+    title: "FoSEI (Forum Silaturahmi Studi Ekonomi Islam)",
     description:
-      "Pendampingan lomba business plan, esai, debat, dan karya tulis ilmiah.",
+      "Kelompok studi ekonomi Islam tempat mahasiswa mendalami riset fikih muamalah, kebijakan ekonomi syariah, dan persiapan kompetisi ilmiah nasional (Temilnas/Temilreg).",
   },
   {
-    title: "Kuliah Praktisi & Kunjungan Industri",
+    title: "KSPM & Galeri Investasi Syariah (GIS) BEI FEBI",
     description:
-      "Belajar langsung dari bank syariah, regulator, dan pelaku industri halal.",
+      "Kelompok Studi Pasar Modal yang mengelola edukasi investasi saham syariah, Sekolah Pasar Modal Syariah (SPMS), dan riset portofolio bersama BEI & MNC Sekuritas.",
   },
   {
-    title: "Pengabdian Masyarakat",
+    title: "Kuliah Praktisi, Klinik Halal & Pengabdian Desa Binaan",
     description:
-      "Literasi keuangan syariah, pendampingan UMKM, dan program halal di desa binaan.",
+      "Pembelajaran langsung bersama praktisi bank syariah/regulator, pendampingan sertifikasi halal UMKM & Juleha, serta program Green Halal Village di Desa Indragiri.",
   },
 ];
 
@@ -695,134 +751,220 @@ export const dosen = [
   {
     name: "Dr. Evi Sopiah, M.Ag., CIIQA, CIELP",
     initials: "ES",
-    role: "Ketua Program Studi",
+    role: "Ketua Program Studi · Lektor",
     expertise: ["Ekonomi Islam", "Industri Halal", "Perilaku Konsumen Muslim"],
+    pendidikan: "S3 Studi Islam / Ekonomi Islam — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Evi+Sopiah+UIN+Sunan+Gunung+Djati",
+    konsultasi: "Senin–Kamis, 09.00–15.00 WIB (Ruang Prodi Ekonomi Syariah Lt. 2 FEBI)",
   },
   {
     name: "Anisa Ilmia, M.E.",
     initials: "AI",
-    role: "Sekretaris Program Studi",
+    role: "Sekretaris Program Studi · Asisten Ahli",
     expertise: ["Ekonomi Syariah", "Keuangan Sosial Islam", "ZISWAF"],
+    pendidikan: "S2 Ekonomi Syariah",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Anisa+Ilmia+UIN+Sunan+Gunung+Djati",
+    konsultasi: "Senin–Jumat, 09.00–15.00 WIB (Ruang Prodi Ekonomi Syariah Lt. 2 FEBI)",
   },
   {
-    name: "Prof. Dr. H. Dudang Gojali, M.Ag.",
+    name: "Prof. Dr. H. Dudang Gojali, S.Ag., M.Ag.",
     initials: "DG",
     role: "Guru Besar · Dekan FEBI",
-    expertise: ["Fiqh Muamalah", "Hukum Ekonomi Syariah"],
+    expertise: ["Fiqh Muamalah", "Hukum Ekonomi Syariah", "Filsafat Hukum Islam"],
+    pendidikan: "S3 Hukum Islam — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Dudang+Gojali+UIN+Sunan+Gunung+Djati",
+  },
+  {
+    name: "Prof. Dr. Iwan Setiawan, S.Ag., M.Pd., M.E.Sy.",
+    initials: "IS",
+    role: "Guru Besar · Wakil Dekan I FEBI",
+    expertise: ["Ekonomi Pembangunan Islam", "Pemberdayaan Ekonomi Umat", "Manajemen Pendidikan"],
+    pendidikan: "S3 Ekonomi Islam — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Iwan+Setiawan+UIN+Sunan+Gunung+Djati",
+  },
+  {
+    name: "Dr. Muhammad Zaky, M.Si.",
+    initials: "MZ",
+    role: "Wakil Dekan II FEBI · Lektor Kepala",
+    expertise: ["Manajemen Keuangan Syariah", "Tata Kelola Organisasi", "Ekonomi Makro"],
+    pendidikan: "S3 Ilmu Ekonomi / Manajemen",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Muhammad+Zaky+UIN+Sunan+Gunung+Djati",
+  },
+  {
+    name: "Dr. H. Kadar Nurjaman, S.E., M.M.",
+    initials: "KN",
+    role: "Wakil Dekan III FEBI · Lektor Kepala",
+    expertise: ["Kewirausahaan Syariah", "Manajemen SDM", "Studi Kelayakan Bisnis"],
+    pendidikan: "S3 Ilmu Manajemen",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Kadar+Nurjaman+UIN+Sunan+Gunung+Djati",
   },
   {
     name: "Prof. Dr. H. Atang Abd. Hakim, M.A.",
     initials: "AH",
     role: "Guru Besar Ekonomi Islam",
-    expertise: ["Pemikiran Ekonomi Islam", "Ushul Fiqh Ekonomi"],
+    expertise: ["Pemikiran Ekonomi Islam", "Ushul Fiqh Ekonomi", "Metodologi Studi Islam"],
+    pendidikan: "S3 Studi Islam — IAIN Syarif Hidayatullah Jakarta",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Atang+Abd+Hakim+UIN+Sunan+Gunung+Djati",
   },
   {
     name: "Prof. Dr. H. Ahmad Hasan Ridwan, M.Ag.",
     initials: "AR",
     role: "Guru Besar",
-    expertise: ["Filsafat Ekonomi Syariah", "Fiqh Zakat & Wakaf"],
+    expertise: ["Filsafat Ekonomi Syariah", "Fiqh Zakat & Wakaf", "Hukum Ekonomi Islam"],
+    pendidikan: "S3 Hukum Islam — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Ahmad+Hasan+Ridwan+UIN+Sunan+Gunung+Djati",
   },
   {
     name: "Dr. H. Muhammad Hasanuddin, M.Ag.",
     initials: "MH",
     role: "Dosen Tetap · Inisiator Desa Ekowisata Halal",
     expertise: ["Ekowisata Halal", "Fiqh Muamalah", "Lembaga Keuangan Syariah"],
+    pendidikan: "S3 Hukum Ekonomi Syariah — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Muhammad+Hasanuddin+UIN+Sunan+Gunung+Djati",
   },
   {
     name: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
     initials: "EJ",
-    role: "Dosen Tetap",
+    role: "Dosen Tetap · Lektor",
     expertise: ["Akuntansi Syariah", "Audit Syariah", "Hukum Islam"],
+    pendidikan: "S1 Al-Azhar Kairo · S2 & S3 Ekonomi/Akuntansi Islam",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Endang+Jumali+UIN+Sunan+Gunung+Djati",
   },
   {
     name: "Dr. H. Abdullah Safe'i, M.Ag.",
     initials: "AS",
-    role: "Dosen Tetap",
+    role: "Dosen Tetap · Lektor Kepala",
     expertise: ["Etika Bisnis Islam", "Ushul Fiqh", "Tafsir & Hadis Ekonomi"],
+    pendidikan: "S3 Studi Islam — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Abdullah+Safei+UIN+Sunan+Gunung+Djati",
   },
   {
     name: "Suteja Wira Dana Kusuma, M.E.",
     initials: "SW",
-    role: "Dosen Tetap",
+    role: "Dosen Tetap · Pembina GIS BEI FEBI",
     expertise: ["Ekonomi Makro Islam", "Pasar Modal Syariah", "Ekonometrika"],
+    pendidikan: "S2 Ilmu Ekonomi & Keuangan Syariah",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Suteja+Wira+Dana+Kusuma",
   },
   {
     name: "Reza Fauzi Nazar, M.E.",
     initials: "RN",
     role: "Dosen Tetap",
     expertise: ["Perbankan Syariah", "Manajemen Keuangan Syariah", "Fintech Syariah"],
+    pendidikan: "S2 Ekonomi Syariah",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Reza+Fauzi+Nazar",
   },
   {
     name: "Depid Ismail, M.E.Sy.",
     initials: "DI",
     role: "Dosen Tetap",
     expertise: ["Ekonomi Mikro Islam", "Kewirausahaan Syariah", "Bisnis Halal"],
+    pendidikan: "S2 Ekonomi Syariah — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Depid+Ismail",
   },
   {
     name: "Nabiela Rizki Alifa, M.E.",
     initials: "NR",
     role: "Dosen Tetap",
     expertise: ["Ekonomi Pembangunan Islam", "Statistika Ekonomi", "Industri Halal"],
+    pendidikan: "S2 Ekonomi Islam",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Nabiela+Rizki+Alifa",
   },
   {
     name: "Zia Sidqurrahman, M.E.",
     initials: "ZS",
     role: "Dosen Tetap",
     expertise: ["Pasar Modal Syariah", "Manajemen Risiko Syariah", "Investasi Islam"],
+    pendidikan: "S2 Ekonomi & Keuangan Syariah",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Zia+Sidqurrahman",
   },
   {
     name: "Annisa Nur Salam, M.E.",
     initials: "AN",
     role: "Dosen Tetap",
     expertise: ["Ekonomi Moneter Islam", "Kebijakan Fiskal Islam", "Ekonomi Internasional"],
+    pendidikan: "S2 Ilmu Ekonomi Islam",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Annisa+Nur+Salam",
   },
   {
     name: "Dr. Dedi Suyandi, M.Ag.",
     initials: "DS",
-    role: "Dosen Tetap",
+    role: "Dosen Tetap · Lektor",
     expertise: ["Sejarah Pemikiran Ekonomi Islam", "Manajemen ZISWAF"],
+    pendidikan: "S3 Ekonomi Islam — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Dedi+Suyandi",
   },
   {
     name: "Yuda Septia Fitri, M.E.",
     initials: "YF",
     role: "Dosen Tetap",
     expertise: ["Kewirausahaan Syariah", "Pemasaran Islami", "UMKM Halal"],
+    pendidikan: "S2 Ekonomi Syariah",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Yuda+Septia+Fitri",
   },
   {
     name: "Herry Sutanto, M.M.",
     initials: "HS",
-    role: "Dosen Tetap",
+    role: "Dosen Tetap · Lektor",
     expertise: ["Manajemen Perbankan Syariah", "Manajemen Sumber Daya Insani"],
+    pendidikan: "S2 Magister Manajemen",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Herry+Sutanto+UIN+Bandung",
   },
   {
     name: "Widiawati, M.E.",
     initials: "WW",
     role: "Dosen Tetap",
     expertise: ["Fintech Syariah", "Ekonomi Digital Islam", "Keuangan Mikro Syariah"],
+    pendidikan: "S2 Ekonomi Syariah",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Widiawati+Ekonomi+Syariah",
   },
   {
     name: "Ramadhani Irma Tripalupi, M.E.",
     initials: "RT",
     role: "Dosen Tetap",
     expertise: ["Asuransi Syariah (Takaful)", "Perencanaan Keuangan Islam"],
+    pendidikan: "S2 Ekonomi Syariah",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Ramadhani+Irma+Tripalupi",
   },
   {
     name: "Dr. Sofian Al Hakim, M.Ag.",
     initials: "SH",
-    role: "Dosen Tetap",
+    role: "Dosen Tetap · Lektor Kepala",
     expertise: ["Pariwisata & Ekowisata Halal", "Sosiologi Ekonomi Islam"],
-  },
-  {
-    name: "Dr. Iwan Setiawan, M.Ag.",
-    initials: "IS",
-    role: "Dosen Tetap",
-    expertise: ["Ekonomi Pembangunan", "Pemberdayaan Ekonomi Masyarakat"],
+    pendidikan: "S3 Studi Islam — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Sofian+Al+Hakim+UIN+Sunan+Gunung+Djati",
   },
   {
     name: "Dr. Neneng Hartati, M.Ag.",
     initials: "NH",
-    role: "Dosen Tetap",
+    role: "Dosen Tetap · Lektor Kepala",
     expertise: ["Manajemen Pembiayaan Syariah", "Operasional Bank Syariah"],
+    pendidikan: "S3 Ekonomi Islam — UIN Sunan Gunung Djati Bandung",
+    sinta: "https://sinta.kemdikbud.go.id/",
+    scholar: "https://scholar.google.com/citations?hl=id&q=Neneng+Hartati+UIN+Sunan+Gunung+Djati",
   },
 ];
 
@@ -832,31 +974,43 @@ export const fasilitas = [
     title: "Galeri Investasi Syariah BEI FEBI",
     description:
       "Diresmikan 13 Oktober 2021 bersama MNC Sekuritas — pusat edukasi, riset data pasar modal, dan praktik investasi saham syariah serta Sekolah Pasar Modal Syariah.",
+    image:
+      "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
   },
   {
     title: "Laboratorium Perbankan & Keuangan Syariah",
     description:
       "Fasilitas praktikum mini banking syariah, simulasi akad muamalah, layanan teller/customer service, dan analisis pembiayaan.",
+    image:
+      "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80",
   },
   {
     title: "Gedung FEBI Kampus 2 Gedebage",
     description:
       "Ruang perkuliahan terpadu, ruang diskusi mahasiswa, dan Aula FEBI untuk seminar nasional, kuliah praktisi, serta kegiatan kemahasiswaan.",
+    image:
+      "https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=80",
   },
   {
     title: "Perpustakaan & Digital Library (Digilib)",
     description:
       "Akses koleksi literatur ekonomi Islam, jurnal terakreditasi SINTA, serta 515+ repositori digital skripsi Ekonomi Syariah.",
+    image:
+      "https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&w=1000&q=80",
   },
   {
     title: "Pembelajaran Daring e-Knows",
     description:
       "Learning management system terintegrasi untuk perkuliahan, modul RPS, penugasan, dan evaluasi akademik.",
+    image:
+      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=80",
   },
   {
     title: "Desa Binaan Ekowisata Halal Indragiri",
     description:
       "Laboratorium pengabdian masyarakat inklusif di Kecamatan Rancabali, Kabupaten Bandung untuk riset ekosistem halal dan pemberdayaan desa.",
+    image:
+      "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80",
   },
 ];
 
@@ -942,10 +1096,11 @@ export const faq = [
 ];
 
 export const kontak = {
-  address: "Fakultas Ekonomi dan Bisnis Islam, UIN Sunan Gunung Djati Bandung",
+  address:
+    "Gedung Fakultas Ekonomi dan Bisnis Islam (FEBI), Kampus II UIN Sunan Gunung Djati Bandung",
   street:
-    "Jl. A.H. Nasution No. 105, Cipadung, Cibiru, Kota Bandung, Jawa Barat 40614",
-  email: "es.uinsgdbdg@gmail.com",
+    "Jl. Cimencrang, Kec. Gedebage, Kota Bandung 40292 · Kampus I: Jl. A.H. Nasution No. 105, Cibiru, Bandung 40614",
+  email: "eksyar@uinsgd.ac.id",
   hours: "Senin–Jumat, 08.00–16.00 WIB",
   instagram: "https://www.instagram.com/eksyaruinsgd/",
   instagramHandle: "@eksyaruinsgd",

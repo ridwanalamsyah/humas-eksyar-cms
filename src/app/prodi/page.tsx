@@ -178,32 +178,58 @@ export default async function ProdiHomePage() {
       {/* ─── Hero ─────────────────────────────────────────── */}
       <ParallaxHero>
         <Reveal>
-          <ProdiLogo size={72} priority className="mx-auto" />
-          <p className="mt-6 text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
-            {prodi.level} · {prodi.faculty}
-          </p>
+          <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent-soft/75 px-3.5 py-1.5 text-[12px] font-semibold tracking-wide text-accent">
+            <span className="size-1.5 rounded-full bg-accent" aria-hidden />
+            <span>
+              {prodi.level} · {prodi.faculty}
+            </span>
+          </div>
+          <div className="mt-5 flex justify-center">
+            <ProdiLogo size={76} priority />
+          </div>
           <HeroTitle
             text={identity.heroTitle}
-            className="mt-3 text-[clamp(3rem,1.8rem+5.4vw,6.5rem)] font-extrabold leading-[0.95] tracking-[-0.045em] text-label"
+            className="mt-5 text-[clamp(2.65rem,1.6rem+5vw,6rem)] font-extrabold leading-[1.04] tracking-[-0.04em] text-label"
           />
-          <p className="mt-4 text-[15px] font-semibold text-label-2">
+          <p className="mt-3 text-[15.5px] font-semibold text-label-2">
             {prodi.university}
           </p>
-          <p className="mx-auto mt-6 max-w-2xl text-[clamp(1.05rem,1rem+0.35vw,1.3rem)] leading-[1.5] text-label-2">
+          <p className="mx-auto mt-5 max-w-2xl text-[clamp(1.02rem,0.98rem+0.3vw,1.24rem)] leading-[1.6] text-label-2">
             {identity.heroDescription}
           </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+
+          {/* Indikator ringkas identitas akademik */}
+          <div className="mx-auto mt-6 flex max-w-2xl flex-wrap items-center justify-center gap-2 text-[12.5px] font-medium text-label-2">
+            <span className="rounded-full border border-hairline bg-canvas/85 px-3.5 py-1">
+              Kurikulum OBE {identity.totalCredits} SKS · Gelar {identity.degree}
+            </span>
+            <span className="rounded-full border border-hairline bg-canvas/85 px-3.5 py-1">
+              UIN SGD Terakreditasi {identity.universityAccreditation}
+            </span>
+            <span className="rounded-full border border-hairline bg-canvas/85 px-3.5 py-1">
+              Kampus II Gedebage · Bandung
+            </span>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
               href="/prodi/profil"
-              className="rounded-full border border-hairline px-6 py-2.5 text-[15px] font-semibold text-label transition-colors hover:border-accent hover:text-accent"
+              className="inline-flex items-center gap-2 rounded-full bg-accent px-6 py-3 text-[14.5px] font-semibold text-white shadow-xs transition-colors hover:bg-accent-hover"
             >
-              Kenali prodi
+              Kenali Profil Prodi
+              <ArrowRight className="size-4" />
             </Link>
             <Link
               href="/prodi/akademik"
-              className="text-[15px] font-semibold text-accent hover:underline"
+              className="rounded-full border border-hairline bg-canvas px-6 py-3 text-[14.5px] font-semibold text-label transition-colors hover:border-accent hover:text-accent"
             >
-              Lihat kurikulum ›
+              Kurikulum & Akademik
+            </Link>
+            <Link
+              href="/prodi/skripsi"
+              className="rounded-full border border-hairline bg-mist/70 px-5 py-3 text-[14.5px] font-semibold text-label-2 transition-colors hover:border-accent/40 hover:text-label"
+            >
+              Direktori Skripsi ›
             </Link>
           </div>
         </Reveal>

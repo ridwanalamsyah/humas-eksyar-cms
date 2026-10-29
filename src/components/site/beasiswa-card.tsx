@@ -11,19 +11,20 @@ export function BeasiswaCard({
 }) {
   const reqs = compact ? item.requirements.slice(0, 2) : item.requirements;
   return (
-    <article className="group flex h-full flex-col rounded-[24px] border border-hairline bg-canvas p-7 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
+    <article className="group relative isolate flex h-full flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas p-7 transition duration-300 hover:-translate-y-1 hover:border-accent/35 hover:shadow-[0_20px_40px_-20px_rgba(22,58,69,0.28)]">
       <p className="text-[12px] font-semibold uppercase tracking-[0.06em] text-accent">
         {item.provider}
       </p>
-      <h3 className="mt-1.5 text-[21px] font-bold leading-snug tracking-[-0.015em] text-label">
+      <h3 className="mt-1.5 break-words text-[20px] font-bold leading-snug tracking-[-0.015em] text-label">
         {item.name}
       </h3>
       {item.period && (
-        <p className="mt-3 inline-flex items-center gap-1.5 self-start rounded-full bg-mist px-3 py-1 text-[13px] font-medium text-label-2">
-          <CalendarDays className="size-3.5 text-accent" /> {item.period}
+        <p className="mt-3 inline-flex max-w-full items-center gap-1.5 self-start rounded-xl bg-mist px-3 py-1.5 text-[12.5px] font-medium leading-snug text-label-2">
+          <CalendarDays className="size-3.5 shrink-0 text-accent" />
+          <span className="break-words">{item.period}</span>
         </p>
       )}
-      <p className="mt-4 text-[15px] leading-relaxed text-label-2">
+      <p className="mt-4 break-words text-[15px] leading-relaxed text-label-2">
         {item.description}
       </p>
       {reqs.length > 0 && (
@@ -34,7 +35,7 @@ export function BeasiswaCard({
                 className="mt-0.5 size-4 shrink-0 text-accent"
                 strokeWidth={2.25}
               />{" "}
-              {r}
+              <span className="min-w-0 break-words">{r}</span>
             </li>
           ))}
         </ul>

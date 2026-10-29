@@ -309,7 +309,22 @@ export async function listContents(opts?: {
     filters.length ? query.where(and(...filters)) : query,
     fixtures.listContents(opts),
   ]);
-  const dbItems = rows.map((r) => row<ContentItem>(r));
+  const seedByIdOrSlug = new Map<string, ContentItem>();
+  for (const s of seedRows) {
+    seedByIdOrSlug.set(s.id, s);
+    seedByIdOrSlug.set(s.slug, s);
+  }
+  const dbItems = rows.map((r) => {
+    const item = row<ContentItem>(r);
+    if (!item.mediaIds || item.mediaIds.length === 0) {
+      const seedMatch =
+        seedByIdOrSlug.get(item.id) ?? seedByIdOrSlug.get(item.slug);
+      if (seedMatch?.mediaIds?.length) {
+        return { ...item, mediaIds: seedMatch.mediaIds };
+      }
+    }
+    return item;
+  });
   const seen = new Set(dbItems.flatMap((c) => [c.id, c.slug]));
   for (const s of seedRows) {
     if (!seen.has(s.id) && !seen.has(s.slug)) {
@@ -327,7 +342,16 @@ export async function getContent(id: ID): Promise<ContentItem | null> {
     .from(schema.contents)
     .where(eq(schema.contents.id, id))
     .limit(1);
-  if (rows[0]) return row<ContentItem>(rows[0]);
+  if (rows[0]) {
+    const item = row<ContentItem>(rows[0]);
+    if (!item.mediaIds || item.mediaIds.length === 0) {
+      const seedMatch = await fixtures.getContent(id);
+      if (seedMatch?.mediaIds?.length) {
+        return { ...item, mediaIds: seedMatch.mediaIds };
+      }
+    }
+    return item;
+  }
   return fixtures.getContent(id);
 }
 
@@ -354,10 +378,19 @@ export async function listMedia(opts?: {
     .select()
     .from(schema.media)
     .orderBy(desc(schema.media.uploadedAt));
-  const rows = await (filters.length
-    ? query.where(and(...filters))
-    : query);
-  return rows.map((r) => row<MediaAsset>(r));
+  const [rows, seedMedia] = await Promise.all([
+    filters.length ? query.where(and(...filters)) : query,
+    fixtures.listMedia(opts),
+  ]);
+  const dbMedia = rows.map((r) => row<MediaAsset>(r));
+  const seen = new Set(dbMedia.map((m) => m.id));
+  for (const s of seedMedia) {
+    if (!seen.has(s.id)) {
+      dbMedia.push(s);
+      seen.add(s.id);
+    }
+  }
+  return dbMedia;
 }
 
 /** Simpan aset media baru (mis. foto hasil impor Instagram). */
@@ -377,7 +410,8 @@ export async function getMedia(id: ID): Promise<MediaAsset | null> {
     .from(schema.media)
     .where(eq(schema.media.id, id))
     .limit(1);
-  return rows[0] ? row<MediaAsset>(rows[0]) : null;
+  if (rows[0]) return row<MediaAsset>(rows[0]);
+  return fixtures.getMedia(id);
 }
 
 /* ------------------------------------------------------------------ */

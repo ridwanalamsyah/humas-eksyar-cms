@@ -3,7 +3,7 @@
 import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
 import { useRef } from "react";
 
-/** Garis linimasa yang terisi mengikuti posisi gulir. */
+/** Garis linimasa yang terisi mengikuti posisi gulir, dengan margin kiri aman agar titik tidak keluar batas. */
 export function TimelineProgress({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLOListElement>(null);
   const reduce = useReducedMotion();
@@ -13,15 +13,15 @@ export function TimelineProgress({ children }: { children: React.ReactNode }) {
   });
   const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
   return (
-    <ol ref={ref} className="relative mx-auto mt-16 max-w-[820px] pl-8">
+    <ol ref={ref} className="relative mx-auto mt-16 max-w-[820px] pl-10">
       <span
         aria-hidden
-        className="absolute left-0 top-0 h-full w-0.5 bg-hairline"
+        className="absolute left-3 top-0 h-full w-0.5 bg-hairline"
       />
       <motion.span
         aria-hidden
         style={{ scaleY: reduce ? 1 : scaleY }}
-        className="absolute left-0 top-0 h-full w-0.5 origin-top bg-accent"
+        className="absolute left-3 top-0 h-full w-0.5 origin-top bg-accent"
       />
       {children}
     </ol>

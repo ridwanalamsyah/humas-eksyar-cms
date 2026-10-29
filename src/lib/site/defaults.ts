@@ -51,14 +51,18 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     role: d.role,
     photo: null,
     expertise: d.expertise,
+    pendidikan: "pendidikan" in d ? d.pendidikan : undefined,
+    sinta: "sinta" in d ? d.sinta : undefined,
+    scholar: "scholar" in d ? d.scholar : undefined,
+    konsultasi: "konsultasi" in d ? d.konsultasi : undefined,
   })),
   prestasi: prestasi.map((p) => ({
     name: p.name,
     achievement: p.achievement,
     group: p.group,
-    photo: null,
+    photo: p.photo ?? null,
   })),
-  kegiatan: sorotan.map((k) => ({ ...k, image: null })),
+  kegiatan: sorotan.map((k) => ({ ...k, image: k.image ?? null })),
   bidangKajian,
   kelompokMataKuliah,
   kurikulum,
@@ -70,6 +74,11 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   timeline,
   mitra,
   tendik: [
+    {
+      name: "Adi Suharyo, S.HI., M.Ag.",
+      role: "Kepala Subbagian Tata Usaha (Kasubbag TU) FEBI",
+      photo: null,
+    },
     {
       name: "Staf Administrasi Akademik Prodi Ekonomi Syariah",
       role: "Layanan Administrasi & Persuratan Mahasiswa FEBI",
@@ -117,6 +126,24 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       caption: "Focus Group Discussion (FGD) Peninjauan Visi Misi & Kurikulum OBE bersama OJK, Asosiasi Prodi, Praktisi, dan Alumni.",
       album: "Penjaminan Mutu",
       date: "2024-04-25",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
+      caption: "Seminar Karir 2026: Menjadi SDM Unggul dan Kompetitif dalam Industri Keuangan Syariah di Aula FEBI Kampus 2.",
+      album: "Akademik",
+      date: "2026-06-19",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1000&q=80",
+      caption: "Desa Binaan Ekowisata Halal Indragiri Kecamatan Rancabali — Peraih Penghargaan Konservasi Bupati Bandung.",
+      album: "Desa Binaan",
+      date: "2019-12-18",
+    },
+    {
+      image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1000&q=80",
+      caption: "Kajian Ekonomi Islam & Diskusi Tematik FoSEI serta HMJ Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.",
+      album: "Kemahasiswaan",
+      date: "2026-05-12",
     },
   ],
   video: [
@@ -621,21 +648,82 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       ],
     },
   ],
-  apresiasi: [],
+  apresiasi: [
+    {
+      judul: "Apresiasi Publikasi Internasional Bereputasi (Scopus Q2)",
+      penerima: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
+      tanggal: "2026-03-10",
+      isi: "Selamat dan sukses atas terbitnya artikel ilmiah di jurnal internasional terindeks Scopus Q2 pada bidang Akuntabilitas & Kepatuhan Syariah Lembaga ZISWAF.",
+    },
+    {
+      judul: "Apresiasi Kontributor Media Keuangan Islam Internasional (IFN)",
+      penerima: "Hakiki Ramadhan (Mahasiswa Ekonomi Syariah)",
+      tanggal: "2026-04-22",
+      isi: "Selamat atas dimuatnya artikel analisis ekonomi dan keuangan syariah di publikasi internasional Islamic Finance News (IFN).",
+    },
+    {
+      judul: "Penghargaan Sinergi Konservasi & Pengembangan Desa Ekowisata Halal",
+      penerima: "Tim Dosen & Mahasiswa Prodi Ekonomi Syariah UIN SGD",
+      tanggal: "2019-12-18",
+      isi: "Penghargaan resmi Bupati Bandung atas inisiasi dan pendampingan Desa Ekowisata Halal Indragiri, Kecamatan Rancabali, Kabupaten Bandung.",
+    },
+  ],
   statusLayanan: {
     status: "normal",
     pesan: "Layanan akademik Prodi Ekonomi Syariah beroperasi normal (Senin–Jumat, 08.00–16.00 WIB di Gedung FEBI Kampus 2).",
   },
-  struktur: pimpinan.map((p, i) => ({
-    jabatan: p.role,
-    nama: p.name,
-    level: i === 0 ? 1 : 2,
-  })),
+  struktur: [
+    {
+      jabatan: "Dekan Fakultas Ekonomi dan Bisnis Islam",
+      nama: "Prof. Dr. H. Dudang Gojali, S.Ag., M.Ag.",
+      level: 1,
+    },
+    {
+      jabatan: "Wakil Dekan I Bidang Akademik",
+      nama: "Prof. Dr. Iwan Setiawan, S.Ag., M.Pd., M.E.Sy.",
+      level: 2,
+    },
+    {
+      jabatan: "Wakil Dekan II Bidang Administrasi Umum & Keuangan",
+      nama: "Dr. Muhammad Zaky, M.Si.",
+      level: 2,
+    },
+    {
+      jabatan: "Wakil Dekan III Bidang Kemahasiswaan & Kerja Sama",
+      nama: "Dr. H. Kadar Nurjaman, S.E., M.M.",
+      level: 2,
+    },
+    {
+      jabatan: "Ketua Program Studi Ekonomi Syariah",
+      nama: "Dr. Evi Sopiah, M.Ag., CIIQA, CIELP",
+      level: 3,
+    },
+    {
+      jabatan: "Sekretaris Program Studi Ekonomi Syariah",
+      nama: "Anisa Ilmia, M.E.",
+      level: 3,
+    },
+    {
+      jabatan: "Kepala Subbagian Tata Usaha FEBI",
+      nama: "Adi Suharyo, S.HI., M.Ag.",
+      level: 3,
+    },
+    {
+      jabatan: "Pembina Galeri Investasi Syariah BEI & Laboratorium",
+      nama: "Suteja Wira Dana Kusuma, M.E.",
+      level: 4,
+    },
+    {
+      jabatan: "Gugus Penjaminan Mutu (GPM) Prodi Ekonomi Syariah",
+      nama: "Tim Penjaminan Mutu Prodi Ekonomi Syariah",
+      level: 4,
+    },
+  ],
   statistik: [
     { tahun: "2023", mahasiswaAktif: 740, mahasiswaBaru: 195, lulusan: 142, dosen: 20 },
     { tahun: "2024", mahasiswaAktif: 785, mahasiswaBaru: 210, lulusan: 158, dosen: 21 },
     { tahun: "2025", mahasiswaAktif: 820, mahasiswaBaru: 220, lulusan: 165, dosen: 22 },
-    { tahun: "2026", mahasiswaAktif: 850, mahasiswaBaru: 225, lulusan: 172, dosen: 22 },
+    { tahun: "2026", mahasiswaAktif: 850, mahasiswaBaru: 225, lulusan: 172, dosen: 24 },
   ],
   infografis: [
     {
@@ -657,26 +745,51 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     {
       name: "Aula & Auditorium FEBI Kampus 2",
       description: "Kapasitas 250 peserta untuk seminar nasional, studium generale, dan kegiatan HMJ Ekonomi Syariah.",
-      image: null,
+      image: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1000&q=80",
     },
     {
       name: "Galeri Investasi Syariah (GIS) BEI FEBI",
       description: "Ruang edukasi, terminal data pasar modal syariah, dan diskusi kelompok studi pasar modal.",
-      image: null,
+      image: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=1000&q=80",
     },
     {
       name: "Laboratorium Mini Banking & Keuangan Syariah",
       description: "Ruang praktikum operasional bank syariah, simulasi akad muamalah, dan pelatihan aplikasi keuangan.",
-      image: null,
+      image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1000&q=80",
     },
     {
       name: "Ruang Sidang Munaqasyah & Diskusi Prodi",
       description: "Ruang seminar proposal, ujian komprehensif, sidang skripsi, dan rapat kepanitiaan mahasiswa.",
-      image: null,
+      image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=1000&q=80",
     },
   ],
-  wisuda: [],
-  karya: [],
+  wisuda: [
+    {
+      periode: "Wisuda Ke-102 UIN Sunan Gunung Djati Bandung (2026)",
+      nama: "Lulusan Terbaik Program Studi Ekonomi Syariah FEBI",
+      judul: "Analisis Literasi Keuangan Syariah, Wakaf Produktif, dan Ekosistem Industri Halal di Jawa Barat",
+      predikat: "Cum Laude (Dengan Pujian)",
+      foto: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=800&q=80",
+    },
+  ],
+  karya: [
+    {
+      judul: "Opini & Analisis Pasar Keuangan Syariah di Islamic Finance News (IFN)",
+      penulis: "Hakiki Ramadhan",
+      jenis: "Artikel Media Internasional",
+      tahun: "2026",
+      deskripsi: "Analisis perkembangan instrumen keuangan Islam dan dinamika pasar modal syariah Indonesia.",
+      url: "https://www.islamicfinancenews.com/",
+    },
+    {
+      judul: "Model Pemberdayaan Desa Ekowisata Halal Indragiri Kecamatan Rancabali",
+      penulis: "Tim Riset & Pengabdian Dosen-Mahasiswa Ekonomi Syariah",
+      jenis: "Riset & Inovasi Desa Binaan",
+      tahun: "2020",
+      deskripsi: "Kajian terpadu pengembangan destinasi wisata ramah muslim dan konservasi lingkungan Green Halal Village.",
+      url: "https://journal.uinsgd.ac.id/index.php/likuid",
+    },
+  ],
   panduanMaba: [
     {
       name: "Aktifkan akun SALAM",
@@ -773,7 +886,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     tracerUrl: "https://cdc.uinsgd.ac.id/tracer_study/",
     sebaranUrl: "https://cdc.uinsgd.ac.id/tracer_study/sebaran_alumni",
   },
-  fasilitas: fasilitas.map((f) => ({ ...f, image: null })),
+  fasilitas: fasilitas.map((f) => ({ ...f, image: f.image ?? null })),
   jalurMasuk,
   unduhan: [
     {
