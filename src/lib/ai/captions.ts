@@ -68,6 +68,7 @@ const STYLE_LABELS: Record<CaptionStyle, string> = {
  * sendiri lewat UI / API.
  */
 const RUBRIC_LABELS: Record<ContentRubric, string> = {
+  buletin_hmj: "Buletin Artikel HMJ Ekonomi Syariah",
   tausiyah_senin: "Rubrik harian (refleksi / kutipan pagi)",
   eksyar_talks: "Diskusi / Talkshow",
   bisnis_halal: "Spotlight UMKM / Bisnis Halal",
@@ -371,6 +372,7 @@ export const STYLE_LIST: Array<{ value: CaptionStyle; label: string; emoji: stri
  * as a fallback for tooling that runs before the DB is reachable.
  */
 export const RUBRIC_LIST: Array<{ value: ContentRubric; label: string; emoji: string }> = [
+  { value: "buletin_hmj", label: "Buletin Artikel HMJ", emoji: "📰" },
   { value: "refleksi_harian" as ContentRubric, label: "Refleksi harian", emoji: "🌅" },
   { value: "pengumuman" as ContentRubric, label: "Pengumuman resmi", emoji: "📣" },
   { value: "kajian" as ContentRubric, label: "Kajian akademik", emoji: "📖" },
