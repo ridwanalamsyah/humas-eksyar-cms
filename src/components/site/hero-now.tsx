@@ -46,11 +46,11 @@ export function HeroNow({ items }: { items: HeroNowItem[] }) {
                 <span className="inline-block rounded-md bg-accent-soft px-2 py-0.5 text-[11.5px] font-semibold text-accent">
                   {it.label}
                 </span>
-                <span className="mt-2 line-clamp-2 block break-words text-[15.5px] font-semibold leading-snug text-label group-hover:text-accent">
+                <span className="mt-2 line-clamp-2 break-words text-[15.5px] font-semibold leading-snug text-label group-hover:text-accent">
                   {it.title}
                 </span>
                 {it.meta && (
-                  <span className="mt-1 line-clamp-1 block text-[12.5px] text-label-2">
+                  <span className="mt-1 line-clamp-1 text-[12.5px] text-label-2">
                     {it.meta}
                   </span>
                 )}

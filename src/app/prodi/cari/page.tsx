@@ -220,7 +220,7 @@ export default async function CariPage({ searchParams }: Props) {
                               {h.title}
                             </span>
                             {h.snippet && (
-                              <span className="mt-1 line-clamp-2 block text-[14px] text-label-2">
+                              <span className="mt-1 line-clamp-2 text-[14px] text-label-2">
                                 {h.snippet}
                               </span>
                             )}

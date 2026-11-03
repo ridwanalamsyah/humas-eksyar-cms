@@ -200,7 +200,7 @@ export function InteractiveHero({
                       >
                         {s.category}
                       </span>
-                      <span className="mt-0.5 line-clamp-1 block text-[12px] font-semibold">
+                      <span className="mt-0.5 line-clamp-1 text-[12px] font-semibold">
                         {s.title}
                       </span>
                     </button>
