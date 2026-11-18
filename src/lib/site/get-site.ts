@@ -382,9 +382,28 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
 }
 
 /** Konten website untuk request ini (di-cache per render). */
+/**
+ * Foto orang yang aslinya digabung dengan tangkapan layar karyanya: di kartu
+ * orang (field `photo`) dipakai versi yang dipotong hanya orangnya.
+ */
+const PERSON_PHOTO_CROPS: Record<string, string> = {
+  "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg": "/prodi/prestasi/hakiki-ramadhan.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg": "/prodi/prestasi/sabila-syifa.jpg",
+};
+
+function cropPersonPhotos<T>(value: T): T {
+  if (Array.isArray(value)) return value.map(cropPersonPhotos) as T;
+  if (!value || typeof value !== "object") return value;
+  const out: Record<string, unknown> = {};
+  for (const [k, v] of Object.entries(value)) {
+    out[k] = k === "photo" && typeof v === "string" && PERSON_PHOTO_CROPS[v] ? PERSON_PHOTO_CROPS[v] : cropPersonPhotos(v);
+  }
+  return out as T;
+}
+
 export const getSite = cache(async (): Promise<WebsiteConfig> => {
   try {
-    return mergeWebsiteConfig(await getWebsiteContent());
+    return cropPersonPhotos(mergeWebsiteConfig(await getWebsiteContent()));
   } catch {
     return defaultWebsiteConfig;
   }

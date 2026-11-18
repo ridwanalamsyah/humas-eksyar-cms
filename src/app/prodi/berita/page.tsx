@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { BookOpen, PenTool } from "lucide-react";
 import { AnnouncementList } from "@/components/site/announcement-list";
 import { KegiatanExplorer } from "@/components/site/kegiatan-explorer";
 import { NewsCard } from "@/components/site/news-card";
@@ -59,55 +58,8 @@ export default async function BeritaPage({ searchParams }: Props) {
           Berita & Buletin Artikel
         </h1>
         <p className="mt-2 max-w-[68ch] text-[16px] leading-[1.55] text-label-2">
-          Kabar kegiatan akademik, pengumuman resmi, dan publikasi{" "}
-          <strong className="font-semibold text-label">
-            Buletin Artikel HMJ Ekonomi Syariah
-          </strong>
-          .
+          Kegiatan, pengumuman, dan tulisan mahasiswa.
         </p>
-
-        {/* Banner Program Kolaborasi Buletin Artikel HMJ */}
-        <div className="mt-7 flex flex-col justify-between gap-4 rounded-[20px] border border-accent/25 bg-canvas p-5 shadow-xs sm:flex-row sm:items-center sm:px-6">
-          <div className="flex items-start gap-3.5">
-            <span className="mt-0.5 flex size-10 shrink-0 items-center justify-center rounded-[12px] bg-accent-soft text-accent">
-              <BookOpen className="size-5" />
-            </span>
-            <div>
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-accent/12 px-2.5 py-0.5 text-[14px] font-semibold text-accent">
-                  Kolaborasi Prodi × HMJ Eksyar
-                </span>
-                <h2 className="text-[16px] font-bold text-label">
-                  Program Buletin Artikel HMJ Ekonomi Syariah
-                </h2>
-              </div>
-              <p className="mt-1 text-[14px] leading-[1.5] text-label-2">
-                Setiap edisi Buletin Artikel karya mahasiswa & departemen keilmuan HMJ Ekonomi Syariah dapat langsung diunggah melalui CMS (Rubrik{" "}
-                <code className="rounded bg-mist px-1.5 py-0.5 text-[14px] font-semibold text-label">
-                  Buletin Artikel HMJ
-                </code>
-                ) atau dikirim melalui formulir kontribusi berita untuk tayang di website resmi prodi.
-              </p>
-            </div>
-          </div>
-          <div className="flex shrink-0 flex-wrap gap-2">
-            {tab !== "buletin_hmj" && (
-              <Link
-                href="/prodi/berita?kategori=buletin_hmj"
-                className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-[14px] font-semibold text-white transition-colors hover:bg-accent-hover"
-              >
-                Lihat Buletin HMJ
-              </Link>
-            )}
-            <Link
-              href="/prodi/formulir/buletin-artikel"
-              className="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-mist px-4 py-2 text-[14px] font-semibold text-label transition-colors hover:border-accent/40 hover:text-accent"
-            >
-              <PenTool className="size-3.5" />
-              Kirim Artikel Buletin
-            </Link>
-          </div>
-        </div>
 
         <nav
           aria-label="Kategori"
@@ -156,7 +108,7 @@ export default async function BeritaPage({ searchParams }: Props) {
             )}
           </>
         ) : (
-          <p className="mt-10 rounded-[20px] bg-canvas p-10 text-center text-[16px] text-label-2">
+          <p className="mt-10 text-center text-[16px] text-label-2 py-6">
             Belum ada berita yang dipublikasikan.
           </p>
         )}

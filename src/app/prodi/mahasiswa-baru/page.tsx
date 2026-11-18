@@ -127,7 +127,7 @@ export default async function MahasiswaBaruPage() {
       </section>
 
       {jalurMasuk.length > 0 && (
-        <section className="bg-mist px-4 py-24 sm:px-6">
+        <section className="bg-mist px-4 py-14 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading
@@ -140,7 +140,7 @@ export default async function MahasiswaBaruPage() {
               {jalurMasuk.map((j, i) => (
                 <li
                   key={j.title}
-                  className="flex gap-4 rounded-[24px] bg-canvas p-6"
+                  className="flex gap-4 pt-6 border-t border-hairline"
                 >
                   <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent text-[14px] font-bold text-white">
                     {i + 1}
@@ -161,7 +161,7 @@ export default async function MahasiswaBaruPage() {
       )}
 
       {infoMaba.length > 0 && (
-        <section className="px-4 py-24 sm:px-6">
+        <section className="px-4 py-14 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading
@@ -205,7 +205,7 @@ export default async function MahasiswaBaruPage() {
         </section>
       )}
 
-      <section className="bg-navy px-4 py-24 text-white sm:px-6">
+      <section className="bg-navy px-4 py-14 sm:py-24 text-white sm:px-6">
         <div className="mx-auto max-w-[1024px]">
           <p className="text-[16px] font-semibold uppercase tracking-[0.08em] text-sand">
             Setelah lulus
@@ -272,7 +272,7 @@ export default async function MahasiswaBaruPage() {
       )}
 
       {faq.length > 0 && (
-        <section className="px-4 py-24 sm:px-6">
+        <section className="px-4 py-14 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[820px]">
             <SectionHeading title="Pertanyaan calon mahasiswa" />
             <div className="mt-10">

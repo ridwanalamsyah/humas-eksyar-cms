@@ -90,7 +90,7 @@ export function NewsCard({
         )}
 
         {/* Info Penulis & Tanggal Terbit */}
-        <div className="mt-auto flex items-center justify-between gap-3 pt-4">
+        <div className="flex items-center justify-between gap-3 pt-4">
           <div className="flex items-center gap-2.5 min-w-0">
             {author?.avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element

@@ -552,3 +552,32 @@ body {
     padding-left: 0 !important;
   }
 }
+
+/*
+ * Baris geser di ponsel: daftar yang di desktop berupa grid menjadi satu baris
+ * yang digeser ke samping (bukan memanjang ke bawah). Sengaja di luar @layer
+ * supaya menang atas utilitas `grid` di ukuran kecil.
+ */
+@media (max-width: 639px) {
+  .rail {
+    display: flex;
+    gap: 12px;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 1rem;
+    scrollbar-width: none;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+  .rail > * {
+    flex: 0 0 80%;
+    scroll-snap-align: start;
+    /* Kartu di luar layar tidak menunggu animasi muncul: langsung terlihat saat digeser. */
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}

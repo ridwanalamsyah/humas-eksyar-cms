@@ -51,7 +51,7 @@ export function KurikulumTabs({ years }: { years: KurikulumYear[] }) {
         className="mt-10 grid gap-5 md:grid-cols-2"
       >
         {year.semesters.map((s) => (
-          <div key={s.name} className="rounded-[28px] bg-canvas p-8">
+          <div key={s.name} className="pt-6 border-t border-hairline">
             <p className="text-[24px] font-semibold tracking-[-0.01em] text-label">
               {s.name}
             </p>

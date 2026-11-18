@@ -5,6 +5,7 @@
  *   POST /api/contents         → create a content draft (auth required)
  */
 
+import { BULETIN_HMJ_RUBRIC } from "@/lib/site/content";
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
@@ -53,10 +54,20 @@ export async function POST(req: NextRequest) {
       { status: 400 },
     );
   }
+  // Akun HMJ (peran "anggota") hanya boleh menulis Buletin Artikel HMJ dan
+  // tidak bisa menerbitkan sendiri: kirimannya selalu menunggu pemeriksaan.
+  const hmj = member.role === "anggota";
+  if (hmj && body.rubric !== BULETIN_HMJ_RUBRIC) {
+    return NextResponse.json(
+      { error: "Akun HMJ hanya bisa menulis Buletin Artikel HMJ." },
+      { status: 403 },
+    );
+  }
+  const status = hmj && body.status === "published" ? "review_divisi" : (body.status ?? "draft");
   const content = await createContent({
     title: String(body.title),
     rubric: body.rubric,
-    status: body.status ?? "draft",
+    status,
     divisionId: body.divisionId ?? member.divisionId,
     authorId: member.id,
     body: body.body,

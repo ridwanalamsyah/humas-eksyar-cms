@@ -4,7 +4,7 @@ import type { Testimoni } from "@/lib/site/schema";
 /** Kartu kutipan alumni/mahasiswa. */
 export function TestimoniCard({ item }: { item: Testimoni }) {
   return (
-    <figure className="flex h-full flex-col rounded-[28px] bg-canvas p-7 sm:p-8">
+    <figure className="flex h-full flex-col pt-6 sm:pt-6 border-t border-hairline">
       <span
         aria-hidden
         className="text-[40px] font-extrabold leading-[0.6] text-accent/25"

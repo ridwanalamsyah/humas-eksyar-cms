@@ -143,7 +143,7 @@ export default async function LayananPage() {
               href={l.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-start justify-between gap-6 rounded-[24px] bg-canvas p-7 transition-colors hover:bg-canvas/70"
+              className="group flex items-start justify-between gap-6 pt-6 border-t border-hairline"
             >
               <span>
                 <span className="block text-[18px] font-bold tracking-[-0.01em] text-label">

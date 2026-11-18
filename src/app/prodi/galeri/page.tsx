@@ -58,7 +58,7 @@ export default async function GaleriPage() {
       </section>
 
       {allVideos.length > 0 && (
-        <section className="bg-mist px-4 py-24 sm:px-6">
+        <section className="bg-mist px-4 py-14 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <SectionHeading
