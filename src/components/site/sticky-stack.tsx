@@ -14,7 +14,7 @@ import { useRef } from "react";
  */
 export function StickyStack({ children }: { children: React.ReactNode[] }) {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4 sm:gap-6">
       {children.map((child, i) => (
         <StackItem key={i} index={i} total={children.length}>
           {child}
@@ -47,8 +47,13 @@ function StackItem({
   return (
     <div
       ref={ref}
-      className="md:sticky"
-      style={{ top: `calc(7rem + ${index * 1.25}rem)` }}
+      className="sticky top-[var(--stack-top)] sm:top-[var(--stack-top-sm)]"
+      style={
+        {
+          "--stack-top": `calc(5rem + ${index * 0.75}rem)`,
+          "--stack-top-sm": `calc(7rem + ${index * 1.25}rem)`,
+        } as React.CSSProperties
+      }
     >
       <motion.div style={reduce ? undefined : { scale }} className="origin-top">
         {children}

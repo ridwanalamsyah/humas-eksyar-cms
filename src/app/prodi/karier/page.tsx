@@ -82,7 +82,7 @@ export default async function KarierPage() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {prospekKarir.map((p, i) => (
               <Reveal key={p.title} delay={(i % 4) * 0.05}>
-                <div className="h-full rounded-[24px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
+                <div className="h-full border-t border-hairline pt-6 transition duration-300">
                   <span className="text-[14px] font-bold tabular-nums text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>

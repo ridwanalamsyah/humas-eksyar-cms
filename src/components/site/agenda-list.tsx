@@ -65,7 +65,7 @@ export async function AgendaList() {
                 const d = new Date(e.startsAt);
                 return (
                   <Reveal key={e.id}>
-                    <li className="flex gap-5 rounded-[24px] border border-hairline bg-canvas p-5 sm:p-6">
+                    <li className="flex gap-5 border-t border-hairline pt-5 sm:pt-6">
                       <div className="w-16 shrink-0 rounded-2xl bg-accent-soft py-3 text-center text-accent">
                         <p className="text-[14px] font-bold uppercase">
                           {d.toLocaleDateString("id-ID", {

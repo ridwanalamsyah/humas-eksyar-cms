@@ -12,7 +12,9 @@ export function PrestasiGrid({ items }: { items: Prestasi[] }) {
     () => [ALL, ...new Set(items.map((p) => p.group).filter(Boolean))],
     [items],
   );
-  const shown = items.filter((p) => group === ALL || p.group === group);
+  const shown = items
+    .filter((p) => group === ALL || p.group === group)
+    .sort((a, b) => Number(!!b.photo) - Number(!!a.photo));
 
   return (
     <div>
@@ -21,7 +23,7 @@ export function PrestasiGrid({ items }: { items: Prestasi[] }) {
           <FilterChips options={groups} value={group} onChange={setGroup} />
         </div>
       )}
-      <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
         {shown.map((p, i) => (
           <PrestasiCard key={`${p.name}-${i}`} item={p} />
         ))}

@@ -62,7 +62,7 @@ export function MitraList({ items }: { items: Mitra[] }) {
           </div>
         );
         const cls =
-          "group relative isolate block h-full overflow-hidden rounded-[22px] border border-hairline bg-canvas p-5 transition duration-300 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-[0_16px_32px_-18px_rgba(22,58,69,0.22)]";
+          "group relative block h-full border-t border-hairline pt-5 transition duration-300";
         return (
           <li key={`${m.name}-${idx}`}>
             {m.url ? (

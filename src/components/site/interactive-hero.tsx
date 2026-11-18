@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, BadgeCheck } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { CountUp } from "./count-up";
 
 type Stat = { label: string; value?: string; num?: number; suffix?: string };
@@ -31,8 +31,8 @@ function StatValue({ s }: { s: Stat }) {
 /**
  * Hero beranda (opsi A).
  * Desktop: satu foto penuh dengan gradasi gelap, judul, dua tombol, tiga angka.
- * Ponsel: foto sebagai kartu dengan lencana akreditasi, judul dua warna, dan
- * dua kotak angka berwarna khas prodi yang menghitung naik.
+ * Ponsel: foto penuh juga, dengan lapisan gelap tipis dari bawah; tanpa
+ * kotak berwarna, angka berupa teks di atas garis tipis.
  * Tanpa slider: fotonya diatur dari CMS (Isi website → heroImage).
  */
 export function InteractiveHero({
@@ -47,65 +47,50 @@ export function InteractiveHero({
   const [s1, s2, s3] = stats;
   return (
     <>
-      {/* ─── Ponsel ─────────────────────────────────────────── */}
-      <section className="px-4 pb-6 pt-4 sm:hidden">
-        <div className="relative aspect-[5/4] overflow-hidden rounded-[28px] bg-navy">
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-[58%_40%]"
-          />
-          <div
-            aria-hidden
-            className="absolute inset-x-0 bottom-0 h-1/2"
-            style={{ background: "linear-gradient(0deg, rgba(8,28,34,.55), transparent)" }}
-          />
-          <span className="absolute bottom-4 left-4 inline-flex items-center gap-1.5 rounded-full bg-sand px-3.5 py-2 text-[14px] font-bold text-navy">
-            <BadgeCheck className="size-4" /> Akreditasi {accreditation}
-          </span>
-        </div>
-
-        <h1 className="mt-6 text-balance text-[44px] font-extrabold leading-[1] tracking-[-0.04em] text-label">
+      {/* ─── Ponsel: foto penuh, teks di atas lapisan tipis ─── */}
+      <section className="relative isolate flex min-h-[calc(100svh-4rem)] flex-col justify-end overflow-hidden bg-navy px-5 pb-8 pt-24 text-white sm:hidden">
+        <Image
+          src={image}
+          alt={imageAlt}
+          fill
+          priority
+          sizes="100vw"
+          className="-z-20 object-cover object-[58%_40%]"
+        />
+        <div
+          aria-hidden
+          className="absolute inset-0 -z-10"
+          style={{
+            background:
+              "linear-gradient(0deg, rgba(8,28,34,.78) 0%, rgba(8,28,34,.45) 40%, rgba(8,28,34,.05) 70%)",
+          }}
+        />
+        <p className="text-[14px] font-medium text-white/80">Akreditasi {accreditation}</p>
+        <h1 className="mt-2 text-balance text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em]">
           {title}
-          <span className="mt-2 block text-[22px] font-bold leading-tight tracking-[-0.02em] text-accent">
+          <span className="mt-2 block text-[20px] font-semibold leading-tight tracking-[-0.01em] text-white/85">
             {subtitle}
           </span>
         </h1>
-        <p className="mt-4 text-[16px] leading-[1.55] text-label-2">{description}</p>
-
-        <div className="mt-6 grid grid-cols-1 gap-3">
+        <div className="mt-6 flex gap-3">
           <Link
             href="/prodi/akademik"
-            className="group inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent text-[16px] font-semibold text-white transition active:scale-[0.98]"
+            className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-full bg-white/90 text-[16px] font-semibold text-navy backdrop-blur transition active:scale-[0.98]"
           >
-            Lihat kurikulum
-            <ArrowRight className="size-4 transition-transform group-active:translate-x-0.5" />
+            Kurikulum <ArrowRight className="size-4" />
           </Link>
           <Link
             href="/prodi/skripsi"
-            className="inline-flex h-12 items-center justify-center rounded-full border border-hairline text-[16px] font-semibold text-label transition active:scale-[0.98]"
+            className="inline-flex h-12 flex-1 items-center justify-center rounded-full bg-white/10 text-[16px] font-semibold text-white ring-1 ring-inset ring-white/50 backdrop-blur transition active:scale-[0.98]"
           >
             Cari skripsi
           </Link>
         </div>
-
-        <dl className="mt-6 grid grid-cols-2 gap-3">
-          {[s2, s3].filter(Boolean).map((s, i) => (
-            <div
-              key={s.label}
-              className={
-                i === 0
-                  ? "flex flex-col-reverse rounded-3xl bg-navy p-5 text-white"
-                  : "flex flex-col-reverse rounded-3xl bg-sand p-5 text-navy"
-              }
-            >
-              <dt className={i === 0 ? "mt-1 text-[14px] text-white/80" : "mt-1 text-[14px] text-navy/75"}>
-                {s.label}
-              </dt>
-              <dd className="text-[32px] font-extrabold leading-none tracking-[-0.03em]">
+        <dl className="mt-6 flex gap-8 border-t border-white/20 pt-4">
+          {[s2, s3].filter(Boolean).map((s) => (
+            <div key={s.label} className="flex flex-col-reverse">
+              <dt className="text-[13px] text-white/75">{s.label}</dt>
+              <dd className="text-[24px] font-bold leading-tight tracking-[-0.02em]">
                 <StatValue s={s} />
               </dd>
             </div>

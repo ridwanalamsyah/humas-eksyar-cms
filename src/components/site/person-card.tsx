@@ -16,10 +16,10 @@ export function PersonCard({
   href?: string;
 }) {
   return (
-    <article className="group relative isolate flex h-full flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-accent/35 hover:shadow-[0_20px_40px_-20px_rgba(22,58,69,0.28)]">
-      <Photo src={photo} alt={name} />
-      <div className="flex min-w-0 flex-1 flex-col p-5">
-        <p className="text-[14px] font-semibold uppercase tracking-[0.06em] text-accent">
+    <article className="group relative flex h-full flex-col">
+      <Photo src={photo} alt={name} className="rounded-[20px]" />
+      <div className="flex min-w-0 flex-1 flex-col pt-4">
+        <p className="text-[14px] font-semibold text-accent">
           {role}
         </p>
         <h3 className="mt-1.5 break-words text-[16px] font-bold leading-snug tracking-[-0.01em] text-label">
@@ -35,16 +35,7 @@ export function PersonCard({
           )}
         </h3>
         {tags && tags.length > 0 && (
-          <ul className="mt-auto flex flex-wrap gap-1.5 pt-4">
-            {tags.map((t) => (
-              <li
-                key={t}
-                className="max-w-full truncate rounded-full border border-hairline bg-mist px-2.5 py-1 text-[14px] font-medium text-label-2"
-              >
-                {t}
-              </li>
-            ))}
-          </ul>
+          <p className="mt-1.5 line-clamp-2 text-[14px] text-label-2">{tags.join(" · ")}</p>
         )}
       </div>
     </article>

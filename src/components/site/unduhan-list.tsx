@@ -85,7 +85,7 @@ export function UnduhanList({ items }: { items: Unduhan[] }) {
                   href={d.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-4 rounded-[20px] border border-hairline bg-canvas p-4 transition duration-300 hover:-translate-y-0.5 hover:border-transparent hover:shadow-[0_20px_40px_-24px_rgba(22,58,69,0.4)] sm:p-5"
+                  className="group flex items-center gap-4 border-t border-hairline pt-4 transition duration-300 sm:pt-5"
                 >
                   <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-accent-soft text-accent">
                     <Icon className="size-6" strokeWidth={1.75} />

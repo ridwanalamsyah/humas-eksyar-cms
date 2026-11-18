@@ -46,33 +46,6 @@ const PUBLIC_EVENT_CATEGORIES: Event["category"][] = [
   "perayaan",
 ];
 
-const BIDANG_TONES = [
-  {
-    card: "bg-accent text-white",
-    icon: "bg-white/15 text-white",
-    body: "text-white/85",
-    num: "text-sand",
-  },
-  {
-    card: "bg-sand text-navy",
-    icon: "bg-navy/10 text-navy",
-    body: "text-navy/75",
-    num: "text-accent",
-  },
-  {
-    card: "bg-navy text-white",
-    icon: "bg-white/10 text-white",
-    body: "text-white/75",
-    num: "text-sand",
-  },
-  {
-    card: "bg-mist text-label border border-hairline",
-    icon: "bg-accent-soft text-accent",
-    body: "text-label-2",
-    num: "text-accent",
-  },
-];
-
 export default async function ProdiHomePage() {
   const [site, news, events, media, skripsi, igApi, igPilihan, members] = await Promise.all([
     getSite(),
@@ -176,7 +149,7 @@ export default async function ProdiHomePage() {
             </Link>
           </div>
           <div className="mt-8">
-            <BidangKajian items={site.bidangKajian} tones={BIDANG_TONES} />
+            <BidangKajian items={site.bidangKajian} />
           </div>
         </div>
       </section>
@@ -214,8 +187,8 @@ export default async function ProdiHomePage() {
                     Semua prestasi <ArrowRight className="size-4" />
                   </Link>
                 </div>
-                <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {site.prestasi.slice(0, 3).map((p, i) => (
+                <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
+                  {[...site.prestasi].sort((a, b) => Number(!!b.photo) - Number(!!a.photo)).slice(0, 4).map((p, i) => (
                     <PrestasiCard key={`${p.name}-${i}`} item={p} />
                   ))}
                 </div>
@@ -254,13 +227,11 @@ export default async function ProdiHomePage() {
                 ))}
               </div>
             ) : (
-              <div className="rounded-2xl border border-hairline bg-canvas p-8 text-center text-[16px] text-label-2">
-                Belum ada berita.
-              </div>
+              <p className="text-[16px] text-label-2">Belum ada berita.</p>
             )}
 
-            <div className="flex min-w-0 flex-col gap-5">
-              <div className="rounded-2xl border border-hairline bg-canvas p-6">
+            <div className="flex min-w-0 flex-col gap-10">
+              <div>
                 <div className="flex items-center justify-between border-b border-hairline pb-3">
                   <h3 className="text-[18px] font-bold text-label">Agenda</h3>
                   <Link href="/prodi/kalender" className="text-[14px] font-semibold text-accent hover:underline">
@@ -291,7 +262,7 @@ export default async function ProdiHomePage() {
               </div>
 
               {announcements.length > 0 && (
-                <div className="rounded-2xl border border-hairline bg-canvas p-6">
+                <div>
                   <div className="flex items-center justify-between border-b border-hairline pb-3">
                     <h3 className="text-[18px] font-bold text-label">Pengumuman</h3>
                     <Link
@@ -325,31 +296,25 @@ export default async function ProdiHomePage() {
               </Link>
             </div>
             <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-              <div className="grid content-start gap-4">
-              {pimpinanProdi.map((p) => (
-                <Link
-                  key={p.name}
-                  href={`/prodi/dosen/${dosenSlug(p.name)}`}
-                  className="group flex items-center gap-5 rounded-3xl border border-hairline bg-canvas p-5 transition-colors hover:border-accent/40 sm:p-6"
-                >
-                  {p.photo ? (
-                    <Photo src={p.photo} alt={p.name} className="w-24 shrink-0 rounded-2xl sm:w-28" />
-                  ) : (
-                    <span className="grid size-20 shrink-0 place-items-center rounded-full bg-accent-soft text-[24px] font-bold text-accent">
-                      {initials(p.name)}
-                    </span>
-                  )}
-                  <div className="min-w-0">
-                    <p className="text-[14px] font-semibold text-accent">{p.role}</p>
-                    <h3 className="mt-1 text-[18px] font-bold leading-snug text-label group-hover:text-accent">
+              <div className="grid grid-cols-2 content-start gap-x-4 gap-y-6 sm:grid-cols-3">
+                {pimpinanProdi.map((p) => (
+                  <Link key={p.name} href={`/prodi/dosen/${dosenSlug(p.name)}`} className="group">
+                    {p.photo ? (
+                      <Photo src={p.photo} alt={p.name} className="rounded-[20px] [&_img]:object-top" />
+                    ) : (
+                      <span className="grid size-20 place-items-center rounded-full bg-accent-soft text-[24px] font-bold text-accent">
+                        {initials(p.name)}
+                      </span>
+                    )}
+                    <p className="mt-3 text-[14px] font-semibold text-accent">{p.role}</p>
+                    <h3 className="mt-0.5 text-[16px] font-bold leading-snug text-label group-hover:text-accent">
                       {p.name}
                     </h3>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                ))}
               </div>
               {pimpinanFakultas.length > 0 && (
-                <div className="rounded-3xl bg-mist/60 p-6">
+                <div className="border-t border-hairline pt-4 lg:border-l lg:border-t-0 lg:pl-8 lg:pt-0">
                   <h3 className="text-[16px] font-bold text-label">Pimpinan fakultas</h3>
                   <ul className="mt-3 divide-y divide-hairline">
                     {pimpinanFakultas.map((p) => (

@@ -37,7 +37,7 @@ export default async function FormulirPage({ params }: Props) {
         <p className="mt-3 text-[16px] leading-[1.5] text-label-2">
           {def.description}
         </p>
-        <div className="mt-10 rounded-[28px] border border-hairline bg-canvas p-6 sm:p-8">
+        <div className="mt-10 border-t border-hairline pt-6 sm:pt-8">
           <FormRenderer def={def} options={options} />
         </div>
         <p className="mt-4 text-[14px] text-label-3">

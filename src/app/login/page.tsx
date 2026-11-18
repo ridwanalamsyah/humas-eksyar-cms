@@ -4,9 +4,8 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { ArrowLeft, ArrowRight, KeyRound, Loader2, Mail } from "lucide-react";
+import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 
 const EASE_OPUS: [number, number, number, number] = [0.16, 1, 0.3, 1];
@@ -36,7 +35,7 @@ function GoogleMark({ className }: { className?: string }) {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div className="min-h-dvh flex items-center justify-center bg-[#FAF9F5] dark:bg-[#0B171C]" />}>
+    <Suspense fallback={<div className="min-h-dvh flex items-center justify-center bg-white" />}>
       <LoginInner />
     </Suspense>
   );
@@ -83,132 +82,67 @@ function LoginInner() {
   };
 
   return (
-    <main className="relative flex min-h-dvh flex-col items-center justify-center overflow-hidden bg-[#FAF9F5] px-4 py-12 text-[#1E221E] dark:bg-[#0B171C] dark:text-white">
-      {/* Ambient Background Glow Orbs */}
-      <motion.div
-        aria-hidden="true"
-        animate={
-          reduce
-            ? undefined
-            : {
-                scale: [1, 1.1, 1],
-                opacity: [0.18, 0.3, 0.18],
-              }
-        }
-        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        className="pointer-events-none absolute -top-32 left-1/2 -z-10 h-[440px] w-[440px] -translate-x-1/2 rounded-full bg-[#237A74] blur-[130px] dark:opacity-15"
-      />
-      <motion.div
-        aria-hidden="true"
-        animate={
-          reduce
-            ? undefined
-            : {
-                scale: [1, 1.12, 1],
-                opacity: [0.12, 0.22, 0.12],
-              }
-        }
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-        className="pointer-events-none absolute -bottom-36 left-1/2 -z-10 h-[380px] w-[380px] -translate-x-1/2 rounded-full bg-[#EEB25F] blur-[130px] dark:opacity-10"
-      />
+    <main className="grid min-h-dvh bg-white text-[#14201a] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+      {/* Foto kampus di kiri (desktop saja) */}
+      <aside className="relative hidden overflow-hidden bg-[#152e2b] lg:block">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/prodi/hero-mahasiswa.jpg" alt="" className="absolute inset-0 size-full object-cover opacity-80" />
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{ background: "linear-gradient(0deg, rgba(8,28,34,.75), rgba(8,28,34,.1) 60%)" }}
+        />
+        <p className="absolute bottom-10 left-10 max-w-[28ch] text-[28px] font-bold leading-tight tracking-[-0.02em] text-white">
+          Ruang kerja Humas Ekonomi Syariah.
+        </p>
+      </aside>
 
-      {/* Top right theme toggle */}
-      <motion.div
-        initial={reduce ? false : { opacity: 0, y: -8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.45, ease: EASE_OPUS }}
-        className="absolute right-4 top-4 sm:right-8 sm:top-6"
-      >
-        <ThemeToggle />
-      </motion.div>
-
-      <div className="w-full max-w-[420px]">
+      <div className="flex flex-col justify-center px-6 py-12 sm:px-12">
         <motion.div
-          initial={reduce ? false : { opacity: 0, y: 22, scale: 0.97, filter: "blur(8px)" }}
-          animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-          transition={{ duration: 0.55, ease: EASE_OPUS }}
-          className="rounded-2xl border border-neutral-200/80 bg-white/95 p-7 shadow-[0_20px_50px_-15px_rgba(0,0,0,0.07)] backdrop-blur-md dark:border-white/10 dark:bg-[#121F25]/95 dark:shadow-[0_24px_60px_-15px_rgba(0,0,0,0.45)] sm:p-9"
+          initial={reduce ? false : { opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: EASE_OPUS }}
+          className="mx-auto w-full max-w-[380px]"
         >
-          {/* Brand Header */}
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: EASE_OPUS, delay: 0.08 }}
-            className="flex flex-col items-center text-center"
-          >
-            <motion.div
-              whileHover={reduce ? undefined : { scale: 1.06, rotate: -3 }}
-              transition={{ type: "spring", stiffness: 400, damping: 22 }}
-            >
-              <EksyarLogo size={52} />
-            </motion.div>
-            <h1 className="mt-4 font-jakarta text-[22px] font-extrabold tracking-tight text-[#1E221E] dark:text-white">
-              Portal Humas
-            </h1>
-            <p className="mt-1 text-[13px] text-neutral-500 dark:text-neutral-400">
-              CMS Humas Jurusan Ekonomi Syariah FEBI UIN SGD
-            </p>
-          </motion.div>
+          <EksyarLogo size={44} />
+          <h1 className="mt-6 text-[28px] font-extrabold tracking-[-0.025em]">Masuk CMS</h1>
+          <p className="mt-1 text-[15px] text-[#4a5c54]">Humas Ekonomi Syariah FEBI UIN SGD</p>
 
           <AnimatePresence mode="wait">
             {error && (
-              <motion.div
+              <motion.p
                 key="login-error"
-                initial={{ opacity: 0, y: -6, height: 0 }}
-                animate={{ opacity: 1, y: 0, height: "auto", x: [0, -5, 5, -3, 3, 0] }}
-                exit={{ opacity: 0, y: -6, height: 0 }}
-                transition={{ duration: 0.35, ease: EASE_OPUS }}
-                className="mt-5 overflow-hidden rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-center text-[12.5px] font-medium text-red-600 dark:text-red-400"
+                role="alert"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: "auto" }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3, ease: EASE_OPUS }}
+                className="mt-5 overflow-hidden text-[14px] font-medium text-red-600"
               >
                 {error}
-              </motion.div>
+              </motion.p>
             )}
           </AnimatePresence>
 
-          {/* Opsi Google SSO Utama */}
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: EASE_OPUS, delay: 0.15 }}
-            className="mt-7"
+          <button
+            type="button"
+            onClick={handleGoogle}
+            disabled={busy}
+            className="mt-8 flex h-12 w-full items-center justify-center gap-3 rounded-full border border-[#14201a]/15 text-[15px] font-semibold transition-colors hover:bg-[#f4f6f5] disabled:opacity-50"
           >
-            <motion.button
-              type="button"
-              onClick={handleGoogle}
-              disabled={busy}
-              whileHover={reduce ? undefined : { y: -1.5, scale: 1.008 }}
-              whileTap={reduce ? undefined : { scale: 0.985 }}
-              transition={{ type: "spring", stiffness: 420, damping: 28 }}
-              className="flex h-11 w-full items-center justify-center gap-3 rounded-xl border border-neutral-200 bg-white px-4 text-[13.5px] font-medium text-neutral-700 shadow-2xs transition-colors hover:bg-neutral-50 hover:shadow-xs disabled:opacity-50 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
-            >
-              <GoogleMark className="size-4.5" />
-              <span>Masuk dengan Akun Google</span>
-            </motion.button>
-          </motion.div>
+            <GoogleMark className="size-5" />
+            Masuk dengan Google
+          </button>
 
-          {/* Divider */}
-          <motion.div
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.45, ease: EASE_OPUS, delay: 0.22 }}
-            className="relative my-6 flex items-center justify-center"
-          >
-            <div className="w-full border-t border-neutral-200 dark:border-white/10" />
-            <span className="absolute bg-white px-3 text-[11.5px] font-medium text-neutral-400 dark:bg-[#121F25] dark:text-neutral-400">
-              atau masuk dengan email
-            </span>
-          </motion.div>
+          <div className="my-6 flex items-center gap-3 text-[13px] text-[#758a80]">
+            <span className="h-px flex-1 bg-[#14201a]/10" />
+            atau email
+            <span className="h-px flex-1 bg-[#14201a]/10" />
+          </div>
 
-          {/* Form Email Resmi */}
-          <motion.form
-            onSubmit={handleEmailSubmit}
-            initial={reduce ? false : { opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, ease: EASE_OPUS, delay: 0.28 }}
-            className="space-y-3"
-          >
-            <div className="relative">
-              <Mail className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-neutral-400" />
+          <form onSubmit={handleEmailSubmit} className="space-y-4">
+            <label className="block text-[14px] font-medium">
+              Email
               <input
                 type="email"
                 required
@@ -216,52 +150,37 @@ function LoginInner() {
                 onChange={(e) => setEmailInput(e.target.value)}
                 placeholder="nama@uinsgd.ac.id"
                 disabled={busy}
-                aria-label="Email"
                 autoComplete="email"
-                className="h-11 w-full rounded-xl border border-neutral-200 bg-neutral-50/50 pl-10 pr-3.5 text-[14px] text-neutral-900 transition-all placeholder:text-neutral-400 focus:border-[#237A74] focus:bg-white focus:outline-none focus:ring-3 focus:ring-[#237A74]/15 dark:border-white/15 dark:bg-white/5 dark:text-white"
+                className="mt-1.5 h-12 w-full rounded-xl border border-[#14201a]/15 px-4 text-[15px] font-normal outline-none transition placeholder:text-[#758a80] focus:border-[#197a6f] focus:ring-3 focus:ring-[#197a6f]/15"
               />
-            </div>
-            <div className="relative">
-              <KeyRound className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-neutral-400" />
+            </label>
+            <label className="block text-[14px] font-medium">
+              Kata sandi tim
               <input
                 type="password"
                 required
                 value={passwordInput}
                 onChange={(e) => setPasswordInput(e.target.value)}
-                placeholder="Kata sandi tim"
-                aria-label="Kata sandi tim"
                 autoComplete="current-password"
                 disabled={busy}
-                className="h-11 w-full rounded-xl border border-neutral-200 bg-neutral-50/50 pl-10 pr-3.5 text-[14px] text-neutral-900 transition-all placeholder:text-neutral-400 focus:border-[#237A74] focus:bg-white focus:outline-none focus:ring-3 focus:ring-[#237A74]/15 dark:border-white/15 dark:bg-white/5 dark:text-white"
+                className="mt-1.5 h-12 w-full rounded-xl border border-[#14201a]/15 px-4 text-[15px] font-normal outline-none transition focus:border-[#197a6f] focus:ring-3 focus:ring-[#197a6f]/15"
               />
-            </div>
-            <motion.button
+            </label>
+            <button
               type="submit"
               disabled={busy || !emailInput.trim() || !passwordInput}
-              whileHover={reduce ? undefined : { y: -1.5, scale: 1.008 }}
-              whileTap={reduce ? undefined : { scale: 0.985 }}
-              transition={{ type: "spring", stiffness: 420, damping: 28 }}
-              className="group flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-[#237A74] text-[13.5px] font-semibold text-white shadow-xs transition-colors hover:bg-[#1D6964] hover:shadow-sm disabled:opacity-50"
+              className="group flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#197a6f] text-[15px] font-semibold text-white transition-colors hover:bg-[#14635a] disabled:opacity-50"
             >
-              {busy ? <Loader2 className="size-4 animate-spin" /> : "Masuk ke Dashboard"}
-              <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
-            </motion.button>
-          </motion.form>
-        </motion.div>
+              {busy ? <Loader2 className="size-4 animate-spin" /> : "Masuk"}
+              {!busy && <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />}
+            </button>
+          </form>
 
-        {/* Back to Home Link */}
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, ease: EASE_OPUS, delay: 0.35 }}
-          className="mt-6 text-center"
-        >
           <Link
             href="/"
-            className="group inline-flex items-center gap-1.5 text-[13px] font-medium text-neutral-500 transition-colors hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white"
+            className="mt-10 inline-flex min-h-11 items-center gap-1.5 text-[14px] font-medium text-[#4a5c54] hover:text-[#14201a]"
           >
-            <ArrowLeft className="size-3.5 transition-transform duration-300 group-hover:-translate-x-1" />
-            Kembali ke beranda website
+            <ArrowLeft className="size-4" /> Kembali ke website
           </Link>
         </motion.div>
       </div>

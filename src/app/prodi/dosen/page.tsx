@@ -106,7 +106,7 @@ export default async function DosenPage({ searchParams }: Props) {
               {tendik.map((t, i) => (
                 <div
                   key={`${t.name}-${i}`}
-                  className="flex items-center gap-3.5 rounded-[18px] border border-hairline bg-canvas p-5"
+                  className="flex items-center gap-3.5 border-t border-hairline pt-5"
                 >
                   {t.photo ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -132,7 +132,7 @@ export default async function DosenPage({ searchParams }: Props) {
           )}
 
           <Reveal className="mt-10">
-            <div className="flex flex-col items-start justify-between gap-4 rounded-[20px] border border-hairline bg-mist/60 p-6 sm:flex-row sm:items-center">
+            <div className="flex flex-col items-start justify-between gap-4 border-t border-hairline pt-6 sm:flex-row sm:items-center">
               <div>
                 <p className="text-[16px] font-bold text-label">
                   Pangkalan Data Pendidikan Tinggi (PDDikti) & SINTA

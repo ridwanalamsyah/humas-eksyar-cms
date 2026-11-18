@@ -27,13 +27,13 @@ export function NewsCard({
     <Link
       href={`/prodi/berita/${item.slug}`}
       className={cn(
-        "group relative isolate flex h-full overflow-hidden rounded-[22px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-accent/35 hover:shadow-[0_20px_40px_-20px_rgba(22,58,69,0.28)]",
+        "group relative flex h-full",
         featured ? "flex-col md:flex-row" : "flex-col",
       )}
     >
       <div
         className={cn(
-          "relative isolate overflow-hidden bg-mist",
+          "relative isolate overflow-hidden rounded-[20px] bg-mist",
           featured
             ? "aspect-[16/9] md:aspect-auto md:w-[54%]"
             : "aspect-[16/9]",
@@ -61,11 +61,11 @@ export function NewsCard({
       <div
         className={cn(
           "flex min-w-0 flex-1 flex-col",
-          featured ? "p-7 md:justify-center md:p-9" : "p-6",
+          featured ? "pt-5 md:justify-center md:pl-9 md:pt-0" : "pt-4",
         )}
       >
         <div className="flex items-center gap-2">
-          <span className="rounded-md bg-accent/10 px-2.5 py-0.5 text-[14px] font-bold uppercase tracking-[0.05em] text-accent">
+          <span className="text-[14px] font-semibold text-accent">
             {rubricLabel(item.rubric)}
           </span>
           <span className="text-[14px] text-label-3">·</span>
@@ -90,7 +90,7 @@ export function NewsCard({
         )}
 
         {/* Info Penulis & Tanggal Terbit */}
-        <div className="mt-auto pt-5 border-t border-hairline/60 flex items-center justify-between gap-3">
+        <div className="mt-auto flex items-center justify-between gap-3 pt-4">
           <div className="flex items-center gap-2.5 min-w-0">
             {author?.avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element

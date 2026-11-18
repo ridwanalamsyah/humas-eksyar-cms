@@ -57,7 +57,7 @@ export default async function AlumniPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {ALUMNI_STATS.map((s, i) => (
               <Reveal key={s.label} delay={i * 0.05}>
-                <div className="flex h-full flex-col justify-between rounded-[24px] border border-hairline bg-canvas p-6 shadow-xs">
+                <div className="flex h-full flex-col justify-between border-t border-hairline pt-6">
                   <div>
                     <p className="font-display text-[24px] font-black tracking-tight text-accent">
                       {s.value}
@@ -89,7 +89,7 @@ export default async function AlumniPage() {
           <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {prospekKarir.map((p, i) => (
               <Reveal key={p.title} delay={(i % 4) * 0.05}>
-                <div className="flex h-full flex-col justify-between rounded-[24px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-md">
+                <div className="flex h-full flex-col justify-between border-t border-hairline pt-6 transition duration-300">
                   <div>
                     <span className="font-mono text-[14px] font-bold text-accent">
                       {String(i + 1).padStart(2, "0")}
@@ -177,7 +177,7 @@ export default async function AlumniPage() {
       <section className="border-t border-hairline bg-canvas px-4 py-20 sm:px-6">
         <div className="mx-auto grid max-w-[1060px] gap-8 md:grid-cols-2">
           {/* Card 1: Kabar Alumni & Donasi Buku */}
-          <div className="rounded-[24px] border border-hairline bg-mist/60 p-8">
+          <div className="border-t border-hairline pt-8">
             <h3 className="text-[18px] font-bold tracking-tight text-label">
               Bagi Kabar &amp; Lowongan Magang
             </h3>
@@ -201,7 +201,7 @@ export default async function AlumniPage() {
           </div>
 
           {/* Card 2: Bimbingan & Kuliah Tamu */}
-          <div className="rounded-[24px] border border-hairline bg-mist/60 p-8">
+          <div className="border-t border-hairline pt-8">
             <h3 className="text-[18px] font-bold tracking-tight text-label">
               Alumni Mengajar &amp; Mentoring
             </h3>

@@ -52,7 +52,7 @@ export function FastHubUin() {
               href={sys.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex flex-col justify-between rounded-xl border border-hairline bg-canvas p-4 sm:p-5 transition-colors duration-200 hover:border-accent/45 hover:bg-mist/30 dark:border-white/10 dark:hover:border-white/25"
+              className="group flex flex-col justify-between border-t border-hairline pt-4 sm:pt-5 transition-colors duration-200"
             >
               <div>
                 <div className="flex items-center justify-between gap-2">

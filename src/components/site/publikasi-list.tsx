@@ -42,7 +42,7 @@ export function PublikasiList({ items }: { items: Publikasi[] }) {
         />
       </div>
       {shown.length ? (
-        <ul className="mt-6 divide-y divide-hairline overflow-hidden rounded-[24px] border border-hairline bg-canvas">
+        <ul className="mt-6 divide-y divide-hairline border-y border-hairline">
           {shown.map((p, i) => {
             const body = (
               <>
