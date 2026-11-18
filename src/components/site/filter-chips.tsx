@@ -18,7 +18,7 @@ export function FilterChips({
     <div
       role="group"
       aria-label="Saring"
-      className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0"
+      className="flex flex-wrap gap-2"
     >
       {options.map((o) => {
         const active = o === value;

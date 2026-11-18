@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { AppShell } from "@/components/layout/app-shell";
 import { InstagramImporter } from "@/components/instagram/instagram-importer";
 import { InstagramConnect } from "@/components/instagram/instagram-connect";
+import { InstagramPilihan } from "@/components/instagram/instagram-pilihan";
 import { getCurrentMember } from "@/lib/data/provider";
 import { getInstagramSync } from "@/lib/instagram/import";
 
@@ -36,6 +37,7 @@ export default async function InstagramPage() {
           direview sebelum terbit.
         </p>
       </header>
+      <InstagramPilihan />
       {member.role === "admin" && <InstagramConnect />}
       <InstagramImporter
         isAdmin={member.role === "admin"}

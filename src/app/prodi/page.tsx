@@ -15,10 +15,12 @@ import {
 import { getSite } from "@/lib/site/get-site";
 import { getSkripsi } from "@/lib/site/skripsi";
 import { instagramFeed } from "@/lib/instagram/graph";
+import { getInstagramPilihan } from "@/lib/instagram/pilihan";
 import { kalenderMendatang, rentang } from "@/lib/site/kalender";
 import { hero, prodi } from "@/lib/site/prodi";
 import { dosenSlug, initials } from "@/lib/site/names";
 import { AnnouncementList } from "@/components/site/announcement-list";
+import { BidangKajian } from "@/components/site/bidang-kajian";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { InteractiveHero } from "@/components/site/interactive-hero";
 import { MitraMarquee } from "@/components/site/mitra-marquee";
@@ -72,15 +74,18 @@ const BIDANG_TONES = [
 ];
 
 export default async function ProdiHomePage() {
-  const [site, news, events, media, skripsi, ig, members] = await Promise.all([
+  const [site, news, events, media, skripsi, igApi, igPilihan, members] = await Promise.all([
     getSite(),
     listPublishedNews(),
     listEvents({ fromDate: new Date().toISOString() }),
     getMediaMap(),
     getSkripsi(),
     instagramFeed(6),
+    getInstagramPilihan(),
     getMemberMap(),
   ]);
+  // Unggahan asli dari Instagram API; bila belum tersambung, pilihan tim dari CMS.
+  const ig = igApi.length > 0 ? igApi : igPilihan;
   const jadwal = kalenderMendatang(site.kalender, 3);
   const { identity, kontak } = site;
 
@@ -107,20 +112,15 @@ export default async function ProdiHomePage() {
   const pimpinanFakultas = site.pimpinan.filter((p) => !isProdi(p.role)).slice(0, 4);
 
   // Hero A: satu foto (dari CMS), judul menyebut prodi + kampus + kota, tiga angka.
-  const heroTitle =
-    identity.heroTitle && identity.heroTitle !== prodi.name
-      ? identity.heroTitle
-      : `${prodi.name} ${prodi.university}`;
+  // Judul dua baris: nama prodi, lalu kampus dan kota (bisa diganti dari CMS).
+  const custom = identity.heroTitle && identity.heroTitle !== prodi.name ? identity.heroTitle : null;
+  const heroMain = custom ?? prodi.name;
+  const heroSub = custom ? "" : prodi.university;
+  const akreditasi = identity.universityAccreditation || "Unggul";
   const heroStats = [
-    {
-      value: identity.universityAccreditation || "Unggul",
-      label: "Akreditasi",
-    },
-    { value: `${identity.totalCredits} SKS`, label: "Kurikulum OBE" },
-    {
-      value: `${Math.max(skripsi.length, 515).toLocaleString("id-ID")}+`,
-      label: "Skripsi Digilib",
-    },
+    { value: akreditasi, label: "Akreditasi" },
+    { num: identity.totalCredits, suffix: " SKS", label: "Kurikulum OBE" },
+    { num: Math.max(skripsi.length, 515), suffix: "+", label: "Skripsi Digilib" },
   ];
 
   return (
@@ -154,15 +154,17 @@ export default async function ProdiHomePage() {
 
       {/* ─── 1. Hero Terpadu ─────────────────────────────────── */}
       <InteractiveHero
-        title={heroTitle}
+        title={heroMain}
+        subtitle={heroSub}
         description={identity.heroDescription || hero.description}
         image={identity.heroImage || hero.image || "/prodi/hero-mahasiswa.jpg"}
         imageAlt={hero.imageAlt}
+        accreditation={akreditasi}
         stats={heroStats}
       />
 
       {/* ─── 2. Bidang kajian: grid 2×2 ─────────────────────── */}
-      <section className="px-4 py-16 sm:px-6 sm:py-24">
+      <section className="px-4 py-12 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-[1160px]">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading align="left" title="Bidang kajian" />
@@ -173,31 +175,15 @@ export default async function ProdiHomePage() {
               Lihat kurikulum <ArrowRight className="size-4" />
             </Link>
           </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
-            {site.bidangKajian.slice(0, 4).map((b, i) => {
-              const tone = BIDANG_TONES[i % BIDANG_TONES.length];
-              return (
-                <article
-                  key={b.title}
-                  className={`flex min-h-[200px] flex-col rounded-3xl p-6 sm:p-8 ${tone.card}`}
-                >
-                  <span className={`text-[14px] font-bold tabular-nums ${tone.num}`}>0{i + 1}</span>
-                  <h3 className="mt-auto pt-6 text-[24px] font-bold leading-tight tracking-[-0.02em]">
-                    {b.title}
-                  </h3>
-                  <p className={`mt-2 line-clamp-2 text-[16px] leading-relaxed ${tone.body}`}>
-                    {b.description}
-                  </p>
-                </article>
-              );
-            })}
+          <div className="mt-8">
+            <BidangKajian items={site.bidangKajian} tones={BIDANG_TONES} />
           </div>
         </div>
       </section>
 
       {/* ─── 3. Kegiatan dan prestasi terbaru: grid, bukan carousel ─── */}
       {(kegiatan.length > 0 || site.prestasi.length > 0) && (
-        <section className="border-t border-hairline/80 bg-mist/40 px-4 py-16 sm:px-6 sm:py-24">
+        <section className="border-t border-hairline/80 bg-mist/40 px-4 py-12 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-[1160px]">
             {kegiatan.length > 0 && (
               <>
@@ -243,7 +229,7 @@ export default async function ProdiHomePage() {
       <SkripsiTrendExplorer />
 
       {/* ─── 5. Kabar: berita, pengumuman, agenda ───────────── */}
-      <section className="border-t border-hairline/80 bg-mist/30 px-4 py-16 sm:px-6 sm:py-24">
+      <section className="border-t border-hairline/80 bg-mist/30 px-4 py-12 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-[1160px]">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading align="left" title="Kabar prodi" />
@@ -327,7 +313,7 @@ export default async function ProdiHomePage() {
 
       {/* ─── 6. Pimpinan program studi ──────────────────────── */}
       {pimpinanProdi.length > 0 && (
-        <section className="border-t border-hairline/80 px-4 py-16 sm:px-6 sm:py-24">
+        <section className="border-t border-hairline/80 px-4 py-12 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-[1160px]">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <SectionHeading align="left" title="Pimpinan program studi" />
@@ -382,7 +368,7 @@ export default async function ProdiHomePage() {
 
       {/* ─── Instagram: hanya tampil bila akun resmi benar-benar tersambung ── */}
       {ig.length > 0 && (
-        <section className="border-t border-hairline/80 px-4 py-16 sm:px-6 sm:py-24">
+        <section className="border-t border-hairline/80 px-4 py-12 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-[1160px]">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <SectionHeading align="left" title={kontak.instagramHandle || "@eksyaruinsgd"} />

@@ -25,7 +25,7 @@ export async function DataStatistik() {
     .map(([t, n]) => ({ label: String(t), nilai: n }));
 
   return (
-    <div className="grid gap-16">
+    <div className="grid grid-cols-1 gap-16">
       {rows.length > 0 && (
         <div>
           <SectionHeading

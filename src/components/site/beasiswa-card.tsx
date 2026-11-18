@@ -28,7 +28,7 @@ export function BeasiswaCard({
         {item.description}
       </p>
       {reqs.length > 0 && (
-        <ul className="mt-4 grid gap-1.5">
+        <ul className="mt-4 grid grid-cols-1 gap-1.5">
           {reqs.map((r) => (
             <li key={r} className="flex gap-2 text-[14px] text-label">
               <Check

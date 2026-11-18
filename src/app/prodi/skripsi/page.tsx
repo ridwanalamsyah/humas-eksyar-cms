@@ -183,7 +183,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
               {mode === "telusuri" ? (
                 <>
                   {years.length > 1 && (
-                    <div className="-mx-4 mt-7 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:px-0">
+                    <div className="mt-7 flex flex-wrap gap-2">
                       <YearChip
                         href={href({ pembimbing: pb, q })}
                         active={!tahun}
@@ -277,7 +277,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                           Tulis judul lebih lengkap agar hasilnya lebih akurat.
                         </p>
                       )}
-                      <ul className="mt-4 grid gap-3">
+                      <ul className="mt-4 grid grid-cols-1 gap-3">
                         {results.map(({ item, score }, i) => {
                           const lv = level(score);
                           return (
@@ -343,7 +343,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                         <p className="text-[14px] font-semibold text-accent">
                           {dosen}
                         </p>
-                        <ul className="mt-2.5 grid gap-3">
+                        <ul className="mt-2.5 grid grid-cols-1 gap-3">
                           {listTopik.map((t) => (
                             <li key={t.topik}>
                               <p className="text-[16px] font-bold leading-snug text-label">
@@ -428,7 +428,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                       eyebrow="Referensi"
                       title="Panduan & rujukan ilmiah"
                     />
-                    <ul className="mt-6 grid gap-3">
+                    <ul className="mt-6 grid grid-cols-1 gap-3">
                       {panduanSkripsi.map((p) => (
                         <li key={p.url}>
                           <a
@@ -460,7 +460,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                       eyebrow="Etika Ilmiah"
                       title="Integritas akademik"
                     />
-                    <ol className="mt-6 grid gap-3.5">
+                    <ol className="mt-6 grid grid-cols-1 gap-3.5">
                       {integritas.map((t, i) => (
                         <li
                           key={i}
