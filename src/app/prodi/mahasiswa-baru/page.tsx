@@ -117,7 +117,7 @@ export default async function MahasiswaBaruPage() {
                   key={j.title}
                   className="flex gap-4 rounded-[24px] bg-canvas p-6"
                 >
-                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-[14px] font-bold text-white">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent text-[14px] font-bold text-white">
                     {i + 1}
                   </span>
                   <span>
@@ -192,7 +192,7 @@ export default async function MahasiswaBaruPage() {
             {prospekKarir.map((p) => (
               <li
                 key={p.title}
-                className="rounded-full bg-white/10 px-4 py-2 text-[15px] font-medium"
+                className="rounded-xl bg-white/10 px-4 py-2 text-[15px] font-medium"
               >
                 {p.title}
               </li>
@@ -227,7 +227,7 @@ export default async function MahasiswaBaruPage() {
                     rel="noopener noreferrer"
                     className="group flex items-center gap-4 rounded-[20px] border border-hairline bg-canvas p-5 hover:border-accent/40"
                   >
-                    <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-[14px] font-bold text-white">
+                    <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent text-[14px] font-bold text-white">
                       {i + 1}
                     </span>
                     <span className="flex-1">

@@ -27,7 +27,8 @@ export type Role =
   | "pengurus"
   | "ketua_divisi"
   | "sekjen"
-  | "admin";
+  | "admin"
+  | "pending";
 
 /** Nama peran yang ditampilkan ke pengguna. */
 export const ROLE_LABEL: Record<Role, string> = {
@@ -37,7 +38,20 @@ export const ROLE_LABEL: Record<Role, string> = {
   ketua_divisi: "Koordinator",
   sekjen: "Sekretaris",
   admin: "Admin",
+  pending: "Menunggu Konfirmasi",
 };
+
+export const GUEST_ID = "guest";
+export const PENDING_PREFIX = "pending-";
+
+export interface PendingMember {
+  email: string;
+  name?: string;
+  image?: string | null;
+  userId?: string;
+  createdAt?: string;
+  at?: string;
+}
 
 export type DivisionSlug = string;
 

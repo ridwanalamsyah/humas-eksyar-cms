@@ -46,3 +46,7 @@ metadata.json
 -e 
 bun.lock
 bun.lockb
+
+# Local deploy script
+deploy.pl
+

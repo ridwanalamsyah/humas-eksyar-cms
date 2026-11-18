@@ -1,21 +1,28 @@
 import Link from "next/link";
-import type { ContentItem, MediaAsset } from "@/lib/data/types";
+import type { ContentItem, MediaAsset, Member } from "@/lib/data/types";
 import { formatLongDate } from "@/lib/format/dates";
-import { contentExcerpt, rubricLabel } from "@/lib/site/content";
+import { contentExcerpt, estimateReadingTime, rubricLabel } from "@/lib/site/content";
 import { cn } from "@/lib/utils";
 import { ProdiLogo } from "./prodi-logo";
 
-/** Kartu berita ala Apple Newsroom. `featured` = kartu lebar dengan gambar di kiri. */
+/** Kartu berita & artikel editorial ala Apple Newsroom dengan info penulis & waktu baca */
 export function NewsCard({
   item,
   cover,
+  author,
   featured = false,
 }: {
   item: ContentItem;
   cover?: MediaAsset | null;
+  author?: Member | null;
   featured?: boolean;
 }) {
   const date = item.publishedAt ?? item.updatedAt;
+  const cleanTitle = item.title.replace(/^\[(?:Buletin\s+Artikel\s+HMJ|Buletin\s+HMJ)\]\s*/i, "");
+  const readTime = estimateReadingTime(item.body || item.caption);
+  const authorName = author?.name || "Redaksi Eksyar";
+  const authorRole = author?.position || (item.rubric === "buletin_hmj" ? "Penulis Mahasiswa" : "Humas Prodi");
+
   return (
     <Link
       href={`/prodi/berita/${item.slug}`}
@@ -28,7 +35,7 @@ export function NewsCard({
         className={cn(
           "relative isolate overflow-hidden bg-mist",
           featured
-            ? "aspect-[16/9] md:aspect-auto md:w-[58%]"
+            ? "aspect-[16/9] md:aspect-auto md:w-[54%]"
             : "aspect-[16/9]",
         )}
       >
@@ -54,30 +61,64 @@ export function NewsCard({
       <div
         className={cn(
           "flex min-w-0 flex-1 flex-col",
-          featured ? "p-7 md:justify-center md:p-10" : "p-6",
+          featured ? "p-7 md:justify-center md:p-9" : "p-6",
         )}
       >
-        <p className="text-[12px] font-semibold uppercase tracking-[0.04em] text-accent">
-          {rubricLabel(item.rubric)}
-        </p>
+        <div className="flex items-center gap-2">
+          <span className="rounded-md bg-accent/10 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.05em] text-accent">
+            {rubricLabel(item.rubric)}
+          </span>
+          <span className="text-[12px] text-label-3">·</span>
+          <span className="text-[12px] text-label-3">{readTime}</span>
+        </div>
+
         <h3
           className={cn(
-            "mt-2 break-words font-semibold tracking-[-0.015em] text-label group-hover:text-accent",
+            "mt-2.5 break-words font-semibold tracking-[-0.015em] text-label group-hover:text-accent transition-colors",
             featured
-              ? "text-[clamp(1.4rem,1.15rem+1vw,1.95rem)] font-bold leading-[1.18]"
-              : "text-[18.5px] font-bold leading-[1.28]",
+              ? "text-[clamp(1.4rem,1.15rem+1vw,1.95rem)] font-bold leading-[1.2]"
+              : "text-[18px] font-bold leading-[1.3]",
           )}
         >
-          {item.title}
+          {cleanTitle}
         </h3>
+
         {featured && (
-          <p className="mt-3 line-clamp-3 break-words text-[15.5px] leading-relaxed text-label-2">
+          <p className="mt-3 line-clamp-3 break-words text-[15px] leading-relaxed text-label-2">
             {contentExcerpt(item)}
           </p>
         )}
-        <time dateTime={date} className="mt-auto pt-4 text-[13px] text-label-3">
-          {formatLongDate(date)}
-        </time>
+
+        {/* Info Penulis & Tanggal Terbit */}
+        <div className="mt-auto pt-5 border-t border-hairline/60 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 min-w-0">
+            {author?.avatarUrl ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={author.avatarUrl}
+                alt={authorName}
+                loading="lazy"
+                className="size-7 shrink-0 rounded-lg object-cover ring-1 ring-hairline"
+              />
+            ) : (
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-accent/12 text-[11px] font-bold text-accent ring-1 ring-accent/20">
+                {author?.initials || "ES"}
+              </span>
+            )}
+            <div className="min-w-0">
+              <p className="truncate text-[12.5px] font-semibold text-label">
+                {authorName}
+              </p>
+              <p className="truncate text-[11px] text-label-3">
+                {authorRole}
+              </p>
+            </div>
+          </div>
+
+          <time dateTime={date} className="shrink-0 text-right text-[12px] text-label-3">
+            {formatLongDate(date)}
+          </time>
+        </div>
       </div>
     </Link>
   );
@@ -88,7 +129,7 @@ export function CoverFallback() {
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#0f3d33] via-[#165b4c] to-[#0c2340] p-6 text-white">
       <ProdiLogo size={52} />
       <span className="mt-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/75">
-        Kabar Ekonomi Syariah · UIN SGD
+        Ekonomi Syariah · UIN SGD
       </span>
     </div>
   );

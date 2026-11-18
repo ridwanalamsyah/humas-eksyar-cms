@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowUpRight, MapPin } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { FormRenderer } from "@/components/site/form-renderer";
 import { PageHeader } from "@/components/site/page-header";
 import { Reveal } from "@/components/site/reveal";
@@ -17,9 +17,9 @@ export const metadata: Metadata = {
 
 const tanyaForm = findActiveForm("tanya")!;
 const FEBI_MAPS_EMBED =
-  "https://maps.google.com/maps?q=-6.935585,107.717612+(Gedung+FEBI+Kampus+2+UIN+Sunan+Gunung+Djati+Bandung)&hl=id&z=17&output=embed";
+  "https://maps.google.com/maps?q=-6.9427728,107.7024383+(Gedung+FEBI+Kampus+2+UIN+Sunan+Gunung+Djati+Bandung)&hl=id&z=17&output=embed";
 const FEBI_MAPS_URL =
-  "https://www.google.com/maps/search/?api=1&query=-6.935585,107.717612";
+  "https://maps.app.goo.gl/hJU8bxaQuhncp6Dm7";
 
 export default async function KontakPage() {
   const { kontak, medsos, statusLayanan, pressKit } = await getSite();
@@ -27,14 +27,9 @@ export default async function KontakPage() {
     ? `https://www.youtube.com/channel/${medsos.youtubeChannelId}`
     : "https://www.youtube.com/channel/UC7loqPCpEN3H_IbrulKBi6w";
   const sosial = [
-    { name: "Instagram", handle: kontak.instagramHandle, href: kontak.instagram },
-    { name: "YouTube", handle: "FEBI & Eksyar UIN SGD", href: youtubeHref },
-    { name: "TikTok", handle: kontak.instagramHandle, href: kontak.tiktok },
-    { name: "X", handle: kontak.instagramHandle, href: kontak.x },
-    { name: "WhatsApp", handle: "Saluran resmi", href: medsos.whatsappChannel },
-    { name: "Linktree", handle: "Tautan resmi", href: kontak.linktree },
-    { name: "Website Prodi", handle: "es.uinsgd.ac.id", href: kontak.website },
-  ].filter((s) => s.href);
+    { name: "Instagram", handle: kontak.instagramHandle || "@eksyaruinsgd", href: kontak.instagram || "https://instagram.com/eksyaruinsgd" },
+    { name: "YouTube", handle: "Kanal YouTube Resmi", href: youtubeHref },
+  ];
 
   return (
     <>
@@ -43,12 +38,6 @@ export default async function KontakPage() {
         title="Hubungi program studi"
         description={`${prodi.fullName}, ${prodi.faculty}, ${prodi.university}.`}
       />
-      <div className="px-4 sm:px-6">
-        <StatusLayanan
-          status={statusLayanan.status}
-          pesan={statusLayanan.pesan}
-        />
-      </div>
 
       {/* Kartu kontak */}
       <section className="px-4 py-16 sm:px-6 sm:py-20">
@@ -65,18 +54,14 @@ export default async function KontakPage() {
                 <p className="mt-2 text-[15.5px] leading-relaxed text-label-2">
                   {kontak.street}
                 </p>
-                <p className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-canvas px-3 py-1 text-[12.5px] font-semibold text-accent">
-                  <MapPin className="size-3.5" />
-                  Titik Koordinat: -6.935585, 107.717612 (Gedung FEBI Kampus II)
-                </p>
               </div>
               <a
                 href={FEBI_MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center gap-1 text-[16px] font-semibold text-accent hover:underline"
+                className="mt-8 inline-flex items-center gap-1.5 text-[15.5px] font-semibold text-accent hover:underline"
               >
-                Buka titik lokasi akurat di Google Maps{" "}
+                Buka di Google Maps{" "}
                 <ArrowUpRight className="size-4" />
               </a>
             </div>
@@ -86,21 +71,32 @@ export default async function KontakPage() {
             <div className="flex h-full flex-col justify-between rounded-[28px] bg-accent p-8 text-white sm:p-10">
               <div>
                 <p className="text-[14px] font-bold text-sand">
-                  Email & Jam Layanan
+                  Kontak Admin & Layanan
                 </p>
-                <a
-                  href={`mailto:${kontak.email}`}
-                  className="mt-4 block break-all text-[clamp(1.35rem,1.1rem+0.9vw,1.85rem)] font-extrabold leading-[1.15] tracking-[-0.02em] hover:underline"
-                >
-                  {kontak.email}
-                </a>
-                <p className="mt-3 text-[16px] text-white/80">{kontak.hours}</p>
+                <p className="mt-4 block text-[clamp(1.4rem,1.15rem+1vw,1.95rem)] font-extrabold leading-[1.15] tracking-[-0.02em]">
+                  Layanan Mahasiswa &amp; Perkuliahan
+                </p>
+                <p className="mt-2 text-[15px] text-white/90">
+                  Konsultasi administrasi akademik, informasi jurusan, dan layanan mahasiswa.
+                </p>
+                <div className="mt-4 border-t border-white/20 pt-3">
+                  <p className="text-[13px] text-sand font-medium">Email Resmi</p>
+                  <a
+                    href={`mailto:${kontak.email}`}
+                    className="text-[15px] font-semibold hover:underline"
+                  >
+                    {kontak.email}
+                  </a>
+                  <p className="mt-1 text-[13.5px] text-white/80">{kontak.hours}</p>
+                </div>
               </div>
               <a
-                href={`mailto:${kontak.email}`}
-                className="mt-8 inline-flex w-fit items-center gap-1 rounded-full bg-white px-5 py-2.5 text-[14px] font-semibold text-label hover:bg-white/90"
+                href="https://wa.me/6285642686526"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-8 inline-flex w-fit items-center gap-2 rounded-xl bg-white px-6 py-3 text-[14.5px] font-semibold text-label shadow-sm transition-all hover:bg-white/90 hover:scale-[1.01]"
               >
-                Kirim email <ArrowUpRight className="size-4" />
+                Hubungi Admin Jurusan <ArrowUpRight className="size-4" />
               </a>
             </div>
           </Reveal>
@@ -158,7 +154,7 @@ export default async function KontakPage() {
                 rel="noopener noreferrer"
                 className="group flex h-full flex-col justify-between rounded-[24px] bg-canvas p-6 transition-colors hover:bg-canvas/70"
               >
-                <span className="flex size-9 items-center justify-center self-end rounded-full bg-mist text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+                <span className="flex size-9 items-center justify-center self-end rounded-xl bg-mist text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                   <ArrowUpRight className="size-4" />
                 </span>
                 <div className="mt-6">
@@ -217,14 +213,14 @@ export default async function KontakPage() {
               <a
                 href={prodi.logo}
                 download
-                className="rounded-full bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-strong"
+                className="rounded-xl bg-accent px-5 py-2.5 font-semibold text-white hover:bg-accent-strong"
               >
                 Unduh logo prodi
               </a>
               {pressKit.kontakMedia && (
                 <a
                   href={`mailto:${pressKit.kontakMedia}`}
-                  className="rounded-full bg-canvas px-5 py-2.5 font-semibold text-label hover:text-accent"
+                  className="rounded-xl bg-canvas px-5 py-2.5 font-semibold text-label hover:text-accent"
                 >
                   Kontak media: {pressKit.kontakMedia}
                 </a>

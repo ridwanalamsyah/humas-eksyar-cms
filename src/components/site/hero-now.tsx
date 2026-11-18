@@ -23,7 +23,7 @@ export function HeroNow({ items }: { items: HeroNowItem[] }) {
     >
       <div className="mb-3 flex items-center justify-between px-1">
         <p className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.08em] text-label-2">
-          <span className="size-2 rounded-full bg-accent" aria-hidden />
+          <span className="size-2 rounded-xs bg-accent" aria-hidden />
           Sekarang di Eksyar
         </p>
         <Link
@@ -55,7 +55,7 @@ export function HeroNow({ items }: { items: HeroNowItem[] }) {
                   </span>
                 )}
               </span>
-              <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-full bg-mist text-label-2 transition-colors group-hover:bg-accent group-hover:text-white">
+              <span className="mt-0.5 grid size-7 shrink-0 place-items-center rounded-lg bg-mist text-label-2 transition-colors group-hover:bg-accent group-hover:text-white">
                 <ArrowUpRight className="size-3.5" />
               </span>
             </Link>

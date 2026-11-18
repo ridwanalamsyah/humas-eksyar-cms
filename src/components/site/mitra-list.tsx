@@ -31,7 +31,7 @@ export function MitraList({ items }: { items: Mitra[] }) {
           <div className="flex h-full flex-col justify-between">
             <div>
               <div className="flex items-center justify-between gap-3">
-                <div className="flex h-14 w-28 items-center justify-center rounded-xl border border-hairline/80 bg-white px-3 py-2 shadow-[0_1px_2px_rgba(12,35,64,0.04)]">
+                <div className="flex h-14 w-28 items-center justify-center rounded-xl bg-white px-3 py-2 shadow-xs dark:bg-white/[0.95]">
                   {logoSrc ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -47,7 +47,7 @@ export function MitraList({ items }: { items: Mitra[] }) {
                   )}
                 </div>
                 {m.url && (
-                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-mist text-label-3 transition-colors group-hover:bg-accent group-hover:text-white">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-mist text-label-3 transition-colors group-hover:bg-accent group-hover:text-white">
                     <ArrowUpRight className="size-4" />
                   </span>
                 )}

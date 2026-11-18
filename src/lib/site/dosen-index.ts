@@ -1,5 +1,5 @@
 import type { AkademikSync } from "./akademik";
-import { normName } from "./names";
+import { isInactivePerson, normName } from "./names";
 import type { Person } from "./schema";
 import type { SkripsiItem } from "./skripsi";
 
@@ -27,8 +27,9 @@ export function buildDosenIndex(
 ): DosenEntry[] {
   const map = new Map<string, DosenEntry>();
   const upsert = (name: string) => {
+    if (isInactivePerson(name)) return null;
     const key = normName(name);
-    if (!key) return null;
+    if (!key || isInactivePerson(key)) return null;
     let e = map.get(key);
     if (!e) {
       e = {

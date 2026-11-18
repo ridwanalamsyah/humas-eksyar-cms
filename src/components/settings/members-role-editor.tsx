@@ -2,27 +2,30 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { toast } from "sonner";
-import { Search, Shield, Trash2, UserPlus } from "lucide-react";
+import { Check, Clock, Search, Shield, Trash2, UserCheck, UserPlus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
 import { Pill } from "@/components/common/pill";
-import type { Member, Role } from "@/lib/data/types";
+import type { Member, PendingMember, Role } from "@/lib/data/types";
 
 interface Props {
   initial: Member[];
+  initialPending?: PendingMember[];
   currentMemberId: string;
+  isAdmin?: boolean;
 }
 
 type PillTone = "neutral" | "brand" | "gold" | "danger" | "success" | "info";
 
 const ROLES: { value: Role; label: string; desc: string; tone: PillTone }[] = [
   { value: "monitoring", label: "Pembina", desc: "Hanya bisa melihat (cocok untuk dosen pembina).", tone: "neutral" },
-  { value: "anggota", label: "Anggota", desc: "Bisa menulis dan mengirim konten.", tone: "neutral" },
+  { value: "anggota", label: "Penulis Mahasiswa", desc: "Akses khusus artikel: hanya menulis dan mengunggah artikel mahasiswa.", tone: "neutral" },
   { value: "pengurus", label: "Pengurus", desc: "Menulis dan ikut menyunting konten.", tone: "info" },
   { value: "ketua_divisi", label: "Koordinator", desc: "Memeriksa konten kiriman tim.", tone: "gold" },
   { value: "sekjen", label: "Sekretaris", desc: "Mengoordinasikan antartim.", tone: "gold" },
   { value: "admin", label: "Admin", desc: "Akses penuh: isi website, anggota, dan persetujuan akhir.", tone: "brand" },
+  { value: "pending", label: "Menunggu", desc: "Menunggu konfirmasi admin.", tone: "danger" },
 ];
 
 const ROLE_INDEX: Record<Role, (typeof ROLES)[number]> = Object.fromEntries(
@@ -36,17 +39,59 @@ function angkatanDariNim(nim: string): number {
   return d.length >= 8 && yy >= 10 ? 2000 + yy : new Date().getFullYear();
 }
 
-export function MembersRoleEditor({ initial, currentMemberId }: Props) {
+export function MembersRoleEditor({
+  initial,
+  initialPending = [],
+  currentMemberId,
+  isAdmin = true,
+}: Props) {
   const [members, setMembers] = useState<Member[]>(initial);
+  const [pendingList, setPendingList] = useState<PendingMember[]>(initialPending);
+  const [pendingRoles, setPendingRoles] = useState<Record<string, Role>>({});
   const [filter, setFilter] = useState("");
   const [pending, startTransition] = useTransition();
   const [form, setForm] = useState({
     name: "",
     email: "",
     nim: "",
-    position: "Anggota Humas",
+    position: "Anggota Eksyar",
     role: "anggota" as Role,
   });
+
+  function handleApprove(p: PendingMember) {
+    const assignedRole = pendingRoles[p.email] || "anggota";
+    startTransition(async () => {
+      const res = await fetch("/api/members/pending", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: p.email, role: assignedRole, position: "Anggota Eksyar" }),
+      });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok || !j.member) {
+        toast.error(j.error ?? "Gagal mengonfirmasi pendaftar");
+        return;
+      }
+      setMembers((prev) => [...prev, j.member as Member]);
+      setPendingList((prev) => prev.filter((x) => x.email.toLowerCase() !== p.email.toLowerCase()));
+      toast.success(`${p.name || p.email} berhasil dikonfirmasi sebagai ${ROLE_INDEX[assignedRole]?.label || assignedRole}.`);
+    });
+  }
+
+  function handleReject(p: PendingMember) {
+    if (!confirm(`Tolak pendaftaran ${p.name || p.email}?`)) return;
+    startTransition(async () => {
+      const res = await fetch(`/api/members/pending?email=${encodeURIComponent(p.email)}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        const j = await res.json().catch(() => ({}));
+        toast.error(j.error ?? "Gagal menolak pendaftar");
+        return;
+      }
+      setPendingList((prev) => prev.filter((x) => x.email.toLowerCase() !== p.email.toLowerCase()));
+      toast.success(`Pendaftaran ${p.name || p.email} telah ditolak.`);
+    });
+  }
 
   const filtered = useMemo(() => {
     const q = filter.trim().toLowerCase();
@@ -134,75 +179,149 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
     "w-full rounded-xl border border-foreground/10 bg-foreground/[0.04] px-3 py-2 text-[13.5px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5";
 
   return (
-    <div className="mt-6 space-y-4">
-      <GlassCard variant="thick" className="p-5">
-        <h2 className="flex items-center gap-2 text-[15px] font-semibold">
-          <UserPlus className="size-4" strokeWidth={1.75} /> Tambah anggota
-        </h2>
-        <p className="mt-1 text-[12px] text-foreground/55">
-          Gunakan email Google yang dipakai orang itu untuk masuk. Setelah ditambahkan,
-          anggota langsung bisa masuk sesuai perannya.
-        </p>
-        <form onSubmit={addMember} className="mt-4 grid gap-3 sm:grid-cols-2">
-          <label className="text-[12px] text-foreground/65">
-            Nama lengkap
-            <input
-              required
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className={`mt-1 ${inputCls}`}
-            />
-          </label>
-          <label className="text-[12px] text-foreground/65">
-            Email untuk masuk
-            <input
-              required
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              placeholder="nama@gmail.com"
-              className={`mt-1 ${inputCls}`}
-            />
-          </label>
-          <label className="text-[12px] text-foreground/65">
-            NIM (opsional)
-            <input
-              inputMode="numeric"
-              value={form.nim}
-              onChange={(e) => setForm({ ...form, nim: e.target.value })}
-              className={`mt-1 ${inputCls}`}
-            />
-          </label>
-          <label className="text-[12px] text-foreground/65">
-            Jabatan
-            <input
-              value={form.position}
-              onChange={(e) => setForm({ ...form, position: e.target.value })}
-              className={`mt-1 ${inputCls}`}
-            />
-          </label>
-          <label className="text-[12px] text-foreground/65">
-            Peran
-            <select
-              value={form.role}
-              onChange={(e) => setForm({ ...form, role: e.target.value as Role })}
-              className={`mt-1 ${inputCls}`}
-            >
-              {ROLES.map((r) => (
-                <option key={r.value} value={r.value}>
-                  {r.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <div className="flex items-end">
-            <Button type="submit" disabled={pending} className="w-full sm:w-auto">
-              <UserPlus className="size-4" strokeWidth={1.75} />
-              {pending ? "Menyimpan…" : "Tambah anggota"}
-            </Button>
+    <div className="mt-6 space-y-5">
+      {/* Pendaftar Baru Menunggu Konfirmasi */}
+      {pendingList.length > 0 && (
+        <GlassCard variant="thick" className="border-amber-500/30 bg-amber-500/[0.04] p-5 dark:border-amber-400/25 dark:bg-amber-400/[0.03]">
+          <div className="flex items-center justify-between gap-3">
+            <h2 className="flex items-center gap-2 text-[15px] font-semibold text-amber-900 dark:text-amber-200">
+              <Clock className="size-4 text-amber-600 dark:text-amber-400" />
+              Pendaftar Baru Menunggu Konfirmasi ({pendingList.length})
+            </h2>
+            <span className="rounded-full bg-amber-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-amber-800 dark:text-amber-300">
+              Perlu Tindakan Admin
+            </span>
           </div>
-        </form>
-      </GlassCard>
+          <p className="mt-1 text-[12.5px] text-foreground/65">
+            Pengguna Google ini telah masuk pertama kali dan menunggu persetujuan Admin sebelum dapat mengakses fitur CMS.
+          </p>
+
+          <ul className="mt-4 divide-y divide-foreground/10 rounded-xl border border-foreground/10 bg-background/60">
+            {pendingList.map((p) => {
+              const selectedRole = pendingRoles[p.email] || "anggota";
+              return (
+                <li key={p.email} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="flex size-10 items-center justify-center rounded-full bg-accent-soft font-semibold text-accent text-sm">
+                      {p.name ? p.name.slice(0, 2).toUpperCase() : p.email.slice(0, 2).toUpperCase()}
+                    </span>
+                    <div>
+                      <p className="text-[14px] font-semibold text-foreground">{p.name || p.email}</p>
+                      <p className="text-[12px] text-foreground/55">{p.email} · Mendaftar {new Date(p.at || p.createdAt || Date.now()).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}</p>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <select
+                      value={selectedRole}
+                      onChange={(e) => setPendingRoles((prev) => ({ ...prev, [p.email]: e.target.value as Role }))}
+                      className="rounded-lg border border-foreground/15 bg-background px-3 py-1.5 text-[12.5px] font-medium outline-none focus:border-accent"
+                    >
+                      {ROLES.filter((r) => r.value !== "pending").map((r) => (
+                        <option key={r.value} value={r.value}>
+                          {r.label}
+                        </option>
+                      ))}
+                    </select>
+
+                    <Button
+                      size="sm"
+                      onClick={() => handleApprove(p)}
+                      disabled={pending}
+                      className="gap-1.5 bg-accent text-white hover:bg-accent-strong"
+                    >
+                      <Check className="size-3.5" />
+                      Konfirmasi
+                    </Button>
+
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={() => handleReject(p)}
+                      disabled={pending}
+                      className="text-foreground/50 hover:bg-rose-500/10 hover:text-rose-600"
+                    >
+                      <X className="size-3.5" />
+                      Tolak
+                    </Button>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </GlassCard>
+      )}
+
+      {isAdmin && (
+        <GlassCard variant="thick" className="p-5">
+          <h2 className="flex items-center gap-2 text-[15px] font-semibold">
+            <UserPlus className="size-4" strokeWidth={1.75} /> Tambah anggota
+          </h2>
+          <p className="mt-1 text-[12px] text-foreground/55">
+            Gunakan email Google yang dipakai orang itu untuk masuk. Setelah ditambahkan,
+            anggota langsung bisa masuk sesuai perannya.
+          </p>
+          <form onSubmit={addMember} className="mt-4 grid gap-3 sm:grid-cols-2">
+            <label className="text-[12px] text-foreground/65">
+              Nama lengkap
+              <input
+                required
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className={`mt-1 ${inputCls}`}
+              />
+            </label>
+            <label className="text-[12px] text-foreground/65">
+              Email untuk masuk
+              <input
+                required
+                type="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+                placeholder="nama@gmail.com"
+                className={`mt-1 ${inputCls}`}
+              />
+            </label>
+            <label className="text-[12px] text-foreground/65">
+              NIM (opsional)
+              <input
+                inputMode="numeric"
+                value={form.nim}
+                onChange={(e) => setForm({ ...form, nim: e.target.value })}
+                className={`mt-1 ${inputCls}`}
+              />
+            </label>
+            <label className="text-[12px] text-foreground/65">
+              Jabatan
+              <input
+                value={form.position}
+                onChange={(e) => setForm({ ...form, position: e.target.value })}
+                className={`mt-1 ${inputCls}`}
+              />
+            </label>
+            <label className="text-[12px] text-foreground/65">
+              Peran
+              <select
+                value={form.role}
+                onChange={(e) => setForm({ ...form, role: e.target.value as Role })}
+                className={`mt-1 ${inputCls}`}
+              >
+                {ROLES.map((r) => (
+                  <option key={r.value} value={r.value}>
+                    {r.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <div className="flex items-end">
+              <Button type="submit" disabled={pending} className="w-full sm:w-auto">
+                <UserPlus className="size-4" strokeWidth={1.75} />
+                {pending ? "Menyimpan…" : "Tambah anggota"}
+              </Button>
+            </div>
+          </form>
+        </GlassCard>
+      )}
 
       <div className="flex flex-wrap items-center gap-3">
         <label className="flex flex-1 items-center gap-2 rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">
@@ -245,32 +364,36 @@ export function MembersRoleEditor({ initial, currentMemberId }: Props) {
                 <Pill tone={ROLE_INDEX[m.role].tone}>
                   {ROLE_INDEX[m.role].label}
                 </Pill>
-                <select
-                  value={m.role}
-                  disabled={pending}
-                  onChange={(e) =>
-                    changeRole(m.id, e.target.value as Role)
-                  }
-                  className="rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-2 py-1.5 text-[12px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
-                >
-                  {ROLES.map((r) => (
-                    <option key={r.value} value={r.value}>
-                      {r.label}
-                    </option>
-                  ))}
-                </select>
-                {!isSelf && (
-                  <button
-                    type="button"
-                    disabled={pending}
-                    onClick={() => removeMember(m)}
-                    aria-label={`Hapus ${m.name}`}
-                    title="Hapus anggota"
-                    className="grid size-8 place-items-center rounded-lg text-foreground/45 transition-colors hover:bg-red-500/10 hover:text-red-600"
-                  >
-                    <Trash2 className="size-4" strokeWidth={1.75} />
-                  </button>
-                )}
+                {isAdmin ? (
+                  <>
+                    <select
+                      value={m.role}
+                      disabled={pending}
+                      onChange={(e) =>
+                        changeRole(m.id, e.target.value as Role)
+                      }
+                      className="rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-2 py-1.5 text-[12px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
+                    >
+                      {ROLES.map((r) => (
+                        <option key={r.value} value={r.value}>
+                          {r.label}
+                        </option>
+                      ))}
+                    </select>
+                    {!isSelf && (
+                      <button
+                        type="button"
+                        disabled={pending}
+                        onClick={() => removeMember(m)}
+                        aria-label={`Hapus ${m.name}`}
+                        title="Hapus anggota"
+                        className="grid size-8 place-items-center rounded-lg text-foreground/45 transition-colors hover:bg-red-500/10 hover:text-red-600"
+                      >
+                        <Trash2 className="size-4" strokeWidth={1.75} />
+                      </button>
+                    )}
+                  </>
+                ) : null}
               </li>
             );
           })}

@@ -5,18 +5,17 @@ import { usePathname } from "next/navigation";
 import {
   BarChart3,
   CalendarDays,
-  CheckSquare,
   ExternalLink,
   FileText,
   Globe,
   Home,
   Image as ImageIcon,
   Settings,
-  Users,
   type LucideIcon,
-  Inbox,
   UserCog,
+  PenLine,
 } from "lucide-react";
+import { motion } from "motion/react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { Avatar } from "@/components/common/avatar";
 import { ROLE_LABEL, type Member } from "@/lib/data/types";
@@ -25,45 +24,49 @@ import { cn } from "@/lib/utils";
 type Item = { href: string; label: string; icon: LucideIcon; external?: boolean };
 
 function groupsFor(role: Member["role"]): { title: string; items: Item[] }[] {
-  const canReview = ["admin", "sekjen", "ketua_divisi"].includes(role);
+  // Akses khusus penulis mahasiswa (HMJ & kontributor artikel)
+  if (role === "anggota") {
+    return [
+      {
+        title: "Penulis",
+        items: [
+          { href: "/content", label: "Artikel & Berita", icon: FileText },
+          { href: "/content/new", label: "Tulis Artikel Baru", icon: PenLine },
+          { href: "/media", label: "Pustaka Media", icon: ImageIcon },
+          { href: "/", label: "Lihat Website", icon: ExternalLink, external: true },
+        ],
+      },
+    ];
+  }
+
   const groups: { title: string; items: Item[] }[] = [
     {
-      title: "Kerja",
+      title: "Menu Utama",
       items: [
-        { href: "/dashboard", label: "Beranda", icon: Home },
-        { href: "/content", label: "Berita & konten", icon: FileText },
-        ...(canReview ? [{ href: "/approval", label: "Perlu disetujui", icon: CheckSquare }] : []),
-        { href: "/events", label: "Agenda", icon: CalendarDays },
-        { href: "/media", label: "Media", icon: ImageIcon },
+        { href: "/dashboard", label: "Dashboard", icon: Home },
+        { href: "/content", label: "Artikel & Berita", icon: FileText },
+        { href: "/content/new", label: "Tulis Artikel Baru", icon: PenLine },
+        { href: "/events", label: "Agenda Kegiatan", icon: CalendarDays },
+        { href: "/media", label: "Pustaka Media", icon: ImageIcon },
       ],
     },
   ];
-  if (role === "admin") {
-    groups.push({
-      title: "Website",
-      items: [
-        { href: "/settings/website", label: "Isi website", icon: Globe },
-        { href: "/settings/formulir", label: "Kotak masuk", icon: Inbox },
-        { href: "/settings/kinerja", label: "Laporan", icon: BarChart3 },
-        { href: "/settings/members", label: "Anggota", icon: UserCog },
-        { href: "/", label: "Lihat website", icon: ExternalLink, external: true },
-      ],
-    });
-  } else {
-    groups.push({
-      title: "Website",
-      items: [
-        { href: "/members", label: "Anggota", icon: Users },
-        { href: "/", label: "Lihat website", icon: ExternalLink, external: true },
-      ],
-    });
-  }
+  groups.push({
+    title: "Kelola Website & Tim",
+    items: [
+      { href: "/settings/website", label: "Konten Website", icon: Globe },
+      { href: "/settings/members", label: "Anggota & Peran", icon: UserCog },
+      { href: "/settings/kinerja", label: "Laporan Kinerja", icon: BarChart3 },
+      { href: "/", label: "Lihat Website", icon: ExternalLink, external: true },
+    ],
+  });
   return groups;
 }
 
 export function isActivePath(pathname: string, href: string) {
   if (href === "/dashboard") return pathname === "/dashboard";
   if (href === "/settings") return pathname === "/settings";
+  if (href === "/content") return pathname === "/content";
   // Tautan pintasan ke bagian editor (?bagian=…) tidak ditandai aktif.
   if (href.includes("?")) return false;
   return pathname === href || pathname.startsWith(href + "/");
@@ -75,11 +78,18 @@ export function Sidebar({ member }: { member: Member }) {
 
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-foreground/[0.07] bg-background lg:flex dark:border-white/[0.07]">
-      <Link href="/dashboard" className="flex items-center gap-2.5 px-5 pt-5 pb-4" aria-label="Beranda">
-        <EksyarLogo size={32} />
+      <Link href="/dashboard" className="group flex items-center gap-2.5 px-5 pt-5 pb-4" aria-label="Dashboard">
+        <motion.div
+          whileHover={{ scale: 1.06, rotate: -3 }}
+          transition={{ type: "spring", stiffness: 400, damping: 22 }}
+        >
+          <EksyarLogo size={32} />
+        </motion.div>
         <span className="leading-tight">
-          <span className="block text-[14px] font-semibold tracking-tight">Humas Eksyar</span>
-          <span className="block text-[11px] text-foreground/50">Ruang kerja humas</span>
+          <span className="block text-[14px] font-semibold tracking-tight transition-colors group-hover:text-brand-600 dark:group-hover:text-brand-300">
+            CMS Humas Eksyar
+          </span>
+          <span className="block text-[11px] text-foreground/50">Humas Jurusan Ekonomi Syariah</span>
         </span>
       </Link>
 
@@ -97,14 +107,27 @@ export function Sidebar({ member }: { member: Member }) {
                       target={external ? "_blank" : undefined}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-[13.5px] transition-colors",
+                        "group relative flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[13.5px] transition-colors",
                         active
-                          ? "bg-foreground/[0.06] font-medium text-foreground dark:bg-white/[0.07]"
+                          ? "font-medium text-foreground"
                           : "text-foreground/65 hover:bg-foreground/[0.04] hover:text-foreground",
                       )}
                     >
-                      <Icon className={cn("size-4 shrink-0", active ? "text-brand-600 dark:text-brand-300" : "")} strokeWidth={1.75} />
-                      {label}
+                      {active && (
+                        <motion.span
+                          layoutId="cms-sidebar-active-pill"
+                          transition={{ type: "spring", stiffness: 380, damping: 32 }}
+                          className="absolute inset-0 rounded-lg bg-foreground/[0.06] dark:bg-white/[0.08]"
+                        />
+                      )}
+                      <Icon
+                        className={cn(
+                          "relative z-10 size-4 shrink-0 transition-transform duration-200 group-hover:scale-105",
+                          active ? "text-brand-600 dark:text-brand-300" : "",
+                        )}
+                        strokeWidth={1.75}
+                      />
+                      <span className="relative z-10">{label}</span>
                     </Link>
                   </li>
                 );
@@ -119,13 +142,21 @@ export function Sidebar({ member }: { member: Member }) {
           href="/settings"
           aria-current={isActivePath(pathname, "/settings") ? "page" : undefined}
           className={cn(
-            "flex items-center gap-2.5 rounded-lg px-2 py-1.5 text-[13.5px] text-foreground/65 hover:bg-foreground/[0.04] hover:text-foreground",
-            isActivePath(pathname, "/settings") && "bg-foreground/[0.06] font-medium text-foreground",
+            "group relative flex items-center gap-2.5 rounded-lg px-2.5 py-1.5 text-[13.5px] text-foreground/65 transition-colors hover:bg-foreground/[0.04] hover:text-foreground",
+            isActivePath(pathname, "/settings") && "font-medium text-foreground",
           )}
         >
-          <Settings className="size-4" strokeWidth={1.75} /> Pengaturan
+          {isActivePath(pathname, "/settings") && (
+            <motion.span
+              layoutId="cms-sidebar-active-pill"
+              transition={{ type: "spring", stiffness: 380, damping: 32 }}
+              className="absolute inset-0 rounded-lg bg-foreground/[0.06] dark:bg-white/[0.08]"
+            />
+          )}
+          <Settings className="relative z-10 size-4 transition-transform duration-300 group-hover:rotate-45" strokeWidth={1.75} />
+          <span className="relative z-10">Pengaturan</span>
         </Link>
-        <Link href="/profile" className="mt-1 flex items-center gap-2.5 rounded-lg px-2 py-1.5 hover:bg-foreground/[0.04]">
+        <Link href="/profile" className="mt-1 flex items-center gap-2.5 rounded-lg px-2 py-1.5 transition-colors hover:bg-foreground/[0.04]">
           <Avatar member={member} size={26} ring={false} />
           <span className="min-w-0 leading-tight">
             <span className="block truncate text-[13px] font-medium">{member.name}</span>

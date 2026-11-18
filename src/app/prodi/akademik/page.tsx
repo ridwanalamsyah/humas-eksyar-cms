@@ -45,6 +45,26 @@ export default async function AkademikPage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "EducationalOccupationalProgram",
+            name: `Program Studi Sarjana (S1) ${prodi.fullName}`,
+            description: identity.heroDescription,
+            provider: {
+              "@type": "CollegeOrUniversity",
+              name: prodi.university,
+              url: "https://uinsgd.ac.id",
+            },
+            educationalCredentialAwarded: identity.degree,
+            timeToComplete: "P4Y",
+            numberOfCredits: identity.totalCredits,
+            occupationalCategory: "Ekonom Syariah, Praktisi Perbankan Syariah, Analis Pasar Modal Syariah, Auditor Halal",
+          }).replace(/</g, "\\u003c"),
+        }}
+      />
       <PageHeader
         crumb="Akademik"
         title="Akademik"
@@ -317,7 +337,7 @@ export default async function AkademikPage() {
                   {c.d}
                 </span>
               </span>
-              <span className="grid size-11 shrink-0 place-items-center rounded-full bg-white/15 text-[20px] transition-transform duration-300 group-hover:translate-x-1">
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/15 text-[20px] transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
             </Link>

@@ -129,7 +129,7 @@ export default async function KalenderPage() {
                           <span
                             aria-hidden
                             className={cn(
-                              "absolute -left-[33px] top-1.5 size-4 rounded-full border-[3px] border-canvas",
+                              "absolute -left-[33px] top-1.5 size-4 rounded-xs border-[3px] border-canvas",
                               st === "berlangsung"
                                 ? "bg-accent ring-4 ring-accent/20"
                                 : st === "selesai"
@@ -146,7 +146,7 @@ export default async function KalenderPage() {
                             <div className="flex flex-wrap items-center gap-2">
                               <span
                                 className={cn(
-                                  "rounded-full px-2.5 py-0.5 text-[12px] font-bold",
+                                  "rounded-md px-2.5 py-0.5 text-[12px] font-bold",
                                   STATUS[st].cls,
                                 )}
                               >

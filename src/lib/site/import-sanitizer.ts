@@ -234,7 +234,7 @@ export const ES_UINSGD_AUDIT_REPORT = {
     "Wayback Machine es.uinsgd.ac.id (Snapshot Bersih 2018–2022: Sejarah, Desa Ekowisata Halal Indragiri, Green Halal Village, FGD, Studium Generale)",
     "Repositori Ilmiah Digilib UIN SGD (515 Skripsi S1 Ekonomi Syariah + Abstrak, Kata Kunci, & Dosen Pembimbing)",
     "LMS E-Knows UIN SGD Kategori 40 (34 Mata Kuliah Ekonomi Syariah & 25 Dosen Pengampu)",
-    "Portal Resmi FEBI & UIN Sunan Gunung Djati Bandung (22 Dosen Homebase, Jurnal SINTA LIKUID/JIEB/Al-Muamalat, & Prestasi Mahasiswa)",
+    "Portal Resmi FEBI & UIN Sunan Gunung Djati Bandung (22 Dosen Homebase, Publikasi Ilmiah & Riset, & Prestasi Mahasiswa)",
   ],
   compromiseVectorsBlocked: [
     "https://es.uinsgd.ac.id/sitemap.xml — Injeksi <div style=\"display:none\"> berisi 28+ backlink judol/gacor/toto/slot lintas domain",

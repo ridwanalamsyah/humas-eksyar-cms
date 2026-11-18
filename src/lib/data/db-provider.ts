@@ -31,7 +31,7 @@ import type {
   WeeklyDigest,
   XPLog,
 } from "./types";
-import { defaultBrandingConfig } from "./types";
+import { defaultBrandingConfig, GUEST_ID, PENDING_PREFIX, type PendingMember } from "./types";
 
 function client() {
   if (!db) throw new Error("DATABASE_URL not configured");
@@ -146,22 +146,27 @@ export async function getMember(id: ID): Promise<Member | null> {
  * mereka dipindahkan ke Ridwan. Ditandai di siteSettings agar tidak
  * mengulang dan tidak menimpa perubahan role setelahnya.
  */
-const ROSTER_FLAG = "roster_2026_10";
+const ROSTER_FLAG = "roster_2026_11_v2";
 let rosterReady: Promise<void> | null = null;
 function ensureRosterUpdate(): Promise<void> {
   rosterReady ??= (async () => {
     if (await getSiteSetting(ROSTER_FLAG)) return;
     const admin = "mbr-ridwan";
-    const [row] = await client()
-      .select({ id: schema.members.id })
-      .from(schema.members)
-      .where(eq(schema.members.id, admin))
-      .limit(1);
-    if (!row) return; // roster belum di-seed; tidak ada yang perlu diubah
     await client()
       .update(schema.members)
-      .set({ role: "admin", position: "Admin Humas" })
+      .set({
+        email: "1239220061@student.uinsgd.ac.id",
+        role: "admin",
+        position: "Admin Humas",
+      })
       .where(eq(schema.members.id, admin));
+    await client()
+      .update(schema.members)
+      .set({
+        email: "1239220048@student.uinsgd.ac.id",
+        role: "anggota",
+      })
+      .where(eq(schema.members.id, "mbr-alya"));
     await client()
       .update(schema.divisions)
       .set({ leadId: admin })
@@ -182,12 +187,108 @@ export async function getCurrentMember(): Promise<Member> {
   try {
     const { auth } = await import("@/auth");
     const session = await auth();
-    if (!session?.user) return fixtures.getCurrentMember();
+    if (!session?.user) return guestMember();
 
     const userId = (session.user as { id?: string }).id ?? undefined;
     const email = session.user.email ?? undefined;
     const name = session.user.name ?? undefined;
     const image = session.user.image ?? undefined;
+    const normEmail = (email || "").toLowerCase().trim();
+
+    // 0. Ridwan & Alya instant identification (Super Admin & Penulis)
+    if (
+      normEmail === "1239220061@student.uinsgd.ac.id" ||
+      normEmail.includes("1239220061") ||
+      normEmail === "humaseksyaruinbdg@gmail.com" ||
+      normEmail === "ridwanalamsyah122@gmail.com"
+    ) {
+      try {
+        const rows = await client()
+          .select()
+          .from(schema.members)
+          .where(eq(schema.members.id, "mbr-ridwan"))
+          .limit(1);
+        if (rows[0]) {
+          if (userId && rows[0].userId !== userId) {
+            await client()
+              .update(schema.members)
+              .set({ userId, email: "1239220061@student.uinsgd.ac.id", role: "admin" })
+              .where(eq(schema.members.id, "mbr-ridwan"));
+          }
+          return row<Member>({
+            ...rows[0],
+            userId: userId ?? rows[0].userId,
+            email: "1239220061@student.uinsgd.ac.id",
+            role: "admin",
+          });
+        }
+      } catch (e) {
+        console.error("Gagal query mbr-ridwan", e);
+      }
+      return {
+        id: "mbr-ridwan",
+        name: name ?? "Ridwan Alamsyah",
+        initials: "RA",
+        email: "1239220061@student.uinsgd.ac.id",
+        role: "admin",
+        divisionId: "div-redaksi",
+        position: "Admin Humas",
+        bio: "Administrator Utama Humas Jurusan Ekonomi Syariah.",
+        avatarUrl: image ?? "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80",
+        joinedAt: "2024-01-01",
+        xp: 1500,
+        streak: 14,
+        badges: ["bdg-perintis", "bdg-top-writer", "bdg-fast-responder"],
+        angkatan: 2022,
+        nimSuffix: "0061",
+        avatarEmoji: "⚡",
+        accentHue: 175,
+      } as unknown as Member;
+    }
+
+    if (normEmail === "1239220048@student.uinsgd.ac.id" || normEmail.includes("1239220048")) {
+      try {
+        const rows = await client()
+          .select()
+          .from(schema.members)
+          .where(eq(schema.members.id, "mbr-alya"))
+          .limit(1);
+        if (rows[0]) {
+          if (userId && rows[0].userId !== userId) {
+            await client()
+              .update(schema.members)
+              .set({ userId, email: "1239220048@student.uinsgd.ac.id" })
+              .where(eq(schema.members.id, "mbr-alya"));
+          }
+          return row<Member>({
+            ...rows[0],
+            userId: userId ?? rows[0].userId,
+            email: "1239220048@student.uinsgd.ac.id",
+          });
+        }
+      } catch (e) {
+        console.error("Gagal query mbr-alya", e);
+      }
+      return {
+        id: "mbr-alya",
+        name: name ?? "Alya Nurul Fatimah",
+        initials: "AN",
+        email: "1239220048@student.uinsgd.ac.id",
+        role: "anggota",
+        divisionId: "div-redaksi",
+        position: "Penulis & Kontributor",
+        bio: "Mahasiswa Ekonomi Syariah & Penulis Berita.",
+        avatarUrl: image ?? "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&auto=format&fit=crop&q=80",
+        joinedAt: "2024-01-01",
+        xp: 850,
+        streak: 7,
+        badges: ["bdg-top-writer"],
+        angkatan: 2022,
+        nimSuffix: "0048",
+        avatarEmoji: "✍️",
+        accentHue: 200,
+      } as unknown as Member;
+    }
 
     // 1. userId match — fast path, no writes needed.
     if (userId) {
@@ -199,13 +300,12 @@ export async function getCurrentMember(): Promise<Member> {
       if (rows[0]) return row<Member>(rows[0]);
     }
 
-    // 2. email match — link userId on the way out so step 1 catches it next
-    //    request.
-    if (email) {
+    // 2. email match — link userId on the way out so step 1 catches it next request.
+    if (normEmail) {
       const rows = await client()
         .select()
         .from(schema.members)
-        .where(eq(schema.members.email, email))
+        .where(ilike(schema.members.email, normEmail))
         .limit(1);
       if (rows[0]) {
         if (userId && !rows[0].userId) {
@@ -219,47 +319,27 @@ export async function getCurrentMember(): Promise<Member> {
       }
     }
 
-    // 3. Name match — reconcile institutional roster with personal Gmail.
-    //    Only takes effect when the roster row is unclaimed (`userId` null);
-    //    that guard means we never overwrite a link that already points at
-    //    a different user.
-    if (name) {
-      const rows = await client()
-        .select()
-        .from(schema.members)
-        .where(
-          and(
-            drizzleSql`LOWER(${schema.members.name}) = LOWER(${name})`,
-            drizzleSql`${schema.members.userId} IS NULL`,
-          ),
-        )
-        .limit(1);
-      if (rows[0]) {
-        const updates: { userId?: string; email?: string } = {};
-        if (userId) updates.userId = userId;
-        if (email && email !== rows[0].email) updates.email = email;
-        if (Object.keys(updates).length > 0) {
-          await client()
-            .update(schema.members)
-            .set(updates)
-            .where(eq(schema.members.id, rows[0].id));
-        }
-        return row<Member>({ ...rows[0], ...updates });
-      }
+    // Belum terdaftar — catat sebagai pendaftar baru yang menunggu
+    // persetujuan admin. Tidak ada pencocokan otomatis berdasarkan nama
+    // agar akun orang lain tidak bisa "mengklaim" data anggota.
+    if (email) {
+      await addPendingMember({
+        userId,
+        email,
+        name: name ?? email,
+        image: image ?? undefined,
+        at: new Date().toISOString(),
+      }).catch(() => undefined);
     }
-
-    // Nothing matched — return a non-persistent ghost so the UI still
-    // renders the signed-in identity. The ghost intentionally lacks a
-    // division so admins notice and assign one through the members UI.
     return {
-      id: userId ?? `ghost-${email ?? "anon"}`,
+      id: `${PENDING_PREFIX}${email ?? "anon"}`,
       userId: userId ?? null,
-      name: name ?? email ?? "Belum bergabung",
+      name: name ?? email ?? "Pengguna baru",
       initials: initialsFromName(name ?? email ?? "?"),
       email: email ?? "",
-      role: "anggota",
+      role: "monitoring",
       divisionId: "",
-      position: "Belum bergabung",
+      position: "Menunggu persetujuan admin",
       joinedAt: new Date().toISOString().slice(0, 10),
       bio: null,
       xp: 0,
@@ -267,13 +347,99 @@ export async function getCurrentMember(): Promise<Member> {
       badges: [],
       angkatan: new Date().getFullYear(),
       nimSuffix: "",
-      avatarEmoji: image ? "" : "👤",
+      avatarEmoji: "",
+      avatarUrl: image ?? null,
       accentHue: 180,
     } as unknown as Member;
   } catch {
-    // Auth not configured or called outside a request scope.
-    return fixtures.getCurrentMember();
+    // Saat build (tanpa request) pakai data contoh; saat runtime jangan
+    // pernah memberi akses admin bila terjadi galat.
+    if (process.env.NEXT_PHASE === "phase-production-build") {
+      return fixtures.getCurrentMember();
+    }
+    return guestMember();
   }
+}
+
+/** Pengguna yang belum masuk (hanya untuk halaman publik). */
+function guestMember(): Member {
+  return {
+    id: GUEST_ID,
+    userId: null,
+    name: "Tamu",
+    initials: "T",
+    email: "",
+    role: "monitoring",
+    divisionId: "",
+    position: "Belum masuk",
+    joinedAt: new Date().toISOString().slice(0, 10),
+    bio: null,
+    xp: 0,
+    streak: 0,
+    badges: [],
+    angkatan: new Date().getFullYear(),
+    nimSuffix: "",
+    avatarEmoji: "",
+    accentHue: 180,
+  } as unknown as Member;
+}
+
+/* ------------------------------------------------------------------ */
+/* Pendaftar baru (menunggu persetujuan admin)                         */
+/* ------------------------------------------------------------------ */
+
+const PENDING_KEY = "pending_members";
+
+export async function listPendingMembers(): Promise<PendingMember[]> {
+  try {
+    const v = await getSiteSetting(PENDING_KEY);
+    return Array.isArray(v) ? (v as PendingMember[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export async function addPendingMember(p: PendingMember): Promise<void> {
+  const list = await listPendingMembers();
+  const email = p.email.toLowerCase();
+  if (list.some((x) => x.email.toLowerCase() === email)) return;
+  await setSiteSetting(PENDING_KEY, [...list, { ...p, email }]);
+}
+
+export async function removePendingMember(email: string): Promise<void> {
+  const list = await listPendingMembers();
+  await setSiteSetting(
+    PENDING_KEY,
+    list.filter((x) => x.email.toLowerCase() !== email.toLowerCase()),
+  );
+}
+
+export async function confirmPendingMember(
+  email: string,
+  role: Member["role"] = "anggota",
+  position?: string,
+): Promise<Member | null> {
+  const pending = await listPendingMembers();
+  const target = pending.find((p) => p.email.toLowerCase() === email.toLowerCase());
+  if (!target) return null;
+  const newMember = await createMember({
+    name: target.name || email.split("@")[0],
+    email: target.email,
+    role: role || "anggota",
+    divisionId: "div-humas-eksyar",
+    position: position || "Anggota Eksyar",
+    angkatan: new Date().getFullYear(),
+    nimSuffix: "",
+    avatarEmoji: "",
+  });
+  if (target.userId) {
+    await updateMember(newMember.id, {
+      userId: target.userId,
+      avatarUrl: target.image ?? null,
+    });
+  }
+  await removePendingMember(email);
+  return newMember;
 }
 
 function initialsFromName(name: string): string {

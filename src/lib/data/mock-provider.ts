@@ -38,6 +38,7 @@ import type {
   CaptionTemplate,
   CaptionVersion,
   CaptionVersionSource,
+  PendingMember,
   ID,
 } from "./types";
 
@@ -512,6 +513,22 @@ export async function deleteMember(id: ID, reassignTo?: ID): Promise<boolean> {
 
 export async function findMemberByEmail(email: string): Promise<Member | null> {
   return membersStore.find((m) => m.email.toLowerCase() === email.toLowerCase()) ?? null;
+}
+
+export async function listPendingMembers(): Promise<PendingMember[]> {
+  return [];
+}
+
+export async function addPendingMember(_p: PendingMember): Promise<void> {}
+
+export async function removePendingMember(_email: string): Promise<void> {}
+
+export async function confirmPendingMember(
+  _email: string,
+  _role: Member["role"] = "anggota",
+  _position?: string,
+): Promise<Member | null> {
+  return null;
 }
 
 /* ------------------------------------------------------------------ */

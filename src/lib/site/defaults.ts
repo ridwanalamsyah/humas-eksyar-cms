@@ -152,6 +152,36 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       date: "2026-10-27",
     },
     {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/09/IMG-20260925-WA0004.jpg",
+      caption: "PkM Literasi Digitalisasi Keuangan Syariah dan Pengelolaan Aset Masjid di Masjid Besar Limbangan Garut bersama Bank Indonesia & Bank Muamalat.",
+      album: "Pengabdian",
+      date: "2026-09-24",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
+      caption: "Apresiasi kelulusan munaqasah jalur publikasi jurnal ilmiah SINTA 2 (Share UIN Ar-Raniry) oleh Hakiki Ramadhan.",
+      album: "Akademik",
+      date: "2026-06-12",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
+      caption: "Apresiasi kelulusan munaqasah jalur publikasi jurnal ilmiah SINTA 4 (JEMSI) tentang Sertifikasi Halal SEHATI oleh Sabila Syifa Noorazlina.",
+      album: "Akademik",
+      date: "2026-06-12",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG_20260611_152453.jpg",
+      caption: "Dokumentasi Sidang Munaqasyah Jalur Publikasi Jurnal Ilmiah bersama Sekretaris Prodi Ekonomi Syariah Anisa Ilmia, M.E.",
+      album: "Akademik",
+      date: "2026-06-12",
+    },
+    {
+      image: "https://uinsgd.ac.id/wp-content/uploads/2025/04/AL-ESUINSGD.jpg",
+      caption: "Asesmen Lapangan Akreditasi Program Studi S1 Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.",
+      album: "Penjaminan Mutu",
+      date: "2025-04-23",
+    },
+    {
       image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
       caption: "Focus Group Discussion (FGD) Peninjauan Visi Misi & Kurikulum OBE bersama OJK, Asosiasi Prodi, Praktisi, dan Alumni.",
       album: "Penjaminan Mutu",
@@ -219,19 +249,28 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   publikasi: [
     {
       title:
-        "Pengaruh Pengetahuan dan Religiusitas terhadap Niat Usaha Mikro dan Kecil Penerima Program Sertifikasi Halal Gratis (SEHATI) 2025 di Jawa Barat",
-      authors: "Dr. Evi Sopiah, M.Ag., dkk.",
-      year: "2025",
-      venue: "JEMSI (Jurnal Ekonomi, Manajemen, dan Akuntansi) Vol. 12 No. 2",
+        "Dinamika Harga Komoditas dan Volatilitas Pasar Saham Syariah di Indonesia",
+      authors: "Hakiki Ramadhan, Dr. H. Muhammad Hasanuddin, M.Ag., Anisa Ilmia, M.E.",
+      year: "2026",
+      venue: "Share: Jurnal Ekonomi dan Bisnis Islam (SINTA 2) Vol. 15 No. 1",
       type: "Artikel jurnal",
-      url: "https://journal.uinsgd.ac.id/",
+      url: "https://doi.org/10.22373/share.0079",
+    },
+    {
+      title:
+        "Pengaruh Pengetahuan dan Religiusitas terhadap Niat Usaha Mikro dan Kecil Penerima Program Sertifikasi Halal Gratis (SEHATI) 2025 di Jawa Barat",
+      authors: "Sabila Syifa Noorazlina, Dr. H. Abdullah Safe'i, M.Ag., Dr. Evi Sopiah, M.Ag.",
+      year: "2026",
+      venue: "JEMSI (Jurnal Ekonomi, Manajemen, dan Akuntansi — SINTA 4) Vol. 12 No. 2",
+      type: "Artikel jurnal",
+      url: "https://doi.org/10.35870/jemsi.v12i2.6238",
     },
     {
       title:
         "Desa Ekowisata Halal Berbasis Kearifan Lokal dan Nilai Religiusitas: Studi Pemberdayaan Masyarakat Desa Indragiri Kecamatan Rancabali",
       authors: "Dr. H. Muhammad Hasanuddin, M.Ag., Dr. Sofian Al Hakim, M.Ag., Prof. Dr. H. Atang Abd. Hakim, M.A.",
       year: "2020",
-      venue: "LIKUID: Jurnal Ekonomi Industri Halal · Arsip Riset Prodi Ekonomi Syariah",
+      venue: "Riset Ekonomi Syariah & Industri Halal · Arsip Riset Prodi Ekonomi Syariah",
       type: "Penelitian & Pengabdian",
       url: "https://journal.uinsgd.ac.id/index.php/likuid",
     },
@@ -239,8 +278,8 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       title:
         "Akuntabilitas dan Kepatuhan Syariah dalam Pelaporan Keuangan Lembaga Pengelola Zakat dan Wakaf di Jawa Barat",
       authors: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
-      year: "2025",
-      venue: "Jurnal Internasional Terindeks Scopus Q2",
+      year: "2024",
+      venue: "Jurnal Ilmiah Akuntansi & Keuangan Syariah",
       type: "Artikel jurnal",
       url: "https://sinta.kemdikbud.go.id/",
     },
@@ -274,7 +313,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   ],
   jurnal: [
     {
-      name: "LIKUID: Jurnal Ekonomi Industri Halal",
+      name: "Riset Ekonomi Syariah & Industri Halal",
       description:
         "Jurnal ilmiah resmi Program Studi Ekonomi Syariah UIN SGD yang memfokuskan kajian pada industri halal, pariwisata halal, rantai pasok halal, dan bisnis Islam.",
       url: "https://journal.uinsgd.ac.id/index.php/likuid",
@@ -312,24 +351,31 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   ],
   testimoni: [
     {
-      name: "Dr. Evi Sopiah, M.Ag., CIIQA, CIELP",
-      role: "Ketua Program Studi Ekonomi Syariah FEBI UIN SGD",
+      name: "Hakiki Ramadhan, S.E.",
+      role: "Lulusan Jalur Publikasi SINTA 2 · Kontributor Islamic Finance News (IFN)",
       quote:
-        "Kurikulum Ekonomi Syariah dirancang integratif antara fondasi wahyu memandu ilmu dan kompetensi analitis ekonomi modern agar lulusan siap memimpin di industri keuangan syariah maupun ekosistem halal global.",
+        "Ekosistem akademik di Ekonomi Syariah UIN SGD membuka akses langsung ke pasar modal syariah BEI, bimbingan riset jurnal SINTA 2, hingga publikasi analisis keuangan Islam tingkat internasional.",
+      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
+    },
+    {
+      name: "Sabila Syifa Noorazlina, S.E.",
+      role: "Lulusan Jalur Publikasi Jurnal SINTA 4 (JEMSI) · Riset Industri Halal SEHATI",
+      quote:
+        "Pendampingan dosen pembimbing di Prodi Ekonomi Syariah mendorong kami menghasilkan riset empiris bersertifikasi nasional yang langsung relevan dengan ekosistem UMKM halal di Jawa Barat.",
+      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
+    },
+    {
+      name: "Evita Farcha Kamila, S.E.",
+      role: "Alumni Ekonomi Syariah · Delegasi Student Mobility UiTM Malaysia",
+      quote:
+        "Kurikulum Ekonomi Syariah yang integratif membekali kami dengan fondasi fiqh muamalah dan analisis ekonomi modern sehingga percaya diri berkompetisi di forum akademik internasional.",
       photo: null,
     },
     {
-      name: "Dr. H. Muhammad Hasanuddin, M.Ag.",
-      role: "Dosen & Inisiator Desa Ekowisata Halal Indragiri",
+      name: "Muhamad Halabi Muzaini",
+      role: "Ketua DEMA FEBI · Mahasiswa Ekonomi Syariah",
       quote:
-        "Tujuan filosofis ekonomi syariah adalah mengantarkan umat manusia menuju kesejahteraan material dan spiritual, jasmani dan rohani, duniawi dan ukhrawi melalui riset yang membumi.",
-      photo: null,
-    },
-    {
-      name: "Hakiki Ramadhan",
-      role: "Mahasiswa Ekonomi Syariah · Kontributor Islamic Finance News (IFN)",
-      quote:
-        "Ekosistem akademik di Eksyar UIN SGD membuka akses langsung ke pasar modal syariah BEI, perbankan syariah, hingga publikasi riset internasional.",
+        "Pembinaan kepemimpinan, kajian ilmiah di FoSEI dan GIS BEI, serta kolaborasi industri di FEBI UIN SGD membentuk karakter mahasiswa yang siap terjun ke dunia profesional.",
       photo: null,
     },
   ],
@@ -432,7 +478,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       url: "https://ejournal.uinsgd.ac.id/",
     },
     {
-      name: "Jurnal LIKUID Prodi Eksyar",
+      name: "Riset & Skripsi Eksyar",
       description: "Jurnal Ekonomi Industri Halal terbitan resmi Prodi Ekonomi Syariah.",
       url: "https://journal.uinsgd.ac.id/index.php/likuid",
     },
@@ -561,7 +607,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       url: "https://ejournal.uinsgd.ac.id/",
     },
     {
-      name: "Jurnal LIKUID: Ekonomi Industri Halal",
+      name: "Repositori Riset Ekonomi Syariah",
       description: "Referensi riset industri halal, pariwisata syariah, dan bisnis Islam.",
       url: "https://journal.uinsgd.ac.id/index.php/likuid",
     },
@@ -724,22 +770,44 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   ],
   apresiasi: [
     {
-      bulan: "Maret 2026",
-      nama: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
-      peran: "Dosen Tetap Ekonomi Syariah",
+      bulan: "Juni 2026",
+      nama: "Hakiki Ramadhan",
+      peran: "Mahasiswa & Alumni Ekonomi Syariah",
       alasan:
-        "Artikel ilmiah terbit di jurnal internasional bereputasi terindeks Scopus Q2 pada bidang Akuntabilitas & Kepatuhan Syariah Lembaga ZISWAF.",
-      photo:
-        "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
+        "Lulus munaqasah melalui publikasi jurnal SINTA 2 (Share UIN Ar-Raniry) serta penulis analisis keuangan Islam di Islamic Finance News (IFN).",
+      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
     },
     {
-      bulan: "April 2026",
-      nama: "Hakiki Ramadhan",
-      peran: "Mahasiswa S1 Ekonomi Syariah",
+      bulan: "Juni 2026",
+      nama: "Sabila Syifa Noorazlina",
+      peran: "Mahasiswa & Alumni Ekonomi Syariah",
       alasan:
-        "Artikel analisis ekonomi dan keuangan syariah dimuat di publikasi internasional Islamic Finance News (IFN).",
-      photo:
-        "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00131-scaled.jpg",
+        "Lulus munaqasah melalui publikasi jurnal terakreditasi SINTA 4 (JEMSI) tentang Program Sertifikasi Halal Gratis (SEHATI) di Jawa Barat.",
+      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
+    },
+    {
+      bulan: "Oktober 2023",
+      nama: "Annisa Nur Salam, S.E., M.E.",
+      peran: "Dosen Program Studi Ekonomi Syariah",
+      alasan:
+        "Meraih penghargaan 1st Best Paper pada The 2nd International Conference on Islamic Economics and Business (ICIEB).",
+      photo: "https://uinsgd.ac.id/wp-content/uploads/2023/10/IMG-20231010-WA0009.jpg",
+    },
+    {
+      bulan: "Juni 2023",
+      nama: "Fajar Andrian Sutisna",
+      peran: "Mahasiswa Ekonomi Syariah",
+      alasan:
+        "Meraih Juara 1 Kompetisi Business Plan pada Olimpiade Agama, Sains, dan Riset (OASE) PTKI II Tingkat Nasional.",
+      photo: "https://uinsgd.ac.id/wp-content/uploads/2023/06/kontingen-uin-sgd-juara1b.jpg",
+    },
+    {
+      bulan: "Oktober 2023",
+      nama: "Arjuna Yuhansa R.P. & M. Athar Maulana",
+      peran: "Mahasiswa Ekonomi Syariah · GIS BEI FEBI",
+      alasan:
+        "Meraih penghargaan Best Equity Research pada UNRAM National Trading Competition.",
+      photo: "https://uinsgd.ac.id/wp-content/uploads/2023/10/IMG_20231024_114554.jpg",
     },
     {
       bulan: "Desember 2019",
@@ -747,8 +815,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       peran: "Inisiator Desa Ekowisata Halal Indragiri",
       alasan:
         "Meraih Penghargaan Bupati Bandung atas sinergi konservasi lingkungan dan pengembangan Desa Ekowisata Halal di Kecamatan Rancabali.",
-      photo:
-        "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
+      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0022.jpg",
     },
   ],
   statusLayanan: {
@@ -861,14 +928,22 @@ export const defaultWebsiteConfig: WebsiteConfig = {
   ],
   karya: [
     {
-      judul: "Opini & Analisis Pasar Keuangan Syariah di Islamic Finance News (IFN)",
-      jenis: "Artikel Media Internasional",
-      pembuat: "Hakiki Ramadhan (Mahasiswa Ekonomi Syariah)",
+      judul: "Dinamika Harga Komoditas dan Volatilitas Pasar Saham Syariah di Indonesia (Jurnal SINTA 2 & IFN)",
+      jenis: "Publikasi Jurnal SINTA 2 & Media Internasional",
+      pembuat: "Hakiki Ramadhan",
       deskripsi:
-        "Analisis perkembangan instrumen keuangan Islam dan dinamika pasar modal syariah Indonesia.",
-      url: "https://www.islamicfinancenews.com/",
-      image:
-        "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00131-scaled.jpg",
+        "Artikel ilmiah di jurnal Share UIN Ar-Raniry (SINTA 2) serta analisis pasar modal syariah di Islamic Finance News (IFN).",
+      url: "https://doi.org/10.22373/share.0079",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
+    },
+    {
+      judul: "Pengaruh Pengetahuan dan Religiusitas terhadap Niat UMK Penerima Sertifikasi Halal Gratis (SEHATI)",
+      jenis: "Publikasi Jurnal Terakreditasi SINTA 4",
+      pembuat: "Sabila Syifa Noorazlina",
+      deskripsi:
+        "Riset empiris sertifikasi halal UMKM Jawa Barat yang diterbitkan di JEMSI (Jurnal Ekonomi, Manajemen, dan Akuntansi) Vol. 12 No. 2.",
+      url: "https://doi.org/10.35870/jemsi.v12i2.6238",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
     },
     {
       judul: "Model Pemberdayaan Desa Ekowisata Halal Indragiri Kecamatan Rancabali",
@@ -877,8 +952,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       deskripsi:
         "Kajian terpadu pengembangan destinasi wisata ramah muslim dan konservasi lingkungan Green Halal Village.",
       url: "https://journal.uinsgd.ac.id/index.php/likuid",
-      image:
-        "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
+      image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0022.jpg",
     },
   ],
   panduanMaba: [
@@ -1005,7 +1079,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       url: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
     },
     {
-      title: "Template Artikel Jurnal LIKUID (Ekonomi Industri Halal)",
+      title: "Pedoman Sistematika Penulisan Skripsi & Artikel Riset Eksyar",
       category: "Publikasi Ilmiah",
       description: "Panduan penulisan dan template publikasi jurnal resmi Prodi Ekonomi Syariah.",
       url: "https://journal.uinsgd.ac.id/index.php/likuid",

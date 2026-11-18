@@ -42,11 +42,11 @@ export const events: Event[] = [
     contentIds: [],
   },
   {
-    id: "evt-klinik-metodologi-likuid",
-    title: "Klinik Metodologi Riset & Penulisan Artikel Jurnal LIKUID (Ekonometrika & ANP/DEA)",
-    slug: "klinik-metodologi-riset-penulisan-jurnal-likuid",
+    id: "evt-klinik-metodologi-riset",
+    title: "Klinik Metodologi Riset & Pengolahan Data Skripsi Mahasiswa (Ekonometrika & SmartPLS)",
+    slug: "klinik-metodologi-riset-pengolahan-data-skripsi",
     description:
-      "Pendampingan intensif pengolahan data skripsi (SmartPLS, EViews, STATA, dan Analytic Network Process) serta klinik publikasi ilmiah menuju jurnal terakreditasi SINTA.",
+      "Pendampingan intensif pengolahan data skripsi (SmartPLS, EViews, STATA, dan Analytic Network Process) bagi mahasiswa tingkat akhir Jurusan Ekonomi Syariah.",
     divisionId: "div-humas-eksyar",
     location: "Lab Komputer & Mini Bank Syariah FEBI Lt. 3",
     isOnline: false,

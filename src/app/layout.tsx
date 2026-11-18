@@ -40,31 +40,42 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Humas Eksyar — Website & CMS Ekonomi Syariah UIN SGD",
-    template: "%s · Humas Eksyar",
+    default: "Eksyar — Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
+    template: "%s · Eksyar UIN SGD",
   },
   description:
-    "Portal resmi dan CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, direktori dosen, 515+ skripsi Digilib, berita, agenda, dan sanitasi arsip bebas malware.",
-  applicationName: "Humas Eksyar",
-  authors: [{ name: "Eksyar UIN SGD" }],
+    "Portal resmi & CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, kurikulum, direktori dosen, skripsi Digilib, artikel mahasiswa, dan kegiatan akademik.",
+  applicationName: "Eksyar",
+  authors: [{ name: "Program Studi Ekonomi Syariah UIN SGD" }],
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/prodi/icon-eksyar.png", sizes: "128x128", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
   openGraph: {
-    title: "Humas Eksyar — Website & CMS Ekonomi Syariah UIN SGD",
+    title: "Eksyar — Program Studi Ekonomi Syariah UIN SGD",
     description:
-      "Portal resmi dan CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, direktori dosen, 515+ skripsi Digilib, berita, agenda, dan sanitasi arsip bebas malware.",
+      "Portal resmi & CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, kurikulum, direktori dosen, skripsi Digilib, artikel mahasiswa, dan kegiatan akademik.",
     type: "website",
+    images: [{ url: "/prodi/logo-eksyar.png", alt: "Logo Program Studi Ekonomi Syariah" }],
   },
   keywords: [
     "Eksyar",
     "Ekonomi Syariah",
     "UIN SGD",
-    "Humas",
-    "CMS",
-    "AI Caption",
+    "UIN Sunan Gunung Djati Bandung",
+    "FEBI UIN SGD",
+    "Skripsi Eksyar",
+    "Kurikulum Ekonomi Syariah",
   ],
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Humas Eksyar",
+    title: "Eksyar UIN SGD",
   },
   formatDetection: { telephone: false },
 };
@@ -85,7 +96,7 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${interTight.variable} ${fraunces.variable} ${geistSans.variable} ${geistMono.variable} relative min-h-dvh font-sans antialiased`}
+        className={`${inter.variable} ${interTight.variable} ${fraunces.variable} ${geistSans.variable} ${geistMono.variable} relative min-h-dvh bg-background text-foreground transition-colors duration-150 font-sans antialiased`}
       >
         <SessionProvider>
         <ThemeProvider>

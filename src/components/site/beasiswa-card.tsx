@@ -48,7 +48,7 @@ export function BeasiswaCard({
           className="mt-auto flex items-center justify-between pt-6 text-[14px] font-semibold text-accent"
         >
           Info & pendaftaran
-          <span className="grid size-8 place-items-center rounded-full bg-mist transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+          <span className="grid size-8 place-items-center rounded-xl bg-mist transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
             <ArrowUpRight className="size-4" />
           </span>
         </a>

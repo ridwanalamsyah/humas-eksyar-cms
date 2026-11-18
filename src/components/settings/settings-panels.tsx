@@ -49,6 +49,19 @@ export function SettingsPanels({ member }: Props) {
   const [haptics, setHaptics] = useState(true);
   const [lang, setLang] = useState<"id" | "en">("id");
 
+  const emailLower = (member.email || "").toLowerCase();
+  const isSuperAdminEmail =
+    emailLower.includes("1239220061") ||
+    emailLower === "1239220061@student.uinsgd.ac.id" ||
+    emailLower === "humaseksyaruinbdg@gmail.com" ||
+    emailLower === "ridwanalamsyah122@gmail.com";
+  const canManage =
+    member.role === "admin" ||
+    member.role === "sekjen" ||
+    member.role === "ketua_divisi" ||
+    member.role === "pengurus" ||
+    isSuperAdminEmail;
+
   return (
     <div className="mt-4 space-y-6">
       <GlassCard variant="thick" className="p-5">
@@ -70,11 +83,11 @@ export function SettingsPanels({ member }: Props) {
         </div>
       </GlassCard>
 
-      {member.role === "admin" && (
+      {canManage && (
         <Panel
           icon={<ShieldCheck className="size-4" strokeWidth={1.75} />}
-          title="Admin"
-          hint="Pengaturan website, tim, dan konten."
+          title="Kelola Website & Tim"
+          hint="Pengaturan konten website, anggota, dan fitur."
         >
           <div className="flex w-full flex-col gap-2">
             <AdminLink

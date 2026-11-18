@@ -1,5 +1,6 @@
 import { z } from "@/lib/zod";
 import { getSiteSetting } from "@/lib/data/provider";
+import { isInactivePerson } from "./names";
 
 /** Hasil sinkron mata kuliah & dosen pengampu dari e-Knows. */
 export const AKADEMIK_KEY = "akademik_sync";
@@ -44,7 +45,7 @@ export const defaultAkademikSync: AkademikSync = {
     // Semester 2
     { nama: "Fiqh Muamalah", dosen: ["Prof. Dr. H. Dudang Gojali, M.Ag.", "Dr. H. Muhammad Hasanuddin, M.Ag."], kelas: 4, kategori: ["Semester 2", "MKU"] },
     { nama: "Sejarah Pemikiran Ekonomi Islam", dosen: ["Prof. Dr. H. Atang Abd. Hakim, M.A.", "Dr. Dedi Suyandi, M.Ag."], kelas: 4, kategori: ["Semester 2", "MKU"] },
-    { nama: "Pengantar Akuntansi", dosen: ["Dr. H. Endang Jumali, Lc., M.Si., M.Ak.", "Agus Joharudin, M.E."], kelas: 4, kategori: ["Semester 2", "MKP"] },
+    { nama: "Pengantar Akuntansi", dosen: ["Agus Joharudin, M.E.", "Zia Sidqurrahman, M.E."], kelas: 4, kategori: ["Semester 2", "MKP"] },
     { nama: "Statistika Ekonomi I", dosen: ["Nabiela Rizki Alifa, M.E.", "Suteja Wira Dana Kusuma, M.E."], kelas: 4, kategori: ["Semester 2", "MKP"] },
     { nama: "Pengantar Manajemen & Bisnis", dosen: ["Dr. H. Kadar Nurjaman, S.E., M.M.", "Herry Sutanto, M.M."], kelas: 4, kategori: ["Semester 2", "MKP"] },
     { nama: "Bahasa Inggris Ekonomi", dosen: ["Nabiela Rizki Alifa, M.E.", "Fithri Dzikrayah, M.E."], kelas: 4, kategori: ["Semester 2", "MKL"] },
@@ -53,7 +54,7 @@ export const defaultAkademikSync: AkademikSync = {
     { nama: "Ushul Fiqh Ekonomi & Maqashid Syariah", dosen: ["Prof. Dr. H. Atang Abd. Hakim, M.A.", "Dr. H. Abdullah Safe'i, M.Ag."], kelas: 4, kategori: ["Semester 3", "MKU"] },
     { nama: "Bank & Lembaga Keuangan Syariah", dosen: ["Reza Fauzi Nazar, M.E.", "Dr. Neneng Hartati, M.Ag."], kelas: 4, kategori: ["Semester 3", "MKU"] },
     { nama: "Manajemen Keuangan Syariah", dosen: ["Reza Fauzi Nazar, M.E.", "Zia Sidqurrahman, M.E."], kelas: 4, kategori: ["Semester 3", "MKU"] },
-    { nama: "Akuntansi Syariah", dosen: ["Dr. H. Endang Jumali, Lc., M.Si., M.Ak.", "Agus Joharudin, M.E."], kelas: 4, kategori: ["Semester 3", "MKP"] },
+    { nama: "Akuntansi Syariah", dosen: ["Agus Joharudin, M.E.", "Zia Sidqurrahman, M.E."], kelas: 4, kategori: ["Semester 3", "MKP"] },
     { nama: "Statistika Ekonomi Lanjutan", dosen: ["Nabiela Rizki Alifa, M.E.", "Suteja Wira Dana Kusuma, M.E."], kelas: 4, kategori: ["Semester 3", "MKP"] },
     // Semester 4
     { nama: "Ekonomi Makro Islam", dosen: ["Suteja Wira Dana Kusuma, M.E.", "Annisa Nur Salam, M.E."], kelas: 4, kategori: ["Semester 4", "MKU"] },
@@ -69,13 +70,13 @@ export const defaultAkademikSync: AkademikSync = {
     { nama: "Industri Halal & Ekowisata Syariah", dosen: ["Dr. Evi Sopiah, M.Ag., CIIQA, CIELP", "Dr. H. Muhammad Hasanuddin, M.Ag.", "Dr. Sofian Al Hakim, M.Ag."], kelas: 4, kategori: ["Semester 5", "MKU"] },
     { nama: "Asuransi Syariah (Takaful)", dosen: ["Ramadhani Irma Tripalupi, M.E.", "Zia Sidqurrahman, M.E."], kelas: 3, kategori: ["Semester 5", "MKU"] },
     { nama: "Metodologi Penelitian Ekonomi Syariah", dosen: ["Dr. Evi Sopiah, M.Ag., CIIQA, CIELP", "Dr. H. Muhammad Hasanuddin, M.Ag."], kelas: 4, kategori: ["Semester 5", "MKU"] },
-    { nama: "Analisis Laporan Keuangan Syariah", dosen: ["Dr. H. Endang Jumali, Lc., M.Si., M.Ak.", "Zia Sidqurrahman, M.E."], kelas: 3, kategori: ["Semester 5", "MKP"] },
-    { nama: "Akuntansi Perbankan Syariah", dosen: ["Dr. H. Endang Jumali, Lc., M.Si., M.Ak."], kelas: 3, kategori: ["Semester 5", "MKP"] },
+    { nama: "Analisis Laporan Keuangan Syariah", dosen: ["Zia Sidqurrahman, M.E.", "Agus Joharudin, M.E."], kelas: 3, kategori: ["Semester 5", "MKP"] },
+    { nama: "Akuntansi Perbankan Syariah", dosen: ["Agus Joharudin, M.E.", "Dr. Neneng Hartati, M.Ag."], kelas: 3, kategori: ["Semester 5", "MKP"] },
     // Semester 6
     { nama: "Kebijakan Fiskal & Moneter Islam", dosen: ["Annisa Nur Salam, M.E.", "Suteja Wira Dana Kusuma, M.E."], kelas: 4, kategori: ["Semester 6", "MKU"] },
     { nama: "Fintech Syariah & Ekonomi Digital", dosen: ["Widiawati, M.E.", "Reza Fauzi Nazar, M.E."], kelas: 4, kategori: ["Semester 6", "MKP"] },
     { nama: "Kewirausahaan Syariah & Inkubasi Bisnis Halal", dosen: ["Yuda Septia Fitri, M.E.", "Depid Ismail, M.E.Sy."], kelas: 4, kategori: ["Semester 6", "MKP"] },
-    { nama: "Audit Syariah & Tata Kelola LKS", dosen: ["Dr. H. Endang Jumali, Lc., M.Si., M.Ak."], kelas: 3, kategori: ["Semester 6", "MKP"] },
+    { nama: "Audit Syariah & Tata Kelola LKS", dosen: ["Agus Joharudin, M.E.", "Dr. Muhammad Zaky, M.Si."], kelas: 3, kategori: ["Semester 6", "MKP"] },
     { nama: "Ekonomi Internasional Islam", dosen: ["Annisa Nur Salam, M.E.", "Fithri Dzikrayah, M.E."], kelas: 3, kategori: ["Semester 6", "MKP"] },
     { nama: "Ekonomi Kreatif & Digital Muslim", dosen: ["Yuda Septia Fitri, M.E.", "Widiawati, M.E."], kelas: 3, kategori: ["Semester 6", "MKP"] },
     { nama: "Ekonomi Sumber Daya Alam & Lingkungan Islam", dosen: ["Prof. Dr. Iwan Setiawan, S.Ag., M.Pd., M.E.Sy.", "Dr. Sofian Al Hakim, M.Ag."], kelas: 3, kategori: ["Semester 6", "MKP"] },
@@ -97,7 +98,6 @@ export const defaultAkademikSync: AkademikSync = {
     { nama: "Prof. Dr. H. Atang Abd. Hakim, M.A.", mataKuliah: ["Ushul Fiqh Ekonomi & Maqashid Syariah", "Sejarah Pemikiran Ekonomi Islam"] },
     { nama: "Prof. Dr. H. Ahmad Hasan Ridwan, M.Ag.", mataKuliah: ["Filsafat Ekonomi Syariah", "Manajemen ZISWAF", "Kapita Selekta Ekonomi & Keuangan Syariah"] },
     { nama: "Dr. H. Muhammad Hasanuddin, M.Ag.", mataKuliah: ["Fiqh Muamalah", "Industri Halal & Ekowisata Syariah", "Metodologi Penelitian Ekonomi Syariah"] },
-    { nama: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.", mataKuliah: ["Pengantar Akuntansi", "Akuntansi Syariah", "Akuntansi Perbankan Syariah", "Analisis Laporan Keuangan Syariah", "Audit Syariah & Tata Kelola LKS"] },
     { nama: "Dr. H. Abdullah Safe'i, M.Ag.", mataKuliah: ["Ulumul Qur'an & Hadis Ekonomi", "Ushul Fiqh Ekonomi & Maqashid Syariah", "Filsafat Ekonomi Syariah", "Etika Bisnis Syariah", "Bahasa Arab Ekonomi I"] },
     { nama: "Suteja Wira Dana Kusuma, M.E.", mataKuliah: ["Pengantar Ilmu Ekonomi (Mikro & Makro)", "Ekonomi Makro Islam", "Ekonomi Moneter Islam", "Pasar Modal Syariah", "Statistika Ekonomi I", "Ekonometrika", "Kebijakan Fiskal & Moneter Islam"] },
     { nama: "Reza Fauzi Nazar, M.E.", mataKuliah: ["Bank & Lembaga Keuangan Syariah", "Manajemen Keuangan Syariah", "Fintech Syariah & Ekonomi Digital"] },
@@ -114,7 +114,7 @@ export const defaultAkademikSync: AkademikSync = {
     { nama: "Prof. Dr. Iwan Setiawan, S.Ag., M.Pd., M.E.Sy.", mataKuliah: ["Ekonomi Pembangunan Islam", "Ekonomi Sumber Daya Alam & Lingkungan Islam"] },
     { nama: "Dr. Neneng Hartati, M.Ag.", mataKuliah: ["Bank & Lembaga Keuangan Syariah", "Manajemen Perbankan Syariah"] },
     { nama: "Dr. Ahmad Mudzakir, M.Ag.", mataKuliah: ["Ekonomi Politik Islam", "Bahasa Arab Ekonomi I"] },
-    { nama: "Agus Joharudin, M.E.", mataKuliah: ["Pengantar Akuntansi", "Akuntansi Syariah"] },
+    { nama: "Agus Joharudin, M.E.", mataKuliah: ["Pengantar Akuntansi", "Akuntansi Syariah", "Akuntansi Perbankan Syariah", "Analisis Laporan Keuangan Syariah", "Audit Syariah & Tata Kelola LKS"] },
     { nama: "Fithri Dzikrayah, M.E.", mataKuliah: ["Ekonomi Internasional Islam", "Ekonomi Sumber Daya Insani", "Bahasa Inggris Ekonomi"] },
   ],
 };
@@ -133,7 +133,10 @@ export async function getAkademik(): Promise<AkademikSync | null> {
     for (const m of parsed.data.mataKuliah) {
       const k = m.nama.toLowerCase().trim();
       if (!seenMk.has(k)) {
-        mergedMk.push(m);
+        mergedMk.push({
+          ...m,
+          dosen: m.dosen.filter((d) => !isInactivePerson(d)),
+        });
         seenMk.add(k);
       }
     }
@@ -144,6 +147,7 @@ export async function getAkademik(): Promise<AkademikSync | null> {
       seenDosen.add(d.nama.toLowerCase().trim());
     }
     for (const d of parsed.data.dosen) {
+      if (isInactivePerson(d.nama)) continue;
       const k = d.nama.toLowerCase().trim();
       if (!seenDosen.has(k)) {
         mergedDosen.push(d);

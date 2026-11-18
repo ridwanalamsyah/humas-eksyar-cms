@@ -59,6 +59,10 @@ export const createMember = impl.createMember;
 export const updateMember = impl.updateMember;
 export const deleteMember = impl.deleteMember;
 export const findMemberByEmail = impl.findMemberByEmail;
+export const listPendingMembers = impl.listPendingMembers;
+export const addPendingMember = impl.addPendingMember;
+export const removePendingMember = impl.removePendingMember;
+export const confirmPendingMember = impl.confirmPendingMember;
 
 export const listHolidays = impl.listHolidays;
 

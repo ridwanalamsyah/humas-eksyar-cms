@@ -20,7 +20,7 @@ export function ShareBar({ title }: { title: string }) {
   }
 
   const btn =
-    "grid size-9 place-items-center rounded-full bg-mist text-label-2 transition-colors hover:bg-[#e8e8ed] hover:text-label";
+    "grid size-9 place-items-center rounded-xl bg-mist text-label-2 transition-colors hover:bg-[#e8e8ed] hover:text-label";
 
   return (
     <div className="flex items-center gap-2">

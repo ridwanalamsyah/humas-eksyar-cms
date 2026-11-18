@@ -72,24 +72,58 @@
   --radius: 1rem;
   --radius-lg: 1.25rem;
   --radius-xl: 1.75rem;
+
+  /* Semantic tokens — Light */
+  --color-canvas: #ffffff;
+  --color-mist: #f4f6f5;
+  --color-sky: #e2f1ee;
+  --color-label: #14201a;
+  --color-label-2: #4a5c54;
+  --color-label-3: #758a80;
+  --color-hairline: rgba(20, 32, 26, 0.09);
+  --color-accent: #197a6f;
+  --color-accent-strong: #14635a;
+  --color-accent-soft: #e6f4f2;
+  --color-teal-sky: #42918b;
+  --color-amber: #eeb25f;
+  --color-amber-deep: #d98f3a;
+  --color-sand: #f6e3bd;
+  --color-navy: #152e2b;
 }
 
 .dark {
-  --background: var(--ink-deep);
-  --foreground: var(--cream-50);
-  --muted: rgba(253, 251, 245, 0.56);
-  --subtle: rgba(253, 251, 245, 0.08);
-  --border: rgba(253, 251, 245, 0.10);
-  --ring: rgba(69, 177, 136, 0.55);
+  --background: #0b171c;
+  --foreground: #f2f5f3;
+  --muted: #829aa1;
+  --subtle: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.10);
+  --ring: rgba(94, 174, 158, 0.55);
 
-  --glass-regular-bg: #111a16;
-  --glass-thick-bg: #111a16;
-  --glass-thin-bg: rgba(255, 255, 255, 0.03);
-  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-regular-bg: #121f25;
+  --glass-thick-bg: #16262e;
+  --glass-thin-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.10);
   --glass-inner-top: transparent;
   --glass-inner-bottom: transparent;
   --glass-shadow-ambient: 0 0 0 0 transparent;
   --glass-shadow-base: 0 0 0 0 transparent;
+
+  /* Semantic tokens — Dark */
+  --color-canvas: #121f25;
+  --color-mist: #17272f;
+  --color-sky: #1d313a;
+  --color-label: #f2f5f3;
+  --color-label-2: #a9bec4;
+  --color-label-3: #829aa1;
+  --color-hairline: rgba(255, 255, 255, 0.10);
+  --color-accent: #5eae9e;
+  --color-accent-strong: #7bc7b8;
+  --color-accent-soft: rgba(94, 174, 158, 0.15);
+  --color-teal-sky: #5eae9e;
+  --color-amber: #eeb25f;
+  --color-amber-deep: #d98f3a;
+  --color-sand: #e9cf98;
+  --color-navy: #0b2433;
 }
 
 /* ============================================================
@@ -103,6 +137,22 @@
   --color-subtle: var(--subtle);
   --color-border: var(--border);
   --color-ring: var(--ring);
+
+  --color-canvas: var(--color-canvas);
+  --color-mist: var(--color-mist);
+  --color-sky: var(--color-sky);
+  --color-label: var(--color-label);
+  --color-label-2: var(--color-label-2);
+  --color-label-3: var(--color-label-3);
+  --color-hairline: var(--color-hairline);
+  --color-accent: var(--color-accent);
+  --color-accent-strong: var(--color-accent-strong);
+  --color-accent-soft: var(--color-accent-soft);
+  --color-teal-sky: var(--color-teal-sky);
+  --color-amber: var(--color-amber);
+  --color-amber-deep: var(--color-amber-deep);
+  --color-sand: var(--color-sand);
+  --color-navy: var(--color-navy);
 
   --color-brand-50: var(--brand-50);
   --color-brand-100: var(--brand-100);
@@ -360,27 +410,26 @@ body {
 
 
 /* ============================================================
-   WEBSITE PUBLIK PRODI — token warna (bukan inline agar bisa
-   ditimpa untuk mode gelap, kontras tinggi, dsb.)
+   WEBSITE PUBLIK PRODI — override warna feed Instagram
    ============================================================ */
-@theme {
+.prodi-site {
   /* Website publik prodi (/prodi) — palet feed IG @eksyaruinsgd:
-     langit teal → krem → emas, teks biru-teal tua. Tidak ikut dark mode CMS. */
-  --color-canvas: #ffffff;
-  --color-mist: #eef7f8;
-  --color-sky: #daeff5;
-  --color-label: #163a45;
-  --color-label-2: #4f6b73;
-  --color-label-3: #7d9299;
-  --color-hairline: #d3e4e7;
+     langit teal → krem → emas, teks biru-teal tua. */
+  --color-canvas: #faf9f5;
+  --color-mist: #f4f8f7;
+  --color-sky: #e2f1ee;
+  --color-label: #111827;
+  --color-label-2: #4b5563;
+  --color-label-3: #6b7280;
+  --color-hairline: #e5e7eb;
   --color-accent: #237a74;
-  --color-accent-strong: #42918b;
-  --color-accent-soft: #daeff5;
-  --color-teal-sky: #6ab5c7;
+  --color-accent-strong: #1d6964;
+  --color-accent-soft: #e6f4f2;
+  --color-teal-sky: #42918b;
   --color-amber: #eeb25f;
   --color-amber-deep: #d98f3a;
   --color-sand: #f6e3bd;
-  --color-navy: #1d3d55;
+  --color-navy: #152e2b;
 }
 
 /* Mode gelap website prodi: otomatis mengikuti pengaturan sistem perangkat pengunjung */
@@ -395,42 +444,111 @@ body {
     --color-label-2: #a9bec4;
     --color-label-3: #829aa1;
     --color-hairline: #26404a;
-    --color-accent: #2f8f87;
-    --color-accent-strong: #3aa59c;
-    --color-accent-soft: #173a3c;
+    --color-accent: #5eae9e;
+    --color-accent-strong: #7bc7b8;
+    --color-accent-soft: #122826;
     --color-sand: #e9cf98;
     --color-navy: #0b2433;
   }
 }
 
-/* Cetak: tanpa navigasi, warna hemat tinta, tautan tetap terbaca */
+/* Cetak: dokumen resmi bersih, tanpa ruang kosong, semua halaman mengalir utuh */
 @media print {
+  @page {
+    margin: 12mm 10mm;
+    size: auto;
+  }
+
+  /* Sembunyikan elemen navigasi, tombol, footer, dan dekorasi */
   [data-print-hide],
-  header.sticky,
-  footer {
-    display: none !important;
-  }
-  [data-site-theme] {
-    --color-canvas: #ffffff;
-    --color-mist: #ffffff;
-    --color-label: #000000;
-    --color-label-2: #222222;
-    --color-hairline: #bbbbbb;
-  }
+  header,
+  nav,
+  footer,
   aside,
+  .bg-mesh,
+  .bg-noise,
+  button,
   .lg\:pl-60 > header {
     display: none !important;
   }
+
+  /* Pastikan seluruh elemen animasi (Reveal/motion/framer) 100% tampak, tidak transparan/kosong */
+  *,
+  *::before,
+  *::after {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* Hilangkan overflow clip/hidden agar cetak tidak terpotong menjadi halaman kosong */
+  html,
+  body,
+  main,
+  #konten,
+  [data-site-theme] {
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    background: #ffffff !important;
+    color: #111111 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  [data-site-theme] {
+    --color-canvas: #ffffff;
+    --color-mist: #ffffff;
+    --color-label: #111111;
+    --color-label-2: #333333;
+    --color-label-3: #555555;
+    --color-hairline: #e2e8f0;
+    --color-accent: #0f766e;
+    --color-accent-soft: #f0fdfa;
+  }
+
+  /* Pastikan teks pada kartu berwarna putih tetap terbaca hitam jika background dicabut browser */
+  .text-white,
+  .text-sand {
+    color: #111111 !important;
+  }
+
+  /* Kartu-kartu ringkas bergaris rapi agar tidak terpotong di tengah halaman */
+  section {
+    padding-top: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+    page-break-inside: auto;
+  }
+
+  article,
+  figure,
+  tr,
+  li,
+  dl > div,
+  .rounded-\[20px\],
+  .rounded-\[22px\],
+  .rounded-\[24px\],
+  .rounded-\[28px\],
+  .rounded-2xl {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  h1, h2, h3, h4, .text-\[40px\] {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
   .lg\:pl-60 {
     padding-left: 0 !important;
-  }
-  main a[href^="http"]::after {
-    content: " (" attr(href) ")";
-    font-size: 0.8em;
-    color: #555;
-  }
-  section {
-    padding-top: 1rem !important;
-    padding-bottom: 1rem !important;
   }
 }

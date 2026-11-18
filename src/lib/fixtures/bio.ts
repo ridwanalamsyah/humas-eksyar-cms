@@ -129,7 +129,7 @@ export const defaultBioConfig: BioConfig = {
     },
     {
       id: "likuid",
-      label: "Jurnal LIKUID (Ekonomi Industri Halal)",
+      label: "Direktori Skripsi & Riset Eksyar",
       href: "https://journal.uinsgd.ac.id/index.php/likuid",
       icon: "📖",
       hint: "Jurnal ilmiah resmi Prodi Ekonomi Syariah",

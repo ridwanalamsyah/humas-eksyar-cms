@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Children, useCallback, useEffect, useRef, useState } from "react";
 import { cn } from "@/lib/utils";
 
-/** Carousel geser horizontal ala Apple: snap, tombol panah, bisa di-swipe. */
+/** Carousel geser horizontal presisi: kartu pertama sejajar lurus dengan judul tanpa offset miring. */
 export function Carousel({
   children,
   label,
@@ -21,7 +21,7 @@ export function Carousel({
     const el = ref.current;
     if (!el) return;
     setEdge({
-      start: el.scrollLeft < 8,
+      start: el.scrollLeft <= 4,
       end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 8,
     });
   }, []);
@@ -35,24 +35,25 @@ export function Carousel({
   const go = (dir: 1 | -1) => {
     const el = ref.current;
     if (!el) return;
-    el.scrollBy({ left: dir * el.clientWidth * 0.8, behavior: "smooth" });
+    el.scrollBy({ left: dir * (el.clientWidth * 0.75), behavior: "smooth" });
   };
 
   return (
-    <div role="region" aria-roledescription="carousel" aria-label={label}>
+    <div role="region" aria-roledescription="carousel" aria-label={label} className="relative w-full">
+      {/* Container scroll lurus sejajar kiri dengan padding 0 agar kartu pertama presisi di bawah judul */}
       <div
         ref={ref}
         onScroll={update}
-        className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-6 pt-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory gap-5 overflow-x-auto scroll-smooth pb-4 pt-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         style={{
-          paddingInline: "max(1rem, calc((100vw - 1024px) / 2))",
-          scrollPaddingInline: "max(1rem, calc((100vw - 1024px) / 2))",
+          paddingInline: 0,
+          scrollPaddingInline: 0,
         }}
       >
         {Children.map(children, (child) => (
           <div
             className={cn(
-              "w-[82vw] max-w-[380px] shrink-0 snap-start",
+              "w-[85vw] max-w-[340px] sm:max-w-[360px] shrink-0 snap-start",
               itemClassName,
             )}
           >
@@ -60,7 +61,9 @@ export function Carousel({
           </div>
         ))}
       </div>
-      <div className="mx-auto mt-2 flex max-w-[1024px] justify-end gap-3 px-4 sm:px-0">
+
+      {/* Tombol navigasi panah kiri/kanan di kanan bawah */}
+      <div className="mt-3 flex items-center justify-end gap-2">
         {([-1, 1] as const).map((dir) => {
           const disabled = dir === -1 ? edge.start : edge.end;
           const Icon = dir === -1 ? ChevronLeft : ChevronRight;
@@ -71,9 +74,9 @@ export function Carousel({
               onClick={() => go(dir)}
               disabled={disabled}
               aria-label={dir === -1 ? "Sebelumnya" : "Berikutnya"}
-              className="grid size-11 place-items-center rounded-full border border-hairline bg-mist text-label transition-colors hover:border-accent/35 hover:bg-hairline disabled:opacity-35"
+              className="grid size-10 place-items-center rounded-xl border border-hairline bg-canvas text-label transition-colors hover:border-accent hover:text-accent disabled:opacity-25 disabled:pointer-events-none shadow-2xs"
             >
-              <Icon className="size-5" />
+              <Icon className="size-4.5" />
             </button>
           );
         })}

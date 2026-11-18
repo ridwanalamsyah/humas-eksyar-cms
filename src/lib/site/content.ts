@@ -1,5 +1,5 @@
-import { listContents, listMedia } from "@/lib/data/provider";
-import type { ContentItem, MediaAsset } from "@/lib/data/types";
+import { listContents, listMedia, listMembers } from "@/lib/data/provider";
+import type { ContentItem, MediaAsset, Member } from "@/lib/data/types";
 
 /**
  * Konten CMS yang tampil di website publik: hanya yang berstatus `published`,
@@ -43,6 +43,20 @@ export function coverFor(
 ): MediaAsset | null {
   const id = item.mediaIds[0];
   return id ? (media.get(id) ?? null) : null;
+}
+
+/** Map id → member untuk data penulis konten */
+export async function getMemberMap(): Promise<Map<string, Member>> {
+  const members = await listMembers();
+  return new Map(members.map((m) => [m.id, m]));
+}
+
+/** Perkiraan waktu baca */
+export function estimateReadingTime(text?: string | null): string {
+  if (!text) return "3 menit baca";
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
+  const minutes = Math.max(1, Math.ceil(words / 180));
+  return `${minutes} menit baca`;
 }
 
 /** Teks polos dari body markdown / caption, untuk ringkasan & meta description. */

@@ -51,10 +51,10 @@ export default async function DosenPage({ searchParams }: Props) {
       <section className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-[1060px]">
           {/* Tab Switcher agar halaman ringkas & tidak terlalu panjang */}
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-hairline pb-4">
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-hairline pb-3">
             <nav
               aria-label="Kategori SDM"
-              className="inline-flex flex-wrap gap-1.5 rounded-full bg-mist p-1"
+              className="inline-flex flex-wrap gap-2"
             >
               {TABS.map((t) => (
                 <Link
@@ -65,10 +65,10 @@ export default async function DosenPage({ searchParams }: Props) {
                       : `/prodi/dosen?tab=${t.key}`
                   }
                   className={cn(
-                    "rounded-full px-4 py-2 text-[13.5px] font-semibold transition-colors",
+                    "rounded-xl px-4 py-2.5 text-[14px] font-semibold transition-colors",
                     activeTab === t.key
-                      ? "bg-accent text-white shadow-xs"
-                      : "text-label-2 hover:text-label",
+                      ? "bg-accent text-white shadow-xs font-bold"
+                      : "bg-mist/70 text-label-2 hover:bg-mist hover:text-label",
                   )}
                 >
                   {t.label}
@@ -113,10 +113,10 @@ export default async function DosenPage({ searchParams }: Props) {
                     <img
                       src={t.photo}
                       alt={t.name}
-                      className="size-13 shrink-0 rounded-full object-cover"
+                      className="size-13 shrink-0 rounded-2xl object-cover"
                     />
                   ) : (
-                    <span className="grid size-13 shrink-0 place-items-center rounded-full bg-accent-soft text-[15px] font-bold text-accent">
+                    <span className="grid size-13 shrink-0 place-items-center rounded-xl bg-accent-soft text-[15px] font-bold text-accent">
                       {initials(t.name)}
                     </span>
                   )}
@@ -146,7 +146,7 @@ export default async function DosenPage({ searchParams }: Props) {
                   href="https://sinta.kemdikbud.go.id/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-hairline bg-canvas px-4 py-2 text-[13.5px] font-semibold text-label hover:border-accent hover:text-accent"
+                  className="rounded-xl border border-hairline bg-canvas px-4 py-2 text-[13.5px] font-semibold text-label hover:border-accent hover:text-accent shadow-xs"
                 >
                   Portal SINTA ↗
                 </a>
@@ -154,7 +154,7 @@ export default async function DosenPage({ searchParams }: Props) {
                   href="https://pddikti.kemdiktisaintek.go.id"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full bg-accent px-4 py-2 text-[13.5px] font-semibold text-white hover:bg-accent-hover"
+                  className="rounded-xl bg-accent px-4 py-2 text-[13.5px] font-semibold text-white hover:bg-accent-hover shadow-xs"
                 >
                   Buka PDDikti ↗
                 </a>

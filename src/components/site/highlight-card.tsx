@@ -40,7 +40,7 @@ export function HighlightCard({ item }: { item: Kegiatan }) {
             strokeWidth={1.25}
           />
         )}
-        <span className="absolute left-4 top-4 z-10 max-w-[calc(100%-2rem)] truncate rounded-full border border-hairline bg-canvas/95 px-3 py-1 text-[12px] font-semibold text-label shadow-xs">
+        <span className="absolute left-4 top-4 z-10 max-w-[calc(100%-2rem)] truncate rounded-md border border-hairline bg-canvas/95 px-3 py-1 text-[12px] font-semibold text-label shadow-xs">
           {item.category}
         </span>
       </div>
@@ -57,7 +57,7 @@ export function HighlightCard({ item }: { item: Kegiatan }) {
         {item.source && (
           <span className="mt-auto flex items-center justify-between pt-5 text-[14px] font-semibold text-accent">
             Baca selengkapnya
-            <span className="grid size-8 place-items-center rounded-full bg-mist transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
+            <span className="grid size-8 place-items-center rounded-xl bg-mist transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
               <ArrowUpRight className="size-4" />
             </span>
           </span>

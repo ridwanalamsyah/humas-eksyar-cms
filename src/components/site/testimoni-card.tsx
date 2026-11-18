@@ -1,3 +1,4 @@
+import { initials } from "@/lib/site/names";
 import type { Testimoni } from "@/lib/site/schema";
 
 /** Kartu kutipan alumni/mahasiswa. */
@@ -19,16 +20,12 @@ export function TestimoniCard({ item }: { item: Testimoni }) {
           <img
             src={item.photo}
             alt=""
-            className="size-11 rounded-full object-cover"
+            className="size-11 rounded-xl object-cover"
             loading="lazy"
           />
         ) : (
-          <span className="grid size-11 place-items-center rounded-full bg-accent-soft text-[15px] font-bold text-accent">
-            {item.name
-              .split(/\s+/)
-              .slice(0, 2)
-              .map((w) => w[0])
-              .join("")}
+          <span className="grid size-11 place-items-center rounded-xl bg-accent-soft text-[15px] font-bold text-accent">
+            {initials(item.name)}
           </span>
         )}
         <span>

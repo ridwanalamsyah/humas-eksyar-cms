@@ -361,6 +361,17 @@ export const prospekKarir = [
  */
 export const sorotan = [
   {
+    date: "2026-09-24",
+    category: "Pengabdian",
+    title: "Siapkan Generasi Qurani yang Melek Digital, Prodi Eksyar Gelar PkM Tata Kelola Masjid di Garut",
+    summary:
+      "Program Studi Ekonomi Syariah menyelenggarakan Pengabdian kepada Masyarakat (PkM) Literasi Digitalisasi Keuangan Syariah dan Pengelolaan Aset Masjid bersama Bank Indonesia Jawa Barat dan Bank Muamalat di Masjid Besar Limbangan, Garut.",
+    source:
+      "https://uinsgd.ac.id/siapkan-generasi-qurani-yang-melek-digital-prodi-eksyar-gelar-pkm-tata-kelola-masjid-di-garut/",
+    image:
+      "https://uinsgd.ac.id/wp-content/uploads/2026/09/IMG-20260925-WA0004.jpg",
+  },
+  {
     date: "2026-08-04",
     category: "Pengabdian",
     title: "Keluarga Cerdas Lawan Judol & Pinjol lewat Investasi Syariah",
@@ -370,6 +381,28 @@ export const sorotan = [
       "https://uinsgd.ac.id/dorong-keluarga-lawan-judol-dan-pinjol-lewat-investasi-syariah-gis-uin-bandung-edukasi-pkk-padasuka/",
     image:
       "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0020.jpg",
+  },
+  {
+    date: "2026-06-19",
+    category: "Karir",
+    title: "Gandeng Muamalat Institute, Prodi Ekonomi Syariah Cetak Lulusan Kompeten & Profesional",
+    summary:
+      "Penandatanganan Perjanjian Kerja Sama (PKS) peningkatan kompetensi SDM serta Seminar Pembekalan Karir “Menjadi SDM Unggul dan Kompetitif dalam Industri Keuangan Syariah” di Aula FEBI Kampus 2.",
+    source:
+      "https://uinsgd.ac.id/gandeng-muamalat-institute-uin-bandung-cetak-lulusan-ekonomi-syariah-kompeten-profesional-dan-berkah/",
+    image:
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260624-WA0016.jpg",
+  },
+  {
+    date: "2026-06-12",
+    category: "Akademik",
+    title: "2 Mahasiswa Ekonomi Syariah Lulus Munaqasah melalui Publikasi Jurnal Ilmiah Terakreditasi SINTA",
+    summary:
+      "Hakiki Ramadhan (Jurnal Share SINTA 2) dan Sabila Syifa Noorazlina (Jurnal JEMSI SINTA 4) berhasil menempuh sidang munaqasah skripsi jalur publikasi jurnal ilmiah bereputasi.",
+    source:
+      "https://uinsgd.ac.id/2-mahasiswa-ekonomi-syariah-lulus-munaqasah-melalui-publikasi-jurnal-ilmiah/",
+    image:
+      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG_20260611_152453.jpg",
   },
   {
     date: "2026-06-08",
@@ -383,24 +416,15 @@ export const sorotan = [
       "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
   },
   {
-    date: "2026-09-24",
-    category: "Pengabdian",
-    title: "Literasi Digitalisasi Keuangan Syariah & Pengelolaan Aset Masjid",
+    date: "2026-04-16",
+    category: "Kemahasiswaan",
+    title: "HMJ Ekonomi Syariah Gelar Eksphoria & Pengembangan Potensi Mahasiswa",
     summary:
-      "Program pengabdian kepada masyarakat menuju tata kelola aset masjid yang akuntabel, bekerja sama dengan Bank Indonesia dan Bank Muamalat.",
-    source: "https://www.instagram.com/eksyaruinsgd/",
+      "Himpunan Mahasiswa Jurusan (HMJ) Ekonomi Syariah menggelar rangkaian Eksphoria untuk mengasah daya kritis, karya tulis buletin artikel, kreativitas bisnis halal, dan kepemimpinan mahasiswa.",
+    source:
+      "https://uinsgd.ac.id/kembangkan-potensi-diri-hmj-ekonomi-syariah-gelar-eksphoria/",
     image:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/10/IMG-20261027-WA0010.jpg",
-  },
-  {
-    date: "2026-06-19",
-    category: "Karir",
-    title: "Seminar Karir & Kerja Sama Muamalat Institute 2026",
-    summary:
-      "“Menjadi SDM Unggul dan Kompetitif dalam Industri Keuangan Syariah” — menghadirkan Dekan FEBI, Kaprodi Ekonomi Syariah, dan praktisi Bank Muamalat di Aula FEBI Kampus 2.",
-    source: "https://www.instagram.com/eksyaruinsgd/",
-    image:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260624-WA0016.jpg",
+      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
   },
   {
     date: "2026-04-15",
@@ -425,15 +449,15 @@ export const sorotan = [
       "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
   },
   {
-    date: "2026-04-16",
-    category: "Kemahasiswaan",
-    title: "HMJ Ekonomi Syariah Gelar Eksphoria & Pengembangan Potensi Mahasiswa",
+    date: "2025-04-23",
+    category: "Penjaminan Mutu",
+    title: "Asesmen Lapangan Akreditasi Program Studi S1 Ekonomi Syariah",
     summary:
-      "Himpunan Mahasiswa Jurusan (HMJ) Ekonomi Syariah menggelar rangkaian Eksphoria untuk mengasah daya kritis, karya tulis buletin artikel, kreativitas bisnis halal, dan kepemimpinan mahasiswa.",
+      "Pelaksanaan Asesmen Lapangan Akreditasi Program Studi S1 Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung menuju predikat akreditasi Unggul.",
     source:
-      "https://uinsgd.ac.id/kembangkan-potensi-diri-hmj-ekonomi-syariah-gelar-eksphoria/",
+      "https://uinsgd.ac.id/wakil-rektor-i-optimistis-prodi-ekonomi-syariah-raih-nilai-unggul/",
     image:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
+      "https://uinsgd.ac.id/wp-content/uploads/2025/04/AL-ESUINSGD.jpg",
   },
   {
     date: "2024-04-25",
@@ -470,79 +494,91 @@ export const sorotan = [
   },
 ];
 
-/** Apresiasi "Selamat & Sukses" dari feed IG @eksyaruinsgd & arsip resmi es.uinsgd.ac.id. */
+/** Apresiasi "Selamat & Sukses" dari feed IG @eksyaruinsgd & pemberitaan resmi uinsgd.ac.id. */
 export const prestasi = [
-  {
-    name: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
-    initials: "EJ",
-    achievement: "Artikel terbit di jurnal internasional terindeks Scopus Q2",
-    group: "Dosen",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
-  },
   {
     name: "Hakiki Ramadhan",
     initials: "HR",
-    achievement: "Tulisan dimuat di Islamic Finance News (IFN)",
-    group: "Eksyar Appreciation",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00131-scaled.jpg",
+    achievement:
+      "Lulus Munaqasah Jalur Publikasi Jurnal SINTA 2 (Share UIN Ar-Raniry) & Kontributor Islamic Finance News (IFN)",
+    group: "Mahasiswa & Alumni",
+    photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
   },
   {
-    name: "Muhammad Azzam Abdillah",
-    initials: "MA",
-    achievement: "Juara 1 Bandung Open Tournament Pencak Silat",
-    group: "Mahasiswa",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
+    name: "Sabila Syifa Noorazlina",
+    initials: "SS",
+    achievement:
+      "Lulus Munaqasah Jalur Publikasi Jurnal Terakreditasi SINTA 4 (JEMSI) tentang Sertifikasi Halal Gratis (SEHATI)",
+    group: "Mahasiswa & Alumni",
+    photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
   },
   {
-    name: "Muhamad Halabi Muzaini",
-    initials: "HM",
-    achievement: "Ketua DEMA Fakultas Ekonomi dan Bisnis Islam 2026",
-    group: "Mahasiswa",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0027.jpg",
+    name: "Annisa Nur Salam, S.E., M.E.",
+    initials: "AN",
+    achievement:
+      "1st Best Paper pada The 2nd International Conference on Islamic Economics and Business (ICIEB)",
+    group: "Dosen",
+    photo: "https://uinsgd.ac.id/wp-content/uploads/2023/10/IMG-20231010-WA0009.jpg",
   },
   {
-    name: "Raditya Fitra",
-    initials: "RF",
-    achievement: "Wakil Ketua DEMA Universitas 2026",
+    name: "Fajar Andrian Sutisna",
+    initials: "FA",
+    achievement:
+      "Juara 1 Kompetisi Business Plan OASE PTKI II Tingkat Nasional & Juara 1 Olimpiade Ekonomi Islam Temilreg FoSSEI",
     group: "Mahasiswa",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260608-WA0010.jpg",
+    photo: "https://uinsgd.ac.id/wp-content/uploads/2023/06/kontingen-uin-sgd-juara1b.jpg",
+  },
+  {
+    name: "Arjuna Yuhansa R.P. & M. Athar Maulana",
+    initials: "AY",
+    achievement:
+      "Best Equity Research pada UNRAM National Trading Competition — Galeri Investasi Syariah BEI FEBI",
+    group: "Mahasiswa",
+    photo: "https://uinsgd.ac.id/wp-content/uploads/2023/10/IMG_20231024_114554.jpg",
   },
   {
     name: "Dr. H. Muhammad Hasanuddin, M.Ag. & Dr. Sofian Al Hakim, M.Ag.",
     initials: "MH",
-    achievement: "Inisiator Desa Ekowisata Halal Indragiri — Penghargaan Bupati Bandung",
+    achievement:
+      "Inisiator Desa Ekowisata Halal Indragiri — Penghargaan Sinergi Konservasi & Wisata Halal Bupati Bandung",
     group: "Dosen",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
+    photo: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0022.jpg",
   },
   {
-    name: "Evita Farcha",
+    name: "Tim KSEI FORDES Ekonomi Syariah (Achmad Syahrul, Ai Nurendah, Arif Rachman Zuhri)",
+    initials: "KF",
+    achievement:
+      "Juara Umum 1 Temu Ilmiah Regional (Temilreg) FoSSEI Jawa Barat — Cabang Olimpiade Ekonomi Islam & Sharia Business Plan",
+    group: "Mahasiswa",
+    photo: "https://uinsgd.ac.id/wp-content/uploads/2022/01/IMG-20220705-WA0001.jpg",
+  },
+  {
+    name: "Muhammad Azzam Abdillah",
+    initials: "MA",
+    achievement: "Juara 1 Bandung Open Tournament Pencak Silat Tingkat Nasional",
+    group: "Mahasiswa",
+    photo: "https://uinsgd.ac.id/wp-content/uploads/2026/05/IMG-20260521-WA0068.jpg",
+  },
+  {
+    name: "Muhamad Halabi Muzaini",
+    initials: "HM",
+    achievement: "Ketua Dewan Eksekutif Mahasiswa (DEMA) Fakultas Ekonomi dan Bisnis Islam",
+    group: "Mahasiswa",
+    photo: null,
+  },
+  {
+    name: "Raditya Fitra",
+    initials: "RF",
+    achievement: "Wakil Ketua Dewan Eksekutif Mahasiswa (DEMA) UIN Sunan Gunung Djati Bandung",
+    group: "Mahasiswa",
+    photo: null,
+  },
+  {
+    name: "Evita Farcha Kamila",
     initials: "EF",
-    achievement: "Delegasi Mahasiswa Ekonomi Syariah di Universiti Teknologi MARA (UiTM) Malaysia",
-    group: "Mahasiswa",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202659-scaled.jpg",
-  },
-  {
-    name: "Tim Mahasiswa Ekonomi Syariah UIN Bandung",
-    initials: "TE",
-    achievement: "Juara 1 Indonesia Sharia Economic Festival (ISEF) Bank Indonesia",
-    group: "Mahasiswa",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2023/12/IMG-20231212-WA0017.jpg",
-  },
-  {
-    name: "Delegasi Mahasiswa Eksyar UIN SGD",
-    initials: "DM",
-    achievement: "Peserta Student Exchange di Universiti Malaya (UM) Kuala Lumpur",
-    group: "Mahasiswa",
-    photo:
-      "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0022.jpg",
+    achievement: "Delegasi Student Mobility di Universiti Teknologi MARA (UiTM) Malaysia",
+    group: "Mahasiswa & Alumni",
+    photo: null,
   },
 ];
 
@@ -848,15 +884,6 @@ export const dosen = [
     scholar: "https://scholar.google.com/citations?hl=id&q=Muhammad+Hasanuddin+UIN+Sunan+Gunung+Djati",
   },
   {
-    name: "Dr. H. Endang Jumali, Lc., M.Si., M.Ak.",
-    initials: "EJ",
-    role: "Dosen Tetap · Lektor",
-    expertise: ["Akuntansi Syariah", "Audit Syariah", "Hukum Islam"],
-    pendidikan: "S1 Al-Azhar Kairo · S2 & S3 Ekonomi/Akuntansi Islam",
-    sinta: "https://sinta.kemdikbud.go.id/",
-    scholar: "https://scholar.google.com/citations?hl=id&q=Endang+Jumali+UIN+Sunan+Gunung+Djati",
-  },
-  {
     name: "Dr. H. Abdullah Safe'i, M.Ag.",
     initials: "AS",
     role: "Dosen Tetap · Lektor Kepala",
@@ -1128,9 +1155,9 @@ export const kontak = {
   x: "https://x.com/eksyaruinsgd",
   febiInstagram: "https://www.instagram.com/febiuinsgdbdg/",
   pmbUrl: "https://pmb.uinsgd.ac.id",
-  mapsUrl: "https://www.google.com/maps?q=-6.935585,107.717612",
+  mapsUrl: "https://maps.app.goo.gl/hJU8bxaQuhncp6Dm7",
   mapsEmbed:
-    "https://maps.google.com/maps?q=-6.935585,107.717612+(Gedung+FEBI+Kampus+2+UIN+Sunan+Gunung+Djati+Bandung)&t=&z=16&ie=UTF8&iwloc=B&output=embed",
+    "https://maps.google.com/maps?q=-6.9427728,107.7024383+(Gedung+FEBI+Kampus+2+UIN+Sunan+Gunung+Djati+Bandung)&t=&z=17&ie=UTF8&iwloc=B&output=embed",
 };
 
 export type NavItem = { href: string; label: string; description?: string };
@@ -1144,23 +1171,28 @@ export const navGroups: NavGroup[] = [
     items: [
       {
         href: "/prodi/profil",
-        label: "Tentang prodi",
-        description: "Sejarah, visi-misi, mitra, fasilitas",
-      },
-      {
-        href: "/prodi/profil#struktur",
-        label: "Pimpinan & struktur",
-        description: "Kaprodi, sekprodi, dan organisasi",
+        label: "Tentang Prodi",
+        description: "Sejarah, visi-misi, akreditasi prodi",
       },
       {
         href: "/prodi/dosen",
-        label: "Dosen & staf",
-        description: "Profil, keahlian, mata kuliah",
+        label: "Dosen & Staf",
+        description: "Direktori dosen homebase & staf pengajar",
+      },
+      {
+        href: "/prodi/profil#mitra",
+        label: "Mitra Kerja Sama",
+        description: "Jejaring industri, perbankan & regulator",
+      },
+      {
+        href: "/prodi/alumni",
+        label: "Alumni & Karier",
+        description: "Profil lulusan, tracer study & jejaring alumni",
       },
       {
         href: "/prodi/mutu",
-        label: "Mutu & data",
-        description: "Akreditasi, survei, statistik",
+        label: "Mutu & Penjaminan",
+        description: "Data akreditasi dan evaluasi akademik",
       },
     ],
   },
@@ -1171,98 +1203,59 @@ export const navGroups: NavGroup[] = [
       {
         href: "/prodi/akademik",
         label: "Kurikulum & Mata Kuliah",
-        description: "Kurikulum Semester 1–8, peminatan, RPS",
+        description: "Struktur 148 SKS Semester 1–8 & RPS",
       },
       {
         href: "/prodi/kalender",
-        label: "Kalender & agenda",
-        description: "Jadwal akademik dan kegiatan",
-      },
-      {
-        href: "/prodi/skripsi",
-        label: "Direktori & Pojok Skripsi",
-        description: "Telusuri 515+ skripsi, cek judul, topik & sidang",
+        label: "Kalender Akademik",
+        description: "Jadwal perkuliahan, UTS, dan UAS",
       },
       {
         href: "/prodi/penelitian",
-        label: "Penelitian & publikasi",
-        description: "Karya dosen dan jurnal ilmiah",
-      },
-      {
-        href: "/prodi/alat",
-        label: "Alat & kamus",
-        description: "Kalkulator zakat, kamus istilah",
+        label: "Penelitian & Riset",
+        description: "Publikasi karya ilmiah dan riset dosen serta mahasiswa",
       },
     ],
   },
   {
-    label: "Mahasiswa",
-    href: "/prodi/kemahasiswaan",
-    items: [
-      {
-        href: "/prodi/kemahasiswaan",
-        label: "Kegiatan & HMJ Eksyar",
-        description: "HMJ, FoSEI, GIS BEI, dan apresiasi mahasiswa",
-      },
-      {
-        href: "/prodi/mahasiswa-baru",
-        label: "Calon mahasiswa baru",
-        description: "Jalur masuk, biaya, beasiswa",
-      },
-      {
-        href: "/prodi/beasiswa",
-        label: "Beasiswa",
-        description: "KIP-K, BAZNAS, BI, dan lainnya",
-      },
-      {
-        href: "/prodi/lomba",
-        label: "Info lomba",
-        description: "Kompetisi & prestasi",
-      },
-      {
-        href: "/prodi/karier",
-        label: "Karier & alumni",
-        description: "Lowongan, magang, tracer study",
-      },
-    ],
-  },
-  {
-    label: "Informasi",
+    label: "Artikel & Kabar",
     href: "/prodi/berita",
     items: [
       {
-        href: "/prodi/berita",
-        label: "Berita & pengumuman",
-        description: "Kabar dan informasi resmi prodi",
+        href: "/prodi/berita?kategori=artikel",
+        label: "Buletin Mahasiswa",
+        description: "Karya tulis dan opini ilmiah mahasiswa Ekonomi Syariah",
       },
       {
-        href: "/prodi/berita?kategori=buletin_hmj",
-        label: "Buletin Artikel HMJ",
-        description: "Program kolaborasi artikel bersama HMJ Eksyar",
+        href: "/prodi/berita",
+        label: "Berita & Pengumuman",
+        description: "Kabar resmi prodi dan agenda akademik",
       },
       {
         href: "/prodi/galeri",
         label: "Galeri & Video",
-        description: "Dokumentasi foto dan video kegiatan Eksyar",
+        description: "Dokumentasi foto dan video YouTube kegiatan",
       },
       {
-        href: "/prodi/layanan",
-        label: "Layanan & formulir",
-        description: "Formulir layanan, unduhan, FAQ",
+        href: "/prodi/kemahasiswaan",
+        label: "Kemahasiswaan",
+        description: "Aktivitas organisasi dan prestasi mahasiswa",
       },
     ],
+  },
+  {
+    label: "Skripsi",
+    href: "/prodi/skripsi",
   },
   { label: "Kontak", href: "/prodi/kontak" },
 ];
 
 export const navLinks = [
-  { href: "/", label: "Beranda" },
   { href: "/prodi/profil", label: "Profil" },
   { href: "/prodi/akademik", label: "Akademik" },
   { href: "/prodi/dosen", label: "Dosen" },
-  { href: "/prodi/kemahasiswaan", label: "Mahasiswa" },
-  { href: "/prodi/berita", label: "Berita" },
-  { href: "/prodi/layanan", label: "Layanan" },
+  { href: "/prodi/berita", label: "Artikel" },
+  { href: "/prodi/skripsi", label: "Skripsi" },
   { href: "/prodi/kontak", label: "Kontak" },
 ];
 
@@ -1270,7 +1263,7 @@ export const utilityLinks = [
   { href: "https://simak.uinsgd.ac.id/beranda/", label: "SALAM" },
   { href: "https://eknows.uinsgd.ac.id", label: "e-Knows" },
   { href: "https://digilib.uinsgd.ac.id", label: "Digilib" },
-  { href: "https://journal.uinsgd.ac.id/index.php/likuid", label: "Jurnal LIKUID" },
+  { href: "https://skpi.uinsgd.ac.id", label: "SKPI Online" },
   { href: "https://febi.uinsgd.ac.id", label: "FEBI" },
   { href: "https://uinsgd.ac.id", label: "UIN SGD" },
 ];

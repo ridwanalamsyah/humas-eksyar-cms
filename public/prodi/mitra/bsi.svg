@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" fill="none">
+  <path d="M14 6 C20 10, 24 16, 24 24 C24 32, 20 38, 14 42 C18 36, 20 30, 20 24 C20 18, 18 12, 14 6 Z" fill="#F7A800" />
+  <circle cx="11" cy="24" r="5" fill="#00A39D" />
+  <text x="32" y="32" font-family="Plus Jakarta Sans, sans-serif" font-weight="900" font-size="26" fill="#00A39D" letter-spacing="-1">BSI</text>
+  <text x="82" y="22" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="9" fill="#222" letter-spacing="0.5">BANK SYARIAH</text>
+  <text x="82" y="33" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="9" fill="#222" letter-spacing="0.5">INDONESIA</text>
+</svg>

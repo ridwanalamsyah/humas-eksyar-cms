@@ -67,7 +67,7 @@ const SHORT_LINKS: Record<string, string> = {
   "/prodi/formulir/konsultasi": "/prodi/layanan#faq",
   "/prodi/formulir/alumni": "/prodi/karier",
   "/prodi/formulir/mentoring": "/prodi/karier",
-  "/prodi/alumni": "/prodi/karier",
+  "/alumni": "/prodi/alumni",
   "/prodi/data": "/prodi/mutu#data",
   "/prodi/media": "/prodi/galeri",
   "/prodi/wisuda": "/prodi/kemahasiswaan",
@@ -79,9 +79,7 @@ const SHORT_LINKS: Record<string, string> = {
 
 export default auth((req) => {
   const { nextUrl, method } = req;
-  const hasDemoSession = req.cookies.get("humas_demo_session")?.value === "1";
-  const isPreviewMode = !process.env.GOOGLE_CLIENT_ID;
-  const isLoggedIn = !!req.auth || hasDemoSession || isPreviewMode;
+  const isLoggedIn = !!req.auth;
   const path = nextUrl.pathname;
 
   // Domain utama langsung membuka website prodi; alamat /prodi dirapikan ke /.

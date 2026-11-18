@@ -8,7 +8,7 @@ import { StatusPill, Pill } from "@/components/common/pill";
 import { rubricLabel } from "@/lib/site/content";
 import { RepurposePanel } from "@/components/content/repurpose-panel";
 import { Avatar } from "@/components/common/avatar";
-import { ApprovalChain } from "@/components/content/approval-chain";
+import { PublishControlCard } from "@/components/content/publish-control-card";
 import { CaptionHistory } from "@/components/content/caption-history";
 import { ContentInlineEditor } from "@/components/content/content-inline-editor";
 import { CommentThread } from "@/components/content/comment-thread";
@@ -151,10 +151,7 @@ export default async function ContentDetail({ params }: Props) {
         </article>
 
         <aside className="flex flex-col gap-4">
-          <GlassCard variant="thick" className="p-5">
-            <h3 className="text-[12.5px] text-foreground/50">Approval</h3>
-            <ApprovalChain content={content} />
-          </GlassCard>
+          <PublishControlCard content={content} canEdit={canEdit} />
 
           {content.metrics && (
             <GlassCard variant="regular" className="p-5">

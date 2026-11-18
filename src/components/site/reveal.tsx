@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/utils";
 
-/** Fade + slide-up ringan saat elemen masuk viewport. */
+/** Fade + slide-up + blur-clear halus saat elemen masuk viewport (Opus motion). */
 export function Reveal({
   children,
   className,
@@ -17,10 +17,10 @@ export function Reveal({
   return (
     <motion.div
       className={cn(className)}
-      initial={reduce ? false : { opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay }}
+      initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(4px)" }}
+      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-72px" }}
+      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay }}
     >
       {children}
     </motion.div>

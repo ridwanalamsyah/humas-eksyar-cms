@@ -1,7 +1,41 @@
 import { cache } from "react";
 import { getWebsiteContent } from "@/lib/data/provider";
 import { defaultWebsiteConfig } from "./defaults";
+import { isInactivePerson } from "./names";
 import { websiteConfigSchema, type WebsiteConfig } from "./schema";
+
+const MISMATCHED_PERSON_EVENT_PHOTOS = new Set([
+  "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260603-WA0014-scaled.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00131-scaled.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0027.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260608-WA0010.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202659-scaled.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2023/12/IMG-20231212-WA0017.jpg",
+  "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0022.jpg",
+]);
+
+const SUPERSEDED_LEGACY_KEYS = new Set([
+  "tim mahasiswa ekonomi syariah uin bandung",
+  "delegasi mahasiswa eksyar uin sgd",
+  "literasi digitalisasi keuangan syariah & pengelolaan aset masjid",
+  "seminar karir & kerja sama muamalat institute 2026",
+  "opini & analisis pasar keuangan syariah di islamic finance news (ifn)",
+  "hakiki ramadhan",
+]);
+
+function hasInactivePersonInObject(key: string, item: unknown): boolean {
+  if (!item || typeof item !== "object") return false;
+  // Publikasi dan topikSkripsi tetap dipertahankan sebagai rekam jejak karya ilmiah beliau
+  if (key === "publikasi" || key === "topikSkripsi") return false;
+  const obj = item as Record<string, unknown>;
+  return (
+    isInactivePerson(obj.name) ||
+    isInactivePerson(obj.nama) ||
+    isInactivePerson(obj.pembuat)
+  );
+}
 
 function itemKey(item: unknown): string {
   if (!item || typeof item !== "object") return String(item).toLowerCase();
@@ -32,6 +66,7 @@ function isLegacyTemplateValue(v: unknown): boolean {
   return (
     v.includes("images.unsplash.com") ||
     v.includes("maps.google.com/?q=UIN+Sunan+Gunung+Djati+Bandung") ||
+    v.includes("-6.939268,107.704824") ||
     v === "/prodi/skripsi/pojok"
   );
 }
@@ -120,40 +155,77 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
             typeof x === "object" &&
             !isLegacyTemplateValue((x as { image?: unknown }).image),
         );
-        const seenCaptions = new Set(
-          cleanStored.map((x) =>
-            String((x as { caption?: unknown }).caption ?? "").toLowerCase(),
-          ),
-        );
-        const combined = [...cleanStored];
+        const seenImages = new Set<string>();
+        const combined: unknown[] = [];
         for (const dItem of defVal) {
-          const cap = String(
-            (dItem as { caption?: unknown }).caption ?? "",
-          ).toLowerCase();
-          if (!seenCaptions.has(cap)) {
+          const img = String((dItem as { image?: unknown }).image ?? "").toLowerCase();
+          if (img && !seenImages.has(img)) {
             combined.push(dItem);
-            seenCaptions.add(cap);
+            seenImages.add(img);
+          }
+        }
+        for (const sItem of cleanStored) {
+          const img = String((sItem as { image?: unknown }).image ?? "").toLowerCase();
+          if (img && !seenImages.has(img)) {
+            combined.push(sItem);
+            seenImages.add(img);
           }
         }
         result[key] = combined;
         continue;
       }
 
-      if (key === "video") {
-        const seenUrls = new Set<string>();
+      if (
+        [
+          "video",
+          "prestasi",
+          "apresiasi",
+          "karya",
+          "publikasi",
+          "kegiatan",
+          "testimoni",
+        ].includes(key)
+      ) {
+        const seenKeys = new Set<string>();
         const combined: unknown[] = [];
         for (const dItem of defVal) {
+          if (hasInactivePersonInObject(key, dItem)) continue;
           const u = itemKey(dItem);
-          if (!seenUrls.has(u)) {
+          if (!seenKeys.has(u)) {
             combined.push(dItem);
-            seenUrls.add(u);
+            seenKeys.add(u);
           }
         }
         for (const sItem of data) {
-          const u = itemKey(sItem);
-          if (!seenUrls.has(u)) {
-            combined.push(sItem);
-            seenUrls.add(u);
+          if (hasInactivePersonInObject(key, sItem)) continue;
+          if (!sItem || typeof sItem !== "object") continue;
+          const obj = { ...(sItem as Record<string, unknown>) };
+          if (
+            key === "prestasi" &&
+            typeof obj.name === "string" &&
+            obj.name.trim().toLowerCase() === "evita farcha"
+          ) {
+            obj.name = "Evita Farcha Kamila";
+          }
+          if (
+            (key === "prestasi" || key === "apresiasi") &&
+            typeof obj.photo === "string" &&
+            MISMATCHED_PERSON_EVENT_PHOTOS.has(obj.photo)
+          ) {
+            obj.photo = null;
+          }
+          if (
+            key === "karya" &&
+            typeof obj.image === "string" &&
+            MISMATCHED_PERSON_EVENT_PHOTOS.has(obj.image)
+          ) {
+            obj.image = null;
+          }
+          const u = itemKey(obj);
+          if (SUPERSEDED_LEGACY_KEYS.has(u)) continue;
+          if (!seenKeys.has(u)) {
+            combined.push(obj);
+            seenKeys.add(u);
           }
         }
         result[key] = combined;
@@ -175,6 +247,21 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
         continue;
       }
 
+      if (
+        key === "testimoni" &&
+        data.some(
+          (x) =>
+            x &&
+            typeof x === "object" &&
+            /evi\s+sopiah|muhammad\s+hasanuddin/i.test(
+              String((x as { name?: unknown }).name ?? ""),
+            ),
+        )
+      ) {
+        result[key] = defVal;
+        continue;
+      }
+
       const defMap = new Map<string, Record<string, unknown>>();
       for (const dItem of defVal) {
         if (dItem && typeof dItem === "object") {
@@ -183,19 +270,52 @@ export function mergeWebsiteConfig(stored: unknown): WebsiteConfig {
       }
 
       const seen = new Set<string>();
-      const merged = data.map((item) => {
-        const k = itemKey(item);
-        seen.add(k);
+      const filteredData = data.filter((item) => !hasInactivePersonInObject(key, item));
+      const merged = filteredData.map((item) => {
         if (item && typeof item === "object") {
+          const obj = { ...(item as Record<string, unknown>) };
+          if (
+            key === "prestasi" &&
+            typeof obj.name === "string" &&
+            obj.name.trim().toLowerCase() === "evita farcha"
+          ) {
+            obj.name = "Evita Farcha Kamila";
+          }
+          if (
+            (key === "prestasi" || key === "apresiasi") &&
+            typeof obj.photo === "string" &&
+            MISMATCHED_PERSON_EVENT_PHOTOS.has(obj.photo)
+          ) {
+            obj.photo = null;
+          }
+          if (
+            key === "karya" &&
+            typeof obj.image === "string" &&
+            MISMATCHED_PERSON_EVENT_PHOTOS.has(obj.image)
+          ) {
+            obj.image = null;
+          }
+          if (
+            key === "prestasi" &&
+            obj.group === "Eksyar Appreciation"
+          ) {
+            obj.group = "Mahasiswa & Alumni";
+          }
+          const k = itemKey(obj);
+          seen.add(k);
           const match = defMap.get(k);
           if (match) {
-            return backfillObject(item as Record<string, unknown>, match);
+            return backfillObject(obj, match);
           }
+          return obj;
         }
+        const k = itemKey(item);
+        seen.add(k);
         return item;
       });
 
       for (const dItem of defVal) {
+        if (hasInactivePersonInObject(key, dItem)) continue;
         const idKey = itemKey(dItem);
         if (!seen.has(idKey)) {
           merged.push(dItem);

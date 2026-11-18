@@ -2,7 +2,7 @@ import Image from "next/image";
 import { prodi } from "@/lib/site/prodi";
 import { cn } from "@/lib/utils";
 
-/** Logo resmi Program Studi Ekonomi Syariah (lingkaran dengan tepi tipis). */
+/** Logo resmi Program Studi Ekonomi Syariah (transparan adaptif tanpa kotak putih). */
 export function ProdiLogo({
   size = 40,
   className,
@@ -16,7 +16,7 @@ export function ProdiLogo({
     <span
       style={{ width: size, height: size }}
       className={cn(
-        "relative inline-flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-white ring-1 ring-black/10",
+        "relative inline-flex shrink-0 items-center justify-center bg-transparent",
         className,
       )}
     >

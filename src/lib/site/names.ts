@@ -33,3 +33,12 @@ export function initials(name: string): string {
   }
   return name.slice(0, 2).toUpperCase();
 }
+
+/** Daftar nama dosen/tokoh yang dinonaktifkan dari tampilan publik. */
+const INACTIVE_PERSON_PATTERN = /\b(endang\s+jumali|jumali[\s,]+endang)\b/i;
+
+export function isInactivePerson(value: unknown): boolean {
+  if (typeof value !== "string") return false;
+  return INACTIVE_PERSON_PATTERN.test(value);
+}
+

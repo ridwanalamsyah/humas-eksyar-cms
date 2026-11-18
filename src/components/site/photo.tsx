@@ -59,39 +59,8 @@ function extractInitials(raw: string): string {
   return "ES";
 }
 
-const PALETTES = [
-  {
-    bg: "from-[#0f3d33] via-[#165b4c] to-[#0c2340]",
-    ring: "border-white/20 bg-white/10 text-white",
-    accent: "#a7f3d0",
-  },
-  {
-    bg: "from-[#0c2340] via-[#163a5f] to-[#0f4c45]",
-    ring: "border-white/20 bg-white/10 text-white",
-    accent: "#fde68a",
-  },
-  {
-    bg: "from-[#14532d] via-[#166534] to-[#0f3d33]",
-    ring: "border-white/20 bg-white/10 text-white",
-    accent: "#bbf7d0",
-  },
-  {
-    bg: "from-[#1e3a5f] via-[#134e4a] to-[#0c2340]",
-    ring: "border-white/20 bg-white/10 text-white",
-    accent: "#99f6e4",
-  },
-];
-
-function pickPalette(seed: string) {
-  let hash = 0;
-  for (let i = 0; i < seed.length; i++) {
-    hash = (hash * 31 + seed.charCodeAt(i)) | 0;
-  }
-  return PALETTES[Math.abs(hash) % PALETTES.length];
-}
-
 /**
- * Foto potret/lanskap dengan fallback monogram akademik & ornamen geometris
+ * Foto potret/lanskap dengan fallback monogram akademik
  * saat foto belum diunggah atau gagal dimuat. Menggunakan `isolate overflow-hidden`
  * agar efek zoom (`group-hover:scale`) tidak pernah keluar dari sudut membulat.
  */
@@ -109,7 +78,6 @@ export function Photo({
   const [failedSrc, setFailedSrc] = useState<string | null>(null);
   const validSrc = src && src.trim() && failedSrc !== src ? src : null;
   const initials = extractInitials(alt || "Ekonomi Syariah");
-  const palette = pickPalette(alt || "eksyar");
 
   return (
     <div
@@ -130,67 +98,15 @@ export function Photo({
         />
       ) : (
         <div
-          className={cn(
-            "absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br p-6 text-white transition-transform duration-700 ease-out group-hover:scale-[1.02]",
-            palette.bg,
-          )}
+          className="absolute inset-0 flex flex-col items-center justify-center bg-mist p-6 text-label"
           aria-hidden
         >
-          {/* Ornamen geometris Islami halus di latar */}
-          <svg
-            viewBox="0 0 200 200"
-            fill="none"
-            className="pointer-events-none absolute -right-10 -top-10 size-48 opacity-[0.12]"
-          >
-            <circle cx="100" cy="100" r="80" stroke="currentColor" strokeWidth="1.5" />
-            <circle cx="100" cy="100" r="56" stroke="currentColor" strokeWidth="1.2" />
-            <rect
-              x="44"
-              y="44"
-              width="112"
-              height="112"
-              stroke="currentColor"
-              strokeWidth="1.2"
-            />
-            <rect
-              x="44"
-              y="44"
-              width="112"
-              height="112"
-              transform="rotate(45 100 100)"
-              stroke="currentColor"
-              strokeWidth="1.2"
-            />
-          </svg>
-
-          {/* Siluet potret akademik halus di bagian bawah */}
-          <svg
-            viewBox="0 0 200 250"
-            preserveAspectRatio="xMidYMax meet"
-            className="pointer-events-none absolute inset-x-0 bottom-0 h-[78%] w-full text-white/[0.08]"
-          >
-            <circle cx="100" cy="88" r="40" fill="currentColor" />
-            <path
-              d="M22 250c0-48 35-82 78-82s78 34 78 82z"
-              fill="currentColor"
-            />
-          </svg>
-
-          {/* Lencana monogram inisial */}
-          <div
-            className={cn(
-              "relative z-10 grid size-20 place-items-center rounded-full border backdrop-blur-xs shadow-inner",
-              palette.ring,
-            )}
-          >
-            <span
-              className="text-[24px] font-extrabold tracking-tight"
-              style={{ color: palette.accent }}
-            >
+          <div className="grid size-16 place-items-center rounded-2xl bg-accent-soft text-accent">
+            <span className="text-[22px] font-extrabold tracking-tight">
               {initials}
             </span>
           </div>
-          <span className="relative z-10 mt-3 rounded-full bg-black/20 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-white/75">
+          <span className="mt-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-label-3">
             FEBI · UIN SGD
           </span>
         </div>

@@ -30,12 +30,12 @@ export default async function LinkPage() {
         ]
       : []),
     { href: "/", label: "Website Prodi Ekonomi Syariah", primary: !kampanyePmb.aktif },
-    { href: "/prodi/skripsi", label: "Direktori 515+ Skripsi & Cek Judul" },
+    { href: "/prodi/skripsi", label: "Direktori 515+ Judul Skripsi" },
     { href: "/prodi/galeri", label: "Galeri Foto & Video YouTube" },
     { href: "/prodi/kalender", label: "Kalender Akademik & Agenda" },
     { href: "/prodi/beasiswa", label: "Info Beasiswa Mahasiswa" },
     { href: "/prodi/layanan#formulir", label: "Formulir Layanan Online" },
-    { href: "/prodi/berita?kategori=buletin_hmj", label: "Buletin Artikel — Kolaborasi HMJ" },
+    { href: "/prodi/berita?kategori=artikel", label: "Buletin Mahasiswa Ekonomi Syariah" },
     { href: "/prodi/alat/zakat", label: "Kalkulator Zakat & Kamus Syariah" },
     { href: "/prodi/mahasiswa-baru", label: "Info Mahasiswa Baru (PMB)" },
     {
@@ -61,11 +61,6 @@ export default async function LinkPage() {
           },
         ]
       : []),
-    {
-      href: "https://journal.uinsgd.ac.id/index.php/likuid",
-      label: "Jurnal LIKUID: Ekonomi Industri Halal",
-      external: true,
-    },
     {
       href: "https://eknows.uinsgd.ac.id/course/index.php?categoryid=40",
       label: "LMS e-Knows Ekonomi Syariah",
@@ -106,8 +101,8 @@ export default async function LinkPage() {
         <ul className="mt-8 grid gap-3">
           {links.map((l) => {
             const cls = l.primary
-              ? "block rounded-full bg-accent px-6 py-4 text-[15.5px] font-bold text-white hover:bg-accent-strong"
-              : "block rounded-full border border-hairline bg-canvas px-6 py-4 text-[15.5px] font-semibold text-label transition hover:-translate-y-0.5 hover:border-accent";
+              ? "block rounded-2xl bg-accent px-6 py-4 text-[15.5px] font-bold text-white hover:bg-accent-strong shadow-xs"
+              : "block rounded-2xl border border-hairline bg-canvas px-6 py-4 text-[15.5px] font-semibold text-label transition hover:-translate-y-0.5 hover:border-accent shadow-xs";
             return (
               <li key={l.href + l.label}>
                 {l.external ? (

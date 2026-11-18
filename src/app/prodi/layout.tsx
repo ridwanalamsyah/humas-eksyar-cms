@@ -3,8 +3,7 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import { SiteNavbar } from "@/components/site/site-navbar";
 import { SiteFooter } from "@/components/site/site-footer";
 import { getSite } from "@/lib/site/get-site";
-import { listPublishedNews, recentAnnouncement } from "@/lib/site/content";
-import { AnnouncementBar } from "@/components/site/announcement-bar";
+import { listPublishedNews } from "@/lib/site/content";
 import { SiteShell } from "@/components/site/site-shell";
 import { ViewBeacon } from "@/components/site/view-beacon";
 import { prodi } from "@/lib/site/prodi";
@@ -19,7 +18,15 @@ export async function generateMetadata(): Promise<Metadata> {
   const { identity } = await getSite();
   return {
     applicationName: prodi.fullName,
-    icons: { icon: "/prodi/icon-eksyar.png", apple: prodi.logo },
+    icons: {
+      icon: [
+        { url: "/favicon.ico" },
+        { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+        { url: "/prodi/icon-eksyar.png", sizes: "128x128", type: "image/png" },
+      ],
+      shortcut: "/favicon.ico",
+      apple: "/apple-touch-icon.png",
+    },
     title: {
       default: `${prodi.fullName} — ${prodi.university}`,
       template: `%s · ${prodi.name} ${prodi.university}`,
@@ -60,27 +67,24 @@ export default async function ProdiLayout({
   ]);
   // Sembunyikan menu yang belum ada isinya.
   const hidden = [...(galeri.length || video.length ? [] : ["/prodi/galeri"])];
-  // Pita pengumuman: dari CMS bila diaktifkan, atau pengumuman terbaru (≤ 14 hari).
-  const latest = recentAnnouncement(news);
-  const bar =
-    banner.aktif && banner.teks
-      ? { text: banner.teks, href: banner.url || undefined }
-      : latest
-        ? { text: latest.title, href: `/prodi/berita/${latest.slug}` }
-        : null;
   return (
     <SiteShell
-      className={`${jakarta.variable} relative flex min-h-dvh flex-col bg-canvas font-jakarta text-label antialiased`}
+      className={`${jakarta.variable} relative flex min-h-dvh w-full max-w-full min-w-0 flex-col overflow-x-clip bg-[#FAF9F5] font-jakarta text-label antialiased dark:bg-[#0B171C]`}
     >
       <a
         href="#konten"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xl focus:bg-accent focus:px-4 focus:py-2 focus:text-white"
       >
         Lewati ke konten
       </a>
-      {bar && <AnnouncementBar text={bar.text} href={bar.href} />}
+
+      {/* Latar bersih bernuansa ivory hangat alami */}
+      <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+        <div className="absolute inset-0 bg-[#FAF9F5] dark:bg-[#0B171C] transition-colors duration-300" />
+      </div>
+
       <SiteNavbar hidden={hidden} />
-      <main id="konten" className="flex-1">
+      <main id="konten" className="flex-1 w-full max-w-full min-w-0 overflow-x-clip">
         {children}
       </main>
       <SiteFooter />

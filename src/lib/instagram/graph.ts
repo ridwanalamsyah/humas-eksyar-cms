@@ -111,8 +111,8 @@ export async function listInstagramPosts(limit = 25): Promise<IgPost[]> {
 export const DEFAULT_IG_FEED: { permalink: string; image: string; caption: string }[] = [
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
-    caption: "Sekolah Pasar Modal Syariah (SPMS) 2026 bersama BEI Perwakilan Jawa Barat & GIS FEBI UIN SGD.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/09/IMG-20260925-WA0004.jpg",
+    caption: "PkM Literasi Digitalisasi Keuangan Syariah & Pengelolaan Aset Masjid di Garut bersama Bank Indonesia & Bank Muamalat.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
@@ -121,18 +121,18 @@ export const DEFAULT_IG_FEED: { permalink: string; image: string; caption: strin
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_202807-scaled.jpg",
-    caption: "Kuliah Praktisi Bank Muamalat Indonesia: Transformasi Digital & Manajemen Risiko Perbankan Syariah.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
+    caption: "Apresiasi Lulus Munaqasah Jalur Publikasi Jurnal Ilmiah SINTA 2 (Share UIN Ar-Raniry) — Hakiki Ramadhan.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG_20260416_203512.jpg",
-    caption: "Penyerahan Sertifikat Juru Sembelih Halal (Juleha) berbasis SKKNI di Desa Cibiru Wetan.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
+    caption: "Apresiasi Lulus Munaqasah Jalur Publikasi Jurnal Ilmiah SINTA 4 (JEMSI) — Sabila Syifa Noorazlina.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/04/IMG-20260416-WA0025-scaled.jpg",
-    caption: "HMJ Ekonomi Syariah Gelar Eksphoria & Kolaborasi Buletin Artikel Mahasiswa FEBI UIN SGD.",
+    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
+    caption: "Sekolah Pasar Modal Syariah (SPMS) 2026 bersama BEI Perwakilan Jawa Barat & GIS FEBI UIN SGD.",
   },
   {
     permalink: "https://www.instagram.com/eksyaruinsgd/",

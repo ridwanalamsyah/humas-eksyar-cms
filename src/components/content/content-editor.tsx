@@ -4,7 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import { toast } from "sonner";
-import { Sparkles, Save, Send, ImageIcon, X, ChevronDown, Wand2, Hash, Calendar } from "lucide-react";
+import { Sparkles, Save, Send, ImageIcon, X, ChevronDown, Wand2, Hash, Calendar, CheckCircle2 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Pill } from "@/components/common/pill";
@@ -76,11 +76,44 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
     }
   }
 
-  function submit(action: "draft" | "submit") {
-    startTransition(() => {
-      const word = action === "draft" ? "Draft tersimpan" : "Konten dikirim ke review koordinator";
-      toast.success(word);
-      router.push("/content");
+  function submit(action: "draft" | "review" | "publish") {
+    if (!title.trim()) {
+      toast.error("Judul artikel wajib diisi.");
+      return;
+    }
+    startTransition(async () => {
+      try {
+        const targetStatus = action === "publish" ? "published" : action === "review" ? "review_divisi" : "draft";
+        const res = await fetch("/api/contents", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: title.trim(),
+            rubric,
+            status: targetStatus,
+            caption,
+            hashtags,
+            channels,
+            mediaIds: selectedMedia,
+            scheduledFor: scheduledFor ? new Date(scheduledFor).toISOString() : null,
+          }),
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || "Gagal menyimpan konten");
+        }
+        const msg =
+          action === "publish"
+            ? "Artikel berhasil diterbitkan ke website!"
+            : action === "review"
+              ? "Artikel dikirim untuk ditinjau."
+              : "Draf berhasil disimpan.";
+        toast.success(msg);
+        router.push("/content");
+        router.refresh();
+      } catch (err: unknown) {
+        toast.error((err as Error).message || "Kendala saat menyimpan artikel.");
+      }
     });
   }
 
@@ -176,11 +209,18 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         </div>
 
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <Button onClick={() => submit("draft")} variant="secondary" disabled={pending}>
-            <Save className="size-4" strokeWidth={1.75} /> Simpan draf
+          <Button
+            onClick={() => submit("publish")}
+            disabled={pending}
+            className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-xs dark:bg-emerald-500"
+          >
+            <CheckCircle2 className="size-4" strokeWidth={2} /> Terbitkan Sekarang
           </Button>
-          <Button onClick={() => submit("submit")} disabled={pending}>
-            <Send className="size-4" strokeWidth={1.75} /> Kirim untuk diperiksa
+          <Button onClick={() => submit("draft")} variant="secondary" disabled={pending} className="gap-2">
+            <Save className="size-4" strokeWidth={1.75} /> Simpan Draf
+          </Button>
+          <Button onClick={() => submit("review")} variant="ghost" disabled={pending} className="gap-2">
+            <Send className="size-4" strokeWidth={1.75} /> Kirim Review
           </Button>
         </div>
       </GlassCard>

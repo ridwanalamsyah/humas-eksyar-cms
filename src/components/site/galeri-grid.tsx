@@ -87,7 +87,7 @@ export function GaleriGrid({ items }: { items: Galeri[] }) {
               <button
                 type="button"
                 aria-label="Tutup"
-                className="grid size-11 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"
+                className="grid size-11 place-items-center rounded-xl bg-white/10 text-white hover:bg-white/20"
               >
                 <X className="size-5" />
               </button>
@@ -110,7 +110,7 @@ export function GaleriGrid({ items }: { items: Galeri[] }) {
                     type="button"
                     aria-label="Sebelumnya"
                     onClick={() => step(-1)}
-                    className="absolute left-0 grid size-11 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"
+                    className="absolute left-0 grid size-11 place-items-center rounded-xl bg-white/10 text-white hover:bg-white/20"
                   >
                     <ChevronLeft className="size-6" />
                   </button>
@@ -118,7 +118,7 @@ export function GaleriGrid({ items }: { items: Galeri[] }) {
                     type="button"
                     aria-label="Berikutnya"
                     onClick={() => step(1)}
-                    className="absolute right-0 grid size-11 place-items-center rounded-full bg-white/10 text-white hover:bg-white/20"
+                    className="absolute right-0 grid size-11 place-items-center rounded-xl bg-white/10 text-white hover:bg-white/20"
                   >
                     <ChevronRight className="size-6" />
                   </button>

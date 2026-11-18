@@ -33,13 +33,6 @@ export default async function LayananPage() {
         title="Layanan mahasiswa"
         description="Formulir online, dokumen prodi, alur layanan, dan jawaban atas pertanyaan yang sering diajukan."
       />
-      <div className="px-4 sm:px-6">
-        <StatusLayanan
-          status={statusLayanan.status}
-          pesan={statusLayanan.pesan}
-        />
-      </div>
-
 
       {/* Formulir online */}
       <section
@@ -160,7 +153,7 @@ export default async function LayananPage() {
                   {l.description}
                 </span>
               </span>
-              <span className="grid size-9 shrink-0 place-items-center rounded-full bg-mist text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+              <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-mist text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                 <ArrowUpRight className="size-4" />
               </span>
             </a>

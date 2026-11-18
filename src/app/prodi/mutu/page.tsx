@@ -54,38 +54,38 @@ export default async function MutuPage() {
         description={mutu.description}
       />
 
-      <section className="px-4 pb-24 sm:px-6">
+      <section className="w-full max-w-full px-4 pb-16 sm:pb-24 sm:px-6">
         <div className="mx-auto grid max-w-[1024px] gap-4 md:grid-cols-2">
           <Reveal>
-            <div className="flex h-full flex-col rounded-[28px] bg-accent p-8 text-white sm:p-10">
-              <p className="text-[14px] font-bold text-sand">
+            <div className="flex h-full flex-col rounded-[28px] bg-accent p-6 sm:p-10 text-white">
+              <p className="text-[13px] sm:text-[14px] font-bold text-sand">
                 Akreditasi Institusi · BAN-PT
               </p>
-              <p className="mt-auto pt-12 text-[clamp(3rem,2rem+3vw,4.5rem)] font-extrabold leading-none tracking-[-0.04em]">
+              <p className="mt-auto pt-8 sm:pt-12 text-4xl sm:text-[clamp(3rem,2rem+3vw,4.5rem)] font-extrabold leading-none tracking-[-0.04em] break-words">
                 {identity.universityAccreditation}
               </p>
-              <p className="mt-3 text-[15px] text-white/80">
+              <p className="mt-3 text-[14px] sm:text-[15px] text-white/80">
                 UIN Sunan Gunung Djati Bandung ·{" "}
                 {identity.universityAccreditationPeriod}
               </p>
             </div>
           </Reveal>
           <Reveal delay={0.06}>
-            <div className="flex h-full flex-col rounded-[28px] bg-mist p-8 sm:p-10">
-              <p className="text-[14px] font-bold text-accent">
+            <div className="flex h-full flex-col rounded-[28px] bg-mist p-6 sm:p-10">
+              <p className="text-[13px] sm:text-[14px] font-bold text-accent">
                 Akreditasi Program Studi
               </p>
-              <p className="mt-auto pt-12 text-[clamp(2.25rem,1.8rem+2vw,3.25rem)] font-extrabold leading-none tracking-[-0.03em] text-label">
+              <p className="mt-auto pt-8 sm:pt-12 text-3xl sm:text-[clamp(2.25rem,1.8rem+2vw,3.25rem)] font-extrabold leading-none tracking-[-0.03em] text-label break-words">
                 {identity.prodiAccreditation || "Terakreditasi"}
               </p>
-              <p className="mt-3 text-[15px] text-label-2">{prodi.fullName}</p>
+              <p className="mt-3 text-[14px] sm:text-[15px] text-label-2">{prodi.fullName}</p>
             </div>
           </Reveal>
         </div>
       </section>
 
       {links.length > 0 && (
-        <section className="px-4 pb-24 sm:px-6">
+        <section className="w-full max-w-full px-4 pb-16 sm:pb-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading
@@ -94,7 +94,7 @@ export default async function MutuPage() {
                 title="Survei & tracer study"
               />
             </Reveal>
-            <div className="mt-8 grid gap-4 md:grid-cols-3">
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 md:grid-cols-3">
               {links.map(({ url, title, desc, Icon }) => (
                 <a
                   key={title}
@@ -123,7 +123,7 @@ export default async function MutuPage() {
       )}
 
       {docs.length > 0 && (
-        <section className="bg-mist px-4 py-24 sm:px-6">
+        <section className="w-full max-w-full bg-mist px-4 py-16 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <SectionHeading
               align="left"
@@ -138,7 +138,7 @@ export default async function MutuPage() {
       )}
 
       {reviews.length > 0 && (
-        <section className="px-4 py-24 sm:px-6">
+        <section className="w-full max-w-full px-4 py-16 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <SectionHeading
               align="left"
@@ -155,7 +155,7 @@ export default async function MutuPage() {
       )}
       <section
         id="data"
-        className="scroll-mt-28 border-t border-hairline px-4 py-24 sm:px-6"
+        className="w-full max-w-full scroll-mt-28 border-t border-hairline px-4 py-16 sm:py-24 sm:px-6"
       >
         <div className="mx-auto max-w-[1024px]">
           <SectionHeading
@@ -164,7 +164,7 @@ export default async function MutuPage() {
             title="Data & statistik"
             description="Angka-angka utama program studi. Sumber data dicantumkan pada tiap grafik."
           />
-          <div className="mt-10">
+          <div className="mt-10 w-full max-w-full min-w-0">
             <DataStatistik />
           </div>
         </div>

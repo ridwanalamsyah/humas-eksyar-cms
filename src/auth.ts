@@ -10,9 +10,11 @@
 
 import NextAuth, { type NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
+import Credentials from "next-auth/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db, isDbEnabled, schema } from "@/lib/db";
 import { recordAuthError } from "@/lib/auth-debug";
+import { members } from "@/lib/fixtures/members";
 
 /**
  * Read an OAuth credential. Accepts Auth.js v5 convention (`AUTH_GOOGLE_ID`)
@@ -45,11 +47,72 @@ const baseConfig: NextAuthConfig = {
   secret:
     readEnv("AUTH_SECRET", "NEXTAUTH_SECRET") ??
     "humas-eksyar-cms-preview-secret-uinsgd-2026",
+  session: { strategy: "jwt" },
   providers: [
     Google({
       clientId: googleClientId ?? "preview-google-client-id",
       clientSecret: googleClientSecret ?? "preview-google-client-secret",
       allowDangerousEmailAccountLinking: true,
+    }),
+    Credentials({
+      id: "credentials",
+      name: "Akun Email / Roster",
+      credentials: {
+        email: { label: "Email", type: "email" },
+        role: { label: "Role", type: "text" },
+      },
+      async authorize(credentials) {
+        const rawEmail = (credentials?.email as string)?.trim().toLowerCase() || "";
+        const role = (credentials?.role as string)?.trim() || "";
+        if (!rawEmail && !role) return null;
+
+        // Pengurus Admin Utama (Ridwan)
+        if (
+          role === "admin" ||
+          rawEmail.includes("1239220061") ||
+          rawEmail === "admin@eksyar.ac.id" ||
+          rawEmail === "humaseksyaruinbdg@gmail.com" ||
+          rawEmail === "ridwanalamsyah122@gmail.com"
+        ) {
+          const m = members.find((x) => x.id === "mbr-ridwan") ?? members[0];
+          return {
+            id: m.id,
+            name: m.name,
+            email: "1239220061@student.uinsgd.ac.id",
+            image: null,
+          };
+        }
+
+        // Penulis Berita (Alya)
+        if (role === "anggota" || role === "mahasiswa" || rawEmail.includes("1239220048")) {
+          const m = members.find((x) => x.id === "mbr-alya") ?? members[1];
+          return {
+            id: m.id,
+            name: m.name,
+            email: "1239220048@student.uinsgd.ac.id",
+            image: null,
+          };
+        }
+
+        // Cek kecocokan roster berdasarkan email
+        const matched = members.find((x) => x.email.toLowerCase() === rawEmail);
+        if (matched) {
+          return {
+            id: matched.id,
+            name: matched.name,
+            email: matched.email,
+            image: null,
+          };
+        }
+
+        // Pengguna baru (menunggu konfirmasi admin)
+        return {
+          id: "pending-" + (rawEmail ? rawEmail.replace(/[^a-z0-9]/g, "-") : "user"),
+          name: rawEmail ? rawEmail.split("@")[0].replace(/[\._]/g, " ") : "Pengguna Baru",
+          email: rawEmail,
+          image: null,
+        };
+      },
     }),
   ],
   pages: {
@@ -67,9 +130,21 @@ const baseConfig: NextAuthConfig = {
     },
   },
   callbacks: {
-    async session({ session, user }) {
-      if (session.user && user?.id) {
-        session.user.id = user.id;
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.name = user.name;
+        token.picture = user.image;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        if (token?.id) session.user.id = token.id as string;
+        if (token?.email) session.user.email = token.email as string;
+        if (token?.name) session.user.name = token.name as string;
+        if (token?.picture) session.user.image = token.picture as string;
       }
       return session;
     },
@@ -80,20 +155,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ...baseConfig,
   ...(isDbEnabled && db
     ? {
-        // The adapter defaults to singular table names (`user`, `account`,
-        // `session`, `verificationToken`). Our schema exports the
-        // conventional Drizzle plural names so we wire them up explicitly —
-        // otherwise the adapter writes into tables that don't exist and the
-        // OAuth callback bails with `?error=Configuration`.
         adapter: DrizzleAdapter(db, {
           usersTable: schema.users,
           accountsTable: schema.accounts,
           sessionsTable: schema.sessions,
           verificationTokensTable: schema.verificationTokens,
         }),
-        session: { strategy: "database" },
       }
-    : {
-        session: { strategy: "jwt" },
-      }),
+    : {}),
 });

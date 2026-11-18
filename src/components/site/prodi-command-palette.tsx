@@ -9,7 +9,6 @@ import {
   FileCheck2,
   GraduationCap,
   Search,
-  Sparkles,
   UserRound,
   X,
 } from "lucide-react";
@@ -45,22 +44,6 @@ const STATIC_ITEMS: PaletteItem[] = [
       keywords: `${it.label} ${it.description ?? ""} ${g.label}`,
     })),
   ]),
-  {
-    id: "form-pinjam",
-    category: "Halaman & Layanan",
-    title: "Formulir Peminjaman Ruang & Alat",
-    subtitle: "Pinjam Aula FEBI, GIS BEI, Lab Mini Banking, atau Ruang Sidang",
-    href: "/prodi/formulir/pinjam",
-    keywords: "pinjam ruang alat aula lab",
-  },
-  {
-    id: "form-saran",
-    category: "Halaman & Layanan",
-    title: "Kotak Saran & Masukan Layanan Prodi",
-    subtitle: "Sampaikan aspirasi, evaluasi mutu, atau saran akademik",
-    href: "/prodi/formulir/saran",
-    keywords: "saran masukan keluhan survei mutu",
-  },
   ...dosen.map((d) => ({
     id: `dosen-${d.name}`,
     category: "Dosen & Pimpinan" as const,
@@ -104,25 +87,24 @@ export function ProdiCommandPalette({
 
   useEffect(() => {
     if (open) {
-      setTimeout(() => inputRef.current?.focus(), 40);
+      setTimeout(() => inputRef.current?.focus(), 60);
+    } else {
+      setQuery("");
     }
   }, [open]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) {
-      return STATIC_ITEMS.slice(0, 12);
-    }
+    if (!q) return STATIC_ITEMS.slice(0, 10);
     const tokens = q.split(/\s+/).filter(Boolean);
-    return STATIC_ITEMS.filter((it) => {
-      const hay = `${it.title} ${it.subtitle} ${it.keywords}`.toLowerCase();
+    return STATIC_ITEMS.filter((item) => {
+      const hay = `${item.title} ${item.subtitle} ${item.keywords}`.toLowerCase();
       return tokens.every((t) => hay.includes(t));
-    }).slice(0, 16);
+    }).slice(0, 20);
   }, [query]);
 
   const go = (href: string) => {
     onClose();
-    setQuery("");
     router.push(href);
   };
 
@@ -133,9 +115,9 @@ export function ProdiCommandPalette({
       case "Mata Kuliah":
         return GraduationCap;
       case "Kamus Ekonomi Syariah":
-        return Sparkles;
-      default:
         return BookOpen;
+      default:
+        return FileCheck2;
     }
   };
 
@@ -143,14 +125,11 @@ export function ProdiCommandPalette({
     <AnimatePresence>
       {open && (
         <motion.div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Pencarian cepat website Ekonomi Syariah"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.16 }}
-          className="fixed inset-0 z-[80] flex items-start justify-center bg-navy/45 px-4 pt-16 backdrop-blur-xs sm:pt-24"
+          className="fixed inset-0 z-[80] flex items-start justify-center bg-navy/45 px-4 pt-10 pb-8 backdrop-blur-xs sm:pt-20"
           onClick={onClose}
         >
           <motion.div
@@ -159,7 +138,7 @@ export function ProdiCommandPalette({
             exit={{ opacity: 0, scale: 0.97, y: -8 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-2xl overflow-hidden rounded-[24px] border border-hairline bg-canvas shadow-[0_24px_64px_rgba(12,35,64,0.28)]"
+            className="flex w-full max-w-2xl max-h-[84dvh] sm:max-h-[78vh] flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas shadow-[0_24px_64px_rgba(12,35,64,0.28)]"
           >
             <form
               onSubmit={(e) => {
@@ -170,7 +149,7 @@ export function ProdiCommandPalette({
                   go(filtered[0].href);
                 }
               }}
-              className="flex items-center gap-3 border-b border-hairline px-4 py-3.5 sm:px-5"
+              className="flex shrink-0 items-center gap-3 border-b border-hairline px-4 py-3.5 sm:px-5"
             >
               <Search className="size-5 shrink-0 text-accent" />
               <input
@@ -184,7 +163,7 @@ export function ProdiCommandPalette({
                 <button
                   type="button"
                   onClick={() => setQuery("")}
-                  className="rounded-full p-1 text-label-3 hover:bg-mist hover:text-label"
+                  className="rounded-xl p-1 text-label-3 hover:bg-mist hover:text-label"
                   aria-label="Bersihkan pencarian"
                 >
                   <X className="size-4" />
@@ -199,7 +178,10 @@ export function ProdiCommandPalette({
               </button>
             </form>
 
-            <div className="max-h-[62vh] overflow-y-auto p-2 sm:p-3">
+            <div
+              className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-2 sm:p-3 scroll-smooth"
+              style={{ WebkitOverflowScrolling: "touch" }}
+            >
               {query.trim().length > 0 && (
                 <button
                   type="button"
@@ -211,7 +193,7 @@ export function ProdiCommandPalette({
                   <span className="flex items-center gap-2.5 min-w-0">
                     <FileCheck2 className="size-4 shrink-0 text-accent" />
                     <span className="truncate text-[14px] font-semibold text-label">
-                      Telusuri &ldquo;{query.trim()}&rdquo; di 515+ Skripsi, Berita & Dokumen
+                      Telusuri &ldquo;{query.trim()}&rdquo; di Judul Skripsi, Berita & Dokumen
                     </span>
                   </span>
                   <ArrowRight className="size-4 shrink-0 text-accent" />
@@ -249,24 +231,21 @@ export function ProdiCommandPalette({
                   })}
                 </ul>
               ) : (
-                <div className="py-8 text-center text-[14px] text-label-2">
-                  Tekan <strong>Enter</strong> untuk mencari &ldquo;{query}&rdquo; di Direktori Skripsi & Berita.
+                <div className="py-12 text-center">
+                  <p className="text-[14.5px] font-semibold text-label">
+                    Tidak ada hasil langsung untuk &ldquo;{query}&rdquo;
+                  </p>
+                  <p className="mt-1 text-[13px] text-label-2">
+                    Tekan Enter untuk menelusuri di seluruh basis data prodi.
+                  </p>
                 </div>
               )}
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-2 border-t border-hairline bg-mist/50 px-4 py-2.5 text-[11.5px] text-label-2">
-              <span>
-                Pintasan: <kbd className="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[10.5px]">⌘K</kbd> atau <kbd className="rounded border border-hairline bg-canvas px-1.5 py-0.5 font-mono text-[10.5px]">Ctrl+K</kbd>
-              </span>
-              <button
-                type="button"
-                onClick={() => go("/prodi/cari")}
-                className="font-semibold text-accent hover:underline"
-              >
-                Buka Halaman Pencarian Lengkap ›
-              </button>
-            </div>
+            <footer className="flex shrink-0 items-center justify-between border-t border-hairline bg-mist/40 px-4 py-2.5 text-[11.5px] text-label-3 sm:px-5">
+              <span>Navigasi cepat Program Studi Ekonomi Syariah</span>
+              <span>Gunakan tombol panah &amp; Enter</span>
+            </footer>
           </motion.div>
         </motion.div>
       )}

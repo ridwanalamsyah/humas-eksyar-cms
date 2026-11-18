@@ -14,6 +14,10 @@ import {
   Save,
   Search,
   Trash2,
+  ChevronDown,
+  ChevronUp,
+  Layers,
+  Eye,
 } from "lucide-react";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
@@ -1584,11 +1588,31 @@ export function WebsiteEditor({
     TABS.some((t) => t.value === initialTab) ? initialTab! : TABS[0].value,
   );
   const [query, setQuery] = useState("");
+  const [focusedSection, setFocusedSection] = useState<string>("all");
+  const [collapsedMap, setCollapsedMap] = useState<Record<string, boolean>>({});
+
+  const toggleCollapse = (key: string) => {
+    setCollapsedMap((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const collapseAll = () => {
+    const next: Record<string, boolean> = {};
+    active.sections.forEach((s) => {
+      next[s.key] = true;
+    });
+    setCollapsedMap(next);
+  };
+
+  const expandAll = () => {
+    setCollapsedMap({});
+  };
+
   // Pindah bagian saat pintasan di sidebar (?bagian=…) diklik.
   useEffect(() => {
-    if (initialTab && TABS.some((t) => t.value === initialTab))
-      // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (initialTab && TABS.some((t) => t.value === initialTab)) {
       setTab(initialTab);
+      setFocusedSection("all");
+    }
   }, [initialTab]);
   const [config, setConfig] = useState<WebsiteConfig>(initial);
   const [saved, setSaved] = useState(() => JSON.stringify(initial));
@@ -1649,17 +1673,18 @@ export function WebsiteEditor({
 
   function jumpTo(tabValue: string, key: string) {
     setTab(tabValue);
+    setFocusedSection(key);
     setQuery("");
-    requestAnimationFrame(() =>
-      document
-        .getElementById(`bagian-${key}`)
-        ?.scrollIntoView({ behavior: "smooth", block: "start" }),
-    );
   }
+
+  const displayedSections =
+    focusedSection === "all"
+      ? active.sections
+      : active.sections.filter((s) => s.key === focusedSection);
 
   return (
     <div className="mt-6">
-      <div className="z-20 rounded-2xl glass-thick px-3 py-3 sm:sticky sm:top-2">
+      <div className="z-20 rounded-2xl glass-thick px-3 py-3 sm:sticky sm:top-2 shadow-2xs">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="relative w-full min-w-0 sm:w-auto sm:max-w-xs sm:flex-1">
             <Search
@@ -1670,7 +1695,7 @@ export function WebsiteEditor({
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Cari bagian: lomba, kalender, zakat…"
+              placeholder="Cari bagian: mitra, dosen, zakat…"
               aria-label="Cari bagian website"
               className="h-8 w-full rounded-lg bg-foreground/[0.05] pr-2 pl-8 text-[13px] outline-none placeholder:text-foreground/40 focus:ring-2 focus:ring-foreground/15"
             />
@@ -1701,37 +1726,62 @@ export function WebsiteEditor({
             )}
           </div>
           <div className="flex items-center gap-2">
+            {dirty && (
+              <span className="hidden items-center gap-1.5 text-[12px] font-medium text-amber-600 dark:text-amber-400 sm:inline-flex">
+                <span className="size-2 rounded-full bg-amber-500 animate-pulse" />
+                Belum disimpan
+              </span>
+            )}
             <Button variant="ghost" size="sm" asChild>
               <a href="/" target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="size-3.5" strokeWidth={1.75} /> Lihat
-                website
+                <ExternalLink className="size-3.5" strokeWidth={1.75} /> Buka website
               </a>
             </Button>
-            <Button size="sm" disabled={pending || !dirty} onClick={save}>
+            <Button
+              size="sm"
+              disabled={pending || !dirty}
+              onClick={save}
+              className={cn(
+                "transition-all shadow-xs",
+                dirty ? "bg-emerald-600 text-white hover:bg-emerald-700 dark:bg-emerald-500" : ""
+              )}
+            >
               <Save className="size-3.5" strokeWidth={1.75} />{" "}
-              {pending ? "Menyimpan…" : dirty ? "Simpan" : "Tersimpan"}
+              {pending ? "Menyimpan…" : dirty ? "Simpan Perubahan" : "Tersimpan"}
             </Button>
           </div>
         </div>
+
+        {/* Tab Kategori Utama */}
         <nav
           aria-label="Bagian website"
-          className="mt-2.5 flex flex-wrap gap-1.5"
+          className="mt-2.5 flex flex-wrap gap-1.5 border-t border-hairline/60 pt-2.5"
         >
           {TABS.map((t) => (
             <button
               key={t.value}
               type="button"
               aria-pressed={t.value === active.value}
-              onClick={() => setTab(t.value)}
+              onClick={() => {
+                setTab(t.value);
+                setFocusedSection("all");
+              }}
               className={cn(
-                "rounded-full px-3 py-1 text-[12.5px] transition-colors",
+                "rounded-xl px-3 py-1.5 text-[12.5px] font-medium transition-colors",
                 t.value === active.value
-                  ? "bg-foreground text-background"
-                  : "bg-foreground/[0.05] text-foreground/70 hover:bg-foreground/[0.09] hover:text-foreground",
+                  ? "bg-accent text-white shadow-2xs"
+                  : "bg-foreground/[0.04] text-foreground/70 hover:bg-foreground/[0.08] hover:text-foreground",
               )}
             >
               {t.label}
-              <span className="ml-1 opacity-50">{t.sections.length}</span>
+              <span
+                className={cn(
+                  "ml-1.5 rounded-full px-1.5 py-0.2 text-[10.5px] tabular-nums",
+                  t.value === active.value ? "bg-white/20 text-white" : "opacity-60"
+                )}
+              >
+                {t.sections.length}
+              </span>
             </button>
           ))}
         </nav>
@@ -1740,7 +1790,7 @@ export function WebsiteEditor({
       {dirty && (
         <div className="fixed inset-x-4 bottom-24 z-30 sm:hidden">
           <Button
-            className="w-full shadow-lg"
+            className="w-full shadow-lg bg-emerald-600 text-white hover:bg-emerald-700"
             disabled={pending}
             onClick={save}
           >
@@ -1750,87 +1800,167 @@ export function WebsiteEditor({
         </div>
       )}
 
-      <div className="mt-4 flex flex-wrap gap-1.5">
-        {active.sections.map((sec) => (
+      {/* Sub-navigasi Fokus Bagian (Anti-Numpuk / Anti-Scroll Lelah) */}
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-3">
+        <div className="flex flex-wrap items-center gap-1.5">
+          <span className="text-[12px] font-medium text-label-3 mr-1">Fokus Bagian:</span>
           <button
-            key={sec.key}
             type="button"
-            onClick={() => jumpTo(active.value, sec.key)}
-            className="rounded-lg border border-foreground/10 px-2.5 py-1 text-[12px] text-foreground/65 hover:border-foreground/25 hover:text-foreground"
+            onClick={() => setFocusedSection("all")}
+            className={cn(
+              "rounded-xl px-3 py-1 text-[12px] font-medium transition-all",
+              focusedSection === "all"
+                ? "bg-accent text-white shadow-2xs"
+                : "bg-canvas text-label-2 border border-hairline hover:bg-mist hover:text-label",
+            )}
           >
-            {sec.title}
+            Semua Bagian ({active.sections.length})
           </button>
-        ))}
+          {active.sections.map((sec) => {
+            const isSelected = focusedSection === sec.key;
+            return (
+              <button
+                key={sec.key}
+                type="button"
+                onClick={() => setFocusedSection(sec.key)}
+                className={cn(
+                  "rounded-xl px-3 py-1 text-[12px] font-medium transition-all",
+                  isSelected
+                    ? "bg-accent text-white shadow-2xs"
+                    : "bg-canvas text-label-2 border border-hairline hover:bg-mist hover:text-label",
+                )}
+              >
+                {sec.title}
+              </button>
+            );
+          })}
+        </div>
+
+        {focusedSection === "all" && active.sections.length > 1 && (
+          <div className="flex items-center gap-1.5 text-[12px]">
+            <button
+              type="button"
+              onClick={collapseAll}
+              className="text-label-3 hover:text-label px-2 py-0.5 rounded-lg hover:bg-mist transition-colors"
+            >
+              Tutup Semua
+            </button>
+            <span className="text-hairline">·</span>
+            <button
+              type="button"
+              onClick={expandAll}
+              className="text-label-3 hover:text-label px-2 py-0.5 rounded-lg hover:bg-mist transition-colors"
+            >
+              Buka Semua
+            </button>
+          </div>
+        )}
+
+        {focusedSection !== "all" && (
+          <button
+            type="button"
+            onClick={() => setFocusedSection("all")}
+            className="text-[12px] font-medium text-accent hover:underline inline-flex items-center gap-1"
+          >
+            ← Tampilkan Semua Bagian
+          </button>
+        )}
       </div>
 
-      <div className="mt-6 grid gap-6">
-        {active.sections.map((section) => (
-          <GlassCard
-            key={section.key}
-            id={`bagian-${section.key}`}
-            variant="thick"
-            className="scroll-mt-40 p-5 sm:p-6"
-          >
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <h2 className="font-display text-[17px] font-semibold tracking-tight">
-                  {section.title}
-                </h2>
-                {section.hint && (
-                  <p className="mt-1 text-[12px] text-foreground/55">
-                    {section.hint}
-                  </p>
-                )}
-                {SHOWN_ON[section.key] && (
-                  <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-foreground/55">
-                    Tampil di:
-                    {SHOWN_ON[section.key]!.map(([label, href]) => (
-                      <a
-                        key={href}
-                        href={href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-0.5 font-medium text-foreground/75 underline-offset-2 hover:text-foreground hover:underline"
-                      >
-                        {label}
-                        <ExternalLink className="size-3" strokeWidth={1.75} />
-                      </a>
-                    ))}
-                  </p>
-                )}
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    if (confirm(`Kembalikan "${section.title}" ke data awal?`))
-                      setSection(section.key, defaults[section.key]);
-                  }}
-                  className="inline-flex items-center gap-1 text-[12px] text-foreground/55 hover:text-foreground"
+      {/* Render Kartu Bagian */}
+      <div className="mt-5 grid gap-5">
+        {displayedSections.map((section) => {
+          const isCollapsed = focusedSection === "all" && !!collapsedMap[section.key];
+          const rawVal = config[section.key];
+          const itemCount = Array.isArray(rawVal) ? rawVal.length : null;
+
+          return (
+            <GlassCard
+              key={section.key}
+              id={`bagian-${section.key}`}
+              variant="thick"
+              className="scroll-mt-40 p-5 sm:p-6 transition-all"
+            >
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div
+                  className="flex-1 cursor-pointer select-none"
+                  onClick={() => focusedSection === "all" && toggleCollapse(section.key)}
                 >
-                  <RotateCcw className="size-3.5" strokeWidth={1.75} /> Data
-                  awal
-                </button>
+                  <div className="flex items-center gap-2">
+                    <h2 className="font-display text-[16.5px] font-semibold tracking-tight text-label">
+                      {section.title}
+                    </h2>
+                    {itemCount !== null && (
+                      <span className="rounded-full bg-mist px-2 py-0.5 text-[11px] font-medium text-label-2 tabular-nums border border-hairline">
+                        {itemCount} item
+                      </span>
+                    )}
+                    {focusedSection === "all" && (
+                      <span className="text-label-3 transition-transform ml-1">
+                        {isCollapsed ? <ChevronDown className="size-4" /> : <ChevronUp className="size-4" />}
+                      </span>
+                    )}
+                  </div>
+                  {!isCollapsed && section.hint && (
+                    <p className="mt-1 text-[12px] text-label-2">
+                      {section.hint}
+                    </p>
+                  )}
+                  {!isCollapsed && SHOWN_ON[section.key] && (
+                    <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-label-3">
+                      Tampil di:
+                      {SHOWN_ON[section.key]!.map(([label, href]) => (
+                        <a
+                          key={href}
+                          href={href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="inline-flex items-center gap-0.5 font-medium text-label hover:text-accent underline-offset-2 hover:underline"
+                        >
+                          {label}
+                          <ExternalLink className="size-3" strokeWidth={1.75} />
+                        </a>
+                      ))}
+                    </p>
+                  )}
+                </div>
+                <div className="flex items-center gap-3">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (confirm(`Kembalikan "${section.title}" ke data awal?`))
+                        setSection(section.key, defaults[section.key]);
+                    }}
+                    className="inline-flex items-center gap-1 text-[12px] text-label-3 hover:text-label transition-colors"
+                  >
+                    <RotateCcw className="size-3.5" strokeWidth={1.75} /> Data awal
+                  </button>
+                </div>
               </div>
-            </div>
-            <div className="mt-4">
-              {section.key === "kegiatan" && (
-                <div className="mb-3">
-                  <KegiatanFromCaption
-                    onCreate={(item) =>
-                      setSection("kegiatan", [item, ...config.kegiatan])
-                    }
+
+              {!isCollapsed && (
+                <div className="mt-5 border-t border-hairline pt-4">
+                  {section.key === "kegiatan" && (
+                    <div className="mb-3">
+                      <KegiatanFromCaption
+                        onCreate={(item) =>
+                          setSection("kegiatan", [item, ...config.kegiatan])
+                        }
+                      />
+                    </div>
+                  )}
+                  <SectionBody
+                    section={section}
+                    value={config[section.key]}
+                    onChange={(v) => setSection(section.key, v)}
                   />
                 </div>
               )}
-              <SectionBody
-                section={section}
-                value={config[section.key]}
-                onChange={(v) => setSection(section.key, v)}
-              />
-            </div>
-          </GlassCard>
-        ))}
+            </GlassCard>
+          );
+        })}
       </div>
     </div>
   );

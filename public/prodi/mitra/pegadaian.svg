@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 48" fill="none">
+  <circle cx="16" cy="18" r="9" fill="#008850" opacity="0.9" />
+  <circle cx="28" cy="18" r="9" fill="#84BD00" opacity="0.85" />
+  <circle cx="22" cy="28" r="9" fill="#006A38" opacity="0.9" />
+  <text x="44" y="24" font-family="Plus Jakarta Sans, sans-serif" font-weight="800" font-size="14" fill="#006A38">Pegadaian</text>
+  <text x="44" y="36" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" font-size="10.5" fill="#84BD00" letter-spacing="1">SYARIAH</text>
+</svg>

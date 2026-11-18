@@ -21,6 +21,7 @@ const ROLE_LABEL: Record<Role, string> = {
   ketua_divisi: "Koordinator",
   sekjen: "Sekjen",
   admin: "Admin",
+  pending: "Menunggu Konfirmasi",
 };
 
 export function MembersDirectory({ members }: Props) {

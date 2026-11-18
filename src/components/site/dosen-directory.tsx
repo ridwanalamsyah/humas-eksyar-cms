@@ -65,7 +65,7 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
               <Link
                 key={`${d.name}-${i}`}
                 href={`/prodi/dosen/${dosenSlug(d.name)}`}
-                className="group flex items-start gap-3.5 rounded-[18px] border border-hairline bg-canvas p-4 transition-colors hover:border-accent/40 hover:bg-mist/30"
+                className="group flex items-start gap-4 rounded-2xl border border-hairline bg-canvas p-5 transition-colors hover:border-accent/40 hover:bg-mist/30 shadow-xs"
               >
                 {d.photo ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -73,10 +73,10 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
                     src={d.photo}
                     alt={d.name}
                     loading="lazy"
-                    className="size-13 shrink-0 rounded-full object-cover"
+                    className="size-13 shrink-0 rounded-2xl object-cover"
                   />
                 ) : (
-                  <span className="grid size-13 shrink-0 place-items-center rounded-full bg-accent-soft text-[15px] font-bold text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+                  <span className="grid size-13 shrink-0 place-items-center rounded-xl bg-accent-soft text-[15px] font-bold text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                     {initials(d.name)}
                   </span>
                 )}
@@ -109,7 +109,7 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
               <button
                 type="button"
                 onClick={() => setShowAll((v) => !v)}
-                className="rounded-full border border-hairline bg-canvas px-6 py-2.5 text-[14px] font-semibold text-label transition-colors hover:border-accent hover:text-accent"
+                className="rounded-xl border border-hairline bg-canvas px-6 py-2.5 text-[14px] font-semibold text-label transition-colors hover:border-accent hover:text-accent shadow-xs"
               >
                 {showAll
                   ? "Ringkas tampilan dosen"

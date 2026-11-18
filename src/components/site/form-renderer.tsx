@@ -166,7 +166,7 @@ export function FormRenderer({
                   aria-label={`${n} dari ${scale}`}
                   onClick={() => set(f.name, n)}
                   className={cn(
-                    "grid size-11 place-items-center rounded-full border transition-colors",
+                    "grid size-11 place-items-center rounded-xl border transition-colors",
                     n <= v
                       ? "border-accent bg-accent text-white"
                       : "border-hairline bg-canvas text-label-3 hover:border-accent/50",
@@ -264,7 +264,7 @@ export function FormRenderer({
         <button
           type="submit"
           disabled={state === "sending" || (!!def.consent && !consent)}
-          className="inline-flex items-center gap-2 rounded-full bg-accent px-7 py-3 text-[15.5px] font-semibold text-white transition hover:bg-accent-strong disabled:opacity-50"
+          className="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3 text-[15.5px] font-semibold text-white transition hover:bg-accent-strong disabled:opacity-50 shadow-xs"
         >
           {state === "sending" && <Loader2 className="size-4 animate-spin" />}
           Kirim
