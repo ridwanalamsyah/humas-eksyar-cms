@@ -499,7 +499,7 @@ export const prestasi = [
     achievement:
       "Lulus Munaqasah Jalur Publikasi Jurnal SINTA 2 (Share UIN Ar-Raniry) & Kontributor Islamic Finance News (IFN)",
     group: "Mahasiswa & Alumni",
-    photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
+    photo: "/prodi/prestasi/hakiki-ramadhan.jpg",
   },
   {
     name: "Sabila Syifa Noorazlina",
@@ -507,7 +507,7 @@ export const prestasi = [
     achievement:
       "Lulus Munaqasah Jalur Publikasi Jurnal Terakreditasi SINTA 4 (JEMSI) tentang Sertifikasi Halal Gratis (SEHATI)",
     group: "Mahasiswa & Alumni",
-    photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
+    photo: "/prodi/prestasi/sabila-syifa.jpg",
   },
   {
     name: "Annisa Nur Salam, S.E., M.E.",
@@ -1191,8 +1191,7 @@ export const navGroups: NavGroup[] = [
     label: "Mahasiswa",
     href: "/prodi/layanan",
     items: [
-      { href: "/prodi/layanan", label: "Layanan & Formulir", description: "Surat, formulir, unduhan" },
-      { href: "/prodi/layanan#digital", label: "Sistem Kampus", description: "SALAM, e-Knows, Digilib, SKPI" },
+      { href: "/prodi/layanan", label: "Layanan & Sistem Kampus", description: "Surat, formulir, SALAM, Digilib" },
       { href: "/prodi/kemahasiswaan", label: "Kemahasiswaan & Lomba", description: "HMJ, prestasi, info lomba" },
       { href: "/prodi/beasiswa", label: "Beasiswa", description: "Syarat dan tenggat" },
       { href: "/prodi/mahasiswa-baru", label: "Info Pendaftaran", description: "Untuk calon mahasiswa" },
@@ -1206,8 +1205,7 @@ export const navGroups: NavGroup[] = [
     label: "Kabar",
     href: "/prodi/berita",
     items: [
-      { href: "/prodi/berita", label: "Berita & Pengumuman", description: "Kabar resmi prodi" },
-      { href: "/prodi/berita?kategori=artikel", label: "Buletin Mahasiswa", description: "Tulisan mahasiswa" },
+      { href: "/prodi/berita", label: "Berita & Buletin", description: "Kabar prodi dan tulisan mahasiswa" },
       { href: "/prodi/galeri", label: "Galeri & Video", description: "Foto dan video kegiatan" },
     ],
   },

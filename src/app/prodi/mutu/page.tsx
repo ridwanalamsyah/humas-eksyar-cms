@@ -123,7 +123,7 @@ export default async function MutuPage() {
       )}
 
       {docs.length > 0 && (
-        <section className="w-full max-w-full bg-mist px-4 py-16 sm:py-24 sm:px-6">
+        <section className="w-full max-w-full bg-mist px-4 py-16 sm:py-14 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <SectionHeading
               align="left"
@@ -138,7 +138,7 @@ export default async function MutuPage() {
       )}
 
       {reviews.length > 0 && (
-        <section className="w-full max-w-full px-4 py-16 sm:py-24 sm:px-6">
+        <section className="w-full max-w-full px-4 py-16 sm:py-14 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <SectionHeading
               align="left"
@@ -155,7 +155,7 @@ export default async function MutuPage() {
       )}
       <section
         id="data"
-        className="w-full max-w-full scroll-mt-28 border-t border-hairline px-4 py-16 sm:py-24 sm:px-6"
+        className="w-full max-w-full scroll-mt-28 border-t border-hairline px-4 py-16 sm:py-14 sm:py-24 sm:px-6"
       >
         <div className="mx-auto max-w-[1024px]">
           <SectionHeading

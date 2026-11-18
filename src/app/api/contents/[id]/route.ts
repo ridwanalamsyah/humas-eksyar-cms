@@ -6,6 +6,7 @@
  *   DELETE /api/contents/:id   (auth required)
  */
 
+import { BULETIN_HMJ_RUBRIC } from "@/lib/site/content";
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { auth } from "@/auth";
@@ -57,6 +58,19 @@ export async function PATCH(req: NextRequest, { params }: Params) {
     return NextResponse.json({ error: "Data tidak ditemukan." }, { status: 404 });
   }
   const patch = await req.json().catch(() => ({}));
+  // Akun HMJ hanya mengubah tulisannya sendiri, tetap di rubrik Buletin HMJ,
+  // dan tidak bisa menerbitkan sendiri.
+  if (member.role === "anggota") {
+    if (prev.authorId !== member.id) {
+      return NextResponse.json(
+        { error: "Akun HMJ hanya bisa mengubah tulisannya sendiri." },
+        { status: 403 },
+      );
+    }
+    if (patch.rubric !== undefined && patch.rubric !== BULETIN_HMJ_RUBRIC) delete patch.rubric;
+    if (patch.status === "published" || patch.status === "approved" || patch.status === "scheduled")
+      patch.status = "review_divisi";
+  }
   const content = await updateContent(id, patch);
   if (!content) {
     return NextResponse.json({ error: "Data tidak ditemukan." }, { status: 404 });

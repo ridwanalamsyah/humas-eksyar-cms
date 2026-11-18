@@ -7,6 +7,7 @@ import {
   getBrandingConfig,
 } from "@/lib/data/provider";
 import Link from "next/link";
+import { BULETIN_HMJ_RUBRIC } from "@/lib/site/content";
 import { ArrowLeft } from "lucide-react";
 
 export const metadata = { title: "Konten Baru" };
@@ -19,6 +20,12 @@ export default async function NewContentPage() {
     listRubrics(),
     getBrandingConfig(),
   ]);
+
+  // Akun HMJ (peran "anggota") hanya menulis Buletin Artikel HMJ.
+  const allowedRubrics =
+    member?.role === "anggota"
+      ? rubrics.filter((r) => r.slug === BULETIN_HMJ_RUBRIC)
+      : rubrics;
 
   return (
     <AppShell width="wide">
@@ -40,7 +47,7 @@ export default async function NewContentPage() {
       <ContentEditor
         media={media}
         author={member}
-        rubrics={rubrics}
+        rubrics={allowedRubrics}
         defaultHashtags={branding.defaultHashtags}
       />
     </AppShell>

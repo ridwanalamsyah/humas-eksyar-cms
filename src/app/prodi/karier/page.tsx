@@ -70,7 +70,7 @@ export default async function KarierPage() {
           </a>
         </div>
       </section>
-      <section className="px-4 py-24 sm:px-6">
+      <section className="px-4 py-14 sm:py-24 sm:px-6">
         <div className="mx-auto max-w-[1024px]">
           <Reveal>
             <SectionHeading
@@ -100,7 +100,7 @@ export default async function KarierPage() {
       </section>
 
       {testimoni.length > 0 && (
-        <section className="bg-mist py-24">
+        <section className="bg-mist py-14 sm:py-24">
           <Reveal className="mx-auto max-w-[1024px] px-4 sm:px-0">
             <SectionHeading
               align="left"
@@ -161,7 +161,7 @@ export default async function KarierPage() {
       )}
 
       {mitra.length > 0 && (
-        <section className="bg-mist px-4 py-24 sm:px-6">
+        <section className="bg-mist px-4 py-14 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <SectionHeading
               align="left"

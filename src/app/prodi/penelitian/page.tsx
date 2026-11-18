@@ -84,7 +84,7 @@ export default async function PenelitianPage() {
         </section>
       )}
 
-      <section className="bg-mist px-4 py-24 sm:px-6">
+      <section className="bg-mist px-4 py-14 sm:py-24 sm:px-6">
         <div className="mx-auto max-w-[1024px]">
           <Reveal>
             <SectionHeading
@@ -119,7 +119,7 @@ export default async function PenelitianPage() {
       </section>
 
       {pengabdian.length > 0 && (
-        <section className="px-4 py-24 sm:px-6">
+        <section className="px-4 py-14 sm:py-24 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading

@@ -45,11 +45,11 @@ export default async function KemahasiswaanPage() {
             description="Kegiatan akademik dan nonakademik yang dapat diikuti mahasiswa Ekonomi Syariah di luar perkuliahan."
           />
         </Reveal>
-        <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 sm:grid-cols-2">
+        <div className="rail mx-auto mt-10 grid max-w-[1024px] gap-x-10 gap-y-8 sm:mt-14 sm:grid-cols-2">
           {kegiatanMahasiswa.map((k, i) => (
             <Reveal key={`${k.title}-${i}`} delay={(i % 2) * 0.06}>
-              <div className="h-full rounded-[24px] bg-canvas p-8 transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
-                <h3 className="text-[24px] font-bold tracking-[-0.01em] text-label">
+              <div className="h-full pt-6 border-t border-hairline">
+                <h3 className="text-[20px] font-bold leading-snug tracking-[-0.01em] text-label sm:text-[24px]">
                   {k.title}
                 </h3>
                 <p className="mt-2 text-[16px] leading-[1.5] text-label-2">

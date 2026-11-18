@@ -48,23 +48,23 @@ export default async function ProfilPage() {
         description={`${prodi.fullName}, ${prodi.faculty}, ${prodi.university}.`}
       />
 
-      {/* Sejarah: satu paragraf pembuka, lalu garis waktu tahun besar tanpa kotak */}
-      <section id="sejarah" className="scroll-mt-28 px-4 py-16 sm:px-6 sm:py-20">
-        <div className="mx-auto max-w-[1060px]">
-          <Reveal>
+      {/* Sejarah: paragraf pembuka + satu garis waktu yang menyambung */}
+      <section id="sejarah" className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-14 sm:py-20">
+        <div className="mx-auto grid max-w-[1060px] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-16">
+          <Reveal className="lg:sticky lg:top-28 lg:self-start">
             <SectionHeading align="left" title="Sejarah singkat" />
             {profil.sejarah[0] && (
-              <p className="mt-4 max-w-[62ch] text-[17px] leading-[1.7] text-label-2">
+              <p className="mt-4 text-[16px] leading-[1.75] text-label-2 sm:text-[17px]">
                 {profil.sejarah[0]}
               </p>
             )}
             {profil.sejarah.length > 1 && (
-              <details className="group mt-3 max-w-[62ch]">
-                <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-[16px] font-semibold text-accent">
+              <details className="group mt-2">
+                <summary className="inline-flex min-h-11 cursor-pointer list-none items-center text-[16px] font-semibold text-accent">
                   <span className="group-open:hidden">Baca selengkapnya</span>
                   <span className="hidden group-open:inline">Tutup</span>
                 </summary>
-                <div className="mt-2 space-y-4 text-[16px] leading-[1.7] text-label-2">
+                <div className="mt-2 space-y-4 text-[16px] leading-[1.75] text-label-2">
                   {profil.sejarah.slice(1).map((p, i) => (
                     <p key={i}>{p}</p>
                   ))}
@@ -74,21 +74,21 @@ export default async function ProfilPage() {
           </Reveal>
 
           {sortedTimeline.length > 0 && (
-            <ol className="mt-12 grid grid-cols-1 gap-8 border-l-2 border-accent/25 pl-6 sm:grid-cols-2 sm:gap-x-8 sm:border-l-0 sm:pl-0 lg:grid-cols-4">
+            <ol className="relative">
+              {/* Satu garis utuh dari tahun pertama sampai terakhir */}
+              <span aria-hidden className="absolute bottom-3 left-[5px] top-3 w-0.5 bg-accent/25" />
               {sortedTimeline.map((t, i) => (
-                  <li key={`${t.year}-${i}`} className="relative sm:border-t-2 sm:border-accent/25 sm:pt-5">
-                    <span
-                      aria-hidden
-                      className="absolute -left-[31px] top-3 size-2.5 rounded-full bg-accent sm:-top-[6px] sm:left-0"
-                    />
-                    <p className="text-[36px] font-extrabold leading-none tracking-[-0.04em] text-accent tabular-nums">
-                      {t.year}
-                    </p>
-                    <h3 className="mt-2 text-[16px] font-bold leading-snug text-label">{t.title}</h3>
-                    <p className="mt-1 line-clamp-2 text-[14px] leading-relaxed text-label-2">
-                      {t.description}
-                    </p>
-                  </li>
+                <li key={`${t.year}-${i}`} className="relative pb-8 pl-8 last:pb-0">
+                  <span
+                    aria-hidden
+                    className="absolute left-0 top-[6px] size-3 rounded-full border-2 border-accent bg-canvas"
+                  />
+                  <p className="text-[24px] font-extrabold leading-none tracking-[-0.03em] text-accent tabular-nums">
+                    {t.year}
+                  </p>
+                  <h3 className="mt-1.5 text-[16px] font-bold leading-snug text-label">{t.title}</h3>
+                  <p className="mt-1 text-[15px] leading-relaxed text-label-2">{t.description}</p>
+                </li>
               ))}
             </ol>
           )}
@@ -98,7 +98,7 @@ export default async function ProfilPage() {
       {/* Visi, Misi & Tujuan */}
       <section
         id="visi-misi"
-        className="scroll-mt-28 bg-mist px-4 py-16 sm:px-6 sm:py-20"
+        className="scroll-mt-28 bg-mist px-4 py-16 sm:px-6 sm:py-14 sm:py-20"
       >
         <div className="mx-auto max-w-[1060px]">
           <Reveal className="rounded-[24px] bg-accent p-7 text-center text-white sm:p-10">
@@ -124,7 +124,7 @@ export default async function ProfilPage() {
                     {g.items.map((m, i) => (
                       <li
                         key={i}
-                        className="flex gap-3.5 text-justify text-[16px] leading-[1.55] text-label-2"
+                        className="flex gap-3.5 text-[16px] leading-[1.55] text-label-2"
                       >
                         <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-md bg-accent-soft text-[14px] font-bold text-accent">
                           {i + 1}
@@ -143,7 +143,7 @@ export default async function ProfilPage() {
       {/* Pimpinan & Struktur Organisasi (Ringkas) */}
       <section
         id="pimpinan"
-        className="scroll-mt-28 px-4 py-16 sm:px-6 sm:py-20"
+        className="scroll-mt-28 px-4 py-16 sm:px-6 sm:py-14 sm:py-20"
       >
         <div className="mx-auto max-w-[1060px]">
           <Reveal className="flex flex-wrap items-end justify-between gap-4">
@@ -190,10 +190,11 @@ export default async function ProfilPage() {
           </div>
 
           {levels.length > 0 && (
-            <div id="struktur" className="mt-12 scroll-mt-28 border-t border-hairline pt-6 sm:pt-8">
-              <h3 className="text-center text-[18px] font-bold text-label">
-                Bagan Struktur Organisasi FEBI & Prodi Ekonomi Syariah
-              </h3>
+            <details id="struktur" className="group mt-10 scroll-mt-28 border-t border-hairline pt-4">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-[16px] font-semibold text-accent">
+                Lihat bagan struktur organisasi
+                <span aria-hidden className="text-[20px] transition-transform group-open:rotate-45">+</span>
+              </summary>
               <div className="mt-6 flex flex-col items-center gap-4">
                 {levels.map((row, i) => (
                   <div key={i} className="flex w-full flex-col items-center">
@@ -234,7 +235,7 @@ export default async function ProfilPage() {
                   </div>
                 ))}
               </div>
-            </div>
+            </details>
           )}
         </div>
       </section>
@@ -243,7 +244,7 @@ export default async function ProfilPage() {
       {mitra.length > 0 && (
         <section
           id="mitra"
-          className="scroll-mt-28 bg-mist px-4 py-16 sm:px-6 sm:py-20"
+          className="scroll-mt-28 bg-mist px-4 py-16 sm:px-6 sm:py-14 sm:py-20"
         >
           <div className="mx-auto max-w-[1060px]">
             <Reveal>
@@ -264,7 +265,7 @@ export default async function ProfilPage() {
       {/* Fasilitas & Ruang Akademik */}
       <section
         id="fasilitas"
-        className="scroll-mt-28 px-4 py-16 sm:px-6 sm:py-20"
+        className="scroll-mt-28 px-4 py-16 sm:px-6 sm:py-14 sm:py-20"
       >
         <div className="mx-auto max-w-[1060px]">
           <Reveal className="flex flex-wrap items-end justify-between gap-4">
@@ -274,12 +275,12 @@ export default async function ProfilPage() {
               title="Fasilitas akademik & laboratorium"
             />
           </Reveal>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="rail mt-8 grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
             {fasilitas.map((f, i) => (
               <Reveal key={`${f.title}-${i}`} delay={(i % 3) * 0.04}>
-                <div className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-hairline bg-canvas transition duration-300 hover:border-accent/35">
-                  <Photo src={f.image} alt={f.title} ratio="landscape" />
-                  <div className="p-5">
+                <div className="group flex h-full flex-col">
+                  <Photo src={f.image} alt={f.title} ratio="landscape" className="rounded-[20px]" />
+                  <div className="pt-4">
                     <h3 className="text-[16px] font-bold tracking-[-0.01em] text-label">
                       {f.title}
                     </h3>
@@ -297,7 +298,7 @@ export default async function ProfilPage() {
       {/* Akreditasi & Mutu */}
       <section
         id="akreditasi"
-        className="w-full max-w-full scroll-mt-28 bg-mist px-4 py-16 sm:px-6 sm:py-20"
+        className="w-full max-w-full scroll-mt-28 bg-mist px-4 py-16 sm:px-6 sm:py-14 sm:py-20"
       >
         <div className="mx-auto max-w-[1060px]">
           <Reveal>

@@ -231,7 +231,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                 >
                   <Link
                     href={active.href}
-                    className="group flex items-end rounded-2xl bg-mist/70 p-5 text-[18px] font-bold leading-snug tracking-[-0.02em] text-label hover:text-accent"
+                    className="group self-start pt-2.5 text-[22px] font-bold leading-snug tracking-[-0.02em] text-label hover:text-accent"
                   >
                     <span>
                       {active.label}
@@ -248,10 +248,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                             href={i.href}
                             aria-current={subActive ? "page" : undefined}
                             className={cn(
-                              "group block rounded-xl border px-3.5 py-2.5 transition-colors",
-                              subActive
-                                ? "border-accent/35 bg-accent-soft/75"
-                                : "border-transparent hover:border-hairline hover:bg-mist/70",
+                              "group block py-2.5 transition-colors",
                             )}
                           >
                             <span

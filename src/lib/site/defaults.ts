@@ -349,14 +349,14 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       role: "Lulusan Jalur Publikasi SINTA 2 · Kontributor Islamic Finance News (IFN)",
       quote:
         "Ekosistem akademik di Ekonomi Syariah UIN SGD membuka akses langsung ke pasar modal syariah BEI, bimbingan riset jurnal SINTA 2, hingga publikasi analisis keuangan Islam tingkat internasional.",
-      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
+      photo: "/prodi/prestasi/hakiki-ramadhan.jpg",
     },
     {
       name: "Sabila Syifa Noorazlina, S.E.",
       role: "Lulusan Jalur Publikasi Jurnal SINTA 4 (JEMSI) · Riset Industri Halal SEHATI",
       quote:
         "Pendampingan dosen pembimbing di Prodi Ekonomi Syariah mendorong kami menghasilkan riset empiris bersertifikasi nasional yang langsung relevan dengan ekosistem UMKM halal di Jawa Barat.",
-      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
+      photo: "/prodi/prestasi/sabila-syifa.jpg",
     },
     {
       name: "Evita Farcha Kamila, S.E.",
@@ -769,7 +769,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       peran: "Mahasiswa & Alumni Ekonomi Syariah",
       alasan:
         "Lulus munaqasah melalui publikasi jurnal SINTA 2 (Share UIN Ar-Raniry) serta penulis analisis keuangan Islam di Islamic Finance News (IFN).",
-      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
+      photo: "/prodi/prestasi/hakiki-ramadhan.jpg",
     },
     {
       bulan: "Juni 2026",
@@ -777,7 +777,7 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       peran: "Mahasiswa & Alumni Ekonomi Syariah",
       alasan:
         "Lulus munaqasah melalui publikasi jurnal terakreditasi SINTA 4 (JEMSI) tentang Program Sertifikasi Halal Gratis (SEHATI) di Jawa Barat.",
-      photo: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
+      photo: "/prodi/prestasi/sabila-syifa.jpg",
     },
     {
       bulan: "Oktober 2023",

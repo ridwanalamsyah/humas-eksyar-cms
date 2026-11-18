@@ -77,7 +77,7 @@ export default async function AlumniPage() {
       </section>
 
       {/* Bidang Kerja & Prospek Karier Lulusan */}
-      <section className="border-t border-hairline bg-mist/40 px-4 py-20 sm:px-6 sm:py-24">
+      <section className="border-t border-hairline bg-mist/40 px-4 py-20 sm:px-6 sm:py-14 sm:py-24">
         <div className="mx-auto max-w-[1060px]">
           <Reveal>
             <SectionHeading
@@ -110,7 +110,7 @@ export default async function AlumniPage() {
 
       {/* Cerita & Testimoni Alumni */}
       {testimoni.length > 0 && (
-        <section className="px-4 py-20 sm:px-6 sm:py-24">
+        <section className="px-4 py-20 sm:px-6 sm:py-14 sm:py-24">
           <div className="mx-auto max-w-[1060px]">
             <Reveal>
               <SectionHeading
@@ -174,7 +174,7 @@ export default async function AlumniPage() {
       )}
 
       {/* Ajakan Berjejaring & Info Karier */}
-      <section className="border-t border-hairline bg-canvas px-4 py-20 sm:px-6">
+      <section className="border-t border-hairline bg-canvas px-4 py-14 sm:py-20 sm:px-6">
         <div className="mx-auto grid max-w-[1060px] gap-8 md:grid-cols-2">
           {/* Card 1: Kabar Alumni & Donasi Buku */}
           <div className="border-t border-hairline pt-8">
@@ -224,7 +224,7 @@ export default async function AlumniPage() {
 
       {/* Mitra Strategis Tempat Alumni Bekerja */}
       {mitra.length > 0 && (
-        <section className="border-t border-hairline bg-mist/50 px-4 py-20 sm:px-6">
+        <section className="border-t border-hairline bg-mist/50 px-4 py-14 sm:py-20 sm:px-6">
           <div className="mx-auto max-w-[1060px]">
             <SectionHeading
               align="left"

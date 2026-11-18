@@ -40,7 +40,7 @@ export default async function KontakPage() {
       />
 
       {/* Kartu kontak */}
-      <section className="px-4 py-16 sm:px-6 sm:py-20">
+      <section className="px-4 py-16 sm:px-6 sm:py-14 sm:py-20">
         <div className="mx-auto grid max-w-[1024px] gap-4 md:grid-cols-2">
           <Reveal>
             <div className="flex h-full flex-col justify-between rounded-[28px] bg-mist p-8 sm:p-10">
@@ -141,7 +141,7 @@ export default async function KontakPage() {
       </section>
 
       {/* Media sosial */}
-      <section className="bg-mist px-4 py-20 sm:px-6">
+      <section className="bg-mist px-4 py-14 sm:py-20 sm:px-6">
         <Reveal>
           <SectionHeading eyebrow="Kanal resmi" title="Media sosial" />
         </Reveal>
@@ -152,7 +152,7 @@ export default async function KontakPage() {
                 href={s.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex h-full flex-col justify-between rounded-[24px] bg-canvas p-6 transition-colors hover:bg-canvas/70"
+                className="group flex h-full flex-col justify-between pt-6 border-t border-hairline"
               >
                 <span className="flex size-9 items-center justify-center self-end rounded-xl bg-mist text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                   <ArrowUpRight className="size-4" />
@@ -170,7 +170,7 @@ export default async function KontakPage() {
       </section>
 
       {/* Tautan UIN */}
-      <section className="px-4 py-20 sm:px-6">
+      <section className="px-4 py-14 sm:py-20 sm:px-6">
         <div className="mx-auto max-w-[1024px]">
           <Reveal>
             <h2 className="text-[24px] font-bold tracking-[-0.015em] text-label">
@@ -198,7 +198,7 @@ export default async function KontakPage() {
       {pressKit.profilSingkat && (
         <section
           id="media"
-          className="scroll-mt-28 bg-mist px-4 py-20 sm:px-6"
+          className="scroll-mt-28 bg-mist px-4 py-14 sm:py-20 sm:px-6"
         >
           <div className="mx-auto max-w-[760px]">
             <SectionHeading

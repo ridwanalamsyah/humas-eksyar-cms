@@ -81,7 +81,7 @@ export default async function AkademikPage() {
       </section>
 
       {/* Angka */}
-      <section className="border-t border-hairline px-4 py-16 sm:px-6 sm:py-24">
+      <section className="border-t border-hairline px-4 py-16 sm:px-6 sm:py-14 sm:py-24">
         <dl className="mx-auto grid max-w-[1024px] grid-cols-2 gap-y-12 text-center md:grid-cols-4">
           {facts.map((f) => (
             <Reveal key={f.k}>
@@ -100,21 +100,21 @@ export default async function AkademikPage() {
       </section>
 
       {/* Struktur */}
-      <section className="bg-mist px-4 py-24 sm:px-6 sm:py-32">
+      <section className="bg-mist px-4 py-14 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading
             eyebrow="Struktur Kurikulum"
             title="Kelompok mata kuliah"
           />
         </Reveal>
-        <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 md:grid-cols-3">
+        <div className="rail mx-auto mt-10 grid max-w-[1024px] gap-8 sm:mt-14 md:grid-cols-3">
           {kelompokMataKuliah.map((k, i) => (
             <Reveal key={k.code} delay={i * 0.06}>
-              <div className="h-full rounded-[28px] bg-canvas p-8">
-                <p className="text-[40px] font-semibold leading-none tracking-[-0.03em] text-accent">
+              <div className="h-full pt-6 border-t border-hairline">
+                <p className="text-[32px] font-semibold leading-none tracking-[-0.03em] text-accent">
                   {k.code}
                 </p>
-                <h3 className="mt-6 text-[24px] font-semibold leading-snug tracking-[-0.01em] text-label">
+                <h3 className="mt-4 text-[20px] font-semibold leading-snug tracking-[-0.01em] text-label">
                   {k.title}
                 </h3>
                 <p className="mt-2 text-[16px] leading-[1.45] text-label-2">
@@ -129,7 +129,7 @@ export default async function AkademikPage() {
 
       {/* Peminatan & roadmap */}
       {peminatan.length > 0 && (
-        <section id="peminatan" className="scroll-mt-28 px-4 py-24 sm:px-6">
+        <section id="peminatan" className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-14 sm:py-24">
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading
@@ -139,30 +139,22 @@ export default async function AkademikPage() {
                 description="Pilihan fokus studi beserta mata kuliah yang disarankan dan arah kariernya."
               />
             </Reveal>
-            <div className="mt-10 grid gap-4 md:grid-cols-2">
+            <div className="rail mt-10 grid gap-x-10 gap-y-10 md:grid-cols-2">
               {peminatan.map((p, i) => (
                 <div
                   key={p.nama}
-                  className={
-                    i % 2
-                      ? "rounded-[28px] bg-mist p-7"
-                      : "rounded-[28px] bg-accent p-7 text-white"
-                  }
+                  className="border-t-2 border-accent pt-5"
                 >
-                  <h3 className="text-[24px] font-bold tracking-[-0.01em]">
+                  <h3 className="text-[22px] font-bold leading-snug tracking-[-0.01em] text-label">
                     {p.nama}
                   </h3>
                   <p
-                    className={
-                      i % 2
-                        ? "mt-2 text-[16px] text-label-2"
-                        : "mt-2 text-[16px] text-white/80"
-                    }
+                    className="mt-2 text-[16px] leading-relaxed text-label-2"
                   >
                     {p.deskripsi}
                   </p>
                   {p.mataKuliah.length > 0 && (
-                    <ol className="mt-5 space-y-1.5 text-[14px]">
+                    <ol className="mt-4 space-y-1.5 text-[15px] text-label">
                       {p.mataKuliah.map((mk, k) => (
                         <li key={mk} className="flex gap-2">
                           <span className="font-bold tabular-nums opacity-60">
@@ -175,11 +167,7 @@ export default async function AkademikPage() {
                   )}
                   {p.karier.length > 0 && (
                     <p
-                      className={
-                        i % 2
-                          ? "mt-5 text-[14px] text-label-2"
-                          : "mt-5 text-[14px] text-white/75"
-                      }
+                      className="mt-4 text-[14px] leading-relaxed text-label-3"
                     >
                       Arah karier: {p.karier.join(", ")}
                     </p>
@@ -193,7 +181,7 @@ export default async function AkademikPage() {
 
       {/* RPS & referensi */}
       {rps.length > 0 && (
-        <section id="rps" className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6">
+        <section id="rps" className="scroll-mt-28 bg-mist px-4 py-14 sm:px-6 sm:py-14 sm:py-24">
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading
@@ -213,7 +201,7 @@ export default async function AkademikPage() {
       {akademik && akademik.mataKuliah.length > 0 && (
         <section
           id="mata-kuliah"
-          className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32"
+          className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-32"
         >
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
@@ -232,7 +220,7 @@ export default async function AkademikPage() {
       )}
 
       {/* Profil lulusan */}
-      <section className="px-4 py-24 sm:px-6 sm:py-32">
+      <section className="px-4 py-14 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading eyebrow="Profil Lulusan" title="Profil lulusan" />
         </Reveal>
@@ -251,7 +239,7 @@ export default async function AkademikPage() {
       </section>
 
       {/* CPL */}
-      <section className="bg-label px-4 py-24 text-white sm:px-6 sm:py-32">
+      <section className="bg-navy px-4 py-16 text-white sm:px-6 sm:py-32">
         <Reveal className="mx-auto max-w-3xl text-center">
           <p className="text-[16px] font-semibold uppercase tracking-[0.08em] text-amber">
             Capaian pembelajaran
@@ -263,11 +251,11 @@ export default async function AkademikPage() {
         <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {capaianPembelajaran.map((c) => (
             <Reveal key={c.title}>
-              <div className="h-full rounded-[28px] bg-white/[0.06] p-7">
+              <div className="h-full border-t border-white/15 pt-5">
                 <h3 className="text-[18px] font-semibold text-white">
                   {c.title}
                 </h3>
-                <p className="mt-2 text-[16px] leading-[1.45] text-white/65">
+                <p className="mt-2 text-[16px] leading-[1.55] text-white/75">
                   {c.description}
                 </p>
               </div>
@@ -277,7 +265,7 @@ export default async function AkademikPage() {
       </section>
 
       {/* Karir */}
-      <section className="px-4 py-24 sm:px-6 sm:py-32">
+      <section className="px-4 py-14 sm:px-6 sm:py-32">
         <Reveal>
           <SectionHeading
             eyebrow="Prospek Karir"
@@ -339,7 +327,7 @@ export default async function AkademikPage() {
       </section>
 
       {/* Layanan */}
-      <section className="bg-mist px-4 py-24 sm:px-6">
+      <section className="bg-mist px-4 py-14 sm:px-6 sm:py-14 sm:py-24">
         <div className="mx-auto grid max-w-[1024px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {layananAkademik.map((l) => (
             <a

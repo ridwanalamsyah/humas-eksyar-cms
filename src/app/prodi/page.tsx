@@ -137,7 +137,7 @@ export default async function ProdiHomePage() {
       />
 
       {/* ─── 2. Bidang kajian: grid 2×2 ─────────────────────── */}
-      <section className="px-4 py-12 sm:px-6 sm:py-24">
+      <section className="px-4 py-12 sm:px-6 sm:py-14 sm:py-24">
         <div className="mx-auto max-w-[1160px]">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading align="left" title="Bidang kajian" />
@@ -156,7 +156,7 @@ export default async function ProdiHomePage() {
 
       {/* ─── 3. Kegiatan dan prestasi terbaru: grid, bukan carousel ─── */}
       {(kegiatan.length > 0 || site.prestasi.length > 0) && (
-        <section className="border-t border-hairline/80 bg-mist/40 px-4 py-12 sm:px-6 sm:py-24">
+        <section className="border-t border-hairline/80 bg-mist/40 px-4 py-12 sm:px-6 sm:py-14 sm:py-24">
           <div className="mx-auto max-w-[1160px]">
             {kegiatan.length > 0 && (
               <>
@@ -202,7 +202,7 @@ export default async function ProdiHomePage() {
       <SkripsiTrendExplorer />
 
       {/* ─── 5. Kabar: berita, pengumuman, agenda ───────────── */}
-      <section className="border-t border-hairline/80 bg-mist/30 px-4 py-12 sm:px-6 sm:py-24">
+      <section className="border-t border-hairline/80 bg-mist/30 px-4 py-12 sm:px-6 sm:py-14 sm:py-24">
         <div className="mx-auto max-w-[1160px]">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <SectionHeading align="left" title="Kabar prodi" />
@@ -214,9 +214,9 @@ export default async function ProdiHomePage() {
             </Link>
           </div>
 
-          <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+          <div className="mt-8 grid items-start gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-8">
             {articles.length > 0 ? (
-              <div className="grid gap-5 sm:grid-cols-2">
+              <div className="rail grid content-start gap-5 sm:grid-cols-2">
                 {articles.slice(0, 2).map((n) => (
                   <NewsCard
                     key={n.id}
@@ -284,7 +284,7 @@ export default async function ProdiHomePage() {
 
       {/* ─── 6. Pimpinan program studi ──────────────────────── */}
       {pimpinanProdi.length > 0 && (
-        <section className="border-t border-hairline/80 px-4 py-12 sm:px-6 sm:py-24">
+        <section className="border-t border-hairline/80 px-4 py-12 sm:px-6 sm:py-14 sm:py-24">
           <div className="mx-auto max-w-[1160px]">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <SectionHeading align="left" title="Pimpinan program studi" />
@@ -333,7 +333,7 @@ export default async function ProdiHomePage() {
 
       {/* ─── Instagram: hanya tampil bila akun resmi benar-benar tersambung ── */}
       {ig.length > 0 && (
-        <section className="border-t border-hairline/80 px-4 py-12 sm:px-6 sm:py-24">
+        <section className="border-t border-hairline/80 px-4 py-12 sm:px-6 sm:py-14 sm:py-24">
           <div className="mx-auto max-w-[1160px]">
             <div className="flex flex-wrap items-end justify-between gap-4">
               <SectionHeading align="left" title={kontak.instagramHandle || "@eksyaruinsgd"} />
