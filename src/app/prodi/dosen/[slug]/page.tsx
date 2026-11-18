@@ -72,7 +72,7 @@ export default async function DosenProfilPage({ params }: Props) {
               className="rounded-[28px]"
             />
             {(person?.sinta || person?.scholar) && (
-              <div className="mt-4 grid gap-2">
+              <div className="mt-4 grid grid-cols-1 gap-2">
                 {person?.sinta && (
                   <a
                     href={person.sinta}
@@ -158,7 +158,7 @@ export default async function DosenProfilPage({ params }: Props) {
             {publikasi.length > 0 && (
               <div className="mt-8">
                 <h2 className="text-[18px] font-bold text-label">Publikasi</h2>
-                <ul className="mt-3 grid gap-2">
+                <ul className="mt-3 grid grid-cols-1 gap-2">
                   {publikasi.map((p) => (
                     <li
                       key={p.title}

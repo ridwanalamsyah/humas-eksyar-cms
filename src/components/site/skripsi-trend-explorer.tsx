@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { GrowBar } from "./grow-bar";
 
 type TopicGroup = {
   id: string;
@@ -81,7 +82,7 @@ export function SkripsiTrendExplorer() {
   const max = Math.max(...TOPIC_GROUPS.map((g) => g.count));
   const total = TOPIC_GROUPS.reduce((n, g) => n + g.count, 0);
   return (
-    <section className="border-t border-hairline/80 px-4 py-16 sm:px-6 sm:py-24">
+    <section className="border-t border-hairline/80 px-4 py-12 sm:px-6 sm:py-24">
       <div className="mx-auto grid max-w-[1160px] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)] lg:items-center">
         <div>
           <h2 className="text-[clamp(1.75rem,1.3rem+1.8vw,2.5rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-label text-balance">
@@ -97,8 +98,8 @@ export function SkripsiTrendExplorer() {
             Cari skripsi <ArrowRight className="size-4" />
           </Link>
         </div>
-        <ul className="grid gap-2">
-          {TOPIC_GROUPS.map((g) => (
+        <ul className="grid grid-cols-1 gap-2">
+          {TOPIC_GROUPS.map((g, i) => (
             <li key={g.id}>
               <Link
                 href={`/prodi/skripsi?q=${encodeURIComponent(g.keywords[0])}`}
@@ -109,10 +110,7 @@ export function SkripsiTrendExplorer() {
                 </span>
                 <span className="text-[16px] font-bold tabular-nums text-label">{g.count}</span>
                 <span className="col-span-2 block h-2 overflow-hidden rounded-full bg-mist group-hover:bg-canvas">
-                  <span
-                    className="block h-full rounded-full bg-accent"
-                    style={{ width: `${(g.count / max) * 100}%` }}
-                  />
+                  <GrowBar pct={(g.count / max) * 100} delay={i * 90} />
                 </span>
               </Link>
             </li>

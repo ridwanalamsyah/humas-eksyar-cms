@@ -390,7 +390,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                   );
                 })}
               </ul>
-              <div className="grid gap-3 px-6 pb-10">
+              <div className="grid grid-cols-1 gap-3 px-6 pb-10">
                 <Link
                   href={navCta.href}
                   className="flex h-12 items-center justify-center rounded-full bg-accent text-[16px] font-semibold text-white"

@@ -98,7 +98,7 @@ export default async function LinkPage() {
           {prodi.fullName}
         </h1>
         <p className="text-[14px] text-label-2">{prodi.university}</p>
-        <ul className="mt-8 grid gap-3">
+        <ul className="mt-8 grid grid-cols-1 gap-3">
           {links.map((l) => {
             const cls = l.primary
               ? "block rounded-2xl bg-accent px-6 py-4 text-[16px] font-bold text-white hover:bg-accent-strong shadow-xs"

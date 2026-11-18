@@ -60,7 +60,7 @@ export async function AgendaList() {
             <h2 className="text-[16px] font-semibold uppercase tracking-[0.08em] text-accent">
               {month}
             </h2>
-            <ul className="mt-4 grid gap-3">
+            <ul className="mt-4 grid grid-cols-1 gap-3">
               {list.map((e) => {
                 const d = new Date(e.startsAt);
                 return (

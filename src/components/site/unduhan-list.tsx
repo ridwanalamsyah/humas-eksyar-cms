@@ -76,7 +76,7 @@ export function UnduhanList({ items }: { items: Unduhan[] }) {
           Belum ada dokumen di kategori ini.
         </p>
       ) : (
-        <ul className="mt-8 grid gap-3">
+        <ul className="mt-8 grid grid-cols-1 gap-3">
           {visible.map((d, i) => {
             const { label, Icon } = kindOf(d.url);
             return (

@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 export function ProsedurList({ items }: { items: Prosedur[] }) {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <ul className="grid gap-3">
+    <ul className="grid grid-cols-1 gap-3">
       {items.map((p, i) => (
         <li
           key={p.title}

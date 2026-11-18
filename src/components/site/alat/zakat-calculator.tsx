@@ -54,7 +54,7 @@ export function ZakatCalculator({ cfg }: { cfg: Cfg }) {
 
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-      <div className="grid gap-5">
+      <div className="grid grid-cols-1 gap-5">
         <Tabs
           value={tab}
           onChange={setTab}

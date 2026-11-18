@@ -243,7 +243,7 @@ export default async function MahasiswaBaruPage() {
               title="Sudah diterima? Lakukan ini"
               description="Langkah awal setelah dinyatakan lulus seleksi."
             />
-            <ol className="mt-10 grid gap-3">
+            <ol className="mt-10 grid grid-cols-1 gap-3">
               {panduanMaba.map((p, i) => (
                 <li key={p.url}>
                   <a
