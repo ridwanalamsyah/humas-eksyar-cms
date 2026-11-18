@@ -40,10 +40,10 @@ export default async function BeasiswaPage() {
             className="group flex items-center justify-between gap-4 rounded-[24px] bg-accent p-7 text-white transition duration-300 hover:-translate-y-1"
           >
             <span>
-              <span className="block text-[20px] font-bold">
+              <span className="block text-[18px] font-bold">
                 Portal Beasiswa UIN SGD
               </span>
-              <span className="mt-1 block text-[15px] text-white/80">
+              <span className="mt-1 block text-[16px] text-white/80">
                 Pendaftaran resmi, masuk dengan akun SUPERAPPS mahasiswa.
               </span>
             </span>

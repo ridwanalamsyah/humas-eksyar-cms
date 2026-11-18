@@ -41,7 +41,7 @@ export default async function GaleriPage() {
           {photos.length ? (
             <GaleriGrid items={photos} />
           ) : (
-            <p className="rounded-[24px] bg-mist p-10 text-center text-[17px] text-label-2">
+            <p className="rounded-[24px] bg-mist p-10 text-center text-[16px] text-label-2">
               Dokumentasi terbaru ada di Instagram{" "}
               <a
                 href={kontak.instagram}
@@ -71,7 +71,7 @@ export default async function GaleriPage() {
                   href={`https://www.youtube.com/channel/${medsos.youtubeChannelId}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-[15px] font-semibold text-accent hover:underline"
+                  className="text-[16px] font-semibold text-accent hover:underline"
                 >
                   Buka kanal YouTube ↗
                 </a>
@@ -80,7 +80,7 @@ export default async function GaleriPage() {
             {[...new Set(allVideos.map((v) => v.kategori || "Kegiatan"))].map(
               (k) => (
                 <div key={k} className="mt-8">
-                  <h3 className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
+                  <h3 className="text-[16px] font-semibold uppercase tracking-[0.08em] text-accent">
                     {k}
                   </h3>
                   <div className="mt-4 grid gap-5 md:grid-cols-2">

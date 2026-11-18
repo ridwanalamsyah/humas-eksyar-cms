@@ -14,12 +14,12 @@ export function LeaderboardSnippet({ members }: { members: Member[] }) {
     <GlassCard variant="regular" className="p-5">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[12.5px] text-foreground/50">Peringkat</p>
+          <p className="text-[13px] text-foreground/60">Peringkat</p>
           <h3 className="font-display text-base font-semibold tracking-tight">Top kontributor</h3>
         </div>
         <Link
           href="/leaderboard"
-          className="inline-flex size-8 items-center justify-center rounded-full text-foreground/55 hover:bg-foreground/5 dark:hover:bg-white/5"
+          className="inline-flex size-8 items-center justify-center rounded-full text-foreground/60 hover:bg-foreground/5 dark:hover:bg-white/5"
           aria-label="Lihat leaderboard"
         >
           <ChevronRight className="size-4" strokeWidth={1.75} />
@@ -38,8 +38,8 @@ export function LeaderboardSnippet({ members }: { members: Member[] }) {
               className="flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-foreground/5 dark:hover:bg-white/5"
             >
               <span
-                className={`grid size-7 place-items-center rounded-full bg-foreground/5 font-mono text-[11px] font-semibold dark:bg-white/5 ${
-                  tierColor[i] ?? "text-foreground/55"
+                className={`grid size-7 place-items-center rounded-full bg-foreground/5 font-mono text-[13px] font-semibold dark:bg-white/5 ${
+                  tierColor[i] ?? "text-foreground/60"
                 }`}
               >
                 {i + 1}
@@ -47,11 +47,11 @@ export function LeaderboardSnippet({ members }: { members: Member[] }) {
               <Avatar member={m} size={28} ring={false} />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{m.name}</p>
-                <p className="text-[10px] text-foreground/55">
+                <p className="text-[13px] text-foreground/60">
                   XP {m.xp.toLocaleString("id-ID")}
                 </p>
               </div>
-              <span className="inline-flex items-center gap-0.5 text-[11px] text-gold-500">
+              <span className="inline-flex items-center gap-0.5 text-[13px] text-gold-500">
                 <Flame className="size-3" strokeWidth={2} />
                 {m.streak}
               </span>

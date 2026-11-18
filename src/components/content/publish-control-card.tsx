@@ -75,11 +75,11 @@ export function PublishControlCard({ content, canEdit }: Props) {
               <CheckCircle2 className="size-4 shrink-0 text-emerald-600 dark:text-emerald-400" />
               <p className="text-[13px] font-semibold">Tayang di Website Prodi</p>
             </div>
-            <p className="mt-1 text-[12px] opacity-80">
+            <p className="mt-1 text-[13px] opacity-80">
               Artikel ini aktif dan dapat dibaca oleh seluruh civitas akademika &amp; publik.
             </p>
             {content.publishedAt && (
-              <p className="mt-1.5 text-[11px] font-mono opacity-70">
+              <p className="mt-1.5 text-[13px] font-mono opacity-70">
                 Terbit: {formatLongDate(content.publishedAt)}
               </p>
             )}
@@ -94,7 +94,7 @@ export function PublishControlCard({ content, canEdit }: Props) {
                   : "Draf (Belum Tayang)"}
               </p>
             </div>
-            <p className="mt-1 text-[12px] text-label-3">
+            <p className="mt-1 text-[13px] text-label-3">
               {status === "review_divisi" || status === "review_sekjen"
                 ? "Artikel siap ditinjau. Anda dapat langsung menerbitkannya ke website."
                 : "Artikel masih dalam bentuk draf dan belum tampil di website publik."}
@@ -140,7 +140,7 @@ export function PublishControlCard({ content, canEdit }: Props) {
               <Link
                 href={`/prodi/berita/${content.slug || content.id}`}
                 target="_blank"
-                className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl border border-hairline bg-mist/60 text-[12.5px] font-medium text-label-2 transition-colors hover:bg-mist hover:text-accent"
+                className="flex h-9 w-full items-center justify-center gap-1.5 rounded-xl border border-hairline bg-mist/60 text-[13px] font-medium text-label-2 transition-colors hover:bg-mist hover:text-accent"
               >
                 <Globe className="size-3.5" />
                 <span>Buka di Website Publik</span>
@@ -153,14 +153,14 @@ export function PublishControlCard({ content, canEdit }: Props) {
         {/* Pemilih Status Manual */}
         {canEdit && (
           <div className="border-t border-hairline pt-3">
-            <label className="block text-[11.5px] font-medium text-label-3">
+            <label className="block text-[13px] font-medium text-label-3">
               Ubah Status Alur Kerja
             </label>
             <select
               value={status}
               disabled={isPending}
               onChange={(e) => handleUpdateStatus(e.target.value as ContentStatus)}
-              className="mt-1.5 h-9 w-full rounded-xl border border-hairline bg-canvas px-3 text-[12.5px] text-label outline-none focus:border-accent"
+              className="mt-1.5 h-9 w-full rounded-xl border border-hairline bg-canvas px-3 text-[13px] text-label outline-none focus:border-accent"
             >
               <option value="draft">Draf</option>
               <option value="review_divisi">Menunggu Review</option>

@@ -109,7 +109,7 @@ export function CommentThread({ contentId, currentMemberId, canModerate }: Props
   return (
     <GlassCard variant="regular" className="p-5">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-[12.5px] text-foreground/50">
+        <h3 className="text-[13px] text-foreground/60">
           <MessageSquare className="mr-1 inline size-3" strokeWidth={1.75} />
           Komentar internal
         </h3>
@@ -117,7 +117,7 @@ export function CommentThread({ contentId, currentMemberId, canModerate }: Props
           <button
             type="button"
             onClick={() => setShowResolved((s) => !s)}
-            className="text-[11px] text-foreground/55 hover:text-foreground"
+            className="text-[13px] text-foreground/60 hover:text-foreground"
           >
             {showResolved
               ? `Sembunyikan ${resolvedCount} selesai`
@@ -127,11 +127,11 @@ export function CommentThread({ contentId, currentMemberId, canModerate }: Props
       </div>
 
       {loading ? (
-        <div className="mt-3 flex items-center gap-2 text-[12px] text-foreground/45">
+        <div className="mt-3 flex items-center gap-2 text-[13px] text-foreground/60">
           <Loader2 className="size-3.5 animate-spin" /> Memuat…
         </div>
       ) : visible.length === 0 ? (
-        <p className="mt-3 text-[12px] text-foreground/45">
+        <p className="mt-3 text-[13px] text-foreground/60">
           Belum ada komentar. Mulai diskusi internal di sini.
         </p>
       ) : (
@@ -152,14 +152,14 @@ export function CommentThread({ contentId, currentMemberId, canModerate }: Props
                   {c.author ? (
                     <Avatar member={c.author as Member} size={24} ring={false} />
                   ) : (
-                    <span className="inline-flex size-6 items-center justify-center rounded-full bg-foreground/10 text-[10px]">
+                    <span className="inline-flex size-6 items-center justify-center rounded-full bg-foreground/10 text-[13px]">
                       ?
                     </span>
                   )}
-                  <span className="text-[12px] font-medium text-foreground/80">
+                  <span className="text-[13px] font-medium text-foreground/80">
                     {c.author?.name ?? "Anggota"}
                   </span>
-                  <span className="text-[11px] text-foreground/45">
+                  <span className="text-[13px] text-foreground/60">
                     · {timeAgo(c.createdAt)}
                   </span>
                   {isResolved && (
@@ -169,7 +169,7 @@ export function CommentThread({ contentId, currentMemberId, canModerate }: Props
                 <p className="mt-1.5 whitespace-pre-wrap text-[13px] leading-relaxed text-foreground/85">
                   {c.body}
                 </p>
-                <div className="mt-2 flex items-center gap-2 text-[11px]">
+                <div className="mt-2 flex items-center gap-2 text-[13px]">
                   {!isResolved && (
                     <button
                       type="button"
@@ -183,7 +183,7 @@ export function CommentThread({ contentId, currentMemberId, canModerate }: Props
                     <button
                       type="button"
                       onClick={() => resolve(c.id, false)}
-                      className="text-foreground/55 hover:text-foreground"
+                      className="text-foreground/60 hover:text-foreground"
                     >
                       Buka lagi
                     </button>
@@ -213,7 +213,7 @@ export function CommentThread({ contentId, currentMemberId, canModerate }: Props
             placeholder="Tulis komentar internal..."
             className="w-full resize-none rounded-xl border border-foreground/10 bg-background px-3 py-2 text-[13px] focus:border-brand-500 focus:outline-none"
           />
-          {error && <p className="mt-1 text-[11px] text-rose-500">{error}</p>}
+          {error && <p className="mt-1 text-[13px] text-rose-500">{error}</p>}
           <div className="mt-2 flex justify-end">
             <Button
               size="sm"

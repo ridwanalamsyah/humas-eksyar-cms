@@ -94,15 +94,15 @@ export default async function LinkPage() {
     <section className="px-4 py-14">
       <div className="mx-auto max-w-[480px] text-center">
         <ProdiLogo size={80} className="mx-auto" />
-        <h1 className="mt-4 text-[22px] font-extrabold tracking-[-0.02em] text-label">
+        <h1 className="mt-4 text-[24px] font-extrabold tracking-[-0.02em] text-label">
           {prodi.fullName}
         </h1>
         <p className="text-[14px] text-label-2">{prodi.university}</p>
         <ul className="mt-8 grid gap-3">
           {links.map((l) => {
             const cls = l.primary
-              ? "block rounded-2xl bg-accent px-6 py-4 text-[15.5px] font-bold text-white hover:bg-accent-strong shadow-xs"
-              : "block rounded-2xl border border-hairline bg-canvas px-6 py-4 text-[15.5px] font-semibold text-label transition hover:-translate-y-0.5 hover:border-accent shadow-xs";
+              ? "block rounded-2xl bg-accent px-6 py-4 text-[16px] font-bold text-white hover:bg-accent-strong shadow-xs"
+              : "block rounded-2xl border border-hairline bg-canvas px-6 py-4 text-[16px] font-semibold text-label transition hover:-translate-y-0.5 hover:border-accent shadow-xs";
             return (
               <li key={l.href + l.label}>
                 {l.external ? (
@@ -123,7 +123,7 @@ export default async function LinkPage() {
             );
           })}
         </ul>
-        <p className="mt-8 text-[13px] text-label-3">{kontak.email}</p>
+        <p className="mt-8 text-[14px] text-label-3">{kontak.email}</p>
       </div>
     </section>
   );

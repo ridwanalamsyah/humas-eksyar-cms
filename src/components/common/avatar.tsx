@@ -42,7 +42,7 @@ export function Avatar({ member, size = 36, ring = true, className }: AvatarProp
         />
       ) : (
         <span className="relative z-[1] select-none drop-shadow-sm">
-          {member.avatarEmoji ?? member.initials}
+          {member.initials}
         </span>
       )}
       {ring && !hasPhoto && (

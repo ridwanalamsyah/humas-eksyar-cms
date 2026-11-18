@@ -62,7 +62,7 @@ export async function DataStatistik() {
               data={skripsiData}
             />
           </div>
-          <p className="mt-2 text-[13px] text-label-3">
+          <p className="mt-2 text-[14px] text-label-3">
             Sumber: direktori skripsi (Digital Library UIN SGD).
           </p>
         </div>
@@ -79,14 +79,14 @@ export async function DataStatistik() {
             <BarChart title={g.judul} unit={g.satuan} data={g.data} />
           </div>
           {g.sumber && (
-            <p className="mt-2 text-[13px] text-label-3">Sumber: {g.sumber}</p>
+            <p className="mt-2 text-[14px] text-label-3">Sumber: {g.sumber}</p>
           )}
         </div>
       ))}
       {rows.length === 0 &&
         infografis.length === 0 &&
         skripsiData.length <= 1 && (
-          <p className="rounded-[24px] bg-mist p-10 text-center text-[17px] text-label-2">
+          <p className="rounded-[24px] bg-mist p-10 text-center text-[16px] text-label-2">
             Data statistik sedang disiapkan.
           </p>
         )}

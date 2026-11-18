@@ -53,7 +53,7 @@ export function ZakatCalculator({ cfg }: { cfg: Cfg }) {
   const zakat = wajib ? total * 0.025 : 0;
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1.2fr_1fr]">
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
       <div className="grid gap-5">
         <Tabs
           value={tab}
@@ -150,7 +150,7 @@ export function ZakatCalculator({ cfg }: { cfg: Cfg }) {
           value={rupiah(nisab)}
           note={nisabNote}
         />
-        <p className="text-[13px] leading-[1.55] text-label-3">
+        <p className="text-[14px] leading-[1.55] text-label-3">
           Perhitungan ini bersifat edukatif. Untuk kepastian, konsultasikan
           dengan BAZNAS atau lembaga amil zakat resmi, atau gunakan{" "}
           <Link

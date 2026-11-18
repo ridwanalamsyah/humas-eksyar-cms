@@ -22,11 +22,11 @@ export default async function NewContentPage() {
 
   return (
     <AppShell width="wide">
-      <Link href="/content" className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground">
+      <Link href="/content" className="inline-flex items-center gap-1 text-sm text-foreground/60 hover:text-foreground">
         <ArrowLeft className="size-4" strokeWidth={1.75} /> Kembali
       </Link>
       <header className="mt-3">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Editor
         </p>
         <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">

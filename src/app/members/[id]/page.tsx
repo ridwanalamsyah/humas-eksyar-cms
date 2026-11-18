@@ -34,7 +34,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
 
   return (
     <AppShell width="wide">
-      <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
+      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
         <aside className="space-y-4">
           <GlassCard variant="thick" className="p-6 text-center">
             <div className="mx-auto inline-block">
@@ -54,7 +54,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
                 {member.bio}
               </p>
             )}
-            <div className="mt-5 space-y-1.5 text-left text-[12px] text-foreground/65">
+            <div className="mt-5 space-y-1.5 text-left text-[13px] text-foreground/65">
               <p className="flex items-center gap-2">
                 <Mail className="size-3.5" strokeWidth={1.75} />
                 {member.email}
@@ -67,7 +67,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
           </GlassCard>
 
           <GlassCard className="p-5 text-center">
-            <p className="text-[12px] text-foreground/55">Konten terbit</p>
+            <p className="text-[13px] text-foreground/60">Konten terbit</p>
             <p className="mt-1 text-[22px] font-semibold tabular-nums">
               {allContents.filter((c) => c.status === "published").length}
             </p>
@@ -80,7 +80,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
             <h2 className="font-display text-lg font-semibold tracking-tight">
               Konten kontribusi
             </h2>
-            <p className="mt-1 text-[12px] text-foreground/65">
+            <p className="mt-1 text-[13px] text-foreground/65">
               Semua konten yang ditulis atau dijadwalkan anggota ini.
             </p>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -98,7 +98,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
                 );
               })}
               {allContents.length === 0 && (
-                <p className="col-span-2 rounded-xl border border-dashed border-foreground/15 p-6 text-center text-[12px] text-foreground/55">
+                <p className="col-span-2 rounded-xl border border-dashed border-foreground/15 p-6 text-center text-[13px] text-foreground/60">
                   Belum ada konten dari anggota ini.
                 </p>
               )}

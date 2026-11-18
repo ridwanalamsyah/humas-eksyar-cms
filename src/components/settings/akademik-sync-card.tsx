@@ -28,7 +28,7 @@ export function AkademikSyncCard({ info }: { info: { at: string; mataKuliah: num
     <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-foreground/10 px-4 py-3 dark:border-white/10">
       <div className="min-w-0">
         <p className="text-[14px] font-semibold">Mata kuliah & dosen pengampu dari e-Knows</p>
-        <p className="text-[12px] text-foreground/60">
+        <p className="text-[13px] text-foreground/60">
           {info
             ? `Terakhir ${new Date(info.at).toLocaleString("id-ID")} · ${info.mataKuliah} mata kuliah · ${info.dosen} dosen${info.errors ? ` · ${info.errors} halaman gagal` : ""}`
             : "Belum pernah disinkronkan. Data diambil dari kategori Ekonomi Syariah di eknows.uinsgd.ac.id dan diperbarui otomatis tiap Senin."}

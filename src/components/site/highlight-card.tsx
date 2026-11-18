@@ -20,7 +20,7 @@ const CATEGORY_ICONS: Record<string, typeof Newspaper> = {
   kajian: BookOpen,
 };
 
-/** Kartu kegiatan: foto (atau ikon kategori), kategori, judul, ringkasan. */
+/** Kartu kegiatan: foto (atau ikon kategori), kategori, tanggal, judul. Ringkasan ada di halaman beritanya. */
 export function HighlightCard({ item }: { item: Kegiatan }) {
   const Icon = CATEGORY_ICONS[item.category.toLowerCase()] ?? Newspaper;
   const body = (
@@ -40,28 +40,20 @@ export function HighlightCard({ item }: { item: Kegiatan }) {
             strokeWidth={1.25}
           />
         )}
-        <span className="absolute left-4 top-4 z-10 max-w-[calc(100%-2rem)] truncate rounded-md border border-hairline bg-canvas/95 px-3 py-1 text-[12px] font-semibold text-label shadow-xs">
+        <span className="absolute left-4 top-4 z-10 max-w-[calc(100%-2rem)] truncate rounded-md border border-hairline bg-canvas/95 px-3 py-1 text-[14px] font-semibold text-label shadow-xs">
           {item.category}
         </span>
       </div>
-      <div className="flex min-w-0 flex-1 flex-col p-6">
-        <time dateTime={item.date} className="text-[13px] text-label-3">
+      <div className="flex min-w-0 flex-1 flex-col p-5">
+        <time dateTime={item.date} className="text-[14px] text-label-3">
           {formatLongDate(item.date)}
         </time>
-        <h3 className="mt-1.5 break-words text-[18.5px] font-bold leading-[1.28] tracking-[-0.015em] text-label">
+        <h3 className="mt-1.5 line-clamp-3 break-words text-[18px] font-bold leading-[1.3] tracking-[-0.015em] text-label group-hover:text-accent">
           {item.title}
+          {item.source && (
+            <ArrowUpRight aria-label="(situs luar)" className="ml-1 inline size-4 align-[-2px] text-label-3" />
+          )}
         </h3>
-        <p className="mt-2 line-clamp-3 break-words text-[14.5px] leading-relaxed text-label-2">
-          {item.summary}
-        </p>
-        {item.source && (
-          <span className="mt-auto flex items-center justify-between pt-5 text-[14px] font-semibold text-accent">
-            Baca selengkapnya
-            <span className="grid size-8 place-items-center rounded-xl bg-mist transition-colors duration-300 group-hover:bg-accent group-hover:text-white">
-              <ArrowUpRight className="size-4" />
-            </span>
-          </span>
-        )}
       </div>
     </>
   );

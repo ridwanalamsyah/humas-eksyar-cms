@@ -17,7 +17,7 @@ const actions = [
     href: "/captions/playground",
     icon: Wand2,
     title: "AI Caption",
-    desc: "Generate caption per rubrik",
+    desc: "Caption per rubrik",
     accent: "from-gold-300/40 to-gold-500/20",
     iconColor: "text-gold-600 dark:text-gold-300",
   },
@@ -95,7 +95,7 @@ export function QuickActions() {
               <p className="relative mt-3 font-display text-sm font-semibold tracking-tight">
                 {a.title}
               </p>
-              <p className="relative text-[11px] text-foreground/55">{a.desc}</p>
+              <p className="relative text-[13px] text-foreground/60">{a.desc}</p>
             </GlassCard>
           </Link>
         </motion.div>

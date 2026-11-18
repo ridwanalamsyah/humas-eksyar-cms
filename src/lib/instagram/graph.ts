@@ -108,42 +108,11 @@ export async function listInstagramPosts(limit = 25): Promise<IgPost[]> {
   });
 }
 
-export const DEFAULT_IG_FEED: { permalink: string; image: string; caption: string }[] = [
-  {
-    permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/09/IMG-20260925-WA0004.jpg",
-    caption: "PkM Literasi Digitalisasi Keuangan Syariah & Pengelolaan Aset Masjid di Garut bersama Bank Indonesia & Bank Muamalat.",
-  },
-  {
-    permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/08/IMG-20260805-WA0020.jpg",
-    caption: "Edukasi Literasi Keuangan Syariah: Keluarga Cerdas Lawan Judol & Pinjol Ilegal di Kelurahan Padasuka.",
-  },
-  {
-    permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar.jpeg",
-    caption: "Apresiasi Lulus Munaqasah Jalur Publikasi Jurnal Ilmiah SINTA 2 (Share UIN Ar-Raniry) — Hakiki Ramadhan.",
-  },
-  {
-    permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/eksyar1.jpeg",
-    caption: "Apresiasi Lulus Munaqasah Jalur Publikasi Jurnal Ilmiah SINTA 4 (JEMSI) — Sabila Syifa Noorazlina.",
-  },
-  {
-    permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg",
-    caption: "Sekolah Pasar Modal Syariah (SPMS) 2026 bersama BEI Perwakilan Jawa Barat & GIS FEBI UIN SGD.",
-  },
-  {
-    permalink: "https://www.instagram.com/eksyaruinsgd/",
-    image: "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260624-WA0016.jpg",
-    caption: "Kerja Sama Peningkatan Kompetensi SDM bersama Muamalat Institute & Seminar Karir di Aula FEBI Kampus 2.",
-  },
-];
-
 /**
- * Feed ringkas untuk beranda website (di-cache 30 menit). Mengembalikan
- * feed default @eksyaruinsgd bila Instagram belum tersambung atau API sedang gagal.
+ * Feed ringkas untuk beranda website (di-cache 30 menit). Hanya mengembalikan
+ * unggahan asli dari Instagram API. Bila token belum dipasang atau API gagal,
+ * hasilnya kosong supaya beranda menyembunyikan bagian Instagram, bukan
+ * menampilkan foto lain seolah-olah dari Instagram.
  */
 export async function instagramFeed(
   limit = 6,
@@ -154,17 +123,16 @@ export async function instagramFeed(
       `${API}/me/media?fields=media_type,media_url,thumbnail_url,permalink,caption&limit=${limit}&access_token=${token}`,
       { next: { revalidate: 1800 } },
     );
-    if (!res.ok) return DEFAULT_IG_FEED.slice(0, limit);
+    if (!res.ok) return [];
     const j = (await res.json()) as { data?: ApiMedia[] };
-    const items = (j.data ?? [])
+    return (j.data ?? [])
       .map((m) => ({
         permalink: m.permalink,
         image: (m.media_type === "VIDEO" ? m.thumbnail_url : m.media_url) ?? "",
         caption: (m.caption ?? "").split("\n")[0].slice(0, 120),
       }))
       .filter((m) => m.image);
-    return items.length > 0 ? items : DEFAULT_IG_FEED.slice(0, limit);
   } catch {
-    return DEFAULT_IG_FEED.slice(0, limit);
+    return [];
   }
 }

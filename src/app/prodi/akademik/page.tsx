@@ -70,12 +70,18 @@ export default async function AkademikPage() {
         title="Akademik"
         description="Kurikulum yang memadukan teori ekonomi, fiqh muamalah, dan praktik industri."
       />
-      <div className="flex justify-center px-4 pb-8" data-print-hide>
-        <PrintButton />
-      </div>
+      {/* Dibuka langsung dengan mata kuliah per tahun: yang paling dicari. */}
+      <section id="kurikulum" className="scroll-mt-28 px-4 pb-16 sm:px-6 sm:pb-24">
+        <div className="mx-auto max-w-[1024px]">
+          <KurikulumTabs years={kurikulum} />
+          <div className="mt-8 flex justify-center" data-print-hide>
+            <PrintButton />
+          </div>
+        </div>
+      </section>
 
       {/* Angka */}
-      <section className="px-4 pb-24 sm:px-6 sm:pb-32">
+      <section className="border-t border-hairline px-4 py-16 sm:px-6 sm:py-24">
         <dl className="mx-auto grid max-w-[1024px] grid-cols-2 gap-y-12 text-center md:grid-cols-4">
           {facts.map((f) => (
             <Reveal key={f.k}>
@@ -87,7 +93,7 @@ export default async function AkademikPage() {
                   </span>
                 )}
               </dd>
-              <dt className="mt-3 text-[15px] text-label-2">{f.k}</dt>
+              <dt className="mt-3 text-[16px] text-label-2">{f.k}</dt>
             </Reveal>
           ))}
         </dl>
@@ -99,7 +105,6 @@ export default async function AkademikPage() {
           <SectionHeading
             eyebrow="Struktur Kurikulum"
             title="Kelompok mata kuliah"
-            description="Setiap kelompok berkontribusi pada kompetensi lulusan yang berbeda."
           />
         </Reveal>
         <div className="mx-auto mt-14 grid max-w-[1024px] gap-4 md:grid-cols-3">
@@ -109,7 +114,7 @@ export default async function AkademikPage() {
                 <p className="text-[40px] font-semibold leading-none tracking-[-0.03em] text-accent">
                   {k.code}
                 </p>
-                <h3 className="mt-6 text-[21px] font-semibold leading-snug tracking-[-0.01em] text-label">
+                <h3 className="mt-6 text-[24px] font-semibold leading-snug tracking-[-0.01em] text-label">
                   {k.title}
                 </h3>
                 <p className="mt-2 text-[16px] leading-[1.45] text-label-2">
@@ -120,18 +125,6 @@ export default async function AkademikPage() {
           ))}
         </div>
 
-        <div className="mx-auto mt-24 max-w-[1024px]">
-          <Reveal>
-            <SectionHeading
-              eyebrow="Kurikulum"
-              title="Sebaran mata kuliah per semester"
-              description="Gambaran mata kuliah per semester. Daftar resmi tersedia di dokumen kurikulum prodi."
-            />
-          </Reveal>
-          <Reveal className="mt-10">
-            <KurikulumTabs years={kurikulum} />
-          </Reveal>
-        </div>
       </section>
 
       {/* Peminatan & roadmap */}
@@ -156,20 +149,20 @@ export default async function AkademikPage() {
                       : "rounded-[28px] bg-accent p-7 text-white"
                   }
                 >
-                  <h3 className="text-[22px] font-bold tracking-[-0.01em]">
+                  <h3 className="text-[24px] font-bold tracking-[-0.01em]">
                     {p.nama}
                   </h3>
                   <p
                     className={
                       i % 2
-                        ? "mt-2 text-[15px] text-label-2"
-                        : "mt-2 text-[15px] text-white/80"
+                        ? "mt-2 text-[16px] text-label-2"
+                        : "mt-2 text-[16px] text-white/80"
                     }
                   >
                     {p.deskripsi}
                   </p>
                   {p.mataKuliah.length > 0 && (
-                    <ol className="mt-5 space-y-1.5 text-[14.5px]">
+                    <ol className="mt-5 space-y-1.5 text-[14px]">
                       {p.mataKuliah.map((mk, k) => (
                         <li key={mk} className="flex gap-2">
                           <span className="font-bold tabular-nums opacity-60">
@@ -184,8 +177,8 @@ export default async function AkademikPage() {
                     <p
                       className={
                         i % 2
-                          ? "mt-5 text-[13.5px] text-label-2"
-                          : "mt-5 text-[13.5px] text-white/75"
+                          ? "mt-5 text-[14px] text-label-2"
+                          : "mt-5 text-[14px] text-white/75"
                       }
                     >
                       Arah karier: {p.karier.join(", ")}
@@ -246,10 +239,10 @@ export default async function AkademikPage() {
         <div className="mx-auto mt-14 grid max-w-[1024px] gap-x-12 gap-y-10 sm:grid-cols-2">
           {profilLulusan.map((p) => (
             <Reveal key={p.title} className="border-t border-hairline pt-6">
-              <h3 className="text-[21px] font-semibold tracking-[-0.01em] text-label">
+              <h3 className="text-[24px] font-semibold tracking-[-0.01em] text-label">
                 {p.title}
               </h3>
-              <p className="mt-2 text-[17px] leading-[1.45] text-label-2">
+              <p className="mt-2 text-[16px] leading-[1.45] text-label-2">
                 {p.description}
               </p>
             </Reveal>
@@ -260,7 +253,7 @@ export default async function AkademikPage() {
       {/* CPL */}
       <section className="bg-label px-4 py-24 text-white sm:px-6 sm:py-32">
         <Reveal className="mx-auto max-w-3xl text-center">
-          <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-amber">
+          <p className="text-[16px] font-semibold uppercase tracking-[0.08em] text-amber">
             Capaian pembelajaran
           </p>
           <h2 className="mt-3 text-[clamp(2rem,1.4rem+2.4vw,3.5rem)] font-extrabold leading-[1.07] tracking-[-0.03em]">
@@ -271,10 +264,10 @@ export default async function AkademikPage() {
           {capaianPembelajaran.map((c) => (
             <Reveal key={c.title}>
               <div className="h-full rounded-[28px] bg-white/[0.06] p-7">
-                <h3 className="text-[19px] font-semibold text-white">
+                <h3 className="text-[18px] font-semibold text-white">
                   {c.title}
                 </h3>
-                <p className="mt-2 text-[15px] leading-[1.45] text-white/65">
+                <p className="mt-2 text-[16px] leading-[1.45] text-white/65">
                   {c.description}
                 </p>
               </div>
@@ -298,7 +291,7 @@ export default async function AkademikPage() {
               key={p.title}
               className="flex items-baseline justify-between gap-6 border-b border-hairline py-5"
             >
-              <span className="text-[19px] font-semibold tracking-[-0.01em] text-label">
+              <span className="text-[18px] font-semibold tracking-[-0.01em] text-label">
                 {p.title}
               </span>
               <span className="hidden text-right text-[14px] text-label-2 lg:block">
@@ -330,14 +323,14 @@ export default async function AkademikPage() {
               className="group flex items-center justify-between gap-6 rounded-[24px] bg-accent p-8 text-white transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.5)]"
             >
               <span>
-                <span className="block text-[22px] font-extrabold tracking-[-0.02em]">
+                <span className="block text-[24px] font-extrabold tracking-[-0.02em]">
                   {c.t}
                 </span>
-                <span className="mt-1 block text-[15px] text-white/80">
+                <span className="mt-1 block text-[16px] text-white/80">
                   {c.d}
                 </span>
               </span>
-              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/15 text-[20px] transition-transform duration-300 group-hover:translate-x-1">
+              <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-white/15 text-[18px] transition-transform duration-300 group-hover:translate-x-1">
                 →
               </span>
             </Link>
@@ -356,7 +349,7 @@ export default async function AkademikPage() {
               rel="noopener noreferrer"
               className="group rounded-[20px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]"
             >
-              <p className="text-[17px] font-semibold text-label">{l.title}</p>
+              <p className="text-[16px] font-semibold text-label">{l.title}</p>
               <p className="mt-1 text-[14px] text-label-2">{l.description}</p>
               <p className="mt-4 text-[14px] text-accent group-hover:underline">
                 Buka ↗

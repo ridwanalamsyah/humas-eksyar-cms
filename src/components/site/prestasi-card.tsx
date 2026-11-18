@@ -12,7 +12,7 @@ export function PrestasiCard({ item }: { item: Prestasi }) {
             src={item.photo}
             alt={item.name}
             ratio="landscape"
-            className="aspect-[4/3]"
+            className="aspect-[4/3] [&_img]:object-top"
           />
         </div>
       ) : (
@@ -20,21 +20,21 @@ export function PrestasiCard({ item }: { item: Prestasi }) {
           <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-[14px] font-bold text-accent">
             {initials(item.name)}
           </span>
-          <span className="rounded-md bg-mist px-2.5 py-1 text-[11.5px] font-semibold text-label-2">
+          <span className="rounded-md bg-mist px-2.5 py-1 text-[14px] font-semibold text-label-2">
             {item.group}
           </span>
         </div>
       )}
       <div className="flex min-w-0 flex-1 flex-col">
         {item.photo && (
-          <span className="mb-2 inline-block self-start rounded-md bg-mist px-2.5 py-0.5 text-[11.5px] font-semibold text-label-2">
+          <span className="mb-2 inline-block self-start rounded-md bg-mist px-2.5 py-0.5 text-[14px] font-semibold text-label-2">
             {item.group}
           </span>
         )}
-        <h3 className="break-words text-[16.5px] font-bold leading-snug tracking-[-0.01em] text-label">
+        <h3 className="break-words text-[16px] font-bold leading-snug tracking-[-0.01em] text-label">
           {item.name}
         </h3>
-        <p className="mt-1.5 break-words text-[14px] leading-relaxed text-label-2">
+        <p className="mt-1.5 line-clamp-2 break-words text-[14px] leading-relaxed text-label-2">
           {item.achievement}
         </p>
       </div>

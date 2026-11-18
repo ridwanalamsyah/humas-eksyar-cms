@@ -91,9 +91,9 @@ export function RubricsEditor({ initial }: Props) {
   }
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.3fr]">
+    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
       <GlassCard variant="thick" className="p-6">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Rubrik baru
         </p>
         <div className="mt-4 grid gap-3">
@@ -143,7 +143,7 @@ export function RubricsEditor({ initial }: Props) {
       </GlassCard>
 
       <GlassCard variant="thick" className="p-6">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Daftar rubrik ({rubrics.length})
         </p>
         <div className="mt-4 space-y-3">
@@ -157,7 +157,7 @@ export function RubricsEditor({ initial }: Props) {
             />
           ))}
           {rubrics.length === 0 && (
-            <p className="rounded-2xl border border-dashed border-foreground/15 p-6 text-center text-[12px] text-foreground/55">
+            <p className="rounded-2xl border border-dashed border-foreground/15 p-6 text-center text-[13px] text-foreground/60">
               Belum ada rubrik. Tambah satu di kiri.
             </p>
           )}
@@ -206,7 +206,7 @@ function RubricRow({
           onChange={(e) => setLabel(e.target.value)}
           className="min-w-0 flex-1 rounded-lg border border-foreground/10 bg-background/60 px-2 py-1 text-[14px] outline-none dark:border-white/10"
         />
-        <code className="rounded-md bg-foreground/5 px-1.5 py-0.5 text-[10px] text-foreground/55">
+        <code className="rounded-md bg-foreground/5 px-1.5 py-0.5 text-[13px] text-foreground/60">
           {rubric.slug}
         </code>
       </div>
@@ -215,7 +215,7 @@ function RubricRow({
         onChange={(e) => setDescription(e.target.value)}
         rows={1}
         placeholder="Deskripsi singkat…"
-        className="mt-2 w-full resize-y rounded-lg border border-foreground/10 bg-background/60 px-2 py-1 text-[12px] outline-none dark:border-white/10"
+        className="mt-2 w-full resize-y rounded-lg border border-foreground/10 bg-background/60 px-2 py-1 text-[13px] outline-none dark:border-white/10"
       />
       <div className="mt-2 flex items-center justify-end gap-2">
         <Button variant="ghost" size="sm" onClick={onToggle}>
@@ -257,13 +257,13 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[12.5px] text-foreground/50">
+      <span className="mb-1 block text-[13px] text-foreground/60">
         {label}
       </span>
       <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">
         {children}
       </div>
-      {hint && <span className="mt-1 block text-[11px] text-foreground/55">{hint}</span>}
+      {hint && <span className="mt-1 block text-[13px] text-foreground/60">{hint}</span>}
     </label>
   );
 }

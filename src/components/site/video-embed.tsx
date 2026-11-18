@@ -36,7 +36,7 @@ export function VideoEmbed({ url, title }: { url: string; title: string }) {
           <span className="absolute left-1/2 top-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-canvas/95 text-accent shadow-lg transition-transform duration-300 group-hover:scale-110">
             <Play className="ml-1 size-7 fill-current" />
           </span>
-          <span className="absolute inset-x-0 bottom-0 bg-navy/70 px-5 py-3 text-left text-[15px] font-semibold text-white">
+          <span className="absolute inset-x-0 bottom-0 bg-navy/70 px-5 py-3 text-left text-[16px] font-semibold text-white">
             {title}
           </span>
         </button>

@@ -66,7 +66,7 @@ export function MataKuliahDirectory({ items }: { items: MK[] }) {
               <p className="text-[16px] font-semibold leading-snug text-label">
                 {m.nama}
               </p>
-              <p className="mt-1 text-[13px] text-label-3">
+              <p className="mt-1 text-[14px] text-label-3">
                 {m.kelas} kelas
                 {m.kategori[0] ? ` · ${m.kategori.slice(0, 2).join(", ")}` : ""}
               </p>
@@ -76,13 +76,13 @@ export function MataKuliahDirectory({ items }: { items: MK[] }) {
                     <Link
                       key={d}
                       href={`/prodi/dosen?q=${encodeURIComponent(d)}`}
-                      className="rounded-full bg-mist px-2.5 py-1 text-[12.5px] font-medium text-label-2 hover:text-accent"
+                      className="rounded-full bg-mist px-2.5 py-1 text-[14px] font-medium text-label-2 hover:text-accent"
                     >
                       {d}
                     </Link>
                   ))}
                   {m.dosen.length > 6 && (
-                    <span className="px-1 py-1 text-[12.5px] text-label-3">
+                    <span className="px-1 py-1 text-[14px] text-label-3">
                       +{m.dosen.length - 6}
                     </span>
                   )}
@@ -101,7 +101,7 @@ export function MataKuliahDirectory({ items }: { items: MK[] }) {
           <button
             type="button"
             onClick={() => setLimit((l) => l + 48)}
-            className="rounded-full bg-mist px-6 py-2.5 text-[15px] font-semibold text-label hover:bg-hairline"
+            className="rounded-full bg-mist px-6 py-2.5 text-[16px] font-semibold text-label hover:bg-hairline"
           >
             Tampilkan lebih banyak ({shown.length - limit} lagi)
           </button>

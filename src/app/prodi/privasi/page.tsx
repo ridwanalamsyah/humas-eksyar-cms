@@ -91,7 +91,7 @@ export default async function PrivasiPage() {
         <div className="mx-auto grid max-w-[720px] gap-8">
           {sections.map((s) => (
             <div key={s.title}>
-              <h2 className="text-[19px] font-bold tracking-[-0.01em] text-label">
+              <h2 className="text-[18px] font-bold tracking-[-0.01em] text-label">
                 {s.title}
               </h2>
               <p className="mt-2 text-[16px] leading-[1.65] text-label-2">

@@ -82,7 +82,7 @@ export function SearchInput({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full rounded-full border border-hairline bg-canvas py-2.5 pl-10 pr-4 text-[15px] text-label outline-none placeholder:text-label-3 focus:border-accent focus:ring-4 focus:ring-accent/10"
+        className="w-full rounded-full border border-hairline bg-canvas py-2.5 pl-10 pr-4 text-[16px] text-label outline-none placeholder:text-label-3 focus:border-accent focus:ring-4 focus:ring-accent/10"
       />
     </label>
   );

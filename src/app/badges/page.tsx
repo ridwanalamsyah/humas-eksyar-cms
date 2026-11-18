@@ -98,18 +98,18 @@ export default async function BadgesPage() {
                   />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className={`text-[10px] font-medium uppercase tracking-[0.16em] ${color.text}`}>
+                  <p className={`text-[13px] font-medium uppercase tracking-[0.16em] ${color.text}`}>
                     {color.label} · +{b.xpReward} XP
                   </p>
                   <h3 className="mt-0.5 font-display text-[15px] font-semibold leading-tight tracking-tight">
                     {b.name}
                   </h3>
-                  <p className="mt-1 text-[12px] text-foreground/65">
+                  <p className="mt-1 text-[13px] text-foreground/65">
                     {b.description}
                   </p>
                 </div>
               </div>
-              <div className="mt-4 text-[11px] text-foreground/60">
+              <div className="mt-4 text-[13px] text-foreground/60">
                 <div className="flex items-center justify-between">
                   <span>Tingkat unlock</span>
                   <span className="font-mono">
@@ -119,7 +119,7 @@ export default async function BadgesPage() {
                 <ProgressBar value={rate} className="mt-1" />
               </div>
               {unlocked && (
-                <div className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-brand-700 dark:text-brand-300">
+                <div className="mt-3 inline-flex items-center gap-1 text-[13px] font-medium text-brand-700 dark:text-brand-300">
                   <Sparkles className="size-3" strokeWidth={2} /> Sudah dimiliki
                 </div>
               )}

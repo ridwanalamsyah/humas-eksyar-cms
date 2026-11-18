@@ -69,10 +69,10 @@ export default async function WebsiteSettingsPage({
 
         {/* Alat Teknis & Riwayat (Collapsible Dropdown) */}
         <details className="group relative">
-          <summary className="flex cursor-pointer select-none items-center gap-1.5 rounded-xl border border-hairline bg-canvas px-3 py-1.5 text-[12.5px] font-medium text-label-2 hover:bg-mist hover:text-label transition-colors list-none shadow-2xs">
+          <summary className="flex cursor-pointer select-none items-center gap-1.5 rounded-xl border border-hairline bg-canvas px-3 py-1.5 text-[13px] font-medium text-label-2 hover:bg-mist hover:text-label transition-colors list-none shadow-2xs">
             <SlidersHorizontal className="size-3.5" />
             <span>Alat Sinkron &amp; Riwayat</span>
-            <span className="text-[10px] text-label-3 transition-transform group-open:rotate-180">▼</span>
+            <span className="text-[13px] text-label-3 transition-transform group-open:rotate-180">▼</span>
           </summary>
           <div className="absolute right-0 top-full z-40 mt-2 w-[340px] sm:w-[420px] rounded-2xl border border-hairline bg-canvas p-4 shadow-xl">
             <div className="space-y-3">

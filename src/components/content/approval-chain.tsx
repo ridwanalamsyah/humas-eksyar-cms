@@ -82,13 +82,13 @@ export function ApprovalChain({ content }: { content: ContentItem }) {
               )}
             </span>
             <div className="flex-1">
-              <p className="text-[12px] font-semibold">{STAGE_LABEL[stage]}</p>
+              <p className="text-[13px] font-semibold">{STAGE_LABEL[stage]}</p>
               {member ? (
-                <p className="text-[10px] text-foreground/55">{member.name}</p>
+                <p className="text-[13px] text-foreground/60">{member.name}</p>
               ) : stage === "scheduled" ? (
-                <p className="text-[10px] text-foreground/55">{content.scheduledFor ? "Dijadwalkan" : "Belum dijadwalkan"}</p>
+                <p className="text-[13px] text-foreground/60">{content.scheduledFor ? "Dijadwalkan" : "Belum dijadwalkan"}</p>
               ) : (
-                <p className="text-[10px] text-foreground/45">—</p>
+                <p className="text-[13px] text-foreground/60">—</p>
               )}
             </div>
             {member && (

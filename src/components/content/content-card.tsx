@@ -55,7 +55,7 @@ export function ContentCard({ content, author, cover }: ContentCardProps) {
             <div className="absolute left-3 top-3 flex items-center gap-1.5">
               <StatusPill status={content.status} size="xs" />
               {aiGenerated && (
-                <span className="inline-flex items-center gap-1 rounded-full border border-gold-400/40 bg-gold-400/15 px-1.5 py-0.5 text-[10px] font-semibold text-gold-700 backdrop-blur dark:text-gold-200">
+                <span className="inline-flex items-center gap-1 rounded-full border border-gold-400/40 bg-gold-400/15 px-1.5 py-0.5 text-[13px] font-semibold text-gold-700 backdrop-blur dark:text-gold-200">
                   <Sparkles className="size-2.5" strokeWidth={2} />
                   AI
                 </span>
@@ -69,7 +69,7 @@ export function ContentCard({ content, author, cover }: ContentCardProps) {
           <div className="flex items-center gap-1.5">
             <StatusPill status={content.status} size="xs" />
             {aiGenerated && (
-              <span className="inline-flex items-center gap-1 rounded-full border border-gold-400/40 bg-gold-400/15 px-1.5 py-0.5 text-[10px] font-semibold text-gold-700 dark:text-gold-200">
+              <span className="inline-flex items-center gap-1 rounded-full border border-gold-400/40 bg-gold-400/15 px-1.5 py-0.5 text-[13px] font-semibold text-gold-700 dark:text-gold-200">
                 <Sparkles className="size-2.5" strokeWidth={2} />
                 AI
               </span>
@@ -92,8 +92,8 @@ export function ContentCard({ content, author, cover }: ContentCardProps) {
           <div className="flex items-center gap-2">
             <Avatar member={author} size={24} ring={false} />
             <div className="leading-tight">
-              <p className="text-[12px] font-medium">{author.name.split(" ")[0]}</p>
-              <p className="text-[10px] text-foreground/55">
+              <p className="text-[13px] font-medium">{author.name.split(" ")[0]}</p>
+              <p className="text-[13px] text-foreground/60">
                 {content.publishedAt
                   ? `${relativeFromNow(content.publishedAt)} · published`
                   : content.scheduledFor
@@ -103,14 +103,14 @@ export function ContentCard({ content, author, cover }: ContentCardProps) {
             </div>
           </div>
           {content.metrics ? (
-            <div className="flex items-center gap-2 text-[11px] text-foreground/60">
+            <div className="flex items-center gap-2 text-[13px] text-foreground/60">
               <span className="inline-flex items-center gap-0.5"><Eye className="size-3" strokeWidth={1.75} />{humanNumber(content.metrics.views)}</span>
               <span className="inline-flex items-center gap-0.5"><Heart className="size-3" strokeWidth={1.75} />{humanNumber(content.metrics.likes)}</span>
               <span className="inline-flex items-center gap-0.5"><MessageSquare className="size-3" strokeWidth={1.75} />{content.metrics.comments}</span>
               <span className="inline-flex items-center gap-0.5"><Share2 className="size-3" strokeWidth={1.75} />{percent(content.metrics.engagementRate, 1)}</span>
             </div>
           ) : (
-            <div className="flex items-center gap-1.5 text-[11px] text-foreground/55">
+            <div className="flex items-center gap-1.5 text-[13px] text-foreground/60">
               <ImageIcon className="size-3" strokeWidth={1.75} />
               {content.mediaIds.length}
               <span className="opacity-50">·</span>

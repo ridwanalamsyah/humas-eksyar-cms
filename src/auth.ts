@@ -14,6 +14,7 @@ import Credentials from "next-auth/providers/credentials";
 import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import { db, isDbEnabled, schema } from "@/lib/db";
 import { recordAuthError } from "@/lib/auth-debug";
+import { randomBytes, timingSafeEqual } from "node:crypto";
 import { members } from "@/lib/fixtures/members";
 
 /**
@@ -43,10 +44,36 @@ if (process.env.NODE_ENV === "production" && (!googleClientId || !googleClientSe
   );
 }
 
+const isProd = process.env.NODE_ENV === "production";
+
+/**
+ * Kunci penanda tangan sesi. Repo ini publik, jadi kunci cadangan yang tertulis
+ * di kode bisa dipakai siapa pun untuk memalsukan sesi admin. Di produksi tanpa
+ * AUTH_SECRET dipakai kunci acak per proses: login tidak bisa dipalsukan (tapi
+ * sesi tidak awet sampai AUTH_SECRET diisi), dan website publik tetap jalan.
+ */
+const authSecret =
+  readEnv("AUTH_SECRET", "NEXTAUTH_SECRET") ??
+  (isProd ? randomBytes(32).toString("hex") : "humas-eksyar-cms-local-dev-secret");
+if (isProd && !readEnv("AUTH_SECRET", "NEXTAUTH_SECRET")) {
+  console.error("[auth] AUTH_SECRET belum diisi di Vercel: sesi login tidak akan awet.");
+}
+
+/**
+ * Kata sandi tim untuk login dengan email (CMS_LOGIN_PASSWORD). Tanpa nilai ini
+ * di produksi, login email dimatikan dan hanya Google yang bisa dipakai.
+ * Di komputer lokal (development) login email tetap bisa tanpa kata sandi.
+ */
+const teamPassword = readEnv("CMS_LOGIN_PASSWORD");
+function passwordOk(given: unknown): boolean {
+  if (!teamPassword) return !isProd;
+  const a = Buffer.from(typeof given === "string" ? given : "");
+  const b = Buffer.from(teamPassword);
+  return a.length === b.length && timingSafeEqual(a, b);
+}
+
 const baseConfig: NextAuthConfig = {
-  secret:
-    readEnv("AUTH_SECRET", "NEXTAUTH_SECRET") ??
-    "humas-eksyar-cms-preview-secret-uinsgd-2026",
+  secret: authSecret,
   session: { strategy: "jwt" },
   providers: [
     Google({
@@ -59,16 +86,14 @@ const baseConfig: NextAuthConfig = {
       name: "Akun Email / Roster",
       credentials: {
         email: { label: "Email", type: "email" },
-        role: { label: "Role", type: "text" },
+        password: { label: "Kata sandi tim", type: "password" },
       },
       async authorize(credentials) {
         const rawEmail = (credentials?.email as string)?.trim().toLowerCase() || "";
-        const role = (credentials?.role as string)?.trim() || "";
-        if (!rawEmail && !role) return null;
+        if (!rawEmail || !passwordOk(credentials?.password)) return null;
 
         // Pengurus Admin Utama (Ridwan)
         if (
-          role === "admin" ||
           rawEmail.includes("1239220061") ||
           rawEmail === "admin@eksyar.ac.id" ||
           rawEmail === "humaseksyaruinbdg@gmail.com" ||
@@ -84,7 +109,7 @@ const baseConfig: NextAuthConfig = {
         }
 
         // Penulis Berita (Alya)
-        if (role === "anggota" || role === "mahasiswa" || rawEmail.includes("1239220048")) {
+        if (rawEmail.includes("1239220048")) {
           const m = members.find((x) => x.id === "mbr-alya") ?? members[1];
           return {
             id: m.id,

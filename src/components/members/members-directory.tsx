@@ -49,12 +49,12 @@ export function MembersDirectory({ members }: Props) {
       <GlassCard className="p-4">
         <div className="flex flex-wrap items-center gap-2">
           <label className="flex flex-1 items-center gap-2 rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 py-2 dark:border-white/10 dark:bg-white/5">
-            <Search className="size-4 text-foreground/55" strokeWidth={1.75} />
+            <Search className="size-4 text-foreground/60" strokeWidth={1.75} />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari nama, email, jabatan…"
-              className="w-full bg-transparent text-[13px] outline-none placeholder:text-foreground/45"
+              className="w-full bg-transparent text-[13px] outline-none placeholder:text-foreground/60"
             />
           </label>
           <select
@@ -108,7 +108,7 @@ export function MembersDirectory({ members }: Props) {
                           <p className="truncate font-display text-[15px] font-semibold tracking-tight">
                             {m.name}
                           </p>
-                          <p className="truncate text-[12px] text-foreground/65">
+                          <p className="truncate text-[13px] text-foreground/65">
                             {m.position}
                           </p>
                           <div className="mt-2 flex flex-wrap items-center gap-1.5">

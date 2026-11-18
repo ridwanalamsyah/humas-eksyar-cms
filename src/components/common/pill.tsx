@@ -53,7 +53,7 @@ const STATUS_META: Record<
   archived: {
     label: "Arsip",
     classes:
-      "border-foreground/15 bg-foreground/5 text-foreground/55 dark:border-white/10 dark:bg-white/5",
+      "border-foreground/15 bg-foreground/5 text-foreground/60 dark:border-white/10 dark:bg-white/5",
     Icon: Archive,
   },
 };
@@ -83,8 +83,8 @@ export function StatusPill({
       className={cn(
         "inline-flex items-center gap-1.5 rounded-md border font-medium",
         size === "xs"
-          ? "px-1.5 py-0.5 text-[10px]"
-          : "px-2 py-0.5 text-[11px]",
+          ? "px-1.5 py-0.5 text-[13px]"
+          : "px-2 py-0.5 text-[13px]",
         meta.classes,
         className,
       )}
@@ -123,7 +123,7 @@ export function Pill({ children, tone = "neutral", className }: PillProps) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[11px] font-medium",
+        "inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[13px] font-medium",
         map[tone],
         className,
       )}

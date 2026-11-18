@@ -58,7 +58,7 @@ export default async function BeritaPage({ searchParams }: Props) {
         <h1 className="text-[clamp(2.25rem,1.8rem+1.8vw,3.25rem)] font-semibold tracking-[-0.03em] text-label">
           Berita & Buletin Artikel
         </h1>
-        <p className="mt-2 max-w-[68ch] text-[17px] leading-[1.55] text-label-2">
+        <p className="mt-2 max-w-[68ch] text-[16px] leading-[1.55] text-label-2">
           Kabar kegiatan akademik, pengumuman resmi, dan publikasi{" "}
           <strong className="font-semibold text-label">
             Buletin Artikel HMJ Ekonomi Syariah
@@ -74,16 +74,16 @@ export default async function BeritaPage({ searchParams }: Props) {
             </span>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <span className="rounded-full bg-accent/12 px-2.5 py-0.5 text-[11.5px] font-semibold text-accent">
+                <span className="rounded-full bg-accent/12 px-2.5 py-0.5 text-[14px] font-semibold text-accent">
                   Kolaborasi Prodi × HMJ Eksyar
                 </span>
                 <h2 className="text-[16px] font-bold text-label">
                   Program Buletin Artikel HMJ Ekonomi Syariah
                 </h2>
               </div>
-              <p className="mt-1 text-[13.5px] leading-[1.5] text-label-2">
+              <p className="mt-1 text-[14px] leading-[1.5] text-label-2">
                 Setiap edisi Buletin Artikel karya mahasiswa & departemen keilmuan HMJ Ekonomi Syariah dapat langsung diunggah melalui CMS (Rubrik{" "}
-                <code className="rounded bg-mist px-1.5 py-0.5 text-[12px] font-semibold text-label">
+                <code className="rounded bg-mist px-1.5 py-0.5 text-[14px] font-semibold text-label">
                   Buletin Artikel HMJ
                 </code>
                 ) atau dikirim melalui formulir kontribusi berita untuk tayang di website resmi prodi.
@@ -94,14 +94,14 @@ export default async function BeritaPage({ searchParams }: Props) {
             {tab !== "buletin_hmj" && (
               <Link
                 href="/prodi/berita?kategori=buletin_hmj"
-                className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-[13px] font-semibold text-white transition-colors hover:bg-accent-hover"
+                className="inline-flex items-center gap-1.5 rounded-full bg-accent px-4 py-2 text-[14px] font-semibold text-white transition-colors hover:bg-accent-hover"
               >
                 Lihat Buletin HMJ
               </Link>
             )}
             <Link
               href="/prodi/formulir/buletin-artikel"
-              className="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-mist px-4 py-2 text-[13px] font-semibold text-label transition-colors hover:border-accent/40 hover:text-accent"
+              className="inline-flex items-center gap-1.5 rounded-full border border-hairline bg-mist px-4 py-2 text-[14px] font-semibold text-label transition-colors hover:border-accent/40 hover:text-accent"
             >
               <PenTool className="size-3.5" />
               Kirim Artikel Buletin
@@ -123,7 +123,7 @@ export default async function BeritaPage({ searchParams }: Props) {
               }
               aria-current={tab === t.key ? "page" : undefined}
               className={cn(
-                "rounded-full px-4 py-1.5 text-[13.5px] font-semibold transition-colors",
+                "rounded-full px-4 py-1.5 text-[14px] font-semibold transition-colors",
                 tab === t.key
                   ? "bg-accent text-white shadow-xs"
                   : "text-label-2 hover:text-label",
@@ -156,7 +156,7 @@ export default async function BeritaPage({ searchParams }: Props) {
             )}
           </>
         ) : (
-          <p className="mt-10 rounded-[20px] bg-canvas p-10 text-center text-[17px] text-label-2">
+          <p className="mt-10 rounded-[20px] bg-canvas p-10 text-center text-[16px] text-label-2">
             Belum ada berita yang dipublikasikan.
           </p>
         )}
@@ -165,7 +165,7 @@ export default async function BeritaPage({ searchParams }: Props) {
           <>
             <h2
               id="kegiatan"
-              className="mt-20 scroll-mt-28 text-[28px] font-semibold tracking-[-0.02em] text-label"
+              className="mt-20 scroll-mt-28 text-[24px] font-semibold tracking-[-0.02em] text-label"
             >
               Arsip kegiatan
             </h2>

@@ -64,20 +64,20 @@ export default async function SkripsiDetailPage({ params }: Props) {
           {item.judul}
         </h1>
 
-        <dl className="mt-8 grid gap-4 rounded-[24px] bg-mist p-6 text-[15px] sm:grid-cols-2">
+        <dl className="mt-8 grid gap-4 rounded-[24px] bg-mist p-6 text-[16px] sm:grid-cols-2">
           <div>
-            <dt className="text-[13px] text-label-3">Penulis</dt>
+            <dt className="text-[14px] text-label-3">Penulis</dt>
             <dd className="mt-0.5 font-semibold text-label">
               {item.nama || "—"}
             </dd>
           </div>
           <div>
-            <dt className="text-[13px] text-label-3">Tahun</dt>
+            <dt className="text-[14px] text-label-3">Tahun</dt>
             <dd className="mt-0.5 font-semibold text-label">{item.tahun}</dd>
           </div>
           {item.pembimbing?.length ? (
             <div className="sm:col-span-2">
-              <dt className="text-[13px] text-label-3">Dosen pembimbing</dt>
+              <dt className="text-[14px] text-label-3">Dosen pembimbing</dt>
               <dd className="mt-1 flex flex-wrap gap-2">
                 {item.pembimbing.map((p) => (
                   <Link
@@ -95,7 +95,7 @@ export default async function SkripsiDetailPage({ params }: Props) {
 
         {keywords.length > 0 && (
           <div className="mt-8">
-            <h2 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-label-3">
+            <h2 className="text-[14px] font-semibold uppercase tracking-[0.08em] text-label-3">
               Kata kunci
             </h2>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -114,10 +114,10 @@ export default async function SkripsiDetailPage({ params }: Props) {
 
         {detail.abstrak && (
           <section className="mt-10">
-            <h2 className="text-[22px] font-bold tracking-[-0.01em] text-label">
+            <h2 className="text-[24px] font-bold tracking-[-0.01em] text-label">
               Abstrak
             </h2>
-            <p className="mt-4 whitespace-pre-line text-[17px] leading-[1.7] text-label">
+            <p className="mt-4 whitespace-pre-line text-[16px] leading-[1.7] text-label">
               {detail.abstrak}
             </p>
           </section>
@@ -125,7 +125,7 @@ export default async function SkripsiDetailPage({ params }: Props) {
 
         {(detail.dokumen?.length || item.url) && (
           <section className="mt-10">
-            <h2 className="text-[22px] font-bold tracking-[-0.01em] text-label">
+            <h2 className="text-[24px] font-bold tracking-[-0.01em] text-label">
               Berkas
             </h2>
             <p className="mt-1 text-[14px] text-label-2">
@@ -146,7 +146,7 @@ export default async function SkripsiDetailPage({ params }: Props) {
                     ) : (
                       <FileText className="size-4 text-accent" />
                     )}
-                    <span className="flex-1 text-[15px] font-medium text-label group-hover:text-accent">
+                    <span className="flex-1 text-[16px] font-medium text-label group-hover:text-accent">
                       {d.label}
                     </span>
                     <ArrowUpRight className="size-4 text-label-3" />
@@ -161,7 +161,7 @@ export default async function SkripsiDetailPage({ params }: Props) {
                     rel="noopener noreferrer"
                     className="group flex items-center gap-3 bg-accent px-5 py-3.5 text-white hover:bg-accent-strong"
                   >
-                    <span className="flex-1 text-[15px] font-semibold">
+                    <span className="flex-1 text-[16px] font-semibold">
                       Buka halaman lengkap di Digilib
                     </span>
                     <ArrowUpRight className="size-4" />
@@ -173,17 +173,17 @@ export default async function SkripsiDetailPage({ params }: Props) {
         )}
 
         <section className="mt-10">
-          <h2 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-label-3">
+          <h2 className="text-[14px] font-semibold uppercase tracking-[0.08em] text-label-3">
             Sitasi (APA)
           </h2>
-          <p className="mt-2 select-all rounded-[16px] bg-mist p-4 font-mono text-[13px] leading-relaxed text-label-2">
+          <p className="mt-2 select-all rounded-[16px] bg-mist p-4 font-mono text-[14px] leading-relaxed text-label-2">
             {apa}
           </p>
         </section>
 
         {similar.length > 0 && (
           <section className="mt-14">
-            <h2 className="text-[22px] font-bold tracking-[-0.01em] text-label">
+            <h2 className="text-[24px] font-bold tracking-[-0.01em] text-label">
               Skripsi dengan topik serupa
             </h2>
             <ul className="mt-4 divide-y divide-hairline overflow-hidden rounded-[20px] border border-hairline">
@@ -197,10 +197,10 @@ export default async function SkripsiDetailPage({ params }: Props) {
                     }
                     className="group flex gap-4 px-5 py-4 hover:bg-mist/60"
                   >
-                    <span className="w-12 shrink-0 font-mono text-[13px] text-label-3">
+                    <span className="w-12 shrink-0 font-mono text-[14px] text-label-3">
                       {s.tahun}
                     </span>
-                    <span className="text-[15px] font-medium leading-snug text-label group-hover:text-accent">
+                    <span className="text-[16px] font-medium leading-snug text-label group-hover:text-accent">
                       {s.judul}
                     </span>
                   </Link>

@@ -62,8 +62,8 @@ export default async function PenelitianPage() {
                   <span
                     className={
                       i === 0
-                        ? "mt-8 text-[20px] font-bold leading-snug"
-                        : "mt-8 text-[20px] font-bold leading-snug text-label"
+                        ? "mt-8 text-[18px] font-bold leading-snug"
+                        : "mt-8 text-[18px] font-bold leading-snug text-label"
                     }
                   >
                     {j.name}
@@ -71,8 +71,8 @@ export default async function PenelitianPage() {
                   <span
                     className={
                       i === 0
-                        ? "mt-2 text-[14.5px] leading-[1.5] text-white/80"
-                        : "mt-2 text-[14.5px] leading-[1.5] text-label-2"
+                        ? "mt-2 text-[14px] leading-[1.5] text-white/80"
+                        : "mt-2 text-[14px] leading-[1.5] text-label-2"
                     }
                   >
                     {j.description}

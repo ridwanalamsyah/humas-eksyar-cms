@@ -16,7 +16,7 @@ export async function PmbCta() {
       className="scroll-mt-16 border-t border-hairline px-4 py-24 sm:px-6 sm:py-32"
     >
       <Reveal className="mx-auto max-w-3xl text-center">
-        <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
+        <p className="text-[16px] font-semibold uppercase tracking-[0.08em] text-accent">
           Penerimaan Mahasiswa Baru
         </p>
         <h2 className="mt-3 text-[clamp(2.1rem,1.5rem+2.6vw,3.6rem)] font-extrabold leading-[1.05] tracking-[-0.035em] text-label text-balance">
@@ -32,13 +32,13 @@ export async function PmbCta() {
             href={kontak.pmbUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-accent px-7 py-3 text-[17px] font-semibold text-white transition-colors hover:bg-accent-strong"
+            className="rounded-full bg-accent px-7 py-3 text-[16px] font-semibold text-white transition-colors hover:bg-accent-strong"
           >
             Daftar sekarang
           </a>
           <Link
             href="/prodi/kontak"
-            className="text-[17px] font-semibold text-accent hover:underline"
+            className="text-[16px] font-semibold text-accent hover:underline"
           >
             Tanya kami ›
           </Link>

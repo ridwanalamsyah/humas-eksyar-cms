@@ -48,10 +48,10 @@ export default async function KontakPage() {
                 <p className="text-[14px] font-bold text-accent">
                   Lokasi Kampus
                 </p>
-                <p className="mt-4 text-[22px] font-extrabold leading-[1.2] tracking-[-0.02em] text-label">
+                <p className="mt-4 text-[24px] font-extrabold leading-[1.2] tracking-[-0.02em] text-label">
                   {kontak.address}
                 </p>
-                <p className="mt-2 text-[15.5px] leading-relaxed text-label-2">
+                <p className="mt-2 text-[16px] leading-relaxed text-label-2">
                   {kontak.street}
                 </p>
               </div>
@@ -59,7 +59,7 @@ export default async function KontakPage() {
                 href={FEBI_MAPS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex items-center gap-1.5 text-[15.5px] font-semibold text-accent hover:underline"
+                className="mt-8 inline-flex items-center gap-1.5 text-[16px] font-semibold text-accent hover:underline"
               >
                 Buka di Google Maps{" "}
                 <ArrowUpRight className="size-4" />
@@ -76,25 +76,25 @@ export default async function KontakPage() {
                 <p className="mt-4 block text-[clamp(1.4rem,1.15rem+1vw,1.95rem)] font-extrabold leading-[1.15] tracking-[-0.02em]">
                   Layanan Mahasiswa &amp; Perkuliahan
                 </p>
-                <p className="mt-2 text-[15px] text-white/90">
+                <p className="mt-2 text-[16px] text-white/90">
                   Konsultasi administrasi akademik, informasi jurusan, dan layanan mahasiswa.
                 </p>
                 <div className="mt-4 border-t border-white/20 pt-3">
-                  <p className="text-[13px] text-sand font-medium">Email Resmi</p>
+                  <p className="text-[14px] text-sand font-medium">Email Resmi</p>
                   <a
                     href={`mailto:${kontak.email}`}
-                    className="text-[15px] font-semibold hover:underline"
+                    className="text-[16px] font-semibold hover:underline"
                   >
                     {kontak.email}
                   </a>
-                  <p className="mt-1 text-[13.5px] text-white/80">{kontak.hours}</p>
+                  <p className="mt-1 text-[14px] text-white/80">{kontak.hours}</p>
                 </div>
               </div>
               <a
                 href="https://wa.me/6285642686526"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex w-fit items-center gap-2 rounded-xl bg-white px-6 py-3 text-[14.5px] font-semibold text-label shadow-sm transition-all hover:bg-white/90 hover:scale-[1.01]"
+                className="mt-8 inline-flex w-fit items-center gap-2 rounded-xl bg-white px-6 py-3 text-[14px] font-semibold text-label shadow-sm transition-all hover:bg-white/90 hover:scale-[1.01]"
               >
                 Hubungi Admin Jurusan <ArrowUpRight className="size-4" />
               </a>
@@ -119,13 +119,13 @@ export default async function KontakPage() {
       {/* Kirim pertanyaan */}
       <section className="px-4 pb-20 sm:px-6">
         <div className="mx-auto max-w-[720px] rounded-[28px] border border-hairline bg-canvas p-6 sm:p-10">
-          <p className="text-[13px] font-semibold uppercase tracking-[0.08em] text-accent">
+          <p className="text-[14px] font-semibold uppercase tracking-[0.08em] text-accent">
             Tanya prodi
           </p>
           <h2 className="mt-1 text-[24px] font-extrabold tracking-[-0.02em] text-label">
             {tanyaForm.title}
           </h2>
-          <p className="mt-1 text-[15px] text-label-2">
+          <p className="mt-1 text-[16px] text-label-2">
             {tanyaForm.description}{" "}
             <Link
               href="/prodi/layanan#faq"
@@ -158,7 +158,7 @@ export default async function KontakPage() {
                   <ArrowUpRight className="size-4" />
                 </span>
                 <div className="mt-6">
-                  <p className="text-[19px] font-bold tracking-[-0.01em] text-label">
+                  <p className="text-[18px] font-bold tracking-[-0.01em] text-label">
                     {s.name}
                   </p>
                   <p className="mt-0.5 text-[14px] text-label-2">{s.handle}</p>
@@ -173,7 +173,7 @@ export default async function KontakPage() {
       <section className="px-4 py-20 sm:px-6">
         <div className="mx-auto max-w-[1024px]">
           <Reveal>
-            <h2 className="text-[22px] font-bold tracking-[-0.015em] text-label">
+            <h2 className="text-[24px] font-bold tracking-[-0.015em] text-label">
               Portal UIN Sunan Gunung Djati
             </h2>
           </Reveal>
@@ -184,7 +184,7 @@ export default async function KontakPage() {
                   href={u.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between py-4 text-[16.5px] font-medium text-label transition-colors hover:text-accent"
+                  className="group flex items-center justify-between py-4 text-[16px] font-medium text-label transition-colors hover:text-accent"
                 >
                   {u.label}
                   <ArrowUpRight className="size-5 text-label-3 transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />

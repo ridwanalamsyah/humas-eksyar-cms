@@ -66,7 +66,7 @@ export function ApprovalActions({ contentId }: Props) {
             onChange={(e) => setNote(e.target.value)}
             placeholder="Catatan revisi…"
             rows={2}
-            className="w-full resize-y bg-transparent text-[12px] outline-none placeholder:text-foreground/45"
+            className="w-full resize-y bg-transparent text-[13px] outline-none placeholder:text-foreground/60"
           />
           <Button
             size="sm"

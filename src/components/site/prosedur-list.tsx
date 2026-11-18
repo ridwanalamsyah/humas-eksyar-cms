@@ -27,7 +27,7 @@ export function ProsedurList({ items }: { items: Prosedur[] }) {
                 {p.title}
               </span>
               {p.description && (
-                <span className="mt-0.5 block text-[14.5px] text-label-2">
+                <span className="mt-0.5 block text-[14px] text-label-2">
                   {p.description}
                 </span>
               )}
@@ -50,10 +50,10 @@ export function ProsedurList({ items }: { items: Prosedur[] }) {
                 <ol className="space-y-3 px-6 pb-6">
                   {p.steps.map((s, k) => (
                     <li key={k} className="flex gap-4">
-                      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent text-[13px] font-bold text-white">
+                      <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent text-[14px] font-bold text-white">
                         {k + 1}
                       </span>
-                      <span className="pt-0.5 text-[15.5px] leading-relaxed text-label">
+                      <span className="pt-0.5 text-[16px] leading-relaxed text-label">
                         {s}
                       </span>
                     </li>

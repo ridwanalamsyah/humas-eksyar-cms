@@ -78,7 +78,7 @@ export default async function DosenPage({ searchParams }: Props) {
 
             <Link
               href="/prodi/formulir/profil-dosen"
-              className="text-[13.5px] font-semibold text-accent hover:underline"
+              className="text-[14px] font-semibold text-accent hover:underline"
             >
               Pembaruan profil dosen ›
             </Link>
@@ -116,15 +116,15 @@ export default async function DosenPage({ searchParams }: Props) {
                       className="size-13 shrink-0 rounded-2xl object-cover"
                     />
                   ) : (
-                    <span className="grid size-13 shrink-0 place-items-center rounded-xl bg-accent-soft text-[15px] font-bold text-accent">
+                    <span className="grid size-13 shrink-0 place-items-center rounded-xl bg-accent-soft text-[16px] font-bold text-accent">
                       {initials(t.name)}
                     </span>
                   )}
                   <div>
-                    <h3 className="text-[15.5px] font-bold text-label">
+                    <h3 className="text-[16px] font-bold text-label">
                       {t.name}
                     </h3>
-                    <p className="mt-0.5 text-[13px] text-label-2">{t.role}</p>
+                    <p className="mt-0.5 text-[14px] text-label-2">{t.role}</p>
                   </div>
                 </div>
               ))}
@@ -146,7 +146,7 @@ export default async function DosenPage({ searchParams }: Props) {
                   href="https://sinta.kemdikbud.go.id/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-xl border border-hairline bg-canvas px-4 py-2 text-[13.5px] font-semibold text-label hover:border-accent hover:text-accent shadow-xs"
+                  className="rounded-xl border border-hairline bg-canvas px-4 py-2 text-[14px] font-semibold text-label hover:border-accent hover:text-accent shadow-xs"
                 >
                   Portal SINTA ↗
                 </a>
@@ -154,7 +154,7 @@ export default async function DosenPage({ searchParams }: Props) {
                   href="https://pddikti.kemdiktisaintek.go.id"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-xl bg-accent px-4 py-2 text-[13.5px] font-semibold text-white hover:bg-accent-hover shadow-xs"
+                  className="rounded-xl bg-accent px-4 py-2 text-[14px] font-semibold text-white hover:bg-accent-hover shadow-xs"
                 >
                   Buka PDDikti ↗
                 </a>

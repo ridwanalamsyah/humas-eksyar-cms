@@ -106,14 +106,14 @@ export default async function KinerjaPage({ searchParams }: Props) {
       <div data-print-hide>
         <Link
           href="/settings"
-          className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground"
+          className="inline-flex items-center gap-1 text-sm text-foreground/60 hover:text-foreground"
         >
           <ArrowLeft className="size-4" strokeWidth={1.75} /> Pengaturan
         </Link>
       </div>
       <header className="mt-3 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-[12.5px] text-foreground/50">
+          <p className="text-[13px] text-foreground/60">
             Laporan Humas · Website Prodi
           </p>
           <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">
@@ -140,7 +140,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
       <dl className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {stats.map((s) => (
           <div key={s.k} className="glass-regular rounded-xl px-4 py-3.5">
-            <dt className="text-[12.5px] text-foreground/55">{s.k}</dt>
+            <dt className="text-[13px] text-foreground/60">{s.k}</dt>
             <dd className="mt-1 text-[26px] font-semibold tabular-nums tracking-tight">
               {s.v.toLocaleString("id-ID")}
             </dd>
@@ -148,7 +148,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
         ))}
       </dl>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1.6fr_1fr]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <BarChart
           title="Kunjungan per hari"
           unit="kunjungan"
@@ -170,7 +170,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
               ))}
             </ol>
           ) : (
-            <p className="mt-3 text-[13px] text-foreground/55">
+            <p className="mt-3 text-[13px] text-foreground/60">
               Belum ada data kunjungan bulan ini.
             </p>
           )}
@@ -192,7 +192,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
               </li>
             ))}
             {!newsMonth.length && (
-              <li className="text-foreground/55">Tidak ada berita terbit.</li>
+              <li className="text-foreground/60">Tidak ada berita terbit.</li>
             )}
           </ul>
         </section>
@@ -211,7 +211,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
               ) : null;
             })}
             {!subsMonth.length && (
-              <li className="text-foreground/55">Tidak ada isian.</li>
+              <li className="text-foreground/60">Tidak ada isian.</li>
             )}
           </ul>
         </section>
@@ -222,7 +222,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
         <dl className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-4">
           {totals.map((t) => (
             <div key={t.k}>
-              <dt className="text-[12px] text-foreground/55">{t.k}</dt>
+              <dt className="text-[13px] text-foreground/60">{t.k}</dt>
               <dd className="text-[18px] font-semibold tabular-nums">
                 {typeof t.v === "number" ? t.v.toLocaleString("id-ID") : t.v}
               </dd>
@@ -233,14 +233,14 @@ export default async function KinerjaPage({ searchParams }: Props) {
 
       <section className="glass-regular mt-6 rounded-xl p-5" data-print-hide>
         <h2 className="text-[14px] font-semibold">Unduh rekap ke Excel</h2>
-        <p className="mt-1 text-[12.5px] text-foreground/55">
+        <p className="mt-1 text-[13px] text-foreground/60">
           Untuk laporan fakultas/universitas dan bahan akreditasi. Rekap tahun{" "}
           {bulan.slice(0, 4)}.
         </p>
         <div className="mt-3 flex flex-wrap gap-2">
           <a
             href="/api/backup"
-            className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-3 py-1.5 text-[12.5px] font-medium text-background"
+            className="inline-flex items-center gap-1.5 rounded-full bg-foreground px-3 py-1.5 text-[13px] font-medium text-background"
           >
             <Download className="size-3.5" /> Unduh cadangan data
           </a>
@@ -248,7 +248,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
             <a
               key={r}
               href={`/api/ekspor?jenis=${r}&tahun=${bulan.slice(0, 4)}`}
-              className="inline-flex items-center gap-1.5 rounded-full bg-foreground/[0.06] px-3 py-1.5 text-[12.5px] font-medium capitalize hover:bg-foreground/[0.1]"
+              className="inline-flex items-center gap-1.5 rounded-full bg-foreground/[0.06] px-3 py-1.5 text-[13px] font-medium capitalize hover:bg-foreground/[0.1]"
             >
               <Download className="size-3.5" /> {r}
             </a>

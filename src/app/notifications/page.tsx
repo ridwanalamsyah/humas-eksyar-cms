@@ -71,10 +71,10 @@ export default async function NotificationsPage() {
                         <p className="text-[14px] font-medium">{n.title}</p>
                         {!n.read && <Pill tone="brand">Baru</Pill>}
                       </div>
-                      <p className="mt-0.5 text-[12px] text-foreground/65">
+                      <p className="mt-0.5 text-[13px] text-foreground/65">
                         {n.body}
                       </p>
-                      <p className="mt-1 text-[10px] uppercase tracking-[0.16em] text-foreground/45">
+                      <p className="mt-1 text-[13px] uppercase tracking-[0.16em] text-foreground/60">
                         {relativeFromNow(n.at)}
                       </p>
                     </div>
@@ -85,7 +85,7 @@ export default async function NotificationsPage() {
           );
         })}
         {sorted.length === 0 && (
-          <GlassCard variant="thin" className="p-6 text-center text-[13px] text-foreground/55">
+          <GlassCard variant="thin" className="p-6 text-center text-[13px] text-foreground/60">
             Tidak ada notifikasi.
           </GlassCard>
         )}

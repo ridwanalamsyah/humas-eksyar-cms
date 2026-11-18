@@ -117,26 +117,36 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
     });
   }
 
+  const titleWords = title.trim() ? title.trim().split(/\s+/).length : 0;
+
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
+    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
       <GlassCard variant="thick" className="p-6">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Judul atau topik singkat…"
-          className="w-full bg-transparent text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px] outline-none placeholder:text-foreground/40"
+          placeholder="Judul yang menyebut acaranya…"
+          aria-describedby="judul-panduan"
+          className="w-full bg-transparent text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px] outline-none placeholder:text-foreground/60"
         />
+        {/* Aturan menulis tim (docs/panduan-humas.md): judul maksimal 8 kata. */}
+        <p
+          id="judul-panduan"
+          className={`mt-1 text-[13px] ${titleWords > 8 ? "text-amber-600" : "text-foreground/60"}`}
+        >
+          {titleWords} kata · judul maksimal 8 kata
+        </p>
 
-        <div className="mt-3 flex flex-wrap items-center gap-2 text-[12px]">
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-[13px]">
           <SelectField label="Rubrik">
             <select
               value={rubric}
               onChange={(e) => setRubric(e.target.value as ContentRubric)}
-              className="bg-transparent text-[12px] outline-none"
+              className="bg-transparent text-[13px] outline-none"
             >
               {rubrics.map((r) => (
                 <option key={r.id} value={r.slug}>
-                  {r.emoji ? `${r.emoji} ` : ""}{r.label}
+                  {r.label}
                 </option>
               ))}
             </select>
@@ -145,29 +155,29 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
             <select
               value={style}
               onChange={(e) => setStyle(e.target.value as CaptionStyle)}
-              className="bg-transparent text-[12px] outline-none"
+              className="bg-transparent text-[13px] outline-none"
             >
               {STYLE_LIST.map((s) => (
-                <option key={s.value} value={s.value}>{s.emoji} {s.label}</option>
+                <option key={s.value} value={s.value}>{s.label}</option>
               ))}
             </select>
           </SelectField>
         </div>
 
         <div className="mt-5">
-          <label className="text-[12.5px] text-foreground/50">
-            Detail / brief
+          <label className="text-[13px] text-foreground/60">
+            Ceritakan acaranya
           </label>
           <textarea
             value={details}
             onChange={(e) => setDetails(e.target.value)}
-            placeholder="Apa, kapan, di mana, narasumber, key takeaway…"
+            placeholder="Apa, kapan, di mana, narasumber, poin penting…"
             className="mt-2 h-24 w-full resize-y rounded-2xl border border-foreground/10 bg-foreground/5 p-3 text-[14px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
           />
         </div>
 
         <div className="mt-4 flex items-center justify-between">
-          <label className="text-[12.5px] text-foreground/50">
+          <label className="text-[13px] text-foreground/60">
             Caption
           </label>
           <Button
@@ -198,13 +208,13 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         />
 
         <div className="mt-4">
-          <label className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
+          <label className="flex items-center gap-1.5 text-[13px] text-foreground/60">
             <Hash className="size-3" strokeWidth={1.75} /> Tagar
           </label>
           <textarea
             value={hashtags}
             onChange={(e) => setHashtags(e.target.value)}
-            className="mt-2 h-16 w-full resize-y rounded-2xl border border-foreground/10 bg-foreground/5 p-3 font-mono text-[12px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
+            className="mt-2 h-16 w-full resize-y rounded-2xl border border-foreground/10 bg-foreground/5 p-3 font-mono text-[13px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
           />
         </div>
 
@@ -227,7 +237,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
 
       <aside className="flex flex-col gap-4">
         <GlassCard variant="regular" className="p-5">
-          <h3 className="text-[12.5px] text-foreground/50">Channel</h3>
+          <h3 className="text-[13px] text-foreground/60">Channel</h3>
           <div className="mt-3 grid grid-cols-2 gap-1.5">
             {CHANNELS.map((c) => {
               const active = channels.includes(c.value);
@@ -236,7 +246,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
                   key={c.value}
                   type="button"
                   onClick={() => setChannels((cur) => (active ? cur.filter((x) => x !== c.value) : [...cur, c.value]))}
-                  className={`rounded-xl px-3 py-2 text-left text-[12px] font-medium transition-colors ${
+                  className={`rounded-xl px-3 py-2 text-left text-[13px] font-medium transition-colors ${
                     active
                       ? "bg-brand-500/15 text-brand-700 ring-1 ring-brand-500/40 dark:text-brand-200"
                       : "bg-foreground/5 text-foreground/65 hover:text-foreground dark:bg-white/5"
@@ -250,7 +260,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
         </GlassCard>
 
         <GlassCard variant="regular" className="p-5">
-          <h3 className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
+          <h3 className="flex items-center gap-1.5 text-[13px] text-foreground/60">
             <ImageIcon className="size-3" strokeWidth={1.75} /> Media
           </h3>
           <div className="mt-3 grid grid-cols-3 gap-1.5">
@@ -279,12 +289,12 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
             })}
           </div>
           {selectedMedia.length > 0 && (
-            <p className="mt-2 text-[11px] text-foreground/55">{selectedMedia.length} aset dipilih</p>
+            <p className="mt-2 text-[13px] text-foreground/60">{selectedMedia.length} aset dipilih</p>
           )}
         </GlassCard>
 
         <GlassCard variant="regular" className="p-5">
-          <h3 className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
+          <h3 className="flex items-center gap-1.5 text-[13px] text-foreground/60">
             <Calendar className="size-3" strokeWidth={1.75} /> Penjadwalan
           </h3>
           <input
@@ -293,20 +303,20 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
             onChange={(e) => setScheduledFor(e.target.value)}
             className="mt-3 w-full rounded-xl border border-foreground/10 bg-foreground/5 px-3 py-2 text-[13px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
           />
-          <p className="mt-2 text-[11px] text-foreground/55">
+          <p className="mt-2 text-[13px] text-foreground/60">
             Posting otomatis ke channel terpilih saat tanggal jatuh tempo.
           </p>
         </GlassCard>
 
         <GlassCard variant="thin" className="p-5">
-          <h3 className="text-[12.5px] text-foreground/50">Setelah dikirim</h3>
+          <h3 className="text-[13px] text-foreground/60">Setelah dikirim</h3>
           <div className="mt-3 flex flex-wrap gap-2">
             <Pill tone="brand">{rubric.replace(/_/g, " ")}</Pill>
             <Pill tone="gold">
               <Sparkles className="size-3" strokeWidth={2} /> {style.replace(/_/g, " ")}
             </Pill>
           </div>
-          <p className="mt-3 text-[12px] text-foreground/65">
+          <p className="mt-3 text-[13px] text-foreground/65">
             {scheduledFor ? "Konten akan terbit sesuai jadwal." : "Konten akan diperiksa koordinator sebelum terbit."}
           </p>
         </GlassCard>
@@ -321,9 +331,9 @@ function SelectField({ label, children }: { label: string; children: React.React
       whileHover={{ y: -1 }}
       className="inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/5 px-3 py-1.5 text-foreground/85 dark:border-white/10 dark:bg-white/5"
     >
-      <span className="text-[10px] uppercase tracking-wider text-foreground/55">{label}</span>
+      <span className="text-[13px] uppercase tracking-wider text-foreground/60">{label}</span>
       {children}
-      <ChevronDown className="size-3 text-foreground/45" strokeWidth={1.75} />
+      <ChevronDown className="size-3 text-foreground/60" strokeWidth={1.75} />
     </motion.label>
   );
 }

@@ -18,10 +18,10 @@ export function QRCheckIn({ eventId, eventTitle }: Props) {
 
   return (
     <div>
-      <p className="text-[12.5px] text-foreground/50">
+      <p className="text-[13px] text-foreground/60">
         QR Check-in
       </p>
-      <p className="mt-1 text-[12px] text-foreground/65">
+      <p className="mt-1 text-[13px] text-foreground/65">
         Cetak / proyeksi QR ini di acara — anggota scan untuk check-in &amp; dapat XP.
       </p>
 
@@ -41,7 +41,7 @@ export function QRCheckIn({ eventId, eventTitle }: Props) {
             <button
               type="button"
               onClick={() => setRevealed(true)}
-              className="grid size-full place-items-center rounded-xl bg-foreground/[0.04] text-foreground/55 transition-colors hover:bg-foreground/[0.08] dark:bg-white/5"
+              className="grid size-full place-items-center rounded-xl bg-foreground/[0.04] text-foreground/60 transition-colors hover:bg-foreground/[0.08] dark:bg-white/5"
               title="Klik untuk tampilkan QR"
             >
               <QrCode className="size-7" strokeWidth={1.5} />

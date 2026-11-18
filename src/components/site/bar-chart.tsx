@@ -24,10 +24,10 @@ export function BarChart({
 
   return (
     <figure className="w-full max-w-full overflow-hidden rounded-[24px] border border-hairline bg-canvas p-4 sm:p-5">
-      <figcaption className="text-[15px] font-bold text-label">
+      <figcaption className="text-[16px] font-bold text-label">
         {title}
         {unit && (
-          <span className="ml-1 text-[13px] font-normal text-label-3">
+          <span className="ml-1 text-[14px] font-normal text-label-3">
             ({unit})
           </span>
         )}
@@ -53,11 +53,11 @@ export function BarChart({
                   onMouseLeave={() => setHover(null)}
                 >
                   {hover === i && (
-                    <div className="pointer-events-none absolute -top-2 z-10 -translate-y-full whitespace-nowrap rounded-lg bg-navy px-2.5 py-1.5 text-[12px] text-white shadow">
+                    <div className="pointer-events-none absolute -top-2 z-10 -translate-y-full whitespace-nowrap rounded-lg bg-navy px-2.5 py-1.5 text-[14px] text-white shadow">
                       {d.label}: <b>{fmt(d.nilai)}</b> {unit}
                     </div>
                   )}
-                  <span className="mb-1 text-[11px] sm:text-[12px] font-semibold tabular-nums text-label-2 truncate max-w-full text-center">
+                  <span className="mb-1 text-[14px] sm:text-[14px] font-semibold tabular-nums text-label-2 truncate max-w-full text-center">
                     {fmt(d.nilai)}
                   </span>
                   <div
@@ -80,7 +80,7 @@ export function BarChart({
           {data.map((d) => (
             <span
               key={d.label}
-              className="flex-1 min-w-0 truncate text-center text-[11px] sm:text-[12px] text-label-3"
+              className="flex-1 min-w-0 truncate text-center text-[14px] sm:text-[14px] text-label-3"
             >
               {d.label}
             </span>
@@ -88,7 +88,7 @@ export function BarChart({
         </div>
       </div>
 
-      <details className="mt-3 text-[13px]">
+      <details className="mt-3 text-[14px]">
         <summary className="cursor-pointer text-label-3 hover:text-accent">
           Lihat tabel
         </summary>

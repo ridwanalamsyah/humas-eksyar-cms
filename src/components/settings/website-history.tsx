@@ -30,7 +30,7 @@ export function WebsiteHistory({
             <li key={h.at} className="flex items-center justify-between gap-3">
               <span>
                 {new Date(h.at).toLocaleString("id-ID")}{" "}
-                <span className="text-foreground/55">
+                <span className="text-foreground/60">
                   · sebelum diubah oleh {h.by}
                 </span>
               </span>

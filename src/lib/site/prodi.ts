@@ -45,15 +45,12 @@ export const hero = {
   greeting: "Selamat datang di",
   title: "Ekonomi Syariah",
   description:
-    "Belajar ilmu ekonomi modern berlandaskan prinsip muamalah Islam, untuk karir di keuangan syariah, industri halal, filantropi, dan riset kebijakan.",
+    "Kuliah keuangan syariah, zakat, dan industri halal, dengan praktik bersama bank, bursa, dan BAZNAS.",
   /**
-   * Foto utama beranda (mis. "/prodi/hero.jpg" di folder public, atau URL
-   * dari Media Library CMS). Kosongkan untuk memakai kartu sorotan.
+   * Foto utama beranda. Default disimpan di repo (public/prodi) supaya tidak
+   * bergantung pada situs lain; ganti lewat CMS (Isi website → foto hero).
    */
-  image:
-    "https://uinsgd.ac.id/wp-content/uploads/2026/06/IMG-20260611-WA00111-scaled.jpg" as
-      | string
-      | null,
+  image: "/prodi/hero-mahasiswa.jpg" as string | null,
   imageAlt:
     "Mahasiswa Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
 };
@@ -1163,92 +1160,61 @@ export const kontak = {
 export type NavItem = { href: string; label: string; description?: string };
 export type NavGroup = { label: string; href: string; items?: NavItem[] };
 
-/** Menu utama website (mega menu di desktop, akordeon di ponsel). */
+/**
+ * Menu utama website: lima kata, maksimal lima tautan per grup. Beranda cukup
+ * lewat logo. Info pendaftaran sengaja tidak ditonjolkan: ada di grup
+ * Mahasiswa, bukan sebagai menu atau tombol utama.
+ */
 export const navGroups: NavGroup[] = [
   {
     label: "Profil",
     href: "/prodi/profil",
     items: [
-      {
-        href: "/prodi/profil",
-        label: "Tentang Prodi",
-        description: "Sejarah, visi-misi, akreditasi prodi",
-      },
-      {
-        href: "/prodi/dosen",
-        label: "Dosen & Staf",
-        description: "Direktori dosen homebase & staf pengajar",
-      },
-      {
-        href: "/prodi/profil#mitra",
-        label: "Mitra Kerja Sama",
-        description: "Jejaring industri, perbankan & regulator",
-      },
-      {
-        href: "/prodi/alumni",
-        label: "Alumni & Karier",
-        description: "Profil lulusan, tracer study & jejaring alumni",
-      },
-      {
-        href: "/prodi/mutu",
-        label: "Mutu & Penjaminan",
-        description: "Data akreditasi dan evaluasi akademik",
-      },
+      { href: "/prodi/profil", label: "Tentang Prodi", description: "Visi, misi, akreditasi" },
+      { href: "/prodi/profil#pimpinan", label: "Pimpinan", description: "Kaprodi dan jajarannya" },
+      { href: "/prodi/dosen", label: "Dosen & Staf", description: "Keahlian dan profil" },
+      { href: "/prodi/alumni", label: "Alumni & Karier", description: "Ke mana lulusan bekerja" },
+      { href: "/prodi/kontak", label: "Kontak", description: "Alamat dan admin jurusan" },
     ],
   },
   {
     label: "Akademik",
     href: "/prodi/akademik",
     items: [
-      {
-        href: "/prodi/akademik",
-        label: "Kurikulum & Mata Kuliah",
-        description: "Struktur 148 SKS Semester 1–8 & RPS",
-      },
-      {
-        href: "/prodi/kalender",
-        label: "Kalender Akademik",
-        description: "Jadwal perkuliahan, UTS, dan UAS",
-      },
-      {
-        href: "/prodi/penelitian",
-        label: "Penelitian & Riset",
-        description: "Publikasi karya ilmiah dan riset dosen serta mahasiswa",
-      },
+      { href: "/prodi/akademik", label: "Kurikulum & RPS", description: "Mata kuliah per semester" },
+      { href: "/prodi/kalender", label: "Kalender & Agenda", description: "Jadwal kuliah dan acara" },
+      { href: "/prodi/penelitian", label: "Penelitian", description: "Publikasi dan riset" },
+      { href: "/prodi/mutu", label: "Mutu", description: "Data dan penjaminan mutu" },
     ],
   },
   {
-    label: "Artikel & Kabar",
-    href: "/prodi/berita",
+    label: "Mahasiswa",
+    href: "/prodi/layanan",
     items: [
-      {
-        href: "/prodi/berita?kategori=artikel",
-        label: "Buletin Mahasiswa",
-        description: "Karya tulis dan opini ilmiah mahasiswa Ekonomi Syariah",
-      },
-      {
-        href: "/prodi/berita",
-        label: "Berita & Pengumuman",
-        description: "Kabar resmi prodi dan agenda akademik",
-      },
-      {
-        href: "/prodi/galeri",
-        label: "Galeri & Video",
-        description: "Dokumentasi foto dan video YouTube kegiatan",
-      },
-      {
-        href: "/prodi/kemahasiswaan",
-        label: "Kemahasiswaan",
-        description: "Aktivitas organisasi dan prestasi mahasiswa",
-      },
+      { href: "/prodi/layanan", label: "Layanan & Formulir", description: "Surat, formulir, unduhan" },
+      { href: "/prodi/layanan#digital", label: "Sistem Kampus", description: "SALAM, e-Knows, Digilib, SKPI" },
+      { href: "/prodi/kemahasiswaan", label: "Kemahasiswaan & Lomba", description: "HMJ, prestasi, info lomba" },
+      { href: "/prodi/beasiswa", label: "Beasiswa", description: "Syarat dan tenggat" },
+      { href: "/prodi/mahasiswa-baru", label: "Info Pendaftaran", description: "Untuk calon mahasiswa" },
     ],
   },
   {
     label: "Skripsi",
     href: "/prodi/skripsi",
   },
-  { label: "Kontak", href: "/prodi/kontak" },
+  {
+    label: "Kabar",
+    href: "/prodi/berita",
+    items: [
+      { href: "/prodi/berita", label: "Berita & Pengumuman", description: "Kabar resmi prodi" },
+      { href: "/prodi/berita?kategori=artikel", label: "Buletin Mahasiswa", description: "Tulisan mahasiswa" },
+      { href: "/prodi/galeri", label: "Galeri & Video", description: "Foto dan video kegiatan" },
+    ],
+  },
 ];
+
+/** Tombol utama di navbar: layanan untuk mahasiswa aktif. */
+export const navCta = { href: "/prodi/layanan", label: "Layanan" };
 
 export const navLinks = [
   { href: "/prodi/profil", label: "Profil" },

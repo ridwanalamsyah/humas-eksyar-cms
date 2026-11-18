@@ -102,11 +102,11 @@ export function Photo({
           aria-hidden
         >
           <div className="grid size-16 place-items-center rounded-2xl bg-accent-soft text-accent">
-            <span className="text-[22px] font-extrabold tracking-tight">
+            <span className="text-[24px] font-extrabold tracking-tight">
               {initials}
             </span>
           </div>
-          <span className="mt-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-label-3">
+          <span className="mt-3 text-[14px] font-semibold uppercase tracking-[0.12em] text-label-3">
             FEBI · UIN SGD
           </span>
         </div>

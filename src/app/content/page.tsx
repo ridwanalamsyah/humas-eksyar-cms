@@ -11,7 +11,7 @@ export default async function ContentPage() {
     <AppShell width="wide">
       <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-[12.5px] text-foreground/50">
+          <p className="text-[13px] text-foreground/60">
             Publikasi &amp; Artikel
           </p>
           <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">

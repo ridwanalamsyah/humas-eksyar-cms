@@ -58,13 +58,13 @@ export default async function MutuPage() {
         <div className="mx-auto grid max-w-[1024px] gap-4 md:grid-cols-2">
           <Reveal>
             <div className="flex h-full flex-col rounded-[28px] bg-accent p-6 sm:p-10 text-white">
-              <p className="text-[13px] sm:text-[14px] font-bold text-sand">
+              <p className="text-[14px] sm:text-[14px] font-bold text-sand">
                 Akreditasi Institusi · BAN-PT
               </p>
               <p className="mt-auto pt-8 sm:pt-12 text-4xl sm:text-[clamp(3rem,2rem+3vw,4.5rem)] font-extrabold leading-none tracking-[-0.04em] break-words">
                 {identity.universityAccreditation}
               </p>
-              <p className="mt-3 text-[14px] sm:text-[15px] text-white/80">
+              <p className="mt-3 text-[14px] sm:text-[16px] text-white/80">
                 UIN Sunan Gunung Djati Bandung ·{" "}
                 {identity.universityAccreditationPeriod}
               </p>
@@ -72,13 +72,13 @@ export default async function MutuPage() {
           </Reveal>
           <Reveal delay={0.06}>
             <div className="flex h-full flex-col rounded-[28px] bg-mist p-6 sm:p-10">
-              <p className="text-[13px] sm:text-[14px] font-bold text-accent">
+              <p className="text-[14px] sm:text-[14px] font-bold text-accent">
                 Akreditasi Program Studi
               </p>
               <p className="mt-auto pt-8 sm:pt-12 text-3xl sm:text-[clamp(2.25rem,1.8rem+2vw,3.25rem)] font-extrabold leading-none tracking-[-0.03em] text-label break-words">
                 {identity.prodiAccreditation || "Terakreditasi"}
               </p>
-              <p className="mt-3 text-[14px] sm:text-[15px] text-label-2">{prodi.fullName}</p>
+              <p className="mt-3 text-[14px] sm:text-[16px] text-label-2">{prodi.fullName}</p>
             </div>
           </Reveal>
         </div>
@@ -112,7 +112,7 @@ export default async function MutuPage() {
                   <span className="mt-6 text-[18px] font-bold text-label">
                     {title}
                   </span>
-                  <span className="mt-1 text-[14.5px] text-label-2">
+                  <span className="mt-1 text-[14px] text-label-2">
                     {desc}
                   </span>
                 </a>

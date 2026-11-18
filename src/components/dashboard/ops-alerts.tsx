@@ -83,28 +83,35 @@ export async function OpsAlerts() {
       tone: "info",
     });
   if (!alerts.length) return null;
+  // Satu kotak "Perlu perhatian", bukan banner bertumpuk; yang mendesak di atas.
+  alerts.sort((x, y) => (x.tone === y.tone ? 0 : x.tone === "warn" ? -1 : 1));
   return (
-    <ul className="mt-6 grid gap-2">
-      {alerts.map((a) => (
-        <li key={a.text}>
-          <Link
-            href={a.href}
-            className={
-              a.tone === "warn"
-                ? "flex items-center gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-[13.5px] hover:bg-amber-500/15"
-                : "flex items-center gap-3 rounded-xl border border-blue-500/25 bg-blue-500/10 px-4 py-3 text-[13.5px] hover:bg-blue-500/15"
-            }
-          >
-            {a.tone === "warn" ? (
-              <AlertTriangle className="size-4 shrink-0 text-amber-600" />
-            ) : (
-              <Inbox className="size-4 shrink-0 text-blue-600" />
-            )}
-            <span className="min-w-0 flex-1 truncate">{a.text}</span>
-            <span className="text-foreground/55">Buka ›</span>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <section
+      aria-label="Perlu perhatian"
+      className="mt-6 rounded-2xl border border-amber-500/30 bg-amber-500/[0.06] p-4 sm:p-5"
+    >
+      <h2 className="flex items-center gap-2 text-[15px] font-bold text-foreground">
+        <AlertTriangle className="size-4 text-amber-600" /> Perlu perhatian
+        <span className="rounded-full bg-amber-500/15 px-2 text-[13px] tabular-nums">{alerts.length}</span>
+      </h2>
+      <ul className="mt-2 divide-y divide-amber-500/15">
+        {alerts.map((a) => (
+          <li key={a.text}>
+            <Link
+              href={a.href}
+              className="flex min-h-11 items-center gap-3 py-2 text-[14px] hover:text-accent"
+            >
+              {a.tone === "warn" ? (
+                <AlertTriangle className="size-4 shrink-0 text-amber-600" />
+              ) : (
+                <Inbox className="size-4 shrink-0 text-blue-600" />
+              )}
+              <span className="min-w-0 flex-1 truncate">{a.text}</span>
+              <span className="shrink-0 text-[13px] font-semibold text-accent">Buka</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

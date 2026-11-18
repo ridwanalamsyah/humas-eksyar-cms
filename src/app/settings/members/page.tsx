@@ -32,12 +32,12 @@ export default async function MembersSettingsPage() {
     <AppShell>
       <Link
         href="/settings"
-        className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground transition-colors"
+        className="inline-flex items-center gap-1 text-sm text-foreground/60 hover:text-foreground transition-colors"
       >
         <ArrowLeft className="size-4" strokeWidth={1.75} /> Pengaturan
       </Link>
       <header className="mt-3">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Roster Organisasi &amp; Hak Akses
         </p>
         <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">

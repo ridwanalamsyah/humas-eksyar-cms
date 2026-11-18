@@ -41,7 +41,7 @@ export function MitraList({ items }: { items: Mitra[] }) {
                       className="max-h-9 w-auto max-w-full object-contain"
                     />
                   ) : (
-                    <span className="text-[12px] font-bold text-accent">
+                    <span className="text-[14px] font-bold text-accent">
                       {m.name.slice(0, 3).toUpperCase()}
                     </span>
                   )}
@@ -55,7 +55,7 @@ export function MitraList({ items }: { items: Mitra[] }) {
               <p className="mt-4 break-words text-[16px] font-bold leading-snug tracking-[-0.01em] text-label group-hover:text-accent">
                 {m.name}
               </p>
-              <p className="mt-1.5 break-words text-[13.5px] leading-[1.5] text-label-2">
+              <p className="mt-1.5 break-words text-[14px] leading-[1.5] text-label-2">
                 {m.description}
               </p>
             </div>

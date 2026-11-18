@@ -35,7 +35,7 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
           <p className="text-[15px] font-semibold tracking-tight">
             CMS Humas Eksyar
           </p>
-          <p className="hidden text-[12px] text-foreground/55 sm:block">
+          <p className="hidden text-[13px] text-foreground/60 sm:block">
             Humas Jurusan Ekonomi Syariah · UIN SGD
           </p>
         </div>

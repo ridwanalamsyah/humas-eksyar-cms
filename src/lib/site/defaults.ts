@@ -146,12 +146,6 @@ export const defaultWebsiteConfig: WebsiteConfig = {
       date: "2026-06-19",
     },
     {
-      image: "https://uinsgd.ac.id/wp-content/uploads/2026/10/IMG-20261027-WA0010.jpg",
-      caption: "Kuliah Praktisi Industri Keuangan & Asuransi Syariah di lingkungan Fakultas Ekonomi dan Bisnis Islam UIN SGD.",
-      album: "Akademik",
-      date: "2026-10-27",
-    },
-    {
       image: "https://uinsgd.ac.id/wp-content/uploads/2026/09/IMG-20260925-WA0004.jpg",
       caption: "PkM Literasi Digitalisasi Keuangan Syariah dan Pengelolaan Aset Masjid di Masjid Besar Limbangan Garut bersama Bank Indonesia & Bank Muamalat.",
       album: "Pengabdian",
@@ -518,8 +512,8 @@ export const defaultWebsiteConfig: WebsiteConfig = {
     },
   ],
   banner: {
-    aktif: true,
-    teks: "Direktori 515+ Skripsi Digilib & Arsip Resmi Prodi Ekonomi Syariah telah diperbarui dan bebas malware",
+    aktif: false,
+    teks: "Direktori 515+ skripsi Digilib kini bisa dicari di sini",
     url: "/prodi/skripsi",
   },
   kamus: kamusAwal,

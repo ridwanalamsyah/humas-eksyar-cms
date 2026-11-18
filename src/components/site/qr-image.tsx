@@ -44,7 +44,7 @@ export function QrImage({
         <a
           href={src}
           download={`${download}.png`}
-          className="text-[13px] font-semibold text-accent hover:underline"
+          className="text-[14px] font-semibold text-accent hover:underline"
         >
           Unduh QR
         </a>

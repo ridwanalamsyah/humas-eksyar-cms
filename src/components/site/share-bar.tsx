@@ -78,7 +78,7 @@ export function ShareBar({ title }: { title: string }) {
           <Link2 className="size-4" />
         )}
       </button>
-      <span aria-live="polite" className="text-[13px] text-label-2">
+      <span aria-live="polite" className="text-[14px] text-label-2">
         {copied ? "Tautan disalin" : ""}
       </span>
     </div>

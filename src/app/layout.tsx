@@ -6,6 +6,7 @@ import { SessionProvider } from "@/components/providers/session-provider";
 import { LenisProvider } from "@/components/providers/lenis-provider";
 import { Toaster } from "sonner";
 import { PWARegister } from "@/components/providers/pwa-register";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -61,7 +62,7 @@ export const metadata: Metadata = {
     description:
       "Portal resmi & CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, kurikulum, direktori dosen, skripsi Digilib, artikel mahasiswa, dan kegiatan akademik.",
     type: "website",
-    images: [{ url: "/prodi/logo-eksyar.png", alt: "Logo Program Studi Ekonomi Syariah" }],
+    images: [{ url: "/prodi/og-eksyar.jpg", width: 1200, height: 630, alt: "Ekonomi Syariah UIN Sunan Gunung Djati Bandung" }],
   },
   keywords: [
     "Eksyar",
@@ -125,6 +126,8 @@ export default function RootLayout({
           </LenisProvider>
         </ThemeProvider>
         </SessionProvider>
+        {/* Statistik kunjungan anonim (aktifkan Analytics di dashboard Vercel). */}
+        <Analytics />
       </body>
     </html>
   );

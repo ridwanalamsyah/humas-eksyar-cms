@@ -55,10 +55,10 @@ export default async function LayananPage() {
                   className="group flex h-full items-start justify-between gap-4 rounded-[20px] border border-hairline bg-canvas p-5 transition-colors hover:border-accent/40"
                 >
                   <span>
-                    <span className="block text-[17px] font-bold text-label group-hover:text-accent">
+                    <span className="block text-[16px] font-bold text-label group-hover:text-accent">
                       {f.title}
                     </span>
-                    <span className="mt-1 block text-[14.5px] leading-[1.5] text-label-2">
+                    <span className="mt-1 block text-[14px] leading-[1.5] text-label-2">
                       {f.description}
                     </span>
                   </span>
@@ -74,10 +74,10 @@ export default async function LayananPage() {
                 className="group flex h-full items-start justify-between gap-4 rounded-[20px] bg-accent p-5 text-white transition-colors hover:bg-accent-strong"
               >
                 <span>
-                  <span className="block text-[17px] font-bold">
+                  <span className="block text-[16px] font-bold">
                     Surat & administrasi
                   </span>
-                  <span className="mt-1 block text-[14.5px] leading-[1.5] text-white/80">
+                  <span className="mt-1 block text-[14px] leading-[1.5] text-white/80">
                     Surat aktif kuliah, rekomendasi, dan izin penelitian
                     dilayani Tata Usaha FEBI.
                   </span>
@@ -146,10 +146,10 @@ export default async function LayananPage() {
               className="group flex items-start justify-between gap-6 rounded-[24px] bg-canvas p-7 transition-colors hover:bg-canvas/70"
             >
               <span>
-                <span className="block text-[19px] font-bold tracking-[-0.01em] text-label">
+                <span className="block text-[18px] font-bold tracking-[-0.01em] text-label">
                   {l.name}
                 </span>
-                <span className="mt-1 block text-[15px] text-label-2">
+                <span className="mt-1 block text-[16px] text-label-2">
                   {l.description}
                 </span>
               </span>
@@ -170,16 +170,16 @@ export default async function LayananPage() {
           <FaqList items={faq} />
         </Reveal>
         <div className="mx-auto mt-14 max-w-[720px] rounded-[24px] border border-hairline p-6 sm:p-8">
-          <h3 className="text-[20px] font-bold tracking-[-0.01em] text-label">
+          <h3 className="text-[18px] font-bold tracking-[-0.01em] text-label">
             {tanyaForm.title}
           </h3>
-          <p className="mt-1 text-[15px] text-label-2">
+          <p className="mt-1 text-[16px] text-label-2">
             {tanyaForm.description}
           </p>
           <div className="mt-6">
             <FormRenderer def={tanyaForm} compact />
           </div>
-          <p className="mt-6 text-[13.5px] text-label-3">
+          <p className="mt-6 text-[14px] text-label-3">
             Atau email{" "}
             <a
               href={`mailto:${kontak.email}`}
