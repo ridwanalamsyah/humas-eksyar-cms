@@ -4,13 +4,13 @@ import { ProdiLogo } from "./prodi-logo";
 import { utilityLinks } from "@/lib/site/prodi";
 
 const NAV_LINKS = [
-  { href: "/prodi/mahasiswa-baru", label: "Info pendaftaran" },
+  { href: "/prodi/profil", label: "Profil" },
   { href: "/prodi/akademik", label: "Kurikulum" },
   { href: "/prodi/skripsi", label: "Skripsi" },
   { href: "/prodi/berita", label: "Kabar" },
   { href: "/prodi/alumni", label: "Alumni" },
-  { href: "/prodi/profil", label: "Profil" },
   { href: "/prodi/kontak", label: "Kontak" },
+  { href: "/prodi/mahasiswa-baru", label: "Info pendaftaran" },
 ];
 
 /** Sistem kampus yang paling sering dipakai mahasiswa (dulu di bawah hero). */

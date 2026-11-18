@@ -105,8 +105,8 @@ export function SettingsPanels({ member }: Props) {
             <AdminLink
               href="/content/instagram"
               icon={<Camera className="size-4" strokeWidth={1.75} />}
-              title="Instagram → Artikel"
-              desc="Ubah postingan Instagram jadi berita di website."
+              title="Instagram"
+              desc="Sambungkan akun resmi dan ubah unggahan jadi berita."
             />
             <AdminLink
               href="/settings/kinerja"

@@ -2,18 +2,33 @@
 
 Hal-hal yang tidak bisa dikerjakan lewat kode dan perlu dilakukan tim. Urutannya sesuai prioritas.
 
+## 0. Wajib sebelum menggabungkan pembaruan keamanan login
+
+Login email CMS sekarang memakai **kata sandi tim**, dan kunci sesi tidak lagi memakai nilai cadangan yang tertulis di kode (repo ini publik). Isi dua variabel ini di Vercel → project → Settings → Environment Variables (Production), lalu deploy ulang:
+
+| Nama | Isi |
+|---|---|
+| `AUTH_SECRET` | Teks acak panjang. Buat dengan perintah `openssl rand -base64 32`, atau pakai generator kata sandi minimal 32 karakter. |
+| `CMS_LOGIN_PASSWORD` | Kata sandi tim untuk login email. Bagikan hanya ke pengurus Humas, jangan di grup publik. |
+
+Tanpa `CMS_LOGIN_PASSWORD`, login email dimatikan dan hanya login Google yang bisa dipakai. Tanpa `AUTH_SECRET`, login tetap aman, tapi pengguna bisa sering keluar sendiri.
+
+## Aktifkan Vercel Analytics
+
+Kodenya sudah terpasang. Di Vercel → project website → tab **Analytics** → tekan **Enable**. Setelah deploy berikutnya, jumlah kunjungan per halaman muncul di tab itu.
+
 ## 1. Sambungkan Instagram resmi (@eksyaruinsgd)
 
 Bagian Instagram di beranda **hanya muncul kalau Instagram sudah tersambung**. Selama belum, bagian itu disembunyikan. Website tidak lagi menampilkan foto lain seolah-olah dari Instagram.
 
 Jangan memakai scraping (mengambil foto dari halaman Instagram tanpa izin): melanggar ketentuan Instagram, sering diblokir, dan bisa membuat akun bermasalah. Pakai cara resmi:
 
-1. Di aplikasi Instagram, ubah @eksyaruinsgd menjadi **akun profesional** (Kreator atau Bisnis).
-2. Buka developers.facebook.com, buat aplikasi, lalu tambahkan produk **Instagram** dengan pilihan **API setup with Instagram login**.
-3. Hubungkan akun @eksyaruinsgd, lalu buat **access token** (token jangka panjang, berlaku 60 hari).
-4. Di dashboard Vercel → project website → Settings → Environment Variables, tambahkan `INSTAGRAM_ACCESS_TOKEN` berisi token tadi, lalu deploy ulang.
+1. Di aplikasi Instagram, ubah @eksyaruinsgd menjadi **akun profesional** (Kreator atau Bisnis): Pengaturan → Jenis akun dan alat → Beralih ke akun profesional.
+2. Buka developers.facebook.com (masuk dengan akun Facebook pengelola), tekan **Buat aplikasi**, pilih jenis **Bisnis**, lalu tambahkan produk **Instagram** dengan pilihan **API setup with Instagram login**.
+3. Di bagian **Generate access tokens**, tambahkan akun @eksyaruinsgd, izinkan aksesnya, lalu tekan **Generate token**.
+4. Masuk CMS sebagai admin → **Pengaturan → Instagram** → tempel token di kotak **Sambungkan Instagram resmi** → tekan **Sambungkan**. Sistem mengecek token ke Instagram dan menampilkan nama akunnya kalau berhasil.
 
-Setelah itu, kode memperpanjang token sendiri setiap 7 hari dan menyimpannya di database, jadi tidak perlu diulang.
+Setelah itu, kode memperpanjang token sendiri setiap 7 hari, jadi tidak perlu diulang. (Cara lama lewat variabel `INSTAGRAM_ACCESS_TOKEN` di Vercel tetap bisa dipakai.)
 
 ## 2. Impor arsip Instagram lama (opsional)
 

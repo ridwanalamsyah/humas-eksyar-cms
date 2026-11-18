@@ -17,6 +17,7 @@ import { getSkripsi } from "@/lib/site/skripsi";
 import { instagramFeed } from "@/lib/instagram/graph";
 import { kalenderMendatang, rentang } from "@/lib/site/kalender";
 import { hero, prodi } from "@/lib/site/prodi";
+import { dosenSlug, initials } from "@/lib/site/names";
 import { AnnouncementList } from "@/components/site/announcement-list";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { InteractiveHero } from "@/components/site/interactive-hero";
@@ -25,7 +26,7 @@ import { NewsCard } from "@/components/site/news-card";
 import { PrestasiCard } from "@/components/site/prestasi-card";
 import { SectionHeading } from "@/components/site/section-heading";
 import { SkripsiTrendExplorer } from "@/components/site/skripsi-trend-explorer";
-import { TestimoniCard } from "@/components/site/testimoni-card";
+import { Photo } from "@/components/site/photo";
 
 // Render ulang paling lama tiap 5 menit agar update CMS langsung muncul
 export const revalidate = 300;
@@ -93,6 +94,17 @@ export default async function ProdiHomePage() {
   const kegiatan = [...site.kegiatan]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 8);
+
+  // Kaprodi dan Sekprodi tampil besar; pimpinan fakultas sebagai daftar ringkas.
+  // Foto diambil dari data pimpinan, atau dari data dosen bila belum diisi.
+  const fotoDosen = (name: string) =>
+    site.dosen.find((d) => dosenSlug(d.name) === dosenSlug(name))?.photo ?? null;
+  const isProdi = (role: string) => /program studi/i.test(role);
+  const pimpinanProdi = site.pimpinan
+    .filter((p) => isProdi(p.role))
+    .slice(0, 2)
+    .map((p) => ({ ...p, photo: p.photo || fotoDosen(p.name) }));
+  const pimpinanFakultas = site.pimpinan.filter((p) => !isProdi(p.role)).slice(0, 4);
 
   // Hero A: satu foto (dari CMS), judul menyebut prodi + kampus + kota, tiga angka.
   const heroTitle =
@@ -313,32 +325,60 @@ export default async function ProdiHomePage() {
         </div>
       </section>
 
-      {/* ─── 6. Alumni + ajakan untuk calon mahasiswa ─────────── */}
-      <section className="border-t border-hairline/80 px-4 py-16 sm:px-6 sm:py-24">
-        <div className="mx-auto grid max-w-[1160px] gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-center">
-          <div>
-            <SectionHeading
-              align="left"
-              title="Lulusan kami bekerja di bank, bursa, dan lembaga zakat"
-            />
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+      {/* ─── 6. Pimpinan program studi ──────────────────────── */}
+      {pimpinanProdi.length > 0 && (
+        <section className="border-t border-hairline/80 px-4 py-16 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-[1160px]">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <SectionHeading align="left" title="Pimpinan program studi" />
               <Link
-                href="/prodi/mahasiswa-baru"
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-accent px-6 text-[16px] font-semibold text-white transition-colors hover:bg-accent-strong"
+                href="/prodi/dosen"
+                className="inline-flex items-center gap-1.5 text-[16px] font-semibold text-accent hover:underline"
               >
-                Info pendaftaran <ArrowRight className="size-4" />
-              </Link>
-              <Link
-                href="/prodi/alumni"
-                className="inline-flex h-12 items-center justify-center rounded-full border border-hairline px-6 text-[16px] font-semibold text-label transition-colors hover:border-accent/40"
-              >
-                Cerita alumni
+                Semua dosen <ArrowRight className="size-4" />
               </Link>
             </div>
+            <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+              <div className="grid content-start gap-4">
+              {pimpinanProdi.map((p) => (
+                <Link
+                  key={p.name}
+                  href={`/prodi/dosen/${dosenSlug(p.name)}`}
+                  className="group flex items-center gap-5 rounded-3xl border border-hairline bg-canvas p-5 transition-colors hover:border-accent/40 sm:p-6"
+                >
+                  {p.photo ? (
+                    <Photo src={p.photo} alt={p.name} className="w-24 shrink-0 rounded-2xl sm:w-28" />
+                  ) : (
+                    <span className="grid size-20 shrink-0 place-items-center rounded-full bg-accent-soft text-[24px] font-bold text-accent">
+                      {initials(p.name)}
+                    </span>
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-[14px] font-semibold text-accent">{p.role}</p>
+                    <h3 className="mt-1 text-[18px] font-bold leading-snug text-label group-hover:text-accent">
+                      {p.name}
+                    </h3>
+                  </div>
+                </Link>
+              ))}
+              </div>
+              {pimpinanFakultas.length > 0 && (
+                <div className="rounded-3xl bg-mist/60 p-6">
+                  <h3 className="text-[16px] font-bold text-label">Pimpinan fakultas</h3>
+                  <ul className="mt-3 divide-y divide-hairline">
+                    {pimpinanFakultas.map((p) => (
+                      <li key={p.name} className="py-3">
+                        <p className="text-[16px] font-semibold leading-snug text-label">{p.name}</p>
+                        <p className="mt-0.5 text-[14px] text-label-2">{p.role}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
           </div>
-          {site.testimoni[0] && <TestimoniCard item={site.testimoni[0]} />}
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* ─── Instagram: hanya tampil bila akun resmi benar-benar tersambung ── */}
       {ig.length > 0 && (

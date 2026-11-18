@@ -1161,30 +1161,41 @@ export type NavItem = { href: string; label: string; description?: string };
 export type NavGroup = { label: string; href: string; items?: NavItem[] };
 
 /**
- * Menu utama website, dikelompokkan menurut siapa yang datang (calon mahasiswa,
- * mahasiswa, peneliti, pembaca kabar, tamu). Lima kata di navbar, maksimal lima
- * tautan per grup. Beranda cukup lewat logo; Kontak ada di grup Profil dan footer.
+ * Menu utama website: lima kata, maksimal lima tautan per grup. Beranda cukup
+ * lewat logo. Info pendaftaran sengaja tidak ditonjolkan: ada di grup
+ * Mahasiswa, bukan sebagai menu atau tombol utama.
  */
 export const navGroups: NavGroup[] = [
   {
-    label: "Calon Mahasiswa",
-    href: "/prodi/mahasiswa-baru",
+    label: "Profil",
+    href: "/prodi/profil",
     items: [
-      { href: "/prodi/mahasiswa-baru", label: "Info Pendaftaran", description: "Jalur masuk dan tanggal penting" },
-      { href: "/prodi/beasiswa", label: "Beasiswa", description: "Syarat dan tenggat" },
+      { href: "/prodi/profil", label: "Tentang Prodi", description: "Visi, misi, akreditasi" },
+      { href: "/prodi/profil#pimpinan", label: "Pimpinan", description: "Kaprodi dan jajarannya" },
+      { href: "/prodi/dosen", label: "Dosen & Staf", description: "Keahlian dan profil" },
       { href: "/prodi/alumni", label: "Alumni & Karier", description: "Ke mana lulusan bekerja" },
-      { href: "/prodi/akademik", label: "Kurikulum", description: "148 SKS, 8 semester" },
+      { href: "/prodi/kontak", label: "Kontak", description: "Alamat dan admin jurusan" },
+    ],
+  },
+  {
+    label: "Akademik",
+    href: "/prodi/akademik",
+    items: [
+      { href: "/prodi/akademik", label: "Kurikulum & RPS", description: "Mata kuliah per semester" },
+      { href: "/prodi/kalender", label: "Kalender & Agenda", description: "Jadwal kuliah dan acara" },
+      { href: "/prodi/penelitian", label: "Penelitian", description: "Publikasi dan riset" },
+      { href: "/prodi/mutu", label: "Mutu", description: "Data dan penjaminan mutu" },
     ],
   },
   {
     label: "Mahasiswa",
     href: "/prodi/layanan",
     items: [
-      { href: "/prodi/akademik", label: "Kurikulum & RPS", description: "Mata kuliah per semester" },
-      { href: "/prodi/kalender", label: "Kalender & Agenda", description: "Jadwal kuliah dan acara" },
       { href: "/prodi/layanan", label: "Layanan & Formulir", description: "Surat, formulir, unduhan" },
       { href: "/prodi/layanan#digital", label: "Sistem Kampus", description: "SALAM, e-Knows, Digilib, SKPI" },
       { href: "/prodi/kemahasiswaan", label: "Kemahasiswaan & Lomba", description: "HMJ, prestasi, info lomba" },
+      { href: "/prodi/beasiswa", label: "Beasiswa", description: "Syarat dan tenggat" },
+      { href: "/prodi/mahasiswa-baru", label: "Info Pendaftaran", description: "Untuk calon mahasiswa" },
     ],
   },
   {
@@ -1198,24 +1209,12 @@ export const navGroups: NavGroup[] = [
       { href: "/prodi/berita", label: "Berita & Pengumuman", description: "Kabar resmi prodi" },
       { href: "/prodi/berita?kategori=artikel", label: "Buletin Mahasiswa", description: "Tulisan mahasiswa" },
       { href: "/prodi/galeri", label: "Galeri & Video", description: "Foto dan video kegiatan" },
-      { href: "/prodi/kalender", label: "Agenda", description: "Acara terdekat" },
-    ],
-  },
-  {
-    label: "Profil",
-    href: "/prodi/profil",
-    items: [
-      { href: "/prodi/profil", label: "Tentang Prodi", description: "Visi, misi, akreditasi" },
-      { href: "/prodi/dosen", label: "Dosen & Staf", description: "Keahlian dan profil" },
-      { href: "/prodi/penelitian", label: "Penelitian", description: "Publikasi dan riset" },
-      { href: "/prodi/mutu", label: "Mutu", description: "Data dan penjaminan mutu" },
-      { href: "/prodi/kontak", label: "Kontak", description: "Alamat dan admin jurusan" },
     ],
   },
 ];
 
-/** Aksi utama di navbar: untuk pengunjung baru. */
-export const navCta = { href: "/prodi/mahasiswa-baru", label: "Info Pendaftaran" };
+/** Tombol utama di navbar: layanan untuk mahasiswa aktif. */
+export const navCta = { href: "/prodi/layanan", label: "Layanan" };
 
 export const navLinks = [
   { href: "/prodi/profil", label: "Profil" },

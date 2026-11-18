@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { ArrowLeft, ArrowRight, Loader2, Mail } from "lucide-react";
+import { ArrowLeft, ArrowRight, KeyRound, Loader2, Mail } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
@@ -45,8 +45,12 @@ export default function LoginPage() {
 function LoginInner() {
   const [busy, setBusy] = useState(false);
   const [emailInput, setEmailInput] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [passwordInput, setPasswordInput] = useState("");
   const params = useSearchParams();
+  // Auth.js mengembalikan ?error=CredentialsSignin saat email/kata sandi tidak cocok.
+  const [error, setError] = useState<string | null>(
+    params.get("error") === "CredentialsSignin" ? "Email atau kata sandi tim salah." : null,
+  );
   const callbackUrl = params.get("callbackUrl") || "/dashboard";
   const reduce = useReducedMotion();
 
@@ -63,17 +67,18 @@ function LoginInner() {
 
   const handleEmailSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!emailInput.trim()) return;
+    if (!emailInput.trim() || !passwordInput) return;
     setBusy(true);
     setError(null);
     try {
       await signIn("credentials", {
         email: emailInput.trim(),
+        password: passwordInput,
         redirectTo: callbackUrl,
       });
     } catch {
       setBusy(false);
-      setError("Kendala saat memproses login. Silakan periksa format email Anda.");
+      setError("Login gagal. Periksa email dan kata sandi tim, lalu coba lagi.");
     }
   };
 
@@ -211,12 +216,28 @@ function LoginInner() {
                 onChange={(e) => setEmailInput(e.target.value)}
                 placeholder="nama@uinsgd.ac.id"
                 disabled={busy}
-                className="h-11 w-full rounded-xl border border-neutral-200 bg-neutral-50/50 pl-10 pr-3.5 text-[13.5px] text-neutral-900 transition-all placeholder:text-neutral-400 focus:border-[#237A74] focus:bg-white focus:outline-none focus:ring-3 focus:ring-[#237A74]/15 dark:border-white/15 dark:bg-white/5 dark:text-white"
+                aria-label="Email"
+                autoComplete="email"
+                className="h-11 w-full rounded-xl border border-neutral-200 bg-neutral-50/50 pl-10 pr-3.5 text-[14px] text-neutral-900 transition-all placeholder:text-neutral-400 focus:border-[#237A74] focus:bg-white focus:outline-none focus:ring-3 focus:ring-[#237A74]/15 dark:border-white/15 dark:bg-white/5 dark:text-white"
+              />
+            </div>
+            <div className="relative">
+              <KeyRound className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-neutral-400" />
+              <input
+                type="password"
+                required
+                value={passwordInput}
+                onChange={(e) => setPasswordInput(e.target.value)}
+                placeholder="Kata sandi tim"
+                aria-label="Kata sandi tim"
+                autoComplete="current-password"
+                disabled={busy}
+                className="h-11 w-full rounded-xl border border-neutral-200 bg-neutral-50/50 pl-10 pr-3.5 text-[14px] text-neutral-900 transition-all placeholder:text-neutral-400 focus:border-[#237A74] focus:bg-white focus:outline-none focus:ring-3 focus:ring-[#237A74]/15 dark:border-white/15 dark:bg-white/5 dark:text-white"
               />
             </div>
             <motion.button
               type="submit"
-              disabled={busy || !emailInput.trim()}
+              disabled={busy || !emailInput.trim() || !passwordInput}
               whileHover={reduce ? undefined : { y: -1.5, scale: 1.008 }}
               whileTap={reduce ? undefined : { scale: 0.985 }}
               transition={{ type: "spring", stiffness: 420, damping: 28 }}

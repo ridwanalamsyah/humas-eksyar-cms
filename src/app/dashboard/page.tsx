@@ -35,7 +35,6 @@ const REVIEW: ContentItem["status"][] = ["review_divisi", "review_sekjen"];
 export default async function DashboardPage() {
   const now = new Date();
   const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-  const in30 = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
 
   const [member, contents, events, members, views] = await Promise.all([
     getCurrentMember(),
