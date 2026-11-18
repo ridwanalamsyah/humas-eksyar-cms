@@ -26,7 +26,7 @@ export function RpsList({ items }: { items: Rps[] }) {
           {shown.map((r) => (
             <li
               key={r.mk}
-              className="rounded-[20px] border border-hairline bg-canvas p-5"
+              className="border-t border-hairline pt-5"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>

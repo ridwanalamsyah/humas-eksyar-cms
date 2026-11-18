@@ -57,7 +57,7 @@ export function KamusList({ items }: { items: Kamus[] }) {
                   ? `huruf-${k.istilah[0].toUpperCase()}`
                   : undefined
               }
-              className="scroll-mt-28 rounded-[20px] border border-hairline bg-canvas p-5"
+              className="scroll-mt-28 border-t border-hairline pt-5"
             >
               <dt className="flex items-baseline justify-between gap-3">
                 <span className="text-[16px] font-bold text-label">

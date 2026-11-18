@@ -108,7 +108,7 @@ export default async function MahasiswaBaruPage() {
             {bidangKajian.map((b) => (
               <div
                 key={b.title}
-                className="rounded-[24px] border border-hairline bg-canvas p-6"
+                className="border-t border-hairline pt-6"
               >
                 <h3 className="text-[18px] font-bold text-label">{b.title}</h3>
                 <p className="mt-1.5 text-[16px] leading-[1.5] text-label-2">
@@ -177,7 +177,7 @@ export default async function MahasiswaBaruPage() {
                   href={t.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-full flex-col rounded-[24px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]"
+                  className="group flex h-full flex-col border-t border-hairline pt-6 transition duration-300"
                 >
                   <span className="flex items-start justify-between gap-3">
                     <span className="text-[16px] font-bold leading-snug text-label group-hover:text-accent">
@@ -250,7 +250,7 @@ export default async function MahasiswaBaruPage() {
                     href={p.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex items-center gap-4 rounded-[20px] border border-hairline bg-canvas p-5 hover:border-accent/40"
+                    className="group flex items-center gap-4 border-t border-hairline pt-5"
                   >
                     <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent text-[14px] font-bold text-white">
                       {i + 1}

@@ -44,7 +44,7 @@ export function DosenIndex({
           {shown.slice(0, limit).map((d) => (
             <li
               key={d.nama}
-              className="flex h-full flex-col rounded-[20px] border border-hairline bg-canvas p-5"
+              className="flex h-full flex-col border-t border-hairline pt-5"
             >
               <Link
                 href={`/prodi/dosen/${dosenSlug(d.nama)}`}

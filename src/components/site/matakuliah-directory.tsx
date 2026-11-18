@@ -61,7 +61,7 @@ export function MataKuliahDirectory({ items }: { items: MK[] }) {
           {shown.slice(0, limit).map((m) => (
             <li
               key={m.nama}
-              className="rounded-[20px] border border-hairline bg-canvas p-5"
+              className="border-t border-hairline pt-5"
             >
               <p className="text-[16px] font-semibold leading-snug text-label">
                 {m.nama}

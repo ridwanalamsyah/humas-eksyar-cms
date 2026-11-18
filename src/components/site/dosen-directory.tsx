@@ -65,7 +65,7 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
               <Link
                 key={`${d.name}-${i}`}
                 href={`/prodi/dosen/${dosenSlug(d.name)}`}
-                className="group flex items-start gap-4 rounded-2xl border border-hairline bg-canvas p-5 transition-colors hover:border-accent/40 hover:bg-mist/30 shadow-xs"
+                className="group flex items-start gap-4 border-t border-hairline pt-5 transition-colors"
               >
                 {d.photo ? (
                   // eslint-disable-next-line @next/next/no-img-element
@@ -88,16 +88,9 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
                     {d.role}
                   </p>
                   {d.expertise && d.expertise.length > 0 && (
-                    <div className="mt-2 flex flex-wrap gap-1">
-                      {d.expertise.slice(0, 3).map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-md bg-mist px-2 py-0.5 text-[14px] font-medium text-label-2"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    <p className="mt-1.5 line-clamp-2 text-[14px] text-label-3">
+                      {d.expertise.slice(0, 3).join(" · ")}
+                    </p>
                   )}
                 </div>
               </Link>

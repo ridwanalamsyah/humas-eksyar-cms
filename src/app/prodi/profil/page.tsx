@@ -48,103 +48,50 @@ export default async function ProfilPage() {
         description={`${prodi.fullName}, ${prodi.faculty}, ${prodi.university}.`}
       />
 
-      {/* Sejarah & Tonggak Perkembangan (2 Kolom Rapi & Justify) */}
-      <section
-        id="sejarah"
-        className="scroll-mt-28 px-4 py-16 sm:px-6 sm:py-20"
-      >
+      {/* Sejarah: satu paragraf pembuka, lalu garis waktu tahun besar tanpa kotak */}
+      <section id="sejarah" className="scroll-mt-28 px-4 py-16 sm:px-6 sm:py-20">
         <div className="mx-auto max-w-[1060px]">
           <Reveal>
-            <SectionHeading
-              align="left"
-              eyebrow="Sejarah & Perkembangan"
-              title="Sejarah singkat Program Studi Ekonomi Syariah"
-            />
+            <SectionHeading align="left" title="Sejarah singkat" />
+            {profil.sejarah[0] && (
+              <p className="mt-4 max-w-[62ch] text-[17px] leading-[1.7] text-label-2">
+                {profil.sejarah[0]}
+              </p>
+            )}
+            {profil.sejarah.length > 1 && (
+              <details className="group mt-3 max-w-[62ch]">
+                <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-[16px] font-semibold text-accent">
+                  <span className="group-open:hidden">Baca selengkapnya</span>
+                  <span className="hidden group-open:inline">Tutup</span>
+                </summary>
+                <div className="mt-2 space-y-4 text-[16px] leading-[1.7] text-label-2">
+                  {profil.sejarah.slice(1).map((p, i) => (
+                    <p key={i}>{p}</p>
+                  ))}
+                </div>
+              </details>
+            )}
           </Reveal>
 
-          <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
-            <div className="space-y-4">
-              {profil.sejarah.map((p, i) => (
-                <Reveal key={i} delay={i * 0.1}>
-                  <div className="rounded-[22px] border border-hairline bg-canvas p-6 sm:p-7 shadow-xs transition-all hover:border-accent/40">
-                    <div className="flex items-center gap-2 text-[14px] font-bold uppercase tracking-wider text-accent mb-2.5">
-                      <span className="size-1.5 rounded-xs bg-accent" />
-                      Fase Perkembangan {i + 1}
-                    </div>
-                    <p className="text-justify text-[16px] leading-[1.75] text-label hyphens-auto">
-                      {p}
+          {sortedTimeline.length > 0 && (
+            <ol className="mt-12 grid grid-cols-1 gap-8 border-l-2 border-accent/25 pl-6 sm:grid-cols-2 sm:gap-x-8 sm:border-l-0 sm:pl-0 lg:grid-cols-4">
+              {sortedTimeline.map((t, i) => (
+                  <li key={`${t.year}-${i}`} className="relative sm:border-t-2 sm:border-accent/25 sm:pt-5">
+                    <span
+                      aria-hidden
+                      className="absolute -left-[31px] top-3 size-2.5 rounded-full bg-accent sm:-top-[6px] sm:left-0"
+                    />
+                    <p className="text-[36px] font-extrabold leading-none tracking-[-0.04em] text-accent tabular-nums">
+                      {t.year}
                     </p>
-                  </div>
-                </Reveal>
+                    <h3 className="mt-2 text-[16px] font-bold leading-snug text-label">{t.title}</h3>
+                    <p className="mt-1 line-clamp-2 text-[14px] leading-relaxed text-label-2">
+                      {t.description}
+                    </p>
+                  </li>
               ))}
-
-              <Reveal delay={0.25}>
-                <div className="grid grid-cols-3 gap-3 rounded-[22px] border border-hairline bg-mist/60 p-5 text-center">
-                  <div className="rounded-xl bg-canvas p-3 border border-hairline/60">
-                    <p className="text-[18px] font-extrabold text-accent">2015</p>
-                    <p className="text-[14px] font-semibold text-label-2 mt-0.5">
-                      SK Pendirian
-                    </p>
-                  </div>
-                  <div className="rounded-xl bg-canvas p-3 border border-hairline/60">
-                    <p className="text-[18px] font-extrabold text-accent">2020</p>
-                    <p className="text-[14px] font-semibold text-label-2 mt-0.5">
-                      Fakultas Mandiri
-                    </p>
-                  </div>
-                  <div className="rounded-xl bg-canvas p-3 border border-hairline/60">
-                    <p className="text-[18px] font-extrabold text-accent">
-                      {identity.totalCredits} SKS
-                    </p>
-                    <p className="text-[14px] font-semibold text-label-2 mt-0.5">
-                      Kurikulum S.E.
-                    </p>
-                  </div>
-                </div>
-              </Reveal>
-            </div>
-
-            {sortedTimeline.length > 0 && (
-              <div className="space-y-3 lg:sticky lg:top-24">
-                <Reveal>
-                  <div className="rounded-[22px] border border-hairline bg-canvas p-6 sm:p-7 shadow-xs">
-                    <div className="flex items-center justify-between border-b border-hairline/80 pb-3 mb-4">
-                      <h3 className="text-[16px] font-bold text-label">
-                        Tonggak Sejarah Utama
-                      </h3>
-                      <span className="rounded-md bg-accent/10 px-2.5 py-0.5 text-[14px] font-bold text-accent">
-                        {sortedTimeline.length} Peristiwa
-                      </span>
-                    </div>
-
-                    <ol className="relative border-l-2 border-accent/25 pl-5 space-y-5">
-                      {sortedTimeline.map((t, i) => (
-                        <Reveal key={`${t.year}-${i}`} delay={0.05 * i}>
-                          <li className="relative group">
-                            <span
-                              aria-hidden
-                              className="absolute -left-[25px] top-1.5 size-2.5 rounded-xs bg-accent ring-4 ring-canvas transition-transform group-hover:scale-125"
-                            />
-                            <div className="flex items-center gap-2">
-                              <span className="rounded-md bg-accent px-2 py-0.5 text-[14px] font-bold text-white tabular-nums">
-                                {t.year}
-                              </span>
-                              <h4 className="text-[14px] font-bold leading-snug text-label group-hover:text-accent transition-colors">
-                                {t.title}
-                              </h4>
-                            </div>
-                            <p className="mt-1.5 text-justify text-[14px] leading-[1.6] text-label-2">
-                              {t.description}
-                            </p>
-                          </li>
-                        </Reveal>
-                      ))}
-                    </ol>
-                  </div>
-                </Reveal>
-              </div>
-            )}
-          </div>
+            </ol>
+          )}
         </div>
       </section>
 
@@ -169,7 +116,7 @@ export default async function ProfilPage() {
               { title: "Tujuan Pendidikan", items: profil.tujuan },
             ].map((g) => (
               <Reveal key={g.title}>
-                <div className="h-full rounded-[24px] border border-hairline bg-canvas p-6 sm:p-8">
+                <div className="h-full border-t border-hairline pt-6 sm:pt-8">
                   <h2 className="text-[24px] font-extrabold tracking-[-0.02em] text-label">
                     {g.title}
                   </h2>
@@ -216,7 +163,7 @@ export default async function ProfilPage() {
           <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {pimpinan.map((p, i) => (
               <Reveal key={`${p.name}-${i}`} delay={(i % 3) * 0.04}>
-                <div className="flex h-full items-center gap-4 rounded-2xl border border-hairline bg-canvas p-5 shadow-xs">
+                <div className="flex h-full items-center gap-4 border-t border-hairline pt-5">
                   {p.photo ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
@@ -243,7 +190,7 @@ export default async function ProfilPage() {
           </div>
 
           {levels.length > 0 && (
-            <div id="struktur" className="mt-12 scroll-mt-28 rounded-[24px] border border-hairline bg-mist/50 p-6 sm:p-8">
+            <div id="struktur" className="mt-12 scroll-mt-28 border-t border-hairline pt-6 sm:pt-8">
               <h3 className="text-center text-[18px] font-bold text-label">
                 Bagan Struktur Organisasi FEBI & Prodi Ekonomi Syariah
               </h3>
@@ -376,7 +323,7 @@ export default async function ProfilPage() {
               </div>
             </Reveal>
             <Reveal delay={0.05}>
-              <div className="flex h-full flex-col rounded-[22px] border border-hairline bg-canvas p-6 sm:p-7">
+              <div className="flex h-full flex-col border-t border-hairline pt-6 sm:pt-7">
                 <p className="text-[14px] font-bold text-accent">
                   Akreditasi Program Studi
                 </p>

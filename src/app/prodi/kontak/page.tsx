@@ -118,7 +118,7 @@ export default async function KontakPage() {
 
       {/* Kirim pertanyaan */}
       <section className="px-4 pb-20 sm:px-6">
-        <div className="mx-auto max-w-[720px] rounded-[28px] border border-hairline bg-canvas p-6 sm:p-10">
+        <div className="mx-auto max-w-[720px] border-t border-hairline pt-6 sm:pt-10">
           <p className="text-[14px] font-semibold uppercase tracking-[0.08em] text-accent">
             Tanya prodi
           </p>

@@ -347,7 +347,7 @@ export default async function AkademikPage() {
               href={l.href}
               target="_blank"
               rel="noopener noreferrer"
-              className="group rounded-[20px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]"
+              className="group border-t border-hairline pt-6 transition duration-300"
             >
               <p className="text-[16px] font-semibold text-label">{l.title}</p>
               <p className="mt-1 text-[14px] text-label-2">{l.description}</p>

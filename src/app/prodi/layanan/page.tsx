@@ -52,7 +52,7 @@ export default async function LayananPage() {
               <li key={f.slug}>
                 <Link
                   href={`/prodi/formulir/${f.slug}`}
-                  className="group flex h-full items-start justify-between gap-4 rounded-[20px] border border-hairline bg-canvas p-5 transition-colors hover:border-accent/40"
+                  className="group flex h-full items-start justify-between gap-4 border-t border-hairline pt-5 transition-colors"
                 >
                   <span>
                     <span className="block text-[16px] font-bold text-label group-hover:text-accent">

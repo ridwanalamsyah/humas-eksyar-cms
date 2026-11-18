@@ -146,7 +146,7 @@ export default async function BeritaDetailPage({ params }: Props) {
         </div>
 
         {/* Profil Penulis (Author Box) */}
-        <section aria-label="Profil Penulis" className="mx-auto mt-14 max-w-[720px] rounded-[24px] border border-hairline bg-canvas p-6 sm:p-8 shadow-xs">
+        <section aria-label="Profil Penulis" className="mx-auto mt-14 max-w-[720px] border-t border-hairline pt-6 sm:pt-8">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-5">
             {author?.avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element

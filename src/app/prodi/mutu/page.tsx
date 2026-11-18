@@ -101,7 +101,7 @@ export default async function MutuPage() {
                   href={url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex h-full flex-col rounded-[24px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]"
+                  className="group flex h-full flex-col border-t border-hairline pt-6 transition duration-300"
                 >
                   <span className="flex items-start justify-between">
                     <span className="grid size-11 place-items-center rounded-2xl bg-accent-soft text-accent">

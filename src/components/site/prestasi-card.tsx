@@ -1,42 +1,32 @@
 import type { Prestasi } from "@/lib/site/schema";
-import { initials } from "@/lib/site/names";
 import { Photo } from "./photo";
 
-/** Kartu apresiasi "Selamat & Sukses": bersih tanpa ikon dekoratif AI. */
+/**
+ * Prestasi sebagai foto: fotonya yang bicara, nama dan capaian tipis di atas
+ * foto. Prestasi tanpa foto tampil sebagai baris teks biasa tanpa kotak.
+ */
 export function PrestasiCard({ item }: { item: Prestasi }) {
-  return (
-    <article className="group relative isolate flex h-full flex-col justify-between overflow-hidden rounded-[22px] border border-hairline bg-canvas p-5 sm:p-6 transition duration-300 hover:border-accent/35">
-      {item.photo ? (
-        <div className="mb-4 overflow-hidden rounded-xl border border-hairline/60 bg-mist">
-          <Photo
-            src={item.photo}
-            alt={item.name}
-            ratio="landscape"
-            className="aspect-[4/3] [&_img]:object-top"
-          />
-        </div>
-      ) : (
-        <div className="mb-5 flex items-center justify-between gap-3">
-          <span className="grid size-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-[14px] font-bold text-accent">
-            {initials(item.name)}
-          </span>
-          <span className="rounded-md bg-mist px-2.5 py-1 text-[14px] font-semibold text-label-2">
-            {item.group}
-          </span>
-        </div>
-      )}
-      <div className="flex min-w-0 flex-1 flex-col">
-        {item.photo && (
-          <span className="mb-2 inline-block self-start rounded-md bg-mist px-2.5 py-0.5 text-[14px] font-semibold text-label-2">
-            {item.group}
-          </span>
-        )}
-        <h3 className="break-words text-[16px] font-bold leading-snug tracking-[-0.01em] text-label">
-          {item.name}
-        </h3>
-        <p className="mt-1.5 line-clamp-2 break-words text-[14px] leading-relaxed text-label-2">
+  if (!item.photo)
+    return (
+      <article className="border-t border-hairline pt-4">
+        <h3 className="break-words text-[16px] font-bold leading-snug text-label">{item.name}</h3>
+        <p className="mt-1 line-clamp-2 break-words text-[14px] leading-relaxed text-label-2">
           {item.achievement}
         </p>
+      </article>
+    );
+
+  return (
+    <article className="group relative overflow-hidden rounded-[22px]" title={item.achievement}>
+      <Photo src={item.photo} alt={`${item.name}: ${item.achievement}`} className="[&_img]:object-top" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2"
+        style={{ background: "linear-gradient(0deg, rgba(8,28,34,.7), transparent)" }}
+      />
+      <div className="absolute inset-x-0 bottom-0 p-4 text-white">
+        <h3 className="line-clamp-1 text-[15px] font-semibold">{item.name}</h3>
+        <p className="line-clamp-1 text-[13px] text-white/80">{item.achievement}</p>
       </div>
     </article>
   );

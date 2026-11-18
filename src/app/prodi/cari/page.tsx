@@ -211,7 +211,7 @@ export default async function CariPage({ searchParams }: Props) {
                   <h2 className="text-[14px] font-semibold uppercase tracking-[0.08em] text-accent">
                     {g.label}
                   </h2>
-                  <ul className="mt-3 divide-y divide-hairline overflow-hidden rounded-[20px] border border-hairline bg-canvas">
+                  <ul className="mt-3 divide-y divide-hairline border-y border-hairline">
                     {g.hits.map((h, i) => {
                       const inner = (
                         <>

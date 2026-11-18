@@ -11,7 +11,7 @@ export function BeasiswaCard({
 }) {
   const reqs = compact ? item.requirements.slice(0, 2) : item.requirements;
   return (
-    <article className="group relative isolate flex h-full flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas p-7 transition duration-300 hover:-translate-y-1 hover:border-accent/35 hover:shadow-[0_20px_40px_-20px_rgba(22,58,69,0.28)]">
+    <article className="group relative flex h-full flex-col border-t border-hairline pt-7 transition duration-300">
       <p className="text-[14px] font-semibold uppercase tracking-[0.06em] text-accent">
         {item.provider}
       </p>

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 
 export const revalidate = 300;
 
-const PER_PAGE = 30;
+const PER_PAGE = 12;
 
 type Props = {
   searchParams: Promise<{
@@ -183,27 +183,17 @@ export default async function SkripsiPage({ searchParams }: Props) {
               {mode === "telusuri" ? (
                 <>
                   {years.length > 1 && (
-                    <div className="mt-7 flex flex-wrap gap-2">
-                      <YearChip
-                        href={href({ pembimbing: pb, q })}
-                        active={!tahun}
-                        label="Semua"
-                        count={list.length}
-                      />
-                      {years.map((y) => (
-                        <YearChip
-                          key={y}
-                          href={href({ pembimbing: pb, q, tahun: y })}
-                          active={tahun === y}
-                          label={String(y)}
-                          count={counts.get(y) ?? 0}
-                        />
-                      ))}
-                    </div>
+                    <YearBars
+                      years={[...years].reverse()}
+                      counts={counts}
+                      active={tahun}
+                      hrefFor={(y) => href({ pembimbing: pb, q, tahun: y })}
+                      allHref={href({ pembimbing: pb, q })}
+                    />
                   )}
 
                   {pb && (
-                    <p className="mt-6 flex flex-wrap items-center gap-2 rounded-[16px] bg-accent-soft px-4 py-3 text-[14px] text-label">
+                    <p className="mt-6 flex flex-wrap items-center gap-2 text-[14px] text-label">
                       Skripsi bimbingan <span className="font-bold">{pb}</span>
                       <Link
                         href={href({ q, tahun })}
@@ -218,13 +208,13 @@ export default async function SkripsiPage({ searchParams }: Props) {
                     {pages > 1 && ` · halaman ${page} dari ${pages}`}
                   </p>
                   {pageItems.length ? (
-                    <ul className="mt-3 divide-y divide-hairline overflow-hidden rounded-[20px] border border-hairline bg-canvas">
+                    <ul className="mt-2 divide-y divide-hairline border-y border-hairline">
                       {pageItems.map((s, i) => (
                         <SkripsiRow key={`${s.url ?? s.judul}-${i}`} item={s} />
                       ))}
                     </ul>
                   ) : (
-                    <p className="mt-3 rounded-[20px] border border-dashed border-hairline p-10 text-center text-[16px] text-label-2">
+                    <p className="mt-6 text-[16px] text-label-2">
                       Tidak ada skripsi yang cocok. Coba kata kunci lain.
                     </p>
                   )}
@@ -259,7 +249,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
               ) : (
                 <div className="mt-8">
                   {!q ? (
-                    <p className="rounded-[20px] bg-mist p-6 text-[16px] leading-relaxed text-label-2">
+                    <p className="max-w-[60ch] text-[16px] leading-relaxed text-label-2">
                       Tulis rencana judul lengkap di kotak pencarian di atas.
                       Sistem membandingkan kata kunci judulmu dengan{" "}
                       {list.length.toLocaleString("id-ID")} skripsi di direktori
@@ -277,13 +267,13 @@ export default async function SkripsiPage({ searchParams }: Props) {
                           Tulis judul lebih lengkap agar hasilnya lebih akurat.
                         </p>
                       )}
-                      <ul className="mt-4 grid grid-cols-1 gap-3">
+                      <ul className="mt-4 divide-y divide-hairline border-y border-hairline">
                         {results.map(({ item, score }, i) => {
                           const lv = level(score);
                           return (
                             <li
                               key={i}
-                              className="rounded-[20px] border border-hairline bg-canvas p-5"
+                              className="py-4"
                             >
                               <div className="flex items-start justify-between gap-4">
                                 <p className="text-[16px] font-semibold leading-snug text-label">
@@ -334,11 +324,11 @@ export default async function SkripsiPage({ searchParams }: Props) {
                     eyebrow="Inspirasi Riset"
                     title="Topik skripsi & dosen pembimbing"
                   />
-                  <div className="mt-6 grid gap-4 md:grid-cols-2">
+                  <div className="mt-6 grid gap-x-10 gap-y-8 md:grid-cols-2">
                     {[...perDosen].map(([dosen, listTopik]) => (
                       <div
                         key={dosen}
-                        className="rounded-[20px] border border-hairline bg-canvas p-5"
+                        className="border-t border-hairline pt-4"
                       >
                         <p className="text-[14px] font-semibold text-accent">
                           {dosen}
@@ -370,9 +360,9 @@ export default async function SkripsiPage({ searchParams }: Props) {
                     eyebrow="Jadwal Akademik"
                     title="Seminar proposal, komprehensif & sidang munaqasyah"
                   />
-                  <div className="mt-6 overflow-x-auto rounded-[20px] border border-hairline bg-canvas">
+                  <div className="mt-6 overflow-x-auto border-y border-hairline">
                     <table className="w-full min-w-[640px] text-left text-[14px]">
-                      <thead className="bg-mist/60 text-[14px] uppercase tracking-wide text-label-3">
+                      <thead className="text-[13px] uppercase tracking-wide text-label-3">
                         <tr>
                           <th className="px-5 py-3 font-semibold">Tanggal</th>
                           <th className="px-5 py-3 font-semibold">Jenis</th>
@@ -428,14 +418,14 @@ export default async function SkripsiPage({ searchParams }: Props) {
                       eyebrow="Referensi"
                       title="Panduan & rujukan ilmiah"
                     />
-                    <ul className="mt-6 grid grid-cols-1 gap-3">
+                    <ul className="mt-6 divide-y divide-hairline border-y border-hairline">
                       {panduanSkripsi.map((p) => (
                         <li key={p.url}>
                           <a
                             href={p.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="group flex items-start justify-between gap-4 rounded-[18px] border border-hairline bg-canvas p-4 hover:border-accent/40"
+                            className="group flex items-start justify-between gap-4 py-4"
                           >
                             <span>
                               <span className="block text-[16px] font-bold text-label group-hover:text-accent">
@@ -460,13 +450,13 @@ export default async function SkripsiPage({ searchParams }: Props) {
                       eyebrow="Etika Ilmiah"
                       title="Integritas akademik"
                     />
-                    <ol className="mt-6 grid grid-cols-1 gap-3.5">
+                    <ol className="mt-6 grid grid-cols-1 gap-4">
                       {integritas.map((t, i) => (
                         <li
                           key={i}
-                          className="flex gap-3.5 rounded-[16px] bg-mist/60 p-4"
+                          className="flex gap-3.5"
                         >
-                          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[14px] font-bold text-accent">
+                          <span className="w-6 shrink-0 text-[16px] font-bold tabular-nums text-accent">
                             {i + 1}
                           </span>
                           <p className="text-[14px] leading-relaxed text-label">
@@ -485,18 +475,9 @@ export default async function SkripsiPage({ searchParams }: Props) {
             href={`https://digilib.uinsgd.ac.id/cgi/search/simple?q=${encodeURIComponent(q || "ekonomi syariah")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="group mt-10 flex items-center justify-between gap-4 rounded-[20px] bg-mist p-5 transition-colors hover:bg-accent hover:text-white"
+            className="mt-10 inline-flex min-h-11 items-center gap-1.5 text-[16px] font-semibold text-accent hover:underline"
           >
-            <span>
-              <span className="block text-[16px] font-bold text-label group-hover:text-white">
-                Cari di Digital Library UIN SGD
-              </span>
-              <span className="block text-[14px] text-label-2 group-hover:text-white/80">
-                Repositori lengkap skripsi, tesis, dan disertasi seluruh
-                fakultas.
-              </span>
-            </span>
-            <ArrowUpRight className="size-5 shrink-0 text-accent group-hover:text-white" />
+            Cari di Digital Library UIN SGD <ArrowUpRight className="size-4" />
           </a>
         </div>
       </section>
@@ -538,7 +519,7 @@ function SkripsiRow({ item }: { item: SkripsiItem }) {
       {item.id ? (
         <Link
           href={`/prodi/skripsi/${item.id}`}
-          className="group flex gap-4 px-5 py-4 hover:bg-mist/60"
+          className="group flex gap-4 py-4"
         >
           {body}
         </Link>
@@ -547,42 +528,80 @@ function SkripsiRow({ item }: { item: SkripsiItem }) {
           href={item.url}
           target="_blank"
           rel="noopener noreferrer"
-          className="group flex gap-4 px-5 py-4 hover:bg-mist/60"
+          className="group flex gap-4 py-4"
         >
           {body}
         </a>
       ) : (
-        <div className="flex gap-4 px-5 py-4">{body}</div>
+        <div className="flex gap-4 py-4">{body}</div>
       )}
     </li>
   );
 }
 
-function YearChip({
-  href,
+/** Jumlah skripsi per tahun sebagai batang yang bisa diklik untuk menyaring. */
+function YearBars({
+  years,
+  counts,
   active,
-  label,
-  count,
+  hrefFor,
+  allHref,
 }: {
-  href: string;
-  active: boolean;
-  label: string;
-  count: number;
+  years: number[];
+  counts: Map<number, number>;
+  active?: number;
+  hrefFor: (y: number) => string;
+  allHref: string;
 }) {
+  const max = Math.max(1, ...years.map((y) => counts.get(y) ?? 0));
   return (
-    <Link
-      href={href}
-      aria-current={active ? "page" : undefined}
-      className={cn(
-        "shrink-0 rounded-full border px-4 py-2 text-[14px] font-semibold transition-colors",
-        active
-          ? "border-accent bg-accent text-white"
-          : "border-hairline bg-canvas text-label-2 hover:border-accent/40 hover:text-accent",
-      )}
-    >
-      {label}{" "}
-      <span className={active ? "text-white/70" : "text-label-3"}>{count}</span>
-    </Link>
+    <div className="mt-8">
+      <div className="flex items-baseline justify-between gap-4">
+        <p className="text-[14px] font-semibold text-label">Per tahun</p>
+        {active && (
+          <Link href={allHref} className="text-[14px] font-semibold text-accent hover:underline">
+            Semua tahun
+          </Link>
+        )}
+      </div>
+      <div className="mt-3 flex h-28 items-end gap-1 sm:gap-2">
+        {years.map((y) => {
+          const n = counts.get(y) ?? 0;
+          const on = active === y;
+          return (
+            <Link
+              key={y}
+              href={hrefFor(y)}
+              aria-current={on ? "page" : undefined}
+              aria-label={`${y}: ${n} skripsi`}
+              title={`${y}: ${n} skripsi`}
+              className="group flex h-full min-w-0 flex-1 flex-col justify-end"
+            >
+              <span
+                className={cn(
+                  "block rounded-t-md transition-colors",
+                  on ? "bg-accent" : active ? "bg-accent/20 group-hover:bg-accent/50" : "bg-accent/45 group-hover:bg-accent",
+                )}
+                style={{ height: `${Math.max(6, (n / max) * 100)}%` }}
+              />
+            </Link>
+          );
+        })}
+      </div>
+      <div className="mt-1.5 flex gap-1 sm:gap-2">
+        {years.map((y) => (
+          <span
+            key={y}
+            className={cn(
+              "min-w-0 flex-1 text-center text-[12px] tabular-nums sm:text-[13px]",
+              active === y ? "font-bold text-accent" : "text-label-3",
+            )}
+          >
+            &rsquo;{String(y).slice(2)}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 

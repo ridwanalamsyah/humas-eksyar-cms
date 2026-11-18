@@ -25,7 +25,7 @@ export function HighlightCard({ item }: { item: Kegiatan }) {
   const Icon = CATEGORY_ICONS[item.category.toLowerCase()] ?? Newspaper;
   const body = (
     <>
-      <div className="relative isolate aspect-square w-28 shrink-0 overflow-hidden bg-gradient-to-br from-[#0f3d33] via-[#165b4c] to-[#0c2340] sm:aspect-[16/9] sm:w-auto">
+      <div className="relative isolate aspect-square w-28 shrink-0 overflow-hidden rounded-2xl bg-gradient-to-br from-[#0f3d33] via-[#165b4c] to-[#0c2340] sm:aspect-[16/9] sm:w-auto">
         {item.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
@@ -40,13 +40,10 @@ export function HighlightCard({ item }: { item: Kegiatan }) {
             strokeWidth={1.25}
           />
         )}
-        <span className="absolute left-4 top-4 z-10 hidden max-w-[calc(100%-2rem)] truncate rounded-md border border-hairline bg-canvas/95 px-3 py-1 text-[14px] font-semibold text-label shadow-xs sm:block">
-          {item.category}
-        </span>
       </div>
-      <div className="flex min-w-0 flex-1 flex-col justify-center p-4 sm:justify-start sm:p-5">
+      <div className="flex min-w-0 flex-1 flex-col justify-center sm:justify-start sm:pt-4">
         <time dateTime={item.date} className="text-[14px] text-label-3">
-          {formatLongDate(item.date)}
+          {item.category} · {formatLongDate(item.date)}
         </time>
         <h3 className="mt-1 line-clamp-3 break-words text-[16px] font-bold leading-[1.3] tracking-[-0.015em] text-label group-hover:text-accent sm:mt-1.5 sm:text-[18px]">
           {item.title}
@@ -59,7 +56,7 @@ export function HighlightCard({ item }: { item: Kegiatan }) {
   );
 
   const cls =
-    "group relative isolate flex h-full flex-row overflow-hidden rounded-[24px] border border-hairline bg-canvas transition duration-300 hover:-translate-y-1 hover:border-accent/35 hover:shadow-[0_20px_40px_-20px_rgba(22,58,69,0.28)] active:scale-[0.99] sm:flex-col";
+    "group relative flex h-full flex-row gap-4 transition active:scale-[0.99] sm:flex-col sm:gap-0";
 
   return item.source ? (
     <a
