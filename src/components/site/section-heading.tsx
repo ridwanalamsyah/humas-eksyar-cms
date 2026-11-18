@@ -1,8 +1,10 @@
 import { cn } from "@/lib/utils";
 
-/** Judul section gaya Apple: eyebrow kecil, headline besar rapat, deskripsi abu. */
+/**
+ * Judul section: satu judul yang menyebut bendanya, dan (opsional) satu kalimat
+ * pendek di bawahnya. Eyebrow hanya dipakai kalau menambah informasi.
+ */
 export function SectionHeading({
-  eyebrow,
   title,
   description,
   align = "center",
@@ -21,16 +23,12 @@ export function SectionHeading({
         className,
       )}
     >
-      {eyebrow && (
-        <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
-          {eyebrow}
-        </p>
-      )}
-      <h2 className="mt-3 text-[clamp(2rem,1.4rem+2.4vw,3.4rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-label text-balance">
+      {/* `eyebrow` sengaja tidak ditampilkan: judul sudah menyebut bendanya. */}
+      <h2 className="text-[clamp(1.75rem,1.3rem+1.8vw,2.5rem)] font-extrabold leading-[1.1] tracking-[-0.03em] text-label text-balance">
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-[clamp(1.05rem,1rem+0.3vw,1.3rem)] leading-[1.45] text-label-2 text-pretty">
+        <p className="mt-3 line-clamp-2 text-[16px] leading-[1.5] text-label-2 text-pretty sm:text-[18px]">
           {description}
         </p>
       )}

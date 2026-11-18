@@ -157,7 +157,7 @@ export function ProdiCommandPalette({
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Cari dosen, skripsi, mata kuliah, beasiswa, atau istilah syariah…"
-                className="min-w-0 flex-1 bg-transparent text-[15px] text-label outline-none placeholder:text-label-3"
+                className="min-w-0 flex-1 bg-transparent text-[16px] text-label outline-none placeholder:text-label-3"
               />
               {query && (
                 <button
@@ -172,7 +172,7 @@ export function ProdiCommandPalette({
               <button
                 type="button"
                 onClick={onClose}
-                className="rounded-lg border border-hairline bg-mist px-2 py-1 text-[11px] font-semibold text-label-2 hover:text-label"
+                className="rounded-lg border border-hairline bg-mist px-2 py-1 text-[14px] font-semibold text-label-2 hover:text-label"
               >
                 ESC
               </button>
@@ -219,7 +219,7 @@ export function ProdiCommandPalette({
                               <span className="block truncate text-[14px] font-semibold text-label group-hover:text-accent">
                                 {item.title}
                               </span>
-                              <span className="block truncate text-[12px] text-label-2">
+                              <span className="block truncate text-[14px] text-label-2">
                                 {item.category} · {item.subtitle}
                               </span>
                             </span>
@@ -232,17 +232,17 @@ export function ProdiCommandPalette({
                 </ul>
               ) : (
                 <div className="py-12 text-center">
-                  <p className="text-[14.5px] font-semibold text-label">
+                  <p className="text-[14px] font-semibold text-label">
                     Tidak ada hasil langsung untuk &ldquo;{query}&rdquo;
                   </p>
-                  <p className="mt-1 text-[13px] text-label-2">
+                  <p className="mt-1 text-[14px] text-label-2">
                     Tekan Enter untuk menelusuri di seluruh basis data prodi.
                   </p>
                 </div>
               )}
             </div>
 
-            <footer className="flex shrink-0 items-center justify-between border-t border-hairline bg-mist/40 px-4 py-2.5 text-[11.5px] text-label-3 sm:px-5">
+            <footer className="flex shrink-0 items-center justify-between border-t border-hairline bg-mist/40 px-4 py-2.5 text-[14px] text-label-3 sm:px-5">
               <span>Navigasi cepat Program Studi Ekonomi Syariah</span>
               <span>Gunakan tombol panah &amp; Enter</span>
             </footer>

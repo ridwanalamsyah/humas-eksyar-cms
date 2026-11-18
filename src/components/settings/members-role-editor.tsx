@@ -188,11 +188,11 @@ export function MembersRoleEditor({
               <Clock className="size-4 text-amber-600 dark:text-amber-400" />
               Pendaftar Baru Menunggu Konfirmasi ({pendingList.length})
             </h2>
-            <span className="rounded-full bg-amber-500/15 px-2.5 py-0.5 text-[11px] font-semibold text-amber-800 dark:text-amber-300">
+            <span className="rounded-full bg-amber-500/15 px-2.5 py-0.5 text-[13px] font-semibold text-amber-800 dark:text-amber-300">
               Perlu Tindakan Admin
             </span>
           </div>
-          <p className="mt-1 text-[12.5px] text-foreground/65">
+          <p className="mt-1 text-[13px] text-foreground/65">
             Pengguna Google ini telah masuk pertama kali dan menunggu persetujuan Admin sebelum dapat mengakses fitur CMS.
           </p>
 
@@ -207,7 +207,7 @@ export function MembersRoleEditor({
                     </span>
                     <div>
                       <p className="text-[14px] font-semibold text-foreground">{p.name || p.email}</p>
-                      <p className="text-[12px] text-foreground/55">{p.email} · Mendaftar {new Date(p.at || p.createdAt || Date.now()).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}</p>
+                      <p className="text-[13px] text-foreground/60">{p.email} · Mendaftar {new Date(p.at || p.createdAt || Date.now()).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}</p>
                     </div>
                   </div>
 
@@ -215,7 +215,7 @@ export function MembersRoleEditor({
                     <select
                       value={selectedRole}
                       onChange={(e) => setPendingRoles((prev) => ({ ...prev, [p.email]: e.target.value as Role }))}
-                      className="rounded-lg border border-foreground/15 bg-background px-3 py-1.5 text-[12.5px] font-medium outline-none focus:border-accent"
+                      className="rounded-lg border border-foreground/15 bg-background px-3 py-1.5 text-[13px] font-medium outline-none focus:border-accent"
                     >
                       {ROLES.filter((r) => r.value !== "pending").map((r) => (
                         <option key={r.value} value={r.value}>
@@ -239,7 +239,7 @@ export function MembersRoleEditor({
                       variant="ghost"
                       onClick={() => handleReject(p)}
                       disabled={pending}
-                      className="text-foreground/50 hover:bg-rose-500/10 hover:text-rose-600"
+                      className="text-foreground/60 hover:bg-rose-500/10 hover:text-rose-600"
                     >
                       <X className="size-3.5" />
                       Tolak
@@ -257,12 +257,12 @@ export function MembersRoleEditor({
           <h2 className="flex items-center gap-2 text-[15px] font-semibold">
             <UserPlus className="size-4" strokeWidth={1.75} /> Tambah anggota
           </h2>
-          <p className="mt-1 text-[12px] text-foreground/55">
+          <p className="mt-1 text-[13px] text-foreground/60">
             Gunakan email Google yang dipakai orang itu untuk masuk. Setelah ditambahkan,
             anggota langsung bisa masuk sesuai perannya.
           </p>
           <form onSubmit={addMember} className="mt-4 grid gap-3 sm:grid-cols-2">
-            <label className="text-[12px] text-foreground/65">
+            <label className="text-[13px] text-foreground/65">
               Nama lengkap
               <input
                 required
@@ -271,7 +271,7 @@ export function MembersRoleEditor({
                 className={`mt-1 ${inputCls}`}
               />
             </label>
-            <label className="text-[12px] text-foreground/65">
+            <label className="text-[13px] text-foreground/65">
               Email untuk masuk
               <input
                 required
@@ -282,7 +282,7 @@ export function MembersRoleEditor({
                 className={`mt-1 ${inputCls}`}
               />
             </label>
-            <label className="text-[12px] text-foreground/65">
+            <label className="text-[13px] text-foreground/65">
               NIM (opsional)
               <input
                 inputMode="numeric"
@@ -291,7 +291,7 @@ export function MembersRoleEditor({
                 className={`mt-1 ${inputCls}`}
               />
             </label>
-            <label className="text-[12px] text-foreground/65">
+            <label className="text-[13px] text-foreground/65">
               Jabatan
               <input
                 value={form.position}
@@ -299,7 +299,7 @@ export function MembersRoleEditor({
                 className={`mt-1 ${inputCls}`}
               />
             </label>
-            <label className="text-[12px] text-foreground/65">
+            <label className="text-[13px] text-foreground/65">
               Peran
               <select
                 value={form.role}
@@ -325,7 +325,7 @@ export function MembersRoleEditor({
 
       <div className="flex flex-wrap items-center gap-3">
         <label className="flex flex-1 items-center gap-2 rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">
-          <Search className="size-4 text-foreground/40" strokeWidth={1.75} />
+          <Search className="size-4 text-foreground/60" strokeWidth={1.75} />
           <input
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
@@ -333,7 +333,7 @@ export function MembersRoleEditor({
             className="w-full bg-transparent text-[14px] outline-none"
           />
         </label>
-        <p className="text-[11px] text-foreground/55">
+        <p className="text-[13px] text-foreground/60">
           {filtered.length} dari {members.length} anggota
         </p>
       </div>
@@ -352,12 +352,12 @@ export function MembersRoleEditor({
                   <p className="truncate text-[14px] font-medium">
                     {m.name}
                     {isSelf && (
-                      <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-brand-500/15 px-2 py-0.5 text-[10px] font-medium text-brand-700 dark:text-brand-300">
+                      <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-brand-500/15 px-2 py-0.5 text-[13px] font-medium text-brand-700 dark:text-brand-300">
                         <Shield className="size-3" strokeWidth={2} /> kamu
                       </span>
                     )}
                   </p>
-                  <p className="truncate text-[12px] text-foreground/55">
+                  <p className="truncate text-[13px] text-foreground/60">
                     {m.email} · {m.position}
                   </p>
                 </div>
@@ -372,7 +372,7 @@ export function MembersRoleEditor({
                       onChange={(e) =>
                         changeRole(m.id, e.target.value as Role)
                       }
-                      className="rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-2 py-1.5 text-[12px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
+                      className="rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-2 py-1.5 text-[13px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
                     >
                       {ROLES.map((r) => (
                         <option key={r.value} value={r.value}>
@@ -387,7 +387,7 @@ export function MembersRoleEditor({
                         onClick={() => removeMember(m)}
                         aria-label={`Hapus ${m.name}`}
                         title="Hapus anggota"
-                        className="grid size-8 place-items-center rounded-lg text-foreground/45 transition-colors hover:bg-red-500/10 hover:text-red-600"
+                        className="grid size-8 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-red-500/10 hover:text-red-600"
                       >
                         <Trash2 className="size-4" strokeWidth={1.75} />
                       </button>
@@ -398,7 +398,7 @@ export function MembersRoleEditor({
             );
           })}
           {filtered.length === 0 && (
-            <li className="p-8 text-center text-[12px] text-foreground/55">
+            <li className="p-8 text-center text-[13px] text-foreground/60">
               Tidak ada anggota yang cocok.
             </li>
           )}
@@ -406,10 +406,10 @@ export function MembersRoleEditor({
       </GlassCard>
 
       <GlassCard className="p-5">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Penjelasan peran
         </p>
-        <ul className="mt-3 space-y-2 text-[12px]">
+        <ul className="mt-3 space-y-2 text-[13px]">
           {ROLES.map((r) => (
             <li key={r.value} className="flex gap-2">
               <Pill tone={r.tone}>{r.label}</Pill>

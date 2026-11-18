@@ -47,7 +47,7 @@ export function UpcomingHolidays({ holidays }: { holidays: Holiday[] }) {
     <GlassCard variant="regular" className="p-5">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[12.5px] text-foreground/50">
+          <p className="text-[13px] text-foreground/60">
             Pengingat ucapan
           </p>
           <h3 className="font-display text-base font-semibold tracking-tight">
@@ -56,7 +56,7 @@ export function UpcomingHolidays({ holidays }: { holidays: Holiday[] }) {
         </div>
         <Link
           href="/calendar"
-          className="inline-flex size-8 items-center justify-center rounded-full text-foreground/55 hover:bg-foreground/5 dark:hover:bg-white/5"
+          className="inline-flex size-8 items-center justify-center rounded-full text-foreground/60 hover:bg-foreground/5 dark:hover:bg-white/5"
           aria-label="Lihat kalender"
         >
           <ChevronRight className="size-4" strokeWidth={1.75} />
@@ -64,7 +64,7 @@ export function UpcomingHolidays({ holidays }: { holidays: Holiday[] }) {
       </div>
       <ul className="mt-3 flex flex-col gap-2.5">
         {holidays.length === 0 && (
-          <li className="rounded-xl bg-foreground/5 p-3 text-sm text-foreground/55 dark:bg-white/5">
+          <li className="rounded-xl bg-foreground/5 p-3 text-sm text-foreground/60 dark:bg-white/5">
             Tidak ada hari besar dalam waktu dekat.
           </li>
         )}
@@ -72,7 +72,7 @@ export function UpcomingHolidays({ holidays }: { holidays: Holiday[] }) {
           <li key={h.id}>
             <div className="flex items-center gap-3 rounded-xl p-2">
               <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-300">
-                <span className="text-[10px] uppercase tracking-wider">
+                <span className="text-[13px] uppercase tracking-wider">
                   {formatDateID(h.date).split(" ")[2] ?? ""}
                 </span>
                 <span className="font-display text-base font-semibold leading-none">
@@ -84,19 +84,19 @@ export function UpcomingHolidays({ holidays }: { holidays: Holiday[] }) {
                   {h.emoji && <span aria-hidden>{h.emoji}</span>}
                   <span className="truncate">{h.name}</span>
                 </p>
-                <p className="flex flex-wrap items-center gap-1.5 text-[11px] text-foreground/55">
+                <p className="flex flex-wrap items-center gap-1.5 text-[13px] text-foreground/60">
                   <CalendarHeart className="size-3" strokeWidth={1.75} />
                   <span>{formatDateID(h.date)}</span>
                   <span className="opacity-50">·</span>
                   <span>{relativeLabel(h.date)}</span>
                   <span
-                    className={`ml-1 rounded-full px-1.5 py-0.5 text-[10px] font-medium ${KIND_TONE[h.kind]}`}
+                    className={`ml-1 rounded-full px-1.5 py-0.5 text-[13px] font-medium ${KIND_TONE[h.kind]}`}
                   >
                     {KIND_LABEL[h.kind]}
                   </span>
                 </p>
                 {h.hijriahLabel && (
-                  <p className="mt-0.5 text-[11px] text-foreground/55">
+                  <p className="mt-0.5 text-[13px] text-foreground/60">
                     {h.hijriahLabel}
                   </p>
                 )}

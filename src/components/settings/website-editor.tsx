@@ -1688,7 +1688,7 @@ export function WebsiteEditor({
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="relative w-full min-w-0 sm:w-auto sm:max-w-xs sm:flex-1">
             <Search
-              className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-foreground/40"
+              className="pointer-events-none absolute top-1/2 left-2.5 size-3.5 -translate-y-1/2 text-foreground/60"
               strokeWidth={1.75}
             />
             <input
@@ -1697,12 +1697,12 @@ export function WebsiteEditor({
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari bagian: mitra, dosen, zakat…"
               aria-label="Cari bagian website"
-              className="h-8 w-full rounded-lg bg-foreground/[0.05] pr-2 pl-8 text-[13px] outline-none placeholder:text-foreground/40 focus:ring-2 focus:ring-foreground/15"
+              className="h-8 w-full rounded-lg bg-foreground/[0.05] pr-2 pl-8 text-[13px] outline-none placeholder:text-foreground/60 focus:ring-2 focus:ring-foreground/15"
             />
             {q && (
               <div className="absolute inset-x-0 top-full z-30 mt-1 max-h-80 overflow-y-auto rounded-xl border border-foreground/10 bg-background p-1 shadow-lg">
                 {matches.length === 0 ? (
-                  <p className="px-3 py-2 text-[12.5px] text-foreground/55">
+                  <p className="px-3 py-2 text-[13px] text-foreground/60">
                     Tidak ada bagian yang cocok.
                   </p>
                 ) : (
@@ -1716,7 +1716,7 @@ export function WebsiteEditor({
                       <span className="block text-[13px] font-medium">
                         {sec.title}
                       </span>
-                      <span className="block text-[11.5px] text-foreground/50">
+                      <span className="block text-[13px] text-foreground/60">
                         {t.label}
                       </span>
                     </button>
@@ -1727,7 +1727,7 @@ export function WebsiteEditor({
           </div>
           <div className="flex items-center gap-2">
             {dirty && (
-              <span className="hidden items-center gap-1.5 text-[12px] font-medium text-amber-600 dark:text-amber-400 sm:inline-flex">
+              <span className="hidden items-center gap-1.5 text-[13px] font-medium text-amber-600 dark:text-amber-400 sm:inline-flex">
                 <span className="size-2 rounded-full bg-amber-500 animate-pulse" />
                 Belum disimpan
               </span>
@@ -1767,7 +1767,7 @@ export function WebsiteEditor({
                 setFocusedSection("all");
               }}
               className={cn(
-                "rounded-xl px-3 py-1.5 text-[12.5px] font-medium transition-colors",
+                "rounded-xl px-3 py-1.5 text-[13px] font-medium transition-colors",
                 t.value === active.value
                   ? "bg-accent text-white shadow-2xs"
                   : "bg-foreground/[0.04] text-foreground/70 hover:bg-foreground/[0.08] hover:text-foreground",
@@ -1776,7 +1776,7 @@ export function WebsiteEditor({
               {t.label}
               <span
                 className={cn(
-                  "ml-1.5 rounded-full px-1.5 py-0.2 text-[10.5px] tabular-nums",
+                  "ml-1.5 rounded-full px-1.5 py-0.2 text-[13px] tabular-nums",
                   t.value === active.value ? "bg-white/20 text-white" : "opacity-60"
                 )}
               >
@@ -1803,12 +1803,12 @@ export function WebsiteEditor({
       {/* Sub-navigasi Fokus Bagian (Anti-Numpuk / Anti-Scroll Lelah) */}
       <div className="mt-4 flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-3">
         <div className="flex flex-wrap items-center gap-1.5">
-          <span className="text-[12px] font-medium text-label-3 mr-1">Fokus Bagian:</span>
+          <span className="text-[13px] font-medium text-label-3 mr-1">Fokus Bagian:</span>
           <button
             type="button"
             onClick={() => setFocusedSection("all")}
             className={cn(
-              "rounded-xl px-3 py-1 text-[12px] font-medium transition-all",
+              "rounded-xl px-3 py-1 text-[13px] font-medium transition-all",
               focusedSection === "all"
                 ? "bg-accent text-white shadow-2xs"
                 : "bg-canvas text-label-2 border border-hairline hover:bg-mist hover:text-label",
@@ -1824,7 +1824,7 @@ export function WebsiteEditor({
                 type="button"
                 onClick={() => setFocusedSection(sec.key)}
                 className={cn(
-                  "rounded-xl px-3 py-1 text-[12px] font-medium transition-all",
+                  "rounded-xl px-3 py-1 text-[13px] font-medium transition-all",
                   isSelected
                     ? "bg-accent text-white shadow-2xs"
                     : "bg-canvas text-label-2 border border-hairline hover:bg-mist hover:text-label",
@@ -1837,7 +1837,7 @@ export function WebsiteEditor({
         </div>
 
         {focusedSection === "all" && active.sections.length > 1 && (
-          <div className="flex items-center gap-1.5 text-[12px]">
+          <div className="flex items-center gap-1.5 text-[13px]">
             <button
               type="button"
               onClick={collapseAll}
@@ -1860,7 +1860,7 @@ export function WebsiteEditor({
           <button
             type="button"
             onClick={() => setFocusedSection("all")}
-            className="text-[12px] font-medium text-accent hover:underline inline-flex items-center gap-1"
+            className="text-[13px] font-medium text-accent hover:underline inline-flex items-center gap-1"
           >
             ← Tampilkan Semua Bagian
           </button>
@@ -1891,7 +1891,7 @@ export function WebsiteEditor({
                       {section.title}
                     </h2>
                     {itemCount !== null && (
-                      <span className="rounded-full bg-mist px-2 py-0.5 text-[11px] font-medium text-label-2 tabular-nums border border-hairline">
+                      <span className="rounded-full bg-mist px-2 py-0.5 text-[13px] font-medium text-label-2 tabular-nums border border-hairline">
                         {itemCount} item
                       </span>
                     )}
@@ -1902,12 +1902,12 @@ export function WebsiteEditor({
                     )}
                   </div>
                   {!isCollapsed && section.hint && (
-                    <p className="mt-1 text-[12px] text-label-2">
+                    <p className="mt-1 text-[13px] text-label-2">
                       {section.hint}
                     </p>
                   )}
                   {!isCollapsed && SHOWN_ON[section.key] && (
-                    <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[12px] text-label-3">
+                    <p className="mt-1.5 flex flex-wrap gap-x-3 gap-y-1 text-[13px] text-label-3">
                       Tampil di:
                       {SHOWN_ON[section.key]!.map(([label, href]) => (
                         <a
@@ -1933,7 +1933,7 @@ export function WebsiteEditor({
                       if (confirm(`Kembalikan "${section.title}" ke data awal?`))
                         setSection(section.key, defaults[section.key]);
                     }}
-                    className="inline-flex items-center gap-1 text-[12px] text-label-3 hover:text-label transition-colors"
+                    className="inline-flex items-center gap-1 text-[13px] text-label-3 hover:text-label transition-colors"
                   >
                     <RotateCcw className="size-3.5" strokeWidth={1.75} /> Data awal
                   </button>
@@ -2054,7 +2054,7 @@ function FieldGrid({
 }
 
 const inputCls =
-  "w-full bg-transparent text-[14px] outline-none placeholder:text-foreground/35";
+  "w-full bg-transparent text-[14px] outline-none placeholder:text-foreground/60";
 
 function FieldInput({
   spec,
@@ -2277,7 +2277,7 @@ function AiAssist({
         <button
           type="button"
           onClick={() => setOpen(true)}
-          className="inline-flex items-center gap-1 text-[12px] text-foreground/50 hover:text-brand-600"
+          className="inline-flex items-center gap-1 text-[13px] text-foreground/60 hover:text-brand-600"
         >
           <Sparkles className="size-3.5" strokeWidth={1.75} /> Bantu tulis
           dengan AI
@@ -2291,7 +2291,7 @@ function AiAssist({
               type="button"
               disabled={!!busy}
               onClick={() => run(a.action)}
-              className="rounded-md border border-foreground/10 px-2 py-0.5 text-[12px] text-foreground/70 hover:border-brand-500/40 hover:text-foreground disabled:opacity-50"
+              className="rounded-md border border-foreground/10 px-2 py-0.5 text-[13px] text-foreground/70 hover:border-brand-500/40 hover:text-foreground disabled:opacity-50"
             >
               {busy === a.action ? "…" : a.label}
             </button>
@@ -2302,7 +2302,7 @@ function AiAssist({
               setOpen(false);
               setSuggestion(null);
             }}
-            className="text-[12px] text-foreground/40 hover:text-foreground"
+            className="text-[13px] text-foreground/60 hover:text-foreground"
           >
             Tutup
           </button>
@@ -2384,7 +2384,7 @@ function KegiatanFromCaption({
   }
   return (
     <div className="mb-4 rounded-xl border border-brand-500/25 bg-brand-500/[0.04] p-3">
-      <p className="text-[12.5px] text-foreground/60">
+      <p className="text-[13px] text-foreground/60">
         Tempel caption Instagram — AI menyusun judul, tanggal, kategori, dan
         ringkasan.
       </p>
@@ -2487,7 +2487,7 @@ function ImageInput({
             />
           ) : (
             <ImagePlus
-              className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 text-foreground/35"
+              className="absolute left-1/2 top-1/2 size-5 -translate-x-1/2 -translate-y-1/2 text-foreground/60"
               strokeWidth={1.5}
             />
           )}
@@ -2519,7 +2519,7 @@ function ImageInput({
             type="button"
             aria-label="Hapus foto"
             onClick={() => onChange("")}
-            className="text-foreground/45 hover:text-red-500"
+            className="text-foreground/60 hover:text-red-500"
           >
             <Trash2 className="size-4" strokeWidth={1.75} />
           </button>
@@ -2596,7 +2596,7 @@ function FileInput({
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Buka file"
-            className="text-foreground/55 hover:text-foreground"
+            className="text-foreground/60 hover:text-foreground"
           >
             <ExternalLink className="size-4" strokeWidth={1.75} />
           </a>
@@ -2644,7 +2644,7 @@ function ListEditor({
               onClick={() => setOpen(open === i ? null : i)}
               className="min-w-0 flex-1 truncate text-left text-[14px] font-medium"
             >
-              <span className="mr-2 text-foreground/40">{i + 1}.</span>
+              <span className="mr-2 text-foreground/60">{i + 1}.</span>
               {itemTitle(item, i)}
             </button>
             {(() => {
@@ -2676,7 +2676,7 @@ function ListEditor({
                   target="_blank"
                   rel="noopener noreferrer"
                   title="Unduh Poster Instagram (1080×1350)"
-                  className="hidden items-center gap-1 rounded-lg border border-foreground/10 px-2 py-1 text-[11px] font-medium text-foreground/65 transition-colors hover:border-brand-500/40 hover:text-brand-600 sm:inline-flex"
+                  className="hidden items-center gap-1 rounded-lg border border-foreground/10 px-2 py-1 text-[13px] font-medium text-foreground/65 transition-colors hover:border-brand-500/40 hover:text-brand-600 sm:inline-flex"
                 >
                   Poster IG ↗
                 </a>
@@ -2857,7 +2857,7 @@ function IconBtn({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "grid size-7 place-items-center rounded-lg text-foreground/55 transition-colors hover:bg-foreground/5 disabled:opacity-30",
+        "grid size-7 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/5 disabled:opacity-30",
         danger ? "hover:text-red-500" : "hover:text-foreground",
       )}
     >
@@ -2877,14 +2877,14 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[12.5px] text-foreground/50">
+      <span className="mb-1 block text-[13px] text-foreground/60">
         {label}
       </span>
       <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">
         {children}
       </div>
       {hint && (
-        <span className="mt-1 block text-[11px] text-foreground/55">
+        <span className="mt-1 block text-[13px] text-foreground/60">
           {hint}
         </span>
       )}

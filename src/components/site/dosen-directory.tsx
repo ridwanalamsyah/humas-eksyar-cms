@@ -55,7 +55,7 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
           placeholder="Cari nama dosen atau keahlian..."
         />
       </div>
-      <p className="mt-4 text-[13.5px] text-label-3" aria-live="polite">
+      <p className="mt-4 text-[14px] text-label-3" aria-live="polite">
         Menampilkan {visible.length} dari {shown.length} dosen
       </p>
       {visible.length ? (
@@ -76,15 +76,15 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
                     className="size-13 shrink-0 rounded-2xl object-cover"
                   />
                 ) : (
-                  <span className="grid size-13 shrink-0 place-items-center rounded-xl bg-accent-soft text-[15px] font-bold text-accent transition-colors group-hover:bg-accent group-hover:text-white">
+                  <span className="grid size-13 shrink-0 place-items-center rounded-xl bg-accent-soft text-[16px] font-bold text-accent transition-colors group-hover:bg-accent group-hover:text-white">
                     {initials(d.name)}
                   </span>
                 )}
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-[15px] font-bold leading-snug text-label group-hover:text-accent">
+                  <h3 className="text-[16px] font-bold leading-snug text-label group-hover:text-accent">
                     {d.name}
                   </h3>
-                  <p className="mt-0.5 text-[12.5px] font-medium text-label-2">
+                  <p className="mt-0.5 text-[14px] font-medium text-label-2">
                     {d.role}
                   </p>
                   {d.expertise && d.expertise.length > 0 && (
@@ -92,7 +92,7 @@ export function DosenDirectory({ dosen }: { dosen: Person[] }) {
                       {d.expertise.slice(0, 3).map((t) => (
                         <span
                           key={t}
-                          className="rounded-md bg-mist px-2 py-0.5 text-[11px] font-medium text-label-2"
+                          className="rounded-md bg-mist px-2 py-0.5 text-[14px] font-medium text-label-2"
                         >
                           {t}
                         </span>

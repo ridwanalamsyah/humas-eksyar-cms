@@ -106,41 +106,18 @@ export default async function SkripsiPage({ searchParams }: Props) {
       <PageHeader
         crumb="Direktori & Pojok Skripsi"
         title="Direktori & Pojok Skripsi"
-        description="Pusat terpadu 515+ arsip skripsi Digilib UIN SGD, pengecekan kemiripan judul baru, rekomendasi topik pembimbing, dan jadwal sidang."
+        description="Cari 515+ skripsi Digilib UIN SGD dan cek kemiripan judul."
       />
 
       <section className="px-4 pb-24 sm:px-6 sm:pb-28">
         <div className="mx-auto max-w-[960px]">
-          {/* Indikator Sinkronisasi Otomatis Berkelanjutan */}
-          <div className="mb-6 flex flex-wrap items-center justify-between gap-3 rounded-[16px] border border-accent/25 bg-accent-soft/45 px-4 py-3 text-[13px] text-label-2">
-            <div className="flex items-center gap-2">
-              <RefreshCw className="size-4 shrink-0 text-accent" />
-              <span>
-                <strong className="font-semibold text-label">
-                  Sinkronisasi Otomatis Aktif:
-                </strong>{" "}
-                Terhubung ke repositori{" "}
-                <code className="rounded bg-canvas px-1.5 py-0.5 text-[11.5px] font-semibold text-accent">
-                  digilib.uinsgd.ac.id
-                </code>{" "}
-                (Cron harian 02:17 UTC & tombol sinkron di CMS).
-              </span>
-            </div>
-            <span className="font-semibold text-accent">
-              {list.length.toLocaleString("id-ID")} Skripsi Terindeks
-              {sync
-                ? ` · ${new Date(sync.at).toLocaleDateString("id-ID", { dateStyle: "medium" })}`
-                : ""}
-            </span>
-          </div>
-
           {/* 3 Tab Terpadu: Telusuri Skripsi, Cek Kemiripan Judul, & Pojok Skripsi */}
           <div className="mx-auto flex w-fit flex-wrap justify-center gap-1 rounded-full bg-mist p-1">
             {(
               [
-                ["telusuri", "Telusuri Direktori Skripsi"],
-                ["cek", "Cek Kemiripan Judul"],
-                ["pojok", "Pojok Skripsi (Topik & Sidang)"],
+                ["telusuri", "Cari skripsi"],
+                ["cek", "Cek kemiripan judul"],
+                ["pojok", "Topik & jadwal sidang"],
               ] as const
             ).map(([m, label]) => (
               <Link
@@ -150,7 +127,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                 })}
                 aria-current={mode === m ? "page" : undefined}
                 className={cn(
-                  "rounded-full px-5 py-2 text-[13.5px] font-semibold transition-colors",
+                  "flex min-h-11 items-center rounded-full px-5 text-[14px] font-semibold transition-colors",
                   mode === m
                     ? "bg-accent text-white shadow-xs"
                     : "text-label-2 hover:text-label",
@@ -186,15 +163,22 @@ export default async function SkripsiPage({ searchParams }: Props) {
                       ? "Tulis rencana judul, mis. pengaruh literasi keuangan syariah terhadap minat menabung"
                       : "Cari judul, nama penulis, dosen pembimbing, atau kata kunci (mis. zakat, BSI, halal)"
                   }
-                  className="min-w-0 flex-1 bg-transparent py-2 text-[15.5px] text-label outline-none placeholder:text-label-3"
+                  className="min-w-0 flex-1 bg-transparent py-2 text-[16px] text-label outline-none placeholder:text-label-3"
                 />
                 <button
                   type="submit"
-                  className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-[14.5px] font-semibold text-white hover:bg-accent-strong"
+                  className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-[14px] font-semibold text-white hover:bg-accent-strong"
                 >
                   {mode === "cek" ? "Cek Judul" : "Cari"}
                 </button>
               </form>
+              <p className="mt-3 flex items-center justify-center gap-2 text-[14px] text-label-3">
+                <RefreshCw className="size-3.5 text-accent" />
+                {list.length.toLocaleString("id-ID")} skripsi dari Digilib UIN SGD
+                {sync
+                  ? `, diperbarui ${new Date(sync.at).toLocaleDateString("id-ID", { dateStyle: "medium" })}`
+                  : ""}
+              </p>
 
               {mode === "telusuri" ? (
                 <>
@@ -229,7 +213,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                       </Link>
                     </p>
                   )}
-                  <p className="mt-6 text-[13.5px] text-label-3">
+                  <p className="mt-6 text-[14px] text-label-3">
                     {browse.length.toLocaleString("id-ID")} hasil ditemukan
                     {pages > 1 && ` · halaman ${page} dari ${pages}`}
                   </p>
@@ -275,7 +259,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
               ) : (
                 <div className="mt-8">
                   {!q ? (
-                    <p className="rounded-[20px] bg-mist p-6 text-[15px] leading-relaxed text-label-2">
+                    <p className="rounded-[20px] bg-mist p-6 text-[16px] leading-relaxed text-label-2">
                       Tulis rencana judul lengkap di kotak pencarian di atas.
                       Sistem membandingkan kata kunci judulmu dengan{" "}
                       {list.length.toLocaleString("id-ID")} skripsi di direktori
@@ -283,7 +267,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                     </p>
                   ) : (
                     <>
-                      <h2 className="text-[19px] font-bold text-label">
+                      <h2 className="text-[18px] font-bold text-label">
                         {results.length
                           ? `${results.length} judul serupa ditemukan`
                           : "Tidak ada judul yang mirip di direktori."}
@@ -307,7 +291,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                                 </p>
                                 <span
                                   className={cn(
-                                    "shrink-0 rounded-full px-3 py-1 text-[12px] font-bold",
+                                    "shrink-0 rounded-full px-3 py-1 text-[14px] font-bold",
                                     lv.cls,
                                   )}
                                 >
@@ -356,17 +340,17 @@ export default async function SkripsiPage({ searchParams }: Props) {
                         key={dosen}
                         className="rounded-[20px] border border-hairline bg-canvas p-5"
                       >
-                        <p className="text-[12.5px] font-semibold text-accent">
+                        <p className="text-[14px] font-semibold text-accent">
                           {dosen}
                         </p>
                         <ul className="mt-2.5 grid gap-3">
                           {listTopik.map((t) => (
                             <li key={t.topik}>
-                              <p className="text-[15.5px] font-bold leading-snug text-label">
+                              <p className="text-[16px] font-bold leading-snug text-label">
                                 {t.topik}
                               </p>
                               {t.deskripsi && (
-                                <p className="mt-1 text-[13.5px] leading-relaxed text-label-2">
+                                <p className="mt-1 text-[14px] leading-relaxed text-label-2">
                                   {t.deskripsi}
                                 </p>
                               )}
@@ -388,7 +372,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                   />
                   <div className="mt-6 overflow-x-auto rounded-[20px] border border-hairline bg-canvas">
                     <table className="w-full min-w-[640px] text-left text-[14px]">
-                      <thead className="bg-mist/60 text-[12px] uppercase tracking-wide text-label-3">
+                      <thead className="bg-mist/60 text-[14px] uppercase tracking-wide text-label-3">
                         <tr>
                           <th className="px-5 py-3 font-semibold">Tanggal</th>
                           <th className="px-5 py-3 font-semibold">Jenis</th>
@@ -454,10 +438,10 @@ export default async function SkripsiPage({ searchParams }: Props) {
                             className="group flex items-start justify-between gap-4 rounded-[18px] border border-hairline bg-canvas p-4 hover:border-accent/40"
                           >
                             <span>
-                              <span className="block text-[15px] font-bold text-label group-hover:text-accent">
+                              <span className="block text-[16px] font-bold text-label group-hover:text-accent">
                                 {p.name}
                               </span>
-                              <span className="mt-0.5 block text-[13.5px] text-label-2">
+                              <span className="mt-0.5 block text-[14px] text-label-2">
                                 {p.description}
                               </span>
                             </span>
@@ -482,7 +466,7 @@ export default async function SkripsiPage({ searchParams }: Props) {
                           key={i}
                           className="flex gap-3.5 rounded-[16px] bg-mist/60 p-4"
                         >
-                          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[13px] font-bold text-accent">
+                          <span className="grid size-7 shrink-0 place-items-center rounded-full bg-accent-soft text-[14px] font-bold text-accent">
                             {i + 1}
                           </span>
                           <p className="text-[14px] leading-relaxed text-label">
@@ -523,15 +507,15 @@ export default async function SkripsiPage({ searchParams }: Props) {
 function SkripsiRow({ item }: { item: SkripsiItem }) {
   const body = (
     <>
-      <span className="w-12 shrink-0 pt-0.5 font-mono text-[13px] text-label-3">
+      <span className="w-12 shrink-0 pt-0.5 font-mono text-[14px] text-label-3">
         {item.tahun}
       </span>
       <span className="min-w-0 flex-1">
-        <span className="block text-[15.5px] font-medium leading-snug text-label group-hover:text-accent">
+        <span className="block text-[16px] font-medium leading-snug text-label group-hover:text-accent">
           {item.judul}
         </span>
         {(item.nama || item.pembimbing?.length) && (
-          <span className="mt-1 block text-[13px] text-label-2">
+          <span className="mt-1 block text-[14px] text-label-2">
             {item.nama}
             {item.pembimbing?.length ? (
               <span className="text-label-3">

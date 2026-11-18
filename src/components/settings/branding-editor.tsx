@@ -38,9 +38,9 @@ export function BrandingEditor({ initial }: Props) {
   }
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
       <GlassCard variant="thick" className="p-6">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Editor
         </p>
         <div className="mt-4 grid gap-4">
@@ -97,7 +97,7 @@ export function BrandingEditor({ initial }: Props) {
       </GlassCard>
 
       <GlassCard className="p-6">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Contoh tampilan
         </p>
         <div className="mt-4 rounded-2xl border border-foreground/10 bg-background/40 p-4 text-[13px] leading-relaxed dark:border-white/10">
@@ -105,9 +105,9 @@ export function BrandingEditor({ initial }: Props) {
           <p className="mt-3 whitespace-pre-line text-foreground/80">
             {`${orgName} hadir di acara perdana semester ini.\nMari hadir, simak, dan diskusi bersama.\n\n———\n${signature}`}
           </p>
-          <div className="mt-3 text-[11px] text-foreground/55">{defaultHashtags}</div>
+          <div className="mt-3 text-[13px] text-foreground/60">{defaultHashtags}</div>
         </div>
-        <p className="mt-4 text-[11px] text-foreground/55">
+        <p className="mt-4 text-[13px] text-foreground/60">
           Penutup ini dipakai di semua caption, baik yang ditulis sendiri
           maupun yang disusun AI. Perubahan langsung berlaku.
         </p>
@@ -127,13 +127,13 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[12.5px] text-foreground/50">
+      <span className="mb-1 block text-[13px] text-foreground/60">
         {label}
       </span>
       <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">
         {children}
       </div>
-      {hint && <span className="mt-1 block text-[11px] text-foreground/55">{hint}</span>}
+      {hint && <span className="mt-1 block text-[13px] text-foreground/60">{hint}</span>}
     </label>
   );
 }

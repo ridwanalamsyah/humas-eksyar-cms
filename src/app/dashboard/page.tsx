@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowRight, ImageIcon, PenLine, Globe } from "lucide-react";
+import { ArrowRight, PenLine, Globe } from "lucide-react";
 import {
   getCurrentMember,
   listContents,
@@ -58,26 +58,26 @@ export default async function DashboardPage() {
 
   const stats = [
     {
-      label: "Kunjungan (30 Hari)",
+      label: "Kunjungan 30 hari",
       value: totalViews.toLocaleString("id-ID"),
       desc: "Total klik halaman publik",
       href: "/settings/kinerja",
     },
     {
-      label: "Artikel & Berita Terbit",
+      label: "Terbit",
       value: publishedCount.toLocaleString("id-ID"),
       desc: "Tayang di website prodi",
       href: "/content",
     },
     {
-      label: "Menunggu Persetujuan",
+      label: "Menunggu persetujuan",
       value: waiting.length.toLocaleString("id-ID"),
       desc: "Perlu ditinjau pengurus",
       href: "/content",
       highlight: waiting.length > 0,
     },
     {
-      label: "Agenda & Kegiatan",
+      label: "Agenda",
       value: events.length.toLocaleString("id-ID"),
       desc: "Jadwal kegiatan akademik",
       href: "/events",
@@ -93,38 +93,109 @@ export default async function DashboardPage() {
       {/* Sapaan & Tombol Cepat */}
       <div className="flex flex-wrap items-end justify-between gap-4 border-b border-foreground/[0.07] pb-6 dark:border-white/[0.07]">
         <div>
-          <p className="text-[13px] text-foreground/50">
+          <p className="text-[13px] text-foreground/60">
             {formatLongDate(now)}
             {formatHijri(now) && ` · ${formatHijri(now)}`}
           </p>
           <h1 className="mt-1 text-[26px] font-semibold tracking-tight sm:text-[30px]">
             Assalamu&apos;alaikum, {member.name.split(" ")[0]}
           </h1>
-          <p className="mt-1 text-[13.5px] text-foreground/60">
-            Pusat kendali publikasi, berita, dan informasi Humas Jurusan Ekonomi Syariah.
-          </p>
         </div>
 
         <div className="flex flex-wrap gap-2.5">
           <Button variant="secondary" asChild>
             <Link href="/" target="_blank" className="gap-2">
-              <Globe className="size-4" strokeWidth={1.75} /> Buka Website Publik
-            </Link>
-          </Button>
-          <Button variant="secondary" asChild>
-            <Link href="/media" className="gap-2">
-              <ImageIcon className="size-4" strokeWidth={1.75} /> Pustaka Media
+              <Globe className="size-4" strokeWidth={1.75} /> Lihat website
             </Link>
           </Button>
           <Button asChild className="gap-2 shadow-xs bg-emerald-600 hover:bg-emerald-700 text-white dark:bg-emerald-500">
             <Link href="/content/new">
-              <PenLine className="size-4" strokeWidth={1.75} /> Tulis Konten Baru
+              <PenLine className="size-4" strokeWidth={1.75} /> Tulis konten
             </Link>
           </Button>
         </div>
       </div>
 
       {member.role === "admin" && <OpsAlerts />}
+
+      {/* Hari ini: tugas saya dan jadwal minggu ini, paling atas */}
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+        {/* Perlu review */}
+        <section className="min-w-0 rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
+          <header className="flex items-center justify-between border-b border-foreground/[0.07] pb-3.5 dark:border-white/[0.07]">
+            <h2 className="text-[16px] font-bold text-label">Tugas saya: perlu disetujui</h2>
+            <span className="rounded-full bg-foreground/[0.06] px-2.5 py-0.5 text-[13px] font-semibold tabular-nums text-foreground/75 dark:bg-white/[0.08]">
+              {waiting.length}
+            </span>
+          </header>
+          {waiting.length === 0 ? (
+            <p className="py-6 text-[13px] text-foreground/60">
+              Tidak ada yang menunggu. Semua konten sudah diperiksa.
+            </p>
+          ) : (
+            <ul className="mt-2 divide-y divide-foreground/[0.06] dark:divide-white/[0.06]">
+              {waiting.slice(0, 4).map((c) => (
+                <li key={c.id}>
+                  <Link
+                    href={`/content/${c.id}`}
+                    className="block py-3 transition-colors hover:bg-foreground/[0.02] -mx-2 px-2 rounded-xl"
+                  >
+                    <p className="truncate text-[13.5px] font-medium text-foreground">
+                      {c.title}
+                    </p>
+                    <p className="text-[13px] text-foreground/60">
+                      Oleh {authorName(c.authorId)}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {/* Agenda */}
+        <section className="min-w-0 rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
+          <header className="flex items-center justify-between border-b border-foreground/[0.07] pb-3.5 dark:border-white/[0.07]">
+            <h2 className="text-[16px] font-bold text-label">Jadwal terdekat</h2>
+            <Link
+              href="/calendar"
+              className="inline-flex items-center gap-1 text-[13px] font-semibold text-accent hover:underline"
+            >
+              Kalender <ArrowRight className="size-3.5" />
+            </Link>
+          </header>
+          {events.length === 0 ? (
+            <p className="py-6 text-[13px] text-foreground/60">
+              Belum ada agenda kegiatan dalam 30 hari ke depan.
+            </p>
+          ) : (
+            <ul className="mt-2 divide-y divide-foreground/[0.06] dark:divide-white/[0.06]">
+              {events.slice(0, 4).map((e) => (
+                <li key={e.id}>
+                  <Link
+                    href={`/events/${e.id}`}
+                    className="flex gap-3.5 py-3 transition-colors hover:bg-foreground/[0.02] -mx-2 px-2 rounded-xl"
+                  >
+                    <span className="w-16 shrink-0 text-[13px] leading-tight text-foreground/60 font-medium">
+                      {formatShortDate(e.startsAt)}
+                      <br />
+                      <span className="text-foreground/60">{formatTime(e.startsAt)}</span>
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block truncate text-[13.5px] font-medium text-foreground">
+                        {e.title}
+                      </span>
+                      <span className="block truncate text-[13px] text-foreground/60">
+                        {e.location || "Online"}
+                      </span>
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
 
       {/* 4 Kartu KPI Ringkas */}
       <dl className="mt-6 grid grid-cols-2 gap-3.5 lg:grid-cols-4">
@@ -138,17 +209,17 @@ export default async function DashboardPage() {
                 : "border-foreground/[0.08] bg-canvas hover:border-foreground/20 dark:border-white/[0.08]"
             }`}
           >
-            <dt className="text-[12.5px] font-medium text-foreground/55">{s.label}</dt>
+            <dt className="text-[13px] font-medium text-foreground/60">{s.label}</dt>
             <dd className="mt-1.5 text-[28px] font-extrabold tabular-nums tracking-tight text-foreground">
               {s.value}
             </dd>
-            <p className="mt-1 text-[11.5px] text-foreground/45">{s.desc}</p>
+            <p className="mt-1 text-[13px] text-foreground/60">{s.desc}</p>
           </Link>
         ))}
       </dl>
 
       {/* Baris Grafik & Distribusi */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1.6fr_1fr]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <ViewsAreaChart data={views} />
         <ContentDistributionCard
           published={publishedCount}
@@ -158,18 +229,13 @@ export default async function DashboardPage() {
       </div>
 
       {/* Baris Halaman Populer & Konten Terbaru */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
         <TopPagesList views={views} />
 
         {/* Konten terbaru */}
-        <section className="rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
+        <section className="min-w-0 rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
           <header className="flex items-center justify-between border-b border-foreground/[0.07] pb-3.5 dark:border-white/[0.07]">
-            <div>
-              <p className="text-[12px] font-semibold uppercase tracking-wider text-accent">
-                Publikasi
-              </p>
-              <h2 className="text-[17px] font-bold text-label">Konten Terbaru</h2>
-            </div>
+            <h2 className="text-[16px] font-bold text-label">Konten terbaru</h2>
             <Link
               href="/content"
               className="inline-flex items-center gap-1 text-[13px] font-semibold text-accent hover:underline"
@@ -197,7 +263,7 @@ export default async function DashboardPage() {
                       <p className="truncate text-[14px] font-medium text-foreground">
                         {c.title}
                       </p>
-                      <p className="truncate text-[12px] text-foreground/50">
+                      <p className="truncate text-[13px] text-foreground/60">
                         {authorName(c.authorId)} · {relativeFromNow(c.updatedAt)}
                       </p>
                     </div>
@@ -210,84 +276,6 @@ export default async function DashboardPage() {
         </section>
       </div>
 
-      {/* Baris Perlu Review & Agenda */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        {/* Perlu review */}
-        <section className="rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
-          <header className="flex items-center justify-between border-b border-foreground/[0.07] pb-3.5 dark:border-white/[0.07]">
-            <h2 className="text-[15px] font-bold text-label">Perlu Disetujui</h2>
-            <span className="rounded-full bg-foreground/[0.06] px-2.5 py-0.5 text-[12px] font-semibold tabular-nums text-foreground/75 dark:bg-white/[0.08]">
-              {waiting.length}
-            </span>
-          </header>
-          {waiting.length === 0 ? (
-            <p className="py-6 text-[13px] text-foreground/55">
-              Semua konten telah diperiksa dan disetujui.
-            </p>
-          ) : (
-            <ul className="mt-2 divide-y divide-foreground/[0.06] dark:divide-white/[0.06]">
-              {waiting.slice(0, 4).map((c) => (
-                <li key={c.id}>
-                  <Link
-                    href={`/content/${c.id}`}
-                    className="block py-3 transition-colors hover:bg-foreground/[0.02] -mx-2 px-2 rounded-xl"
-                  >
-                    <p className="truncate text-[13.5px] font-medium text-foreground">
-                      {c.title}
-                    </p>
-                    <p className="text-[12px] text-foreground/50">
-                      Oleh {authorName(c.authorId)}
-                    </p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-
-        {/* Agenda */}
-        <section className="rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
-          <header className="flex items-center justify-between border-b border-foreground/[0.07] pb-3.5 dark:border-white/[0.07]">
-            <h2 className="text-[15px] font-bold text-label">Agenda Mendatang</h2>
-            <Link
-              href="/calendar"
-              className="inline-flex items-center gap-1 text-[13px] font-semibold text-accent hover:underline"
-            >
-              Kalender <ArrowRight className="size-3.5" />
-            </Link>
-          </header>
-          {events.length === 0 ? (
-            <p className="py-6 text-[13px] text-foreground/55">
-              Belum ada agenda kegiatan dalam 30 hari ke depan.
-            </p>
-          ) : (
-            <ul className="mt-2 divide-y divide-foreground/[0.06] dark:divide-white/[0.06]">
-              {events.slice(0, 4).map((e) => (
-                <li key={e.id}>
-                  <Link
-                    href={`/events/${e.id}`}
-                    className="flex gap-3.5 py-3 transition-colors hover:bg-foreground/[0.02] -mx-2 px-2 rounded-xl"
-                  >
-                    <span className="w-16 shrink-0 text-[12px] leading-tight text-foreground/55 font-medium">
-                      {formatShortDate(e.startsAt)}
-                      <br />
-                      <span className="text-foreground/40">{formatTime(e.startsAt)}</span>
-                    </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block truncate text-[13.5px] font-medium text-foreground">
-                        {e.title}
-                      </span>
-                      <span className="block truncate text-[12px] text-foreground/50">
-                        {e.location || "Online"}
-                      </span>
-                    </span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-      </div>
     </AppShell>
   );
 }

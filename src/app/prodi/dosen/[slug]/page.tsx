@@ -108,7 +108,7 @@ export default async function DosenProfilPage({ params }: Props) {
                 {keahlian.map((k) => (
                   <span
                     key={k}
-                    className="rounded-full bg-accent-soft px-3 py-1 text-[13px] font-semibold text-accent"
+                    className="rounded-full bg-accent-soft px-3 py-1 text-[14px] font-semibold text-accent"
                   >
                     {k}
                   </span>
@@ -118,7 +118,7 @@ export default async function DosenProfilPage({ params }: Props) {
             {person?.konsultasi && (
               <div className="mt-6 flex items-start gap-3 rounded-[18px] border border-hairline p-4">
                 <CalendarClock className="mt-0.5 size-5 shrink-0 text-accent" />
-                <div className="text-[14.5px]">
+                <div className="text-[14px]">
                   <p className="font-semibold text-label">Jadwal konsultasi</p>
                   <p className="text-label-2">{person.konsultasi}</p>
                   <Link
@@ -132,15 +132,15 @@ export default async function DosenProfilPage({ params }: Props) {
             )}
             {person?.pendidikan && (
               <div className="mt-8">
-                <h2 className="text-[19px] font-bold text-label">Pendidikan</h2>
-                <p className="mt-2 whitespace-pre-line text-[15.5px] leading-relaxed text-label-2">
+                <h2 className="text-[18px] font-bold text-label">Pendidikan</h2>
+                <p className="mt-2 whitespace-pre-line text-[16px] leading-relaxed text-label-2">
                   {person.pendidikan}
                 </p>
               </div>
             )}
             {entry.mataKuliah.length > 0 && (
               <div className="mt-8">
-                <h2 className="text-[19px] font-bold text-label">
+                <h2 className="text-[18px] font-bold text-label">
                   Mata kuliah yang diampu
                 </h2>
                 <ul className="mt-3 flex flex-wrap gap-2">
@@ -157,12 +157,12 @@ export default async function DosenProfilPage({ params }: Props) {
             )}
             {publikasi.length > 0 && (
               <div className="mt-8">
-                <h2 className="text-[19px] font-bold text-label">Publikasi</h2>
+                <h2 className="text-[18px] font-bold text-label">Publikasi</h2>
                 <ul className="mt-3 grid gap-2">
                   {publikasi.map((p) => (
                     <li
                       key={p.title}
-                      className="rounded-[16px] bg-mist p-4 text-[14.5px]"
+                      className="rounded-[16px] bg-mist p-4 text-[14px]"
                     >
                       <p className="font-semibold text-label">{p.title}</p>
                       <p className="mt-0.5 text-label-2">
@@ -175,7 +175,7 @@ export default async function DosenProfilPage({ params }: Props) {
             )}
             {bimbingan.length > 0 && entry.namaPembimbing && (
               <div className="mt-8">
-                <h2 className="text-[19px] font-bold text-label">
+                <h2 className="text-[18px] font-bold text-label">
                   Skripsi bimbingan terbaru
                 </h2>
                 <ul className="mt-3 divide-y divide-hairline rounded-[16px] border border-hairline">
@@ -185,7 +185,7 @@ export default async function DosenProfilPage({ params }: Props) {
                         href={
                           s.id ? `/prodi/skripsi/${s.id}` : "/prodi/skripsi"
                         }
-                        className="flex gap-3 px-4 py-3 text-[14.5px] hover:bg-mist/60"
+                        className="flex gap-3 px-4 py-3 text-[14px] hover:bg-mist/60"
                       >
                         <span className="w-10 shrink-0 font-mono text-label-3">
                           {s.tahun}
@@ -197,13 +197,13 @@ export default async function DosenProfilPage({ params }: Props) {
                 </ul>
                 <Link
                   href={`/prodi/skripsi?pembimbing=${encodeURIComponent(entry.namaPembimbing)}`}
-                  className="mt-3 inline-block text-[14.5px] font-semibold text-accent hover:underline"
+                  className="mt-3 inline-block text-[14px] font-semibold text-accent hover:underline"
                 >
                   Semua {entry.bimbingan} skripsi bimbingan ›
                 </Link>
               </div>
             )}
-            <p className="mt-10 text-[13.5px] text-label-3">
+            <p className="mt-10 text-[14px] text-label-3">
               Bapak/Ibu dosen dapat memperbarui profil ini lewat{" "}
               <Link
                 href="/prodi/formulir/profil-dosen"

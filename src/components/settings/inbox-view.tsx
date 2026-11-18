@@ -119,11 +119,11 @@ export function InboxView({
           >
             {f.title}
             {counts[f.slug]?.baru ? (
-              <span className="rounded-full bg-blue-500 px-1.5 text-[11px] font-semibold text-white">
+              <span className="rounded-full bg-blue-500 px-1.5 text-[13px] font-semibold text-white">
                 {counts[f.slug].baru}
               </span>
             ) : (
-              <span className="text-[11px] text-foreground/40">
+              <span className="text-[13px] text-foreground/60">
                 {counts[f.slug]?.all ?? 0}
               </span>
             )}
@@ -140,7 +140,7 @@ export function InboxView({
                 type="button"
                 onClick={() => setStatus(s)}
                 className={cn(
-                  "rounded-full px-3 py-1 text-[12.5px]",
+                  "rounded-full px-3 py-1 text-[13px]",
                   status === s
                     ? "bg-foreground text-background"
                     : "bg-foreground/[0.05]",
@@ -161,10 +161,10 @@ export function InboxView({
           <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {avg.map((a) => (
               <div key={a.label} className="glass-regular rounded-xl px-4 py-3">
-                <p className="text-[12px] text-foreground/55">{a.label}</p>
+                <p className="text-[13px] text-foreground/60">{a.label}</p>
                 <p className="text-[20px] font-semibold tabular-nums">
                   {a.value.toFixed(2)}{" "}
-                  <span className="text-[12px] font-normal text-foreground/50">
+                  <span className="text-[13px] font-normal text-foreground/60">
                     / {a.scale} · {a.n} responden
                   </span>
                 </p>
@@ -173,10 +173,10 @@ export function InboxView({
           </div>
         )}
 
-        <div className="mt-4 grid gap-4 xl:grid-cols-[1fr_1.1fr]">
+        <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
           <ul className="glass-regular max-h-[640px] divide-y divide-foreground/[0.06] overflow-y-auto rounded-xl">
             {list.length === 0 && (
-              <li className="px-4 py-10 text-center text-[13px] text-foreground/55">
+              <li className="px-4 py-10 text-center text-[13px] text-foreground/60">
                 Belum ada isian.
               </li>
             )}
@@ -200,14 +200,14 @@ export function InboxView({
                     </span>
                     <span
                       className={cn(
-                        "shrink-0 rounded-full px-2 py-0.5 text-[11px] font-medium",
+                        "shrink-0 rounded-full px-2 py-0.5 text-[13px] font-medium",
                         STATUS_CLS[s.status],
                       )}
                     >
                       {s.status}
                     </span>
                   </span>
-                  <span className="mt-0.5 block text-[11.5px] text-foreground/50">
+                  <span className="mt-0.5 block text-[13px] text-foreground/60">
                     {new Date(s.createdAt).toLocaleString("id-ID")}
                     {s.data.nama ? ` · ${s.data.nama}` : ""}
                     {s.published ? " · tampil" : ""}
@@ -226,7 +226,7 @@ export function InboxView({
               call={call}
             />
           ) : (
-            <div className="glass-regular grid place-items-center rounded-xl p-10 text-[13px] text-foreground/55">
+            <div className="glass-regular grid place-items-center rounded-xl p-10 text-[13px] text-foreground/60">
               Pilih isian untuk melihat detail.
             </div>
           )}
@@ -267,7 +267,7 @@ function Detail({
         {def.fields.map((f) =>
           sub.data[f.name] === undefined ? null : (
             <div key={f.name}>
-              <dt className="text-[11.5px] text-foreground/50">{f.label}</dt>
+              <dt className="text-[13px] text-foreground/60">{f.label}</dt>
               <dd className="whitespace-pre-line break-words">
                 {f.type === "url" ? (
                   <a
@@ -295,13 +295,13 @@ function Detail({
         )}
         {sub.refId && (
           <div>
-            <dt className="text-[11.5px] text-foreground/50">Rujukan</dt>
+            <dt className="text-[13px] text-foreground/60">Rujukan</dt>
             <dd>{sub.refId}</dd>
           </div>
         )}
       </dl>
 
-      <label className="mt-5 block text-[12px] font-medium text-foreground/60">
+      <label className="mt-5 block text-[13px] font-medium text-foreground/60">
         {answerLabel}
       </label>
       <textarea
@@ -354,7 +354,7 @@ function Detail({
           type="button"
           aria-label="Hapus"
           onClick={() => confirm("Hapus isian ini?") && call("DELETE", sub.id)}
-          className="ml-auto rounded-lg p-2 text-foreground/45 hover:text-red-500"
+          className="ml-auto rounded-lg p-2 text-foreground/60 hover:text-red-500"
         >
           <Trash2 className="size-4" />
         </button>

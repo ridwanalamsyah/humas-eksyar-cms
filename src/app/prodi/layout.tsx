@@ -50,8 +50,19 @@ export async function generateMetadata(): Promise<Metadata> {
       title: `${prodi.fullName} — ${prodi.university}`,
       description: identity.heroDescription,
       images: [
-        { url: prodi.logo, width: 512, height: 512, alt: prodi.fullName },
+        {
+          url: "/prodi/og-eksyar.jpg",
+          width: 1200,
+          height: 630,
+          alt: `${prodi.name} ${prodi.university}`,
+        },
       ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${prodi.name} ${prodi.university}`,
+      description: identity.heroDescription,
+      images: ["/prodi/og-eksyar.jpg"],
     },
   };
 }

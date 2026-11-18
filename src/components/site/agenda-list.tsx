@@ -42,7 +42,7 @@ export async function AgendaList() {
   return (
     <>
       {months.size === 0 ? (
-        <p className="rounded-[24px] bg-mist p-10 text-center text-[17px] text-label-2">
+        <p className="rounded-[24px] bg-mist p-10 text-center text-[16px] text-label-2">
           Belum ada agenda terjadwal. Ikuti Instagram{" "}
           <a
             href={site.kontak.instagram}
@@ -57,7 +57,7 @@ export async function AgendaList() {
       ) : (
         [...months].map(([month, list]) => (
           <div key={month} className="mb-12">
-            <h2 className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
+            <h2 className="text-[16px] font-semibold uppercase tracking-[0.08em] text-accent">
               {month}
             </h2>
             <ul className="mt-4 grid gap-3">
@@ -67,13 +67,13 @@ export async function AgendaList() {
                   <Reveal key={e.id}>
                     <li className="flex gap-5 rounded-[24px] border border-hairline bg-canvas p-5 sm:p-6">
                       <div className="w-16 shrink-0 rounded-2xl bg-accent-soft py-3 text-center text-accent">
-                        <p className="text-[12px] font-bold uppercase">
+                        <p className="text-[14px] font-bold uppercase">
                           {d.toLocaleDateString("id-ID", {
                             weekday: "short",
                             timeZone: "Asia/Jakarta",
                           })}
                         </p>
-                        <p className="text-[28px] font-extrabold leading-none tracking-[-0.03em]">
+                        <p className="text-[24px] font-extrabold leading-none tracking-[-0.03em]">
                           {d.toLocaleDateString("id-ID", {
                             day: "numeric",
                             timeZone: "Asia/Jakarta",
@@ -81,15 +81,15 @@ export async function AgendaList() {
                         </p>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-[12.5px] font-semibold text-label-3">
+                        <p className="text-[14px] font-semibold text-label-3">
                           {CATEGORY_LABEL[e.category] ?? "Kegiatan"} ·{" "}
                           {formatTime(e.startsAt)} WIB
                         </p>
-                        <h3 className="mt-1 text-[19px] font-bold leading-snug tracking-[-0.01em] text-label">
+                        <h3 className="mt-1 text-[18px] font-bold leading-snug tracking-[-0.01em] text-label">
                           {e.title}
                         </h3>
                         {e.description && (
-                          <p className="mt-1.5 line-clamp-2 text-[15px] text-label-2">
+                          <p className="mt-1.5 line-clamp-2 text-[16px] text-label-2">
                             {e.description}
                           </p>
                         )}

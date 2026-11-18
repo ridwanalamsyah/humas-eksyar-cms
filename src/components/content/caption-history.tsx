@@ -150,7 +150,7 @@ export function CaptionHistory({
   return (
     <GlassCard variant="regular" className="p-5">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
+        <h3 className="flex items-center gap-1.5 text-[13px] text-foreground/60">
           <History className="size-3" strokeWidth={1.75} />
           Riwayat Caption
         </h3>
@@ -185,7 +185,7 @@ export function CaptionHistory({
       </div>
 
       {diffMode && (
-        <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl border border-foreground/10 bg-foreground/[0.03] p-3 text-[11px] text-foreground/70 dark:border-white/10 dark:bg-white/[0.03]">
+        <div className="mt-3 flex flex-wrap items-center gap-2 rounded-xl border border-foreground/10 bg-foreground/[0.03] p-3 text-[13px] text-foreground/70 dark:border-white/10 dark:bg-white/[0.03]">
           Pilih 2 versi ({diffPicks.length}/2)
           {diffPicks.length === 2 && (
             <Button size="sm" onClick={() => setShowDiffModal(true)}>
@@ -196,12 +196,12 @@ export function CaptionHistory({
       )}
 
       {loading ? (
-        <div className="mt-3 flex items-center gap-2 text-[12px] text-foreground/45">
+        <div className="mt-3 flex items-center gap-2 text-[13px] text-foreground/60">
           <Loader2 className="size-3.5 animate-spin" />
           Memuat riwayat...
         </div>
       ) : versions.length === 0 ? (
-        <p className="mt-3 text-[12px] text-foreground/45">
+        <p className="mt-3 text-[13px] text-foreground/60">
           Belum ada versi tersimpan. Klik &ldquo;Simpan versi&rdquo; untuk membuat snapshot caption saat ini.
         </p>
       ) : (
@@ -242,16 +242,16 @@ export function CaptionHistory({
                     <Pill tone={SOURCE_TONES[v.source as CaptionVersionSource] ?? "neutral"}>
                       {SOURCE_LABELS[v.source as CaptionVersionSource] ?? v.source}
                     </Pill>
-                    <span className="text-[11px] text-foreground/45">
+                    <span className="text-[13px] text-foreground/60">
                       {timeAgo(v.createdAt)}
                     </span>
                     {v.note && (
-                      <span className="ml-auto text-[11px] text-foreground/55 truncate max-w-[120px]">
+                      <span className="ml-auto text-[13px] text-foreground/60 truncate max-w-[120px]">
                         {v.note}
                       </span>
                     )}
                   </div>
-                  <p className="mt-1.5 text-[12px] leading-relaxed text-foreground/70">
+                  <p className="mt-1.5 text-[13px] leading-relaxed text-foreground/70">
                     {isExpanded ? v.caption : preview}
                   </p>
                 </button>
@@ -313,14 +313,14 @@ function DiffModal({
             <h4 className="font-display text-base font-semibold">
               Bandingkan versi
             </h4>
-            <p className="text-[11px] text-foreground/55">
+            <p className="text-[13px] text-foreground/60">
               {timeAgo(before.createdAt)} vs {timeAgo(after.createdAt)}
             </p>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full p-1 text-foreground/55 hover:bg-foreground/5 hover:text-foreground"
+            className="rounded-full p-1 text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
             aria-label="Tutup"
           >
             <X className="size-5" strokeWidth={1.75} />
@@ -328,7 +328,7 @@ function DiffModal({
         </header>
         <div className="grid max-h-[calc(85vh-3.5rem)] grid-cols-2 overflow-auto text-[13px]">
           <div className="border-r border-foreground/10 dark:border-white/10">
-            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[12.5px] text-foreground/50 dark:bg-white/[0.05]">
+            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[13px] text-foreground/60 dark:bg-white/[0.05]">
               Sebelum · {timeAgo(before.createdAt)}
             </div>
             <pre className="whitespace-pre-wrap break-words p-4 font-mono leading-relaxed text-foreground/85">
@@ -350,7 +350,7 @@ function DiffModal({
             </pre>
           </div>
           <div>
-            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[12.5px] text-foreground/50 dark:bg-white/[0.05]">
+            <div className="sticky top-0 z-10 bg-foreground/[0.04] px-4 py-2 text-[13px] text-foreground/60 dark:bg-white/[0.05]">
               Sesudah · {timeAgo(after.createdAt)}
             </div>
             <pre className="whitespace-pre-wrap break-words p-4 font-mono leading-relaxed text-foreground/85">

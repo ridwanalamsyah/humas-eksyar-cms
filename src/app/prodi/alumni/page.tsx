@@ -59,13 +59,13 @@ export default async function AlumniPage() {
               <Reveal key={s.label} delay={i * 0.05}>
                 <div className="flex h-full flex-col justify-between rounded-[24px] border border-hairline bg-canvas p-6 shadow-xs">
                   <div>
-                    <p className="font-display text-[28px] font-black tracking-tight text-accent">
+                    <p className="font-display text-[24px] font-black tracking-tight text-accent">
                       {s.value}
                     </p>
-                    <h3 className="mt-1.5 text-[15px] font-bold text-label">
+                    <h3 className="mt-1.5 text-[16px] font-bold text-label">
                       {s.label}
                     </h3>
-                    <p className="mt-2 text-[13px] leading-relaxed text-label-2">
+                    <p className="mt-2 text-[14px] leading-relaxed text-label-2">
                       {s.desc}
                     </p>
                   </div>
@@ -91,13 +91,13 @@ export default async function AlumniPage() {
               <Reveal key={p.title} delay={(i % 4) * 0.05}>
                 <div className="flex h-full flex-col justify-between rounded-[24px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/30 hover:shadow-md">
                   <div>
-                    <span className="font-mono text-[13px] font-bold text-accent">
+                    <span className="font-mono text-[14px] font-bold text-accent">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <h3 className="mt-3 text-[17px] font-bold leading-snug text-label">
+                    <h3 className="mt-3 text-[16px] font-bold leading-snug text-label">
                       {p.title}
                     </h3>
-                    <p className="mt-2 text-[13.5px] leading-relaxed text-label-2">
+                    <p className="mt-2 text-[14px] leading-relaxed text-label-2">
                       {p.description}
                     </p>
                   </div>
@@ -136,13 +136,13 @@ export default async function AlumniPage() {
           <Reveal className="mx-auto max-w-[1060px]">
             <div className="flex flex-col items-start justify-between gap-6 rounded-[28px] bg-accent p-8 text-white sm:flex-row sm:items-center sm:p-10 shadow-lg">
               <div>
-                <p className="text-[13px] font-bold uppercase tracking-wider text-sand">
+                <p className="text-[14px] font-bold uppercase tracking-wider text-sand">
                   Portal Khusus Alumni
                 </p>
                 <h2 className="mt-2 text-[clamp(1.6rem,1.3rem+1vw,2.2rem)] font-extrabold leading-tight tracking-tight">
                   Tracer Study &amp; Sebaran Alumni UIN SGD
                 </h2>
-                <p className="mt-2 max-w-xl text-[15px] leading-relaxed text-white/85">
+                <p className="mt-2 max-w-xl text-[16px] leading-relaxed text-white/85">
                   Partisipasi Anda dalam Tracer Study sangat penting untuk evaluasi kurikulum, pengembangan akreditasi internasional, dan pemeringkatan program studi.
                 </p>
               </div>
@@ -152,7 +152,7 @@ export default async function AlumniPage() {
                     href={mutu.tracerUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-xl bg-white px-6 py-3.5 text-[14.5px] font-bold text-accent shadow-xs transition hover:bg-sand"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-white px-6 py-3.5 text-[14px] font-bold text-accent shadow-xs transition hover:bg-sand"
                   >
                     Isi Tracer Study <ArrowUpRight className="size-4" />
                   </a>
@@ -162,7 +162,7 @@ export default async function AlumniPage() {
                     href={mutu.sebaranUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 rounded-xl border border-white/40 px-6 py-3.5 text-[14.5px] font-semibold text-white transition hover:bg-white/10"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-white/40 px-6 py-3.5 text-[14px] font-semibold text-white transition hover:bg-white/10"
                   >
                     Peta Sebaran Alumni ↗
                   </a>
@@ -178,10 +178,10 @@ export default async function AlumniPage() {
         <div className="mx-auto grid max-w-[1060px] gap-8 md:grid-cols-2">
           {/* Card 1: Kabar Alumni & Donasi Buku */}
           <div className="rounded-[24px] border border-hairline bg-mist/60 p-8">
-            <h3 className="text-[20px] font-bold tracking-tight text-label">
+            <h3 className="text-[18px] font-bold tracking-tight text-label">
               Bagi Kabar &amp; Lowongan Magang
             </h3>
-            <p className="mt-2 text-[14.5px] leading-relaxed text-label-2">
+            <p className="mt-2 text-[14px] leading-relaxed text-label-2">
               Punya lowongan kerja, peluang magang, atau kabar promosi di institusi Anda? Bagikan kepada adik-adik tingkat di Program Studi Ekonomi Syariah.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -202,10 +202,10 @@ export default async function AlumniPage() {
 
           {/* Card 2: Bimbingan & Kuliah Tamu */}
           <div className="rounded-[24px] border border-hairline bg-mist/60 p-8">
-            <h3 className="text-[20px] font-bold tracking-tight text-label">
+            <h3 className="text-[18px] font-bold tracking-tight text-label">
               Alumni Mengajar &amp; Mentoring
             </h3>
-            <p className="mt-2 text-[14.5px] leading-relaxed text-label-2">
+            <p className="mt-2 text-[14px] leading-relaxed text-label-2">
               Prodi secara rutin mengundang praktisi alumni untuk mengisi seminar, kuliah tamu, dan mentoring skripsi praktis di bidang perbankan serta keuangan Islam.
             </p>
             <div className="mt-6">

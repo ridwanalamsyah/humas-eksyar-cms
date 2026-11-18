@@ -46,11 +46,11 @@ export function CommandPaletteTrigger({ open, setOpen }: Props) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="hidden h-9 items-center gap-2 rounded-lg border border-foreground/10 bg-background pl-3 pr-2 text-[13px] text-foreground/50 transition-colors hover:border-foreground/20 dark:border-white/10 sm:flex"
+        className="hidden h-9 items-center gap-2 rounded-lg border border-foreground/10 bg-background pl-3 pr-2 text-[13px] text-foreground/60 transition-colors hover:border-foreground/20 dark:border-white/10 sm:flex"
       >
         <Search className="size-4" strokeWidth={1.75} />
         <span className="pr-6">Cari…</span>
-        <kbd className="rounded-md border border-foreground/15 bg-foreground/5 px-1.5 py-0.5 font-mono text-[10px] font-medium tracking-wider text-foreground/65 dark:border-white/10 dark:bg-white/5">
+        <kbd className="rounded-md border border-foreground/15 bg-foreground/5 px-1.5 py-0.5 font-mono text-[13px] font-medium tracking-wider text-foreground/65 dark:border-white/10 dark:bg-white/5">
           ⌘K
         </kbd>
       </button>
@@ -94,30 +94,30 @@ function CommandPalette({ open, setOpen }: Props) {
           >
             <Command label="Command Palette" className="text-foreground">
               <div className="flex items-center gap-2 border-b border-foreground/10 px-4 dark:border-white/10">
-                <Search className="size-4 text-foreground/55" strokeWidth={1.75} />
+                <Search className="size-4 text-foreground/60" strokeWidth={1.75} />
                 <Command.Input
                   autoFocus
                   placeholder="Cari atau ketik perintah…"
-                  className="h-12 w-full bg-transparent text-[15px] outline-none placeholder:text-foreground/45"
+                  className="h-12 w-full bg-transparent text-[15px] outline-none placeholder:text-foreground/60"
                 />
-                <kbd className="rounded-md border border-foreground/10 bg-foreground/5 px-1.5 py-0.5 font-mono text-[10px] font-medium tracking-wider text-foreground/55 dark:border-white/10 dark:bg-white/5">
+                <kbd className="rounded-md border border-foreground/10 bg-foreground/5 px-1.5 py-0.5 font-mono text-[13px] font-medium tracking-wider text-foreground/60 dark:border-white/10 dark:bg-white/5">
                   esc
                 </kbd>
               </div>
               <Command.List className="max-h-[55vh] overflow-y-auto p-2">
-                <Command.Empty className="px-4 py-12 text-center text-sm text-foreground/55">
+                <Command.Empty className="px-4 py-12 text-center text-sm text-foreground/60">
                   Tidak ditemukan. Coba kata lain.
                 </Command.Empty>
 
                 <Command.Group heading="Aksi cepat" className="cmd-group">
-                  <CmdItem onSelect={() => go("/captions/playground")} icon={<Sparkles className="size-4 text-gold-500" />} label="AI Caption Generator" hint="Generate caption baru" />
-                  <CmdItem onSelect={() => go("/content/new")} icon={<PenLine className="size-4 text-brand-500" />} label="Konten Baru" hint="Tulis postingan baru" />
+                  <CmdItem onSelect={() => go("/captions/playground")} icon={<Sparkles className="size-4 text-gold-500" />} label="Pembuat caption" hint="Buat caption baru" />
+                  <CmdItem onSelect={() => go("/content/new")} icon={<PenLine className="size-4 text-brand-500" />} label="Tulis konten" hint="Konten baru" />
                   <CmdItem onSelect={() => go("/calendar")} icon={<CalendarDays className="size-4 text-sky-500" />} label="Lihat Kalender" />
-                  <CmdItem onSelect={() => go("/media")} icon={<ImageIcon className="size-4 text-violet-500" />} label="Buka Media Library" />
+                  <CmdItem onSelect={() => go("/media")} icon={<ImageIcon className="size-4 text-violet-500" />} label="Buka pustaka media" />
                 </Command.Group>
 
                 <Command.Group heading="Navigasi" className="cmd-group">
-                  <CmdItem onSelect={() => go("/")} icon={<Zap className="size-4" />} label="Dashboard" />
+                  <CmdItem onSelect={() => go("/")} icon={<Zap className="size-4" />} label="Beranda CMS" />
                   <CmdItem onSelect={() => go("/content")} icon={<PenLine className="size-4" />} label="Konten" />
                   <CmdItem onSelect={() => go("/calendar")} icon={<CalendarDays className="size-4" />} label="Kalender" />
                   <CmdItem onSelect={() => go("/members")} icon={<Users className="size-4" />} label="Anggota" />
@@ -164,7 +164,7 @@ function CmdItem({
         {icon}
       </span>
       <span className="flex-1">{label}</span>
-      {hint && <span className="text-[11px] text-foreground/55">{hint}</span>}
+      {hint && <span className="text-[13px] text-foreground/60">{hint}</span>}
     </Command.Item>
   );
 }

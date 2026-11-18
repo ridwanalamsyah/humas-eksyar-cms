@@ -85,7 +85,7 @@ export function StatRow({
             </div>
             <div>
               <p className="text-[13px] font-medium text-foreground/85">{it.label}</p>
-              <p className="text-[11px] text-foreground/55">{it.hint}</p>
+              <p className="text-[13px] text-foreground/60">{it.hint}</p>
             </div>
           </GlassCard>
         </motion.div>

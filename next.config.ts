@@ -3,6 +3,9 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "standalone",
   images: {
+    // Optimasi gambar Vercel sengaja dimatikan: kuota paket gratis terbatas dan
+    // proyek bisa dijeda saat melewatinya. Kompres foto sebelum diunggah
+    // (lihat docs/panduan-humas.md) dan simpan di Pustaka Media.
     unoptimized: true,
     remotePatterns: [
       {

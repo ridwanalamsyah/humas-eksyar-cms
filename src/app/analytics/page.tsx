@@ -101,9 +101,9 @@ export default async function AnalyticsPage() {
         <AnalyticsCharts series={series} />
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[2fr_1fr]">
+      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <GlassCard className="p-5">
-          <p className="text-[12.5px] text-foreground/50">
+          <p className="text-[13px] text-foreground/60">
             Top 5 konten publish
           </p>
           <ul className="mt-3 divide-y divide-foreground/10 dark:divide-white/10">
@@ -115,21 +115,21 @@ export default async function AnalyticsPage() {
                   className="flex items-center justify-between gap-3 py-3"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-foreground/[0.04] font-mono text-[12px] font-semibold text-foreground/65 dark:bg-white/5">
+                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-foreground/[0.04] font-mono text-[13px] font-semibold text-foreground/65 dark:bg-white/5">
                       {i + 1}
                     </span>
                     <div className="min-w-0">
                       <p className="truncate text-[13px] font-medium">{c.title}</p>
-                      <p className="truncate text-[11px] text-foreground/55">
+                      <p className="truncate text-[13px] text-foreground/60">
                         {author?.name ?? "—"}
                       </p>
                     </div>
                   </div>
                   <div className="shrink-0 text-right">
-                    <p className="font-mono text-[12px] font-semibold">
+                    <p className="font-mono text-[13px] font-semibold">
                       {humanNumber(c.metrics!.views)}
                     </p>
-                    <p className="text-[10px] text-foreground/55">
+                    <p className="text-[13px] text-foreground/60">
                       ER {percent(c.metrics!.engagementRate, 2)}
                     </p>
                   </div>
@@ -141,7 +141,7 @@ export default async function AnalyticsPage() {
 
         <aside className="space-y-4">
           <GlassCard variant="thick" className="p-5">
-            <div className="flex items-center gap-2 text-[12.5px] text-foreground/50">
+            <div className="flex items-center gap-2 text-[13px] text-foreground/60">
               <Sparkles className="size-3.5 text-gold-500" strokeWidth={2} />
               Weekly Digest · {digest.isoWeek}
             </div>
@@ -149,20 +149,20 @@ export default async function AnalyticsPage() {
               Reach minggu ini: {humanNumber(digest.totalReach)}
             </p>
             <div className="mt-3">
-              <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+              <p className="text-[13px] font-medium uppercase tracking-[0.16em] text-foreground/60">
                 Highlight
               </p>
-              <ul className="mt-1 list-disc space-y-1 pl-4 text-[12px] text-foreground/75">
+              <ul className="mt-1 list-disc space-y-1 pl-4 text-[13px] text-foreground/75">
                 {digest.highlights.map((h, i) => (
                   <li key={i}>{h}</li>
                 ))}
               </ul>
             </div>
             <div className="mt-3">
-              <p className="text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+              <p className="text-[13px] font-medium uppercase tracking-[0.16em] text-foreground/60">
                 Rekomendasi AI
               </p>
-              <ul className="mt-1 list-disc space-y-1 pl-4 text-[12px] text-foreground/75">
+              <ul className="mt-1 list-disc space-y-1 pl-4 text-[13px] text-foreground/75">
                 {digest.recommendations.map((h, i) => (
                   <li key={i}>{h}</li>
                 ))}
@@ -191,12 +191,12 @@ function KPI({
   return (
     <GlassCard className="p-4">
       <p
-        className={`flex items-center gap-1 text-[10px] uppercase tracking-[0.16em] ${
+        className={`flex items-center gap-1 text-[13px] uppercase tracking-[0.16em] ${
           accent === "brand"
             ? "text-brand-700 dark:text-brand-300"
             : accent === "danger"
               ? "text-rose-700 dark:text-rose-300"
-              : "text-foreground/55"
+              : "text-foreground/60"
         }`}
       >
         {icon}

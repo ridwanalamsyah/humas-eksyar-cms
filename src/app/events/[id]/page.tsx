@@ -70,7 +70,7 @@ export default async function EventDetail({ params }: PageProps) {
           </div>
         )}
         <div className="p-7">
-          <div className="flex flex-wrap items-center gap-2 text-[12.5px] text-foreground/50">
+          <div className="flex flex-wrap items-center gap-2 text-[13px] text-foreground/60">
             <Pill tone="brand">{event.category.replace("_", " ")}</Pill>
             {event.isOnline && <Pill tone="info">Online</Pill>}
           </div>
@@ -114,10 +114,10 @@ export default async function EventDetail({ params }: PageProps) {
         </div>
       </GlassCard>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[2fr_1fr]">
+      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <section className="space-y-4">
           <GlassCard className="p-5">
-            <p className="text-[12.5px] text-foreground/50">
+            <p className="text-[13px] text-foreground/60">
               Peserta RSVP ({rsvpMembers.length})
             </p>
             <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-3">
@@ -125,7 +125,7 @@ export default async function EventDetail({ params }: PageProps) {
                 <Link
                   key={m.id}
                   href={`/members/${m.id}`}
-                  className="flex items-center gap-2 rounded-xl border border-foreground/10 bg-foreground/[0.04] px-2 py-1.5 text-[12px] hover:bg-foreground/[0.07] dark:border-white/10 dark:bg-white/5"
+                  className="flex items-center gap-2 rounded-xl border border-foreground/10 bg-foreground/[0.04] px-2 py-1.5 text-[13px] hover:bg-foreground/[0.07] dark:border-white/10 dark:bg-white/5"
                 >
                   <Avatar member={m} size={28} ring={false} />
                   <span className="truncate font-medium">
@@ -134,7 +134,7 @@ export default async function EventDetail({ params }: PageProps) {
                 </Link>
               ))}
               {rsvpMembers.length > 12 && (
-                <span className="flex items-center justify-center rounded-xl border border-dashed border-foreground/15 px-2 py-1.5 text-[11px] text-foreground/55">
+                <span className="flex items-center justify-center rounded-xl border border-dashed border-foreground/15 px-2 py-1.5 text-[13px] text-foreground/60">
                   +{rsvpMembers.length - 12} lainnya
                 </span>
               )}
@@ -143,7 +143,7 @@ export default async function EventDetail({ params }: PageProps) {
 
           {coordinator && (
             <GlassCard className="p-5">
-              <p className="text-[12.5px] text-foreground/50">
+              <p className="text-[13px] text-foreground/60">
                 Koordinator
               </p>
               <Link
@@ -153,7 +153,7 @@ export default async function EventDetail({ params }: PageProps) {
                 <Avatar member={coordinator} size={48} />
                 <div>
                   <p className="text-[14px] font-semibold">{coordinator.name}</p>
-                  <p className="text-[12px] text-foreground/65">
+                  <p className="text-[13px] text-foreground/65">
                     {coordinator.position}
                   </p>
                 </div>
@@ -164,7 +164,7 @@ export default async function EventDetail({ params }: PageProps) {
 
         <aside className="space-y-4">
           <GlassCard variant="thick" className="p-5">
-            <p className="text-[12.5px] text-foreground/50">
+            <p className="text-[13px] text-foreground/60">
               RSVP &amp; Check-in
             </p>
             <RSVPToggle initial={userRsvp} />
@@ -174,12 +174,12 @@ export default async function EventDetail({ params }: PageProps) {
           </GlassCard>
 
           <GlassCard className="p-5">
-            <p className="text-[12.5px] text-foreground/50">
+            <p className="text-[13px] text-foreground/60">
               Tools cepat
             </p>
             <div className="mt-3 flex flex-col gap-2">
               <Button variant="ghost" size="sm" asChild>
-                <Link href="/captions/playground">Generate caption acara</Link>
+                <Link href="/captions/playground">Buat caption acara</Link>
               </Button>
               <Button variant="ghost" size="sm" asChild>
                 <Link href="/content/new">Tulis post promosi</Link>
@@ -208,12 +208,12 @@ function InfoStat({
 }) {
   return (
     <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] p-3 dark:border-white/10 dark:bg-white/[0.03]">
-      <p className="flex items-center gap-1 text-[10px] uppercase tracking-[0.16em] text-foreground/55">
+      <p className="flex items-center gap-1 text-[13px] uppercase tracking-[0.16em] text-foreground/60">
         {icon}
         {label}
       </p>
       <p className="mt-1 text-[13px] font-semibold">{value}</p>
-      {hint && <p className="text-[10px] text-foreground/50">{hint}</p>}
+      {hint && <p className="text-[13px] text-foreground/60">{hint}</p>}
     </div>
   );
 }

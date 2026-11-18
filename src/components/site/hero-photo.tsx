@@ -62,7 +62,7 @@ export function HeroPhoto({ src, caption }: { src: string; caption: string }) {
             />
           </div>
           {caption && (
-            <figcaption className="mt-3 text-[13px] text-label-2">
+            <figcaption className="mt-3 text-[14px] text-label-2">
               {caption}
             </figcaption>
           )}
@@ -91,7 +91,7 @@ export function HeroPhoto({ src, caption }: { src: string; caption: string }) {
           {caption && (
             <motion.figcaption
               style={{ opacity: captionOpacity }}
-              className="absolute bottom-8 left-6 right-6 max-w-xl rounded-2xl border border-white/15 bg-navy/75 px-4 py-2.5 text-[13px] font-medium leading-snug text-white backdrop-blur-md sm:bottom-12 sm:left-12 sm:right-auto"
+              className="absolute bottom-8 left-6 right-6 max-w-xl rounded-2xl border border-white/15 bg-navy/75 px-4 py-2.5 text-[14px] font-medium leading-snug text-white backdrop-blur-md sm:bottom-12 sm:left-12 sm:right-auto"
             >
               {caption}
             </motion.figcaption>

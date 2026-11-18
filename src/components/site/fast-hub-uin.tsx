@@ -33,14 +33,14 @@ export function FastHubUin() {
       <div className="mx-auto max-w-[1040px]">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 sm:gap-4">
           <div>
-            <p className="text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.14em] text-accent dark:text-[#6AB5AD]">
+            <p className="text-[14px] sm:text-[14px] font-bold uppercase tracking-[0.14em] text-accent dark:text-[#6AB5AD]">
               Layanan Akademik
             </p>
-            <h2 className="mt-1 text-[20px] sm:text-[24px] font-extrabold tracking-tight text-label">
+            <h2 className="mt-1 text-[18px] sm:text-[24px] font-extrabold tracking-tight text-label">
               Portal Mahasiswa UIN Sunan Gunung Djati
             </h2>
           </div>
-          <p className="text-[13px] sm:text-[14px] text-label-2">
+          <p className="text-[14px] sm:text-[14px] text-label-2">
             Tautan resmi perkuliahan, nilai, dan repositori kampus.
           </p>
         </div>
@@ -56,16 +56,16 @@ export function FastHubUin() {
             >
               <div>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-[11px] font-semibold uppercase tracking-wider text-label-3">
+                  <span className="text-[14px] font-semibold uppercase tracking-wider text-label-3">
                     {sys.badge}
                   </span>
                   <ArrowUpRight className="size-3.5 text-label-3 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent" />
                 </div>
 
-                <h3 className="mt-2 text-[14px] sm:text-[15.5px] font-bold text-label leading-snug group-hover:text-accent dark:group-hover:text-[#6AB5AD]">
+                <h3 className="mt-2 text-[14px] sm:text-[16px] font-bold text-label leading-snug group-hover:text-accent dark:group-hover:text-[#6AB5AD]">
                   {sys.name}
                 </h3>
-                <p className="mt-1 hidden sm:block text-[12.5px] text-label-2 leading-relaxed">
+                <p className="mt-1 hidden sm:block text-[14px] text-label-2 leading-relaxed">
                   {sys.desc}
                 </p>
               </div>

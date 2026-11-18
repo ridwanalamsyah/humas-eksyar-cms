@@ -63,7 +63,7 @@ export function GaleriGrid({ items }: { items: Galeri[] }) {
               className="w-full object-cover transition duration-700 group-hover:scale-[1.04]"
             />
             {g.caption && (
-              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-navy/80 px-4 py-2.5 text-left text-[13px] font-medium leading-snug text-white backdrop-blur-xs transition-transform duration-300 group-hover:translate-y-0">
+              <span className="absolute inset-x-0 bottom-0 translate-y-full bg-navy/80 px-4 py-2.5 text-left text-[14px] font-medium leading-snug text-white backdrop-blur-xs transition-transform duration-300 group-hover:translate-y-0">
                 {g.caption}
               </span>
             )}
@@ -126,7 +126,7 @@ export function GaleriGrid({ items }: { items: Galeri[] }) {
               )}
             </div>
             <p
-              className="pt-4 text-center text-[15px] text-white/85"
+              className="pt-4 text-center text-[16px] text-white/85"
               onClick={(e) => e.stopPropagation()}
             >
               {current.caption}

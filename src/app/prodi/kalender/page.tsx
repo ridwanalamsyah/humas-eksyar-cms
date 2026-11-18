@@ -96,7 +96,7 @@ export default async function KalenderPage() {
                       {d.title}
                     </span>
                     {d.description && (
-                      <span className="block text-[13.5px] text-white/75">
+                      <span className="block text-[14px] text-white/75">
                         {d.description}
                       </span>
                     )}
@@ -108,13 +108,13 @@ export default async function KalenderPage() {
           )}
 
           {items.length === 0 ? (
-            <p className="rounded-[24px] bg-mist p-10 text-center text-[17px] text-label-2">
+            <p className="rounded-[24px] bg-mist p-10 text-center text-[16px] text-label-2">
               Jadwal akademik akan segera diperbarui.
             </p>
           ) : (
             [...months].map(([month, list]) => (
               <div key={month} className="mb-12">
-                <h2 className="text-[15px] font-semibold uppercase tracking-[0.08em] text-accent">
+                <h2 className="text-[16px] font-semibold uppercase tracking-[0.08em] text-accent">
                   {month}
                 </h2>
                 <ol className="relative mt-4 border-l-2 border-hairline pl-6">
@@ -146,19 +146,19 @@ export default async function KalenderPage() {
                             <div className="flex flex-wrap items-center gap-2">
                               <span
                                 className={cn(
-                                  "rounded-md px-2.5 py-0.5 text-[12px] font-bold",
+                                  "rounded-md px-2.5 py-0.5 text-[14px] font-bold",
                                   STATUS[st].cls,
                                 )}
                               >
                                 {STATUS[st].label}
                               </span>
-                              <span className="text-[12.5px] font-semibold text-label-3">
+                              <span className="text-[14px] font-semibold text-label-3">
                                 {k.kategori}
                               </span>
                             </div>
                             <p
                               className={cn(
-                                "mt-2 text-[17px] font-bold leading-snug",
+                                "mt-2 text-[16px] font-bold leading-snug",
                                 st === "selesai"
                                   ? "text-label-2"
                                   : "text-label",
@@ -166,7 +166,7 @@ export default async function KalenderPage() {
                             >
                               {k.kegiatan}
                             </p>
-                            <p className="mt-1 text-[14.5px] text-label-2">
+                            <p className="mt-1 text-[14px] text-label-2">
                               {rentang(k)}
                             </p>
                             {k.sumber && (
@@ -174,7 +174,7 @@ export default async function KalenderPage() {
                                 href={k.sumber}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="mt-2 inline-block text-[13.5px] font-semibold text-accent hover:underline"
+                                className="mt-2 inline-block text-[14px] font-semibold text-accent hover:underline"
                               >
                                 Sumber resmi ↗
                               </a>

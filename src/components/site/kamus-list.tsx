@@ -38,7 +38,7 @@ export function KamusList({ items }: { items: Kamus[] }) {
             <a
               key={l}
               href={`#huruf-${l}`}
-              className="grid size-8 place-items-center rounded-full bg-mist text-[13px] font-bold text-label hover:bg-accent hover:text-white"
+              className="grid size-8 place-items-center rounded-full bg-mist text-[14px] font-bold text-label hover:bg-accent hover:text-white"
             >
               {l}
             </a>
@@ -60,14 +60,14 @@ export function KamusList({ items }: { items: Kamus[] }) {
               className="scroll-mt-28 rounded-[20px] border border-hairline bg-canvas p-5"
             >
               <dt className="flex items-baseline justify-between gap-3">
-                <span className="text-[17px] font-bold text-label">
+                <span className="text-[16px] font-bold text-label">
                   {k.istilah}
                 </span>
-                <span className="shrink-0 text-[12px] font-semibold text-accent">
+                <span className="shrink-0 text-[14px] font-semibold text-accent">
                   {k.kategori}
                 </span>
               </dt>
-              <dd className="mt-1.5 text-[15px] leading-[1.55] text-label-2">
+              <dd className="mt-1.5 text-[16px] leading-[1.55] text-label-2">
                 {k.arti}
               </dd>
             </div>

@@ -69,7 +69,7 @@ export function CalendarView({ events }: Props) {
             <p className="font-display text-xl font-semibold tracking-tight">
               {format(cursor, "MMMM yyyy", { locale: localeID })}
             </p>
-            <p className="text-[12px] text-foreground/55">
+            <p className="text-[13px] text-foreground/60">
               {formatHijri(cursor)}
             </p>
           </div>
@@ -103,7 +103,7 @@ export function CalendarView({ events }: Props) {
           </div>
         </div>
 
-        <div className="mt-4 grid grid-cols-7 gap-1 text-center text-[10px] font-medium uppercase tracking-[0.16em] text-foreground/55">
+        <div className="mt-4 grid grid-cols-7 gap-1 text-center text-[13px] font-medium uppercase tracking-[0.16em] text-foreground/60">
           {"Sen,Sel,Rab,Kam,Jum,Sab,Min".split(",").map((d) => (
             <span key={d}>{d}</span>
           ))}
@@ -121,15 +121,15 @@ export function CalendarView({ events }: Props) {
                 type="button"
                 onClick={() => setSelected(d)}
                 className={cn(
-                  "relative flex h-16 flex-col items-start gap-1 rounded-xl border px-1.5 pt-1.5 text-left text-[11px] transition-colors sm:h-20",
+                  "relative flex h-16 flex-col items-start gap-1 rounded-xl border px-1.5 pt-1.5 text-left text-[13px] transition-colors sm:h-20",
                   isCurMonth
                     ? "border-foreground/10 bg-foreground/[0.04] dark:border-white/10 dark:bg-white/5"
-                    : "border-transparent text-foreground/40",
+                    : "border-transparent text-foreground/60",
                   isSel && "border-brand-500/60 bg-brand-500/15",
                   today && !isSel && "ring-1 ring-inset ring-gold-500/50",
                 )}
               >
-                <span className="font-mono text-[12px] font-medium">
+                <span className="font-mono text-[13px] font-medium">
                   {format(d, "d")}
                 </span>
                 <div className="flex flex-wrap items-end gap-0.5">
@@ -141,7 +141,7 @@ export function CalendarView({ events }: Props) {
                     />
                   ))}
                   {dayEvents.length > 3 && (
-                    <span className="text-[9px] text-foreground/55">
+                    <span className="text-[13px] text-foreground/60">
                       +{dayEvents.length - 3}
                     </span>
                   )}
@@ -156,13 +156,13 @@ export function CalendarView({ events }: Props) {
 
       <aside className="space-y-4">
         <GlassCard className="p-5">
-          <p className="text-[12.5px] text-foreground/50">
+          <p className="text-[13px] text-foreground/60">
             {format(selected, "EEEE", { locale: localeID })}
           </p>
           <h3 className="mt-1 font-display text-xl font-semibold tracking-tight">
             {format(selected, "d MMMM yyyy", { locale: localeID })}
           </h3>
-          <p className="text-[12px] text-foreground/60">
+          <p className="text-[13px] text-foreground/60">
             {formatHijri(selected)}
           </p>
         </GlassCard>
@@ -177,7 +177,7 @@ export function CalendarView({ events }: Props) {
             >
               <GlassCard variant="thin" className="p-5 text-center">
                 <CalendarDays
-                  className="mx-auto size-6 text-foreground/45"
+                  className="mx-auto size-6 text-foreground/60"
                   strokeWidth={1.75}
                 />
                 <p className="mt-2 text-[13px] text-foreground/65">
@@ -202,13 +202,13 @@ export function CalendarView({ events }: Props) {
                   >
                     <Link href={`/events/${e.id}`}>
                       <GlassCard hover className="p-4">
-                        <div className="flex items-center justify-end text-[10px] uppercase tracking-[0.16em] text-foreground/55">
+                        <div className="flex items-center justify-end text-[13px] uppercase tracking-[0.16em] text-foreground/60">
                           <span>{formatTime(e.startsAt)}</span>
                         </div>
                         <h4 className="mt-2 font-display text-[15px] font-semibold leading-tight tracking-tight">
                           {e.title}
                         </h4>
-                        <div className="mt-2 flex flex-wrap items-center gap-3 text-[11px] text-foreground/60">
+                        <div className="mt-2 flex flex-wrap items-center gap-3 text-[13px] text-foreground/60">
                           <span className="inline-flex items-center gap-1">
                             <MapPin className="size-3" strokeWidth={1.75} />
                             {e.location}

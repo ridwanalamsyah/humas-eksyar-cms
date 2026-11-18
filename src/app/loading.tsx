@@ -9,7 +9,7 @@ export default function Loading() {
             <Shimmer key={i} className="h-28 rounded-2xl" />
           ))}
         </div>
-        <div className="grid gap-4 pt-2 lg:grid-cols-[2fr_1fr]">
+        <div className="grid gap-4 pt-2 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
           <Shimmer className="h-72 rounded-2xl" />
           <Shimmer className="h-72 rounded-2xl" />
         </div>

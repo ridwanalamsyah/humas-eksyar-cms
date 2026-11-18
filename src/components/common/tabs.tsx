@@ -36,7 +36,7 @@ export function SegmentedTabs<T extends string>({
             onClick={() => onChange(opt.value)}
             className={cn(
               "relative inline-flex items-center gap-1.5 rounded-full px-3 font-medium transition-colors",
-              size === "sm" ? "h-7 text-[12px]" : "h-9 text-[13px]",
+              size === "sm" ? "h-7 text-[13px]" : "h-9 text-[13px]",
               active ? "text-foreground" : "text-foreground/60 hover:text-foreground/85",
             )}
           >

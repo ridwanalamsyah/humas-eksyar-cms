@@ -66,7 +66,7 @@ export function UnduhanList({ items }: { items: Unduhan[] }) {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Cari dokumen…"
-            className="w-full bg-transparent text-[15px] outline-none placeholder:text-label-3"
+            className="w-full bg-transparent text-[16px] outline-none placeholder:text-label-3"
           />
         </label>
       </div>

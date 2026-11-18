@@ -115,7 +115,7 @@ export function InstagramImporter({
             <h2 className="text-[15px] font-semibold">
               Postingan @eksyaruinsgd
             </h2>
-            <p className="text-[12px] text-foreground/55">
+            <p className="text-[13px] text-foreground/60">
               {lastSync
                 ? `Sinkron otomatis terakhir ${new Date(lastSync.at).toLocaleString("id-ID")} · ${lastSync.imported} draft baru${lastSync.error ? ` · galat: ${lastSync.error}` : ""}`
                 : "Postingan baru otomatis dijadikan draf berita setiap hari."}
@@ -137,7 +137,7 @@ export function InstagramImporter({
         </header>
 
         {!feed ? (
-          <p className="flex items-center gap-2 px-5 py-8 text-[13px] text-foreground/55">
+          <p className="flex items-center gap-2 px-5 py-8 text-[13px] text-foreground/60">
             <Loader2 className="size-4 animate-spin" /> Memuat postingan…
           </p>
         ) : !feed.configured ? (
@@ -184,10 +184,10 @@ export function InstagramImporter({
                     />
                   )}
                   <div className="min-w-0">
-                    <p className="text-[11.5px] text-foreground/50">
+                    <p className="text-[13px] text-foreground/60">
                       {fmt(p.timestamp)} · {p.images.length} foto
                     </p>
-                    <p className="mt-1 line-clamp-4 text-[12.5px] leading-snug text-foreground/80">
+                    <p className="mt-1 line-clamp-4 text-[13px] leading-snug text-foreground/80">
                       {p.caption || "(tanpa caption)"}
                     </p>
                   </div>
@@ -197,14 +197,14 @@ export function InstagramImporter({
                     href={p.permalink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[12px] text-foreground/55 hover:text-foreground"
+                    className="inline-flex items-center gap-1 text-[13px] text-foreground/60 hover:text-foreground"
                   >
                     Instagram <ExternalLink className="size-3" />
                   </a>
                   {p.imported ? (
                     <Link
                       href={`/content/${p.imported.contentId}`}
-                      className="text-[12.5px] font-medium text-emerald-600 hover:underline"
+                      className="text-[13px] font-medium text-emerald-600 hover:underline"
                     >
                       Sudah jadi artikel ›
                     </Link>
@@ -278,11 +278,11 @@ function ManualImport({
   return (
     <section className="glass-regular rounded-xl p-5">
       <h2 className="text-[15px] font-semibold">Impor manual</h2>
-      <p className="mt-1 text-[12px] text-foreground/55">
+      <p className="mt-1 text-[13px] text-foreground/60">
         Tempel tautan postingan dan caption-nya (salin dari Instagram), unggah
         fotonya, lalu AI menyusun artikel berita.
       </p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-[2fr_1fr]">
+      <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <input
           value={url}
           onChange={(e) => setUrl(e.target.value)}
@@ -319,7 +319,7 @@ function ManualImport({
             </button>
           </span>
         ))}
-        <label className="grid size-16 cursor-pointer place-items-center rounded-lg border border-dashed border-foreground/20 text-foreground/50 hover:text-foreground">
+        <label className="grid size-16 cursor-pointer place-items-center rounded-lg border border-dashed border-foreground/20 text-foreground/60 hover:text-foreground">
           {uploading ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (

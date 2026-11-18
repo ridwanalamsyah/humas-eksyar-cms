@@ -41,7 +41,7 @@ export default async function QuestsPage() {
           <GlassCard key={q.id} className="p-5">
             <div className="flex items-start justify-between gap-3">
               <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-1.5 text-[11px] uppercase tracking-[0.16em] text-foreground/55">
+                <div className="flex flex-wrap items-center gap-1.5 text-[13px] uppercase tracking-[0.16em] text-foreground/60">
                   <Pill tone={DIFFICULTY_TONE[q.difficulty]}>{q.difficulty}</Pill>
                   <Pill>{DURATION_LABEL[q.duration]}</Pill>
                   <Pill tone="gold">+{q.xpReward} XP</Pill>
@@ -67,7 +67,7 @@ export default async function QuestsPage() {
                 )}
               </div>
             </div>
-            <div className="mt-4 flex items-center justify-between text-[11px] text-foreground/55">
+            <div className="mt-4 flex items-center justify-between text-[13px] text-foreground/60">
               <span>Progress</span>
               <span className="font-mono">
                 {q.current}/{q.target}
@@ -75,7 +75,7 @@ export default async function QuestsPage() {
             </div>
             <ProgressBar value={q.progress} className="mt-1" />
             {q.completed && (
-              <div className="mt-3 inline-flex items-center gap-1 text-[11px] font-medium text-brand-700 dark:text-brand-300">
+              <div className="mt-3 inline-flex items-center gap-1 text-[13px] font-medium text-brand-700 dark:text-brand-300">
                 <Sparkles className="size-3" strokeWidth={2} /> Selesai —
                 kontribusi dibukukan
               </div>

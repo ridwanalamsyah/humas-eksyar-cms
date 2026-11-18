@@ -113,7 +113,7 @@ export default async function BioPage() {
                   <p className="text-[13px] font-medium text-foreground/85 line-clamp-2">
                     {c.title}
                   </p>
-                  <p className="mt-1 text-[11px] text-foreground/55">
+                  <p className="mt-1 text-[13px] text-foreground/60">
                     {formatLongDate(c.publishedAt ?? c.createdAt)}
                   </p>
                 </Link>
@@ -136,7 +136,7 @@ export default async function BioPage() {
                 className="rounded-2xl border border-foreground/8 bg-background/40 px-4 py-3 dark:border-white/8"
               >
                 <p className="text-[13px] font-medium text-foreground/85">{e.title}</p>
-                <p className="mt-1 text-[11px] text-foreground/55">
+                <p className="mt-1 text-[13px] text-foreground/60">
                   {formatLongDate(e.startsAt)} · {e.location}
                 </p>
               </li>
@@ -159,7 +159,7 @@ export default async function BioPage() {
         </section>
       )}
 
-      <footer className="mt-12 mb-4 text-center text-[11px] text-foreground/45">
+      <footer className="mt-12 mb-4 text-center text-[13px] text-foreground/60">
         © {new Date().getFullYear()} {config.name} ·{" "}
         <Link href="/" className="hover:text-foreground/75">
           Dashboard
@@ -192,15 +192,15 @@ function BioLinkButton({ link }: { link: { id: string; label: string; href: stri
           {link.label}
         </span>
         {link.hint && (
-          <span className="mt-0.5 block text-[11.5px] text-foreground/55">
+          <span className="mt-0.5 block text-[13px] text-foreground/60">
             {link.hint}
           </span>
         )}
       </span>
       {external ? (
-        <ExternalLink className="size-4 text-foreground/40 transition group-hover:text-foreground/70" strokeWidth={1.75} />
+        <ExternalLink className="size-4 text-foreground/60 transition group-hover:text-foreground/70" strokeWidth={1.75} />
       ) : (
-        <ArrowUpRight className="size-4 text-foreground/40 transition group-hover:text-foreground/70" strokeWidth={1.75} />
+        <ArrowUpRight className="size-4 text-foreground/60 transition group-hover:text-foreground/70" strokeWidth={1.75} />
       )}
     </a>
   );
@@ -218,7 +218,7 @@ function BioSectionTitle({
   return (
     <h2
       id={id}
-      className="flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-foreground/55"
+      className="flex items-center gap-1.5 text-[13px] font-medium uppercase tracking-[0.18em] text-foreground/60"
     >
       {icon}
       {children}
@@ -246,20 +246,20 @@ function MagazineCard({ issue }: { issue: MagazineIssue }) {
               className="absolute inset-0 size-full object-cover transition-transform group-hover:scale-105"
             />
           ) : (
-            <div className="absolute inset-0 grid place-items-center text-foreground/30">
+            <div className="absolute inset-0 grid place-items-center text-foreground/60">
               <BookOpen className="size-8" strokeWidth={1.5} />
             </div>
           )}
         </div>
         <div className="px-3 py-2.5">
-          <p className="text-[12.5px] font-semibold leading-snug text-foreground/90 line-clamp-2">
+          <p className="text-[13px] font-semibold leading-snug text-foreground/90 line-clamp-2">
             {issue.title}
           </p>
-          <p className="mt-0.5 text-[10.5px] uppercase tracking-[0.14em] text-foreground/55">
+          <p className="mt-0.5 text-[13px] uppercase tracking-[0.14em] text-foreground/60">
             {issue.period}
           </p>
           {issue.blurb && (
-            <p className="mt-1 text-[11px] text-foreground/65 line-clamp-2">
+            <p className="mt-1 text-[13px] text-foreground/65 line-clamp-2">
               {issue.blurb}
             </p>
           )}
@@ -281,7 +281,7 @@ function HolidayCard({ holiday }: { holiday: Holiday }) {
       className={`rounded-2xl border px-3 py-2.5 text-left ${tone}`}
       aria-label={`${holiday.name} pada ${holiday.date}`}
     >
-      <p className="flex items-center gap-1 text-[11px] font-medium text-foreground/55">
+      <p className="flex items-center gap-1 text-[13px] font-medium text-foreground/60">
         {holiday.emoji && <span aria-hidden>{holiday.emoji}</span>}
         {holiday.kind === "hijriah" ? (
           <>Hijriah</>
@@ -293,14 +293,14 @@ function HolidayCard({ holiday }: { holiday: Holiday }) {
           "Internasional"
         )}
       </p>
-      <p className="mt-1 text-[12.5px] font-semibold leading-snug text-foreground/85 line-clamp-2">
+      <p className="mt-1 text-[13px] font-semibold leading-snug text-foreground/85 line-clamp-2">
         {holiday.name}
       </p>
-      <p className="mt-1 text-[11px] text-foreground/55">
+      <p className="mt-1 text-[13px] text-foreground/60">
         {formatLongDate(holiday.date)}
       </p>
       {holiday.hijriahLabel && (
-        <p className="mt-0.5 font-mono text-[10px] text-emerald-700 dark:text-emerald-300">
+        <p className="mt-0.5 font-mono text-[13px] text-emerald-700 dark:text-emerald-300">
           {holiday.hijriahLabel}
         </p>
       )}

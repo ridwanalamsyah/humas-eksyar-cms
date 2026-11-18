@@ -49,7 +49,7 @@ export default async function KemahasiswaanPage() {
           {kegiatanMahasiswa.map((k, i) => (
             <Reveal key={`${k.title}-${i}`} delay={(i % 2) * 0.06}>
               <div className="h-full rounded-[24px] bg-canvas p-8 transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
-                <h3 className="text-[21px] font-bold tracking-[-0.01em] text-label">
+                <h3 className="text-[24px] font-bold tracking-[-0.01em] text-label">
                   {k.title}
                 </h3>
                 <p className="mt-2 text-[16px] leading-[1.5] text-label-2">
@@ -139,7 +139,7 @@ export default async function KemahasiswaanPage() {
           {prospekKarir.map((p) => (
             <li
               key={p.title}
-              className="rounded-full bg-canvas px-5 py-2.5 text-[15px] font-medium text-label"
+              className="rounded-full bg-canvas px-5 py-2.5 text-[16px] font-medium text-label"
             >
               {p.title}
             </li>
@@ -153,7 +153,7 @@ export default async function KemahasiswaanPage() {
             Karier, alumni & tracer study ›
           </Link>
         </p>
-        <p className="mt-4 text-center text-[15px] text-label-2">
+        <p className="mt-4 text-center text-[16px] text-label-2">
           Alumni? Bagikan kabarmu lewat{" "}
           <a
             href={`mailto:${kontak.email}`}

@@ -4,18 +4,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ArrowUpRight, ChevronDown, Search } from "lucide-react";
+import { ArrowRight, ChevronDown, Search } from "lucide-react";
 import { ProdiLogo } from "./prodi-logo";
 import { ProdiCommandPalette } from "./prodi-command-palette";
 import { cn } from "@/lib/utils";
-import { navGroups, prodi, type NavGroup } from "@/lib/site/prodi";
+import { navCta, navGroups, prodi, type NavGroup } from "@/lib/site/prodi";
 
 function cleanPath(href: string) {
   return href.split(/[?#]/)[0] || "/";
-}
-
-function isHomeActive(pathname: string) {
-  return pathname === "/" || pathname === "/prodi";
 }
 
 function groupActive(pathname: string, g: NavGroup) {
@@ -31,8 +27,9 @@ function itemActive(pathname: string, href: string) {
 }
 
 /**
- * Navbar website prodi: mega menu bersih di desktop, akordeon layar penuh di ponsel,
- * dengan indikator halaman aktif yang jelas dan Command Palette (⌘K / Ctrl+K).
+ * Navbar website prodi: logo (sekaligus tautan beranda), lima menu, ikon cari
+ * (⌘K / Ctrl+K) dan satu tombol aksi. Halaman aktif ditandai garis bawah,
+ * bukan pil berwarna, supaya tombol aksi tetap yang paling menonjol.
  */
 export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
   const pathname = usePathname();
@@ -88,22 +85,19 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
     closeTimer.current = setTimeout(() => setMenu(null), 130);
   };
 
-  const homeCurrent = isHomeActive(pathname);
-  const layananCurrent =
-    pathname === "/prodi/layanan" || pathname.startsWith("/prodi/formulir");
+  const ctaCurrent = itemActive(pathname, navCta.href);
 
   return (
     <>
       <header className="sticky top-0 z-50" onMouseLeave={scheduleClose}>
         <div
           className={cn(
-            "relative z-10 border-b border-hairline backdrop-blur-xl backdrop-saturate-150 transition-colors",
-            open || menu ? "bg-canvas" : "bg-canvas/90",
+            "relative z-10 border-b border-hairline bg-canvas",
           )}
         >
           <nav
             aria-label="Navigasi utama"
-            className="mx-auto flex h-16 max-w-[1080px] items-center justify-between gap-3 px-4 sm:px-6"
+            className="mx-auto flex h-16 max-w-[1160px] items-center justify-between gap-4 px-4 sm:px-6"
           >
             <Link
               href="/prodi"
@@ -115,41 +109,26 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                 priority
                 className="transition-transform duration-300 group-hover:scale-[1.04]"
               />
-              <span className="leading-none">
-                <span className="block text-[15px] font-bold tracking-[-0.015em] text-label">
-                  {prodi.name}
-                </span>
-                <span className="mt-1 block text-[11px] font-medium text-label-2">
-                  FEBI · {prodi.universityShort}
+              <span className="whitespace-nowrap text-[16px] font-bold tracking-[-0.015em] text-label">
+                {prodi.name}
+                <span className="ml-1.5 hidden font-medium text-label-2 sm:inline">
+                  {prodi.universityShort}
                 </span>
               </span>
             </Link>
 
-            <ul className="hidden items-center gap-1 lg:flex">
-              <li onMouseEnter={() => openMenu(null)}>
-                <Link
-                  href="/prodi"
-                  aria-current={homeCurrent ? "page" : undefined}
-                  className={cn(
-                    "relative flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13.5px] transition-all",
-                    homeCurrent
-                      ? "bg-accent font-semibold text-white shadow-xs"
-                      : "font-medium text-label/80 hover:bg-mist hover:text-label",
-                  )}
-                >
-                  Beranda
-                </Link>
-              </li>
+            <ul className="ml-auto hidden items-center gap-1 lg:flex">
               {groups.map((g) => {
                 const isActive = groupActive(pathname, g);
                 const isOpen = menu === g.label;
                 const cls = cn(
-                  "relative flex items-center gap-1 rounded-full px-3.5 py-1.5 text-[13.5px] transition-all",
+                  "relative flex h-16 items-center gap-1 px-3 text-[16px] transition-colors",
+                  "after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:rounded-full after:transition-colors",
                   isActive
-                    ? "bg-accent font-semibold text-white shadow-xs"
+                    ? "font-semibold text-label after:bg-accent"
                     : isOpen
-                      ? "bg-mist font-semibold text-label"
-                      : "font-medium text-label/80 hover:bg-mist hover:text-label",
+                      ? "font-medium text-label after:bg-hairline"
+                      : "font-medium text-label/75 after:bg-transparent hover:text-label",
                 );
                 return (
                   <li
@@ -193,31 +172,22 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
               <button
                 type="button"
                 onClick={() => setCmdOpen(true)}
-                aria-label="Cari cepat di website (⌘K)"
-                className="inline-flex h-9 items-center gap-1.5 rounded-full border border-hairline bg-mist/70 px-3 text-[12.5px] font-medium text-label-2 transition-colors hover:border-accent/40 hover:bg-mist hover:text-label"
+                aria-label="Cari di website (⌘K)"
+                title="Cari (⌘K)"
+                className="grid size-11 place-items-center rounded-full text-label-2 transition-colors hover:bg-mist hover:text-label"
               >
-                <Search className="size-3.5 text-label-2" />
-                <span className="hidden sm:inline">Cari</span>
-                <kbd className="hidden rounded border border-hairline bg-canvas/80 px-1.5 py-0.5 font-mono text-[10px] text-label-3 md:inline">
-                  ⌘K
-                </kbd>
+                <Search className="size-[18px]" />
               </button>
               <Link
-                href="/prodi/layanan"
-                aria-current={layananCurrent ? "page" : undefined}
-                className={cn(
-                  "hidden h-9 items-center gap-1 rounded-full px-3.5 text-[12.5px] font-semibold shadow-xs transition-colors md:inline-flex",
-                  layananCurrent
-                    ? "bg-navy text-white ring-2 ring-accent/35"
-                    : "bg-accent text-white hover:bg-accent-strong",
-                )}
+                href={navCta.href}
+                aria-current={ctaCurrent ? "page" : undefined}
+                className="hidden h-10 items-center rounded-full bg-accent px-4 text-[14px] font-semibold text-white transition-colors hover:bg-accent-strong md:inline-flex"
               >
-                Layanan
-                <ArrowUpRight className="size-3.5" />
+                {navCta.label}
               </Link>
               <button
                 type="button"
-                className="relative -mr-1 grid size-10 place-items-center rounded-full hover:bg-mist lg:hidden"
+                className="relative -mr-1 grid size-11 place-items-center rounded-full hover:bg-mist lg:hidden"
                 aria-label={open ? "Tutup menu" : "Buka menu"}
                 aria-expanded={open}
                 aria-controls="menu-mobile"
@@ -257,24 +227,17 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                   initial={{ opacity: 0, y: -6 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.2, delay: 0.03 }}
-                  className="mx-auto grid max-w-[1080px] grid-cols-[220px_1fr] gap-10 px-6 pb-8 pt-6"
+                  className="mx-auto grid max-w-[1160px] grid-cols-[220px_1fr] gap-10 px-6 pb-8 pt-6"
                 >
-                  <div className="flex flex-col justify-between rounded-2xl bg-mist/70 p-5">
-                    <div>
-                      <p className="text-[11px] font-bold uppercase tracking-[0.08em] text-accent">
-                        Menu {active.label}
-                      </p>
-                      <Link
-                        href={active.href}
-                        className="mt-2 block text-[20px] font-bold leading-snug tracking-[-0.02em] text-label hover:text-accent"
-                      >
-                        Halaman Utama {active.label} ›
-                      </Link>
-                    </div>
-                    <p className="mt-4 text-[12px] leading-relaxed text-label-2">
-                      {prodi.fullName} · FEBI {prodi.university}
-                    </p>
-                  </div>
+                  <Link
+                    href={active.href}
+                    className="group flex items-end rounded-2xl bg-mist/70 p-5 text-[18px] font-bold leading-snug tracking-[-0.02em] text-label hover:text-accent"
+                  >
+                    <span>
+                      {active.label}
+                      <ArrowRight className="ml-1 inline size-5 transition-transform group-hover:translate-x-0.5" />
+                    </span>
+                  </Link>
                   <ul className="grid grid-cols-2 gap-x-6 gap-y-1.5 self-start">
                     {active.items.map((i) => {
                       const subActive =
@@ -293,7 +256,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                           >
                             <span
                               className={cn(
-                                "flex items-center gap-2 text-[14.5px] font-semibold group-hover:text-accent",
+                                "flex items-center gap-2 text-[14px] font-semibold group-hover:text-accent",
                                 subActive ? "text-accent" : "text-label",
                               )}
                             >
@@ -306,7 +269,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                               {i.label}
                             </span>
                             {i.description && (
-                              <span className="mt-0.5 block text-[12.5px] leading-snug text-label-2">
+                              <span className="mt-0.5 block text-[14px] leading-snug text-label-2">
                                 {i.description}
                               </span>
                             )}
@@ -348,21 +311,6 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
               className="fixed inset-x-0 bottom-0 top-16 overflow-y-auto bg-canvas lg:hidden"
             >
               <ul className="divide-y divide-hairline px-6 pb-6 pt-3">
-                <motion.li
-                  initial={{ opacity: 0, y: -6 }}
-                  animate={{ opacity: 1, y: 0 }}
-                >
-                  <Link
-                    href="/prodi"
-                    aria-current={homeCurrent ? "page" : undefined}
-                    className={cn(
-                      "block py-3 text-[21px] font-semibold tracking-[-0.02em]",
-                      homeCurrent ? "text-accent" : "text-label",
-                    )}
-                  >
-                    Beranda
-                  </Link>
-                </motion.li>
                 {groups.map((g, idx) => {
                   const isActive = groupActive(pathname, g);
                   return (
@@ -383,7 +331,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                               )
                             }
                             className={cn(
-                              "flex w-full items-center justify-between py-3 text-left text-[21px] font-semibold tracking-[-0.02em]",
+                              "flex w-full items-center justify-between py-3 text-left text-[24px] font-semibold tracking-[-0.02em]",
                               isActive ? "text-accent" : "text-label",
                             )}
                           >
@@ -412,7 +360,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                                       <Link
                                         href={i.href}
                                         className={cn(
-                                          "block rounded-xl py-2 pl-3 text-[16px] font-medium hover:text-accent",
+                                          "flex min-h-11 items-center rounded-xl pl-3 text-[16px] font-medium hover:text-accent",
                                           subActive
                                             ? "bg-accent-soft/75 font-semibold text-accent"
                                             : "text-label-2",
@@ -431,7 +379,7 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                         <Link
                           href={g.href}
                           className={cn(
-                            "block py-3 text-[21px] font-semibold tracking-[-0.02em]",
+                            "block py-3 text-[24px] font-semibold tracking-[-0.02em]",
                             isActive ? "text-accent" : "text-label",
                           )}
                         >
@@ -442,23 +390,23 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                   );
                 })}
               </ul>
-              <div className="flex flex-wrap gap-3 px-6 pb-10">
+              <div className="grid gap-3 px-6 pb-10">
+                <Link
+                  href={navCta.href}
+                  className="flex h-12 items-center justify-center rounded-full bg-accent text-[16px] font-semibold text-white"
+                >
+                  {navCta.label}
+                </Link>
                 <button
                   type="button"
                   onClick={() => {
                     setOpen(false);
                     setCmdOpen(true);
                   }}
-                  className="inline-flex items-center gap-2 rounded-full border border-hairline bg-mist px-5 py-2.5 text-[14px] font-semibold text-label"
+                  className="flex h-12 items-center justify-center gap-2 rounded-full border border-hairline text-[16px] font-semibold text-label"
                 >
-                  <Search className="size-4" /> Cari Cepat
+                  <Search className="size-4" /> Cari di website
                 </button>
-                <Link
-                  href="/prodi/layanan"
-                  className="inline-flex items-center gap-1.5 rounded-full bg-accent px-5 py-2.5 text-[14px] font-semibold text-white"
-                >
-                  Layanan & Akademik <ArrowUpRight className="size-4" />
-                </Link>
               </div>
             </motion.div>
           )}

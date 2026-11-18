@@ -47,7 +47,7 @@ export function PublikasiList({ items }: { items: Publikasi[] }) {
             const body = (
               <>
                 <span className="min-w-0 flex-1">
-                  <span className="text-[12.5px] font-semibold uppercase tracking-[0.06em] text-accent">
+                  <span className="text-[14px] font-semibold uppercase tracking-[0.06em] text-accent">
                     {[p.type, p.year].filter(Boolean).join(" · ")}
                   </span>
                   <span className="mt-1 block text-[16px] font-semibold leading-snug text-label group-hover:text-accent">

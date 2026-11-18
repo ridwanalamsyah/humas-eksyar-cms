@@ -17,13 +17,13 @@ export function CalendarSubscribe() {
             "_blank",
           )
         }
-        className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-[14.5px] font-semibold text-white hover:bg-accent-strong"
+        className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-[14px] font-semibold text-white hover:bg-accent-strong"
       >
         <CalendarPlus className="size-4" /> Langganan di Google Calendar
       </button>
       <a
         href="/prodi/kalender.ics"
-        className="rounded-full bg-mist px-5 py-2.5 text-[14.5px] font-semibold text-label hover:bg-hairline"
+        className="rounded-full bg-mist px-5 py-2.5 text-[14px] font-semibold text-label hover:bg-hairline"
       >
         Unduh .ics
       </a>

@@ -32,7 +32,7 @@ export function RpsList({ items }: { items: Rps[] }) {
                 <div>
                   <p className="text-[16px] font-bold text-label">{r.mk}</p>
                   {r.semester && (
-                    <p className="text-[13px] text-label-3">
+                    <p className="text-[14px] text-label-3">
                       {r.semester.toLowerCase().startsWith("semester")
                         ? r.semester
                         : `Semester ${r.semester}`}
@@ -44,7 +44,7 @@ export function RpsList({ items }: { items: Rps[] }) {
                     href={r.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-mist px-3 py-1.5 text-[13px] font-semibold text-accent hover:bg-accent hover:text-white"
+                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-mist px-3 py-1.5 text-[14px] font-semibold text-accent hover:bg-accent hover:text-white"
                   >
                     RPS <ArrowUpRight className="size-3.5" />
                   </a>

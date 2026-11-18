@@ -7,7 +7,7 @@ import type { FormDef } from "@/lib/site/forms";
 import { cn } from "@/lib/utils";
 
 const inputCls =
-  "w-full rounded-[14px] border border-hairline bg-canvas px-4 py-3 text-[15.5px] text-label outline-none placeholder:text-label-3 focus:border-accent focus:ring-4 focus:ring-accent/10";
+  "w-full rounded-[14px] border border-hairline bg-canvas px-4 py-3 text-[16px] text-label outline-none placeholder:text-label-3 focus:border-accent focus:ring-4 focus:ring-accent/10";
 
 /** Formulir publik generik dari definisi `FormDef`. */
 export function FormRenderer({
@@ -182,7 +182,7 @@ export function FormRenderer({
             <label
               key={f.name}
               className={cn(
-                "flex items-start gap-3 text-[15px] text-label",
+                "flex items-start gap-3 text-[16px] text-label",
                 !compact && "sm:col-span-2",
               )}
             >
@@ -221,7 +221,7 @@ export function FormRenderer({
             <label htmlFor={id}>{label}</label>
             {control}
             {f.hint && (
-              <p className="mt-1 text-[13px] text-label-3">{f.hint}</p>
+              <p className="mt-1 text-[14px] text-label-3">{f.hint}</p>
             )}
           </div>
         );
@@ -230,7 +230,7 @@ export function FormRenderer({
       {def.consent && (
         <label
           className={cn(
-            "flex items-start gap-3 rounded-[14px] bg-mist p-4 text-[14.5px] text-label",
+            "flex items-start gap-3 rounded-[14px] bg-mist p-4 text-[14px] text-label",
             !compact && "sm:col-span-2",
           )}
         >
@@ -264,12 +264,12 @@ export function FormRenderer({
         <button
           type="submit"
           disabled={state === "sending" || (!!def.consent && !consent)}
-          className="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3 text-[15.5px] font-semibold text-white transition hover:bg-accent-strong disabled:opacity-50 shadow-xs"
+          className="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3 text-[16px] font-semibold text-white transition hover:bg-accent-strong disabled:opacity-50 shadow-xs"
         >
           {state === "sending" && <Loader2 className="size-4 animate-spin" />}
           Kirim
         </button>
-        <p className="text-[12.5px] text-label-3">
+        <p className="text-[14px] text-label-3">
           Data Anda diproses sesuai{" "}
           <Link href="/prodi/privasi" className="underline hover:text-label">
             kebijakan privasi

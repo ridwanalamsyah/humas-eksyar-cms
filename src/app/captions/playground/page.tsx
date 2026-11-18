@@ -5,8 +5,8 @@ import { SectionHeader } from "@/components/common/section-header";
 import { CaptionPlayground } from "@/components/ai/caption-playground";
 
 export const metadata: Metadata = {
-  title: "AI Caption Generator",
-  description: "Generate caption untuk konten Humas Eksyar.",
+  title: "Pembuat caption",
+  description: "Buat caption untuk konten Humas Eksyar.",
 };
 
 export default async function CaptionsPlaygroundPage() {
@@ -17,9 +17,8 @@ export default async function CaptionsPlaygroundPage() {
   return (
     <AppShell width="wide">
       <SectionHeader
-        eyebrow="AI"
-        title="Caption Generator"
-        description="Generate caption untuk Instagram, Twitter, dan Facebook."
+        title="Pembuat caption"
+        description="Caption untuk Instagram, X, dan Facebook."
       />
       <CaptionPlayground templates={templates} rubrics={rubrics} />
     </AppShell>

@@ -72,7 +72,7 @@ export async function LaunchChecklist() {
         </div>
         <Link
           href="/settings/website#migrasi-es"
-          className="text-[12px] font-medium text-emerald-700 hover:underline dark:text-emerald-300"
+          className="text-[13px] font-medium text-emerald-700 hover:underline dark:text-emerald-300"
         >
           {doneCount}/{items.length} selesai · Lihat Audit Sanitasi ›
         </Link>
@@ -87,11 +87,11 @@ export async function LaunchChecklist() {
               {i.done ? (
                 <CheckCircle2 className="size-4 shrink-0 text-emerald-600" />
               ) : (
-                <Circle className="size-4 shrink-0 text-foreground/30" />
+                <Circle className="size-4 shrink-0 text-foreground/60" />
               )}
               <span className="flex-1">{i.label}</span>
               {i.note && (
-                <span className="text-[12px] tabular-nums text-foreground/55">
+                <span className="text-[13px] tabular-nums text-foreground/60">
                   {i.note}
                 </span>
               )}

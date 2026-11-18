@@ -65,11 +65,11 @@ export function NewsCard({
         )}
       >
         <div className="flex items-center gap-2">
-          <span className="rounded-md bg-accent/10 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-[0.05em] text-accent">
+          <span className="rounded-md bg-accent/10 px-2.5 py-0.5 text-[14px] font-bold uppercase tracking-[0.05em] text-accent">
             {rubricLabel(item.rubric)}
           </span>
-          <span className="text-[12px] text-label-3">·</span>
-          <span className="text-[12px] text-label-3">{readTime}</span>
+          <span className="text-[14px] text-label-3">·</span>
+          <span className="text-[14px] text-label-3">{readTime}</span>
         </div>
 
         <h3
@@ -84,7 +84,7 @@ export function NewsCard({
         </h3>
 
         {featured && (
-          <p className="mt-3 line-clamp-3 break-words text-[15px] leading-relaxed text-label-2">
+          <p className="mt-3 line-clamp-3 break-words text-[16px] leading-relaxed text-label-2">
             {contentExcerpt(item)}
           </p>
         )}
@@ -101,21 +101,21 @@ export function NewsCard({
                 className="size-7 shrink-0 rounded-lg object-cover ring-1 ring-hairline"
               />
             ) : (
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-accent/12 text-[11px] font-bold text-accent ring-1 ring-accent/20">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-lg bg-accent/12 text-[14px] font-bold text-accent ring-1 ring-accent/20">
                 {author?.initials || "ES"}
               </span>
             )}
             <div className="min-w-0">
-              <p className="truncate text-[12.5px] font-semibold text-label">
+              <p className="truncate text-[14px] font-semibold text-label">
                 {authorName}
               </p>
-              <p className="truncate text-[11px] text-label-3">
+              <p className="truncate text-[14px] text-label-3">
                 {authorRole}
               </p>
             </div>
           </div>
 
-          <time dateTime={date} className="shrink-0 text-right text-[12px] text-label-3">
+          <time dateTime={date} className="shrink-0 text-right text-[14px] text-label-3">
             {formatLongDate(date)}
           </time>
         </div>
@@ -128,7 +128,7 @@ export function CoverFallback() {
   return (
     <div className="absolute inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-[#0f3d33] via-[#165b4c] to-[#0c2340] p-6 text-white">
       <ProdiLogo size={52} />
-      <span className="mt-2.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-white/75">
+      <span className="mt-2.5 text-[14px] font-semibold uppercase tracking-[0.1em] text-white/75">
         Ekonomi Syariah · UIN SGD
       </span>
     </div>

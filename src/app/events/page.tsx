@@ -59,16 +59,16 @@ function Section({
                 hover
                 className={`p-5 ${dim ? "opacity-75" : ""}`}
               >
-                <div className="flex flex-wrap items-center gap-1.5 text-[11px] uppercase tracking-[0.16em] text-foreground/55">
+                <div className="flex flex-wrap items-center gap-1.5 text-[13px] uppercase tracking-[0.16em] text-foreground/60">
                   <Pill tone="brand">{e.category.replace("_", " ")}</Pill>
                 </div>
                 <h3 className="mt-2 font-display text-[15px] font-semibold leading-tight tracking-tight">
                   {e.title}
                 </h3>
-                <p className="mt-2 line-clamp-2 text-[12px] text-foreground/65">
+                <p className="mt-2 line-clamp-2 text-[13px] text-foreground/65">
                   {e.description}
                 </p>
-                <div className="mt-3 flex flex-col gap-1 border-t border-foreground/10 pt-3 text-[11px] text-foreground/65 dark:border-white/10">
+                <div className="mt-3 flex flex-col gap-1 border-t border-foreground/10 pt-3 text-[13px] text-foreground/65 dark:border-white/10">
                   <span>
                     {formatLongDate(e.startsAt)} · {formatTime(e.startsAt)}
                   </span>
@@ -86,7 +86,7 @@ function Section({
           );
         })}
         {events.length === 0 && (
-          <p className="col-span-full rounded-xl border border-dashed border-foreground/15 p-6 text-center text-[12px] text-foreground/55">
+          <p className="col-span-full rounded-xl border border-dashed border-foreground/15 p-6 text-center text-[13px] text-foreground/60">
             Tidak ada kegiatan.
           </p>
         )}

@@ -89,9 +89,9 @@ export function ProfileEditor({ member }: Props) {
   }
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
+    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
       <GlassCard variant="thick" className="p-6">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Preview
         </p>
         <div className="mt-4 flex flex-col items-center gap-3 text-center">
@@ -100,8 +100,8 @@ export function ProfileEditor({ member }: Props) {
             <p className="font-display text-lg font-semibold tracking-tight">
               {name || "Tanpa nama"}
             </p>
-            <p className="text-[12px] text-foreground/65">{member.email}</p>
-            <p className="mt-1 text-[12px] text-foreground/55">{position}</p>
+            <p className="text-[13px] text-foreground/65">{member.email}</p>
+            <p className="mt-1 text-[13px] text-foreground/60">{position}</p>
           </div>
         </div>
 
@@ -130,14 +130,14 @@ export function ProfileEditor({ member }: Props) {
               <Trash2 className="size-3.5" strokeWidth={1.75} /> Hapus foto, pakai emoji
             </Button>
           )}
-          <p className="text-[10px] text-foreground/50">
+          <p className="text-[13px] text-foreground/60">
             JPG / PNG / WEBP, maks 5MB.
           </p>
         </div>
       </GlassCard>
 
       <GlassCard variant="thick" className="p-6">
-        <p className="text-[12.5px] text-foreground/50">
+        <p className="text-[13px] text-foreground/60">
           Detail
         </p>
         <div className="mt-4 grid gap-4">
@@ -166,7 +166,7 @@ export function ProfileEditor({ member }: Props) {
 
           {!avatarUrl && (
             <div>
-              <p className="mb-2 text-[12.5px] text-foreground/50">
+              <p className="mb-2 text-[13px] text-foreground/60">
                 Emoji avatar (kalau tidak upload foto)
               </p>
               <div className="grid grid-cols-8 gap-1.5">
@@ -190,7 +190,7 @@ export function ProfileEditor({ member }: Props) {
 
           {!avatarUrl && (
             <div>
-              <label className="mb-1.5 block text-[12.5px] text-foreground/50">
+              <label className="mb-1.5 block text-[13px] text-foreground/60">
                 Accent warna · {accentHue}°
               </label>
               <input
@@ -220,7 +220,7 @@ export function ProfileEditor({ member }: Props) {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[12.5px] text-foreground/50">
+      <span className="mb-1 block text-[13px] text-foreground/60">
         {label}
       </span>
       <div className="rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2 dark:border-white/10 dark:bg-white/[0.03]">

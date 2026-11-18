@@ -44,8 +44,33 @@ export default async function MahasiswaBaruPage() {
       <PageHeader
         crumb="Mahasiswa baru"
         title="Kuliah di Ekonomi Syariah"
-        description={`Informasi untuk calon mahasiswa ${prodi.fullName}, ${prodi.faculty}, ${prodi.university}.`}
+        description="Jalur masuk, biaya, dan tanggal penting untuk calon mahasiswa."
       />
+      {/* Tiga aksi yang paling dicari calon mahasiswa, langsung di atas. */}
+      <div className="mx-auto flex max-w-[1024px] flex-col justify-center gap-3 px-4 pb-14 sm:flex-row sm:px-6">
+        <a
+          href={kontak.pmbUrl || "https://pmb.uinsgd.ac.id"}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex h-12 items-center justify-center gap-1.5 rounded-full bg-accent px-6 text-[16px] font-semibold text-white hover:bg-accent-strong"
+        >
+          Daftar di PMB UIN SGD <ArrowUpRight className="size-4" />
+        </a>
+        <a
+          href="https://wa.me/6285642686526"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex h-12 items-center justify-center gap-1.5 rounded-full border border-hairline px-6 text-[16px] font-semibold text-label hover:border-accent/40"
+        >
+          Tanya admin jurusan <ArrowUpRight className="size-4" />
+        </a>
+        <Link
+          href="/prodi/alumni"
+          className="inline-flex h-12 items-center justify-center rounded-full border border-hairline px-6 text-[16px] font-semibold text-label hover:border-accent/40"
+        >
+          Cerita alumni
+        </Link>
+      </div>
       {kampanyePmb.aktif && kampanyePmb.judul && (
         <PmbCampaign
           judul={kampanyePmb.judul}
@@ -86,7 +111,7 @@ export default async function MahasiswaBaruPage() {
                 className="rounded-[24px] border border-hairline bg-canvas p-6"
               >
                 <h3 className="text-[18px] font-bold text-label">{b.title}</h3>
-                <p className="mt-1.5 text-[15px] leading-[1.5] text-label-2">
+                <p className="mt-1.5 text-[16px] leading-[1.5] text-label-2">
                   {b.description}
                 </p>
               </div>
@@ -121,10 +146,10 @@ export default async function MahasiswaBaruPage() {
                     {i + 1}
                   </span>
                   <span>
-                    <span className="block text-[17px] font-bold text-label">
+                    <span className="block text-[16px] font-bold text-label">
                       {j.title}
                     </span>
-                    <span className="mt-1 block text-[15px] leading-[1.5] text-label-2">
+                    <span className="mt-1 block text-[16px] leading-[1.5] text-label-2">
                       {j.description}
                     </span>
                   </span>
@@ -155,18 +180,18 @@ export default async function MahasiswaBaruPage() {
                   className="group flex h-full flex-col rounded-[24px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]"
                 >
                   <span className="flex items-start justify-between gap-3">
-                    <span className="text-[17px] font-bold leading-snug text-label group-hover:text-accent">
+                    <span className="text-[16px] font-bold leading-snug text-label group-hover:text-accent">
                       {t.name}
                     </span>
                     <ArrowUpRight className="size-5 shrink-0 text-label-3 group-hover:text-accent" />
                   </span>
-                  <span className="mt-2 text-[14.5px] leading-[1.5] text-label-2">
+                  <span className="mt-2 text-[14px] leading-[1.5] text-label-2">
                     {t.description}
                   </span>
                 </a>
               ))}
             </div>
-            <p className="mt-6 text-[15px] text-label-2">
+            <p className="mt-6 text-[16px] text-label-2">
               Tersedia {beasiswa.length} program beasiswa untuk mahasiswa UIN
               SGD.{" "}
               <Link
@@ -182,7 +207,7 @@ export default async function MahasiswaBaruPage() {
 
       <section className="bg-navy px-4 py-24 text-white sm:px-6">
         <div className="mx-auto max-w-[1024px]">
-          <p className="text-[15px] font-semibold uppercase tracking-[0.08em] text-sand">
+          <p className="text-[16px] font-semibold uppercase tracking-[0.08em] text-sand">
             Setelah lulus
           </p>
           <h2 className="mt-3 text-[clamp(1.75rem,1.3rem+1.6vw,2.5rem)] font-bold tracking-[-0.02em]">
@@ -192,14 +217,14 @@ export default async function MahasiswaBaruPage() {
             {prospekKarir.map((p) => (
               <li
                 key={p.title}
-                className="rounded-xl bg-white/10 px-4 py-2 text-[15px] font-medium"
+                className="rounded-xl bg-white/10 px-4 py-2 text-[16px] font-medium"
               >
                 {p.title}
               </li>
             ))}
           </ul>
           {mitra.length > 0 && (
-            <p className="mt-8 text-[15px] text-white/75">
+            <p className="mt-8 text-[16px] text-white/75">
               Belajar langsung bersama mitra:{" "}
               {mitra
                 .slice(0, 5)

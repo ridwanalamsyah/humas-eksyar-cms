@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 
 const tabs = [
   { href: "/dashboard", label: "Beranda", icon: HomeIcon },
-  { href: "/content", label: "Berita", icon: FileText },
-  { href: "/events", label: "Agenda", icon: CalendarDays },
+  { href: "/content", label: "Konten", icon: FileText },
+  { href: "/events", label: "Jadwal", icon: CalendarDays },
   { href: "/media", label: "Media", icon: ImageIcon },
   { href: "/settings", label: "Lainnya", icon: Menu },
 ] as const;
@@ -31,8 +31,8 @@ export function BottomDock() {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 className={cn(
-                  "flex flex-col items-center gap-0.5 py-2 text-[11px] transition-colors",
-                  active ? "font-medium text-brand-600 dark:text-brand-300" : "text-foreground/55",
+                  "flex flex-col items-center gap-0.5 py-2 text-[13px] transition-colors",
+                  active ? "font-medium text-brand-600 dark:text-brand-300" : "text-foreground/60",
                 )}
               >
                 <Icon className="size-5" strokeWidth={1.75} />

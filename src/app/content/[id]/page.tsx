@@ -40,11 +40,11 @@ export default async function ContentDetail({ params }: Props) {
 
   return (
     <AppShell width="wide">
-      <Link href="/content" className="inline-flex items-center gap-1 text-sm text-foreground/55 hover:text-foreground">
+      <Link href="/content" className="inline-flex items-center gap-1 text-sm text-foreground/60 hover:text-foreground">
         <ArrowLeft className="size-4" strokeWidth={1.75} /> Kembali ke Konten
       </Link>
 
-      <div className="mt-4 grid gap-6 lg:grid-cols-[2fr_1fr]">
+      <div className="mt-4 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <article>
           <div className="flex flex-wrap items-center gap-2">
             <StatusPill status={content.status} />
@@ -60,8 +60,8 @@ export default async function ContentDetail({ params }: Props) {
             {content.title}
           </h1>
 
-          <div className="mt-3 flex flex-wrap items-center gap-2 text-[12.5px]">
-            <span className="text-foreground/55">Template IG:</span>
+          <div className="mt-3 flex flex-wrap items-center gap-2 text-[13px]">
+            <span className="text-foreground/60">Template IG:</span>
             {(["feed", "story"] as const).map((f) => (
               <a
                 key={f}
@@ -82,11 +82,11 @@ export default async function ContentDetail({ params }: Props) {
                 <Avatar member={author} size={28} ring={false} />
                 <span>{author.name}</span>
               </span>
-              <span aria-hidden className="text-foreground/30">·</span>
+              <span aria-hidden className="text-foreground/60">·</span>
               <span>{formatLongDate(content.publishedAt ?? content.scheduledFor ?? content.createdAt)}</span>
               {content.scheduledFor && (
                 <>
-                  <span aria-hidden className="text-foreground/30">·</span>
+                  <span aria-hidden className="text-foreground/60">·</span>
                   <span className="inline-flex items-center gap-1 text-sky-600 dark:text-sky-300">
                     <CalendarIcon className="size-3.5" strokeWidth={1.75} />
                     Terjadwal {formatDateTime(content.scheduledFor)}
@@ -97,7 +97,7 @@ export default async function ContentDetail({ params }: Props) {
           )}
 
           {media.length > 0 && (
-            <div className="mt-6 grid gap-3 sm:grid-cols-[2fr_1fr]">
+            <div className="mt-6 grid gap-3 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
               {media.map((m, i) => (
                 <div
                   key={m!.id}
@@ -111,7 +111,7 @@ export default async function ContentDetail({ params }: Props) {
           )}
 
           <GlassCard variant="regular" className="mt-6 p-6">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/55">
+            <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/60">
               Caption
             </h3>
             <pre className="mt-3 whitespace-pre-wrap font-sans text-[14.5px] leading-[1.75] text-foreground/85">
@@ -120,7 +120,7 @@ export default async function ContentDetail({ params }: Props) {
             {content.hashtags && (
               <div className="mt-4 flex flex-wrap gap-1.5">
                 {content.hashtags.split(" ").map((h) => (
-                  <span key={h} className="rounded-full bg-brand-500/10 px-2 py-0.5 font-mono text-[11px] text-brand-700 dark:text-brand-300">
+                  <span key={h} className="rounded-full bg-brand-500/10 px-2 py-0.5 font-mono text-[13px] text-brand-700 dark:text-brand-300">
                     {h}
                   </span>
                 ))}
@@ -130,7 +130,7 @@ export default async function ContentDetail({ params }: Props) {
 
           {content.body && content.body !== content.caption && (
             <GlassCard variant="thin" className="mt-4 p-6">
-              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/55">
+              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/60">
                 Catatan internal
               </h3>
               <p className="mt-3 whitespace-pre-wrap text-[14px] text-foreground/75">{content.body}</p>
@@ -155,7 +155,7 @@ export default async function ContentDetail({ params }: Props) {
 
           {content.metrics && (
             <GlassCard variant="regular" className="p-5">
-              <h3 className="text-[12.5px] text-foreground/50">
+              <h3 className="text-[13px] text-foreground/60">
                 Performa
               </h3>
               <div className="mt-3 grid grid-cols-3 gap-3">
@@ -168,13 +168,13 @@ export default async function ContentDetail({ params }: Props) {
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3 border-t border-foreground/8 pt-3 dark:border-white/8">
                 <div>
-                  <p className="text-[11px] uppercase tracking-wider text-foreground/55">Engagement</p>
+                  <p className="text-[13px] uppercase tracking-wider text-foreground/60">Engagement</p>
                   <p className="font-display text-xl font-semibold text-brand-600 dark:text-brand-300">
                     {percent(content.metrics.engagementRate)}
                   </p>
                 </div>
                 <div>
-                  <p className="text-[11px] uppercase tracking-wider text-foreground/55">Sentimen</p>
+                  <p className="text-[13px] uppercase tracking-wider text-foreground/60">Sentimen</p>
                   <p className="font-display text-xl font-semibold text-gold-500">
                     {Math.round(content.metrics.sentiment * 100)}
                   </p>
@@ -184,7 +184,7 @@ export default async function ContentDetail({ params }: Props) {
           )}
 
           <GlassCard variant="regular" className="p-5">
-            <h3 className="text-[12.5px] text-foreground/50">Channel</h3>
+            <h3 className="text-[13px] text-foreground/60">Channel</h3>
             <ul className="mt-3 flex flex-wrap gap-1.5">
               {content.channels.map((ch) => (
                 <li key={ch}>
@@ -211,7 +211,7 @@ export default async function ContentDetail({ params }: Props) {
 
           {relatedMedia.length > 0 && (
             <GlassCard variant="thin" className="p-5">
-              <h3 className="text-[12.5px] text-foreground/50">
+              <h3 className="text-[13px] text-foreground/60">
                 Media terkait
               </h3>
               <ul className="mt-3 grid grid-cols-3 gap-2">
@@ -221,7 +221,7 @@ export default async function ContentDetail({ params }: Props) {
                   </li>
                 ))}
               </ul>
-              <Link href="/media" className="mt-3 inline-flex items-center gap-1 text-[12px] font-medium text-brand-600 hover:text-brand-700 dark:text-brand-300 dark:hover:text-brand-200">
+              <Link href="/media" className="mt-3 inline-flex items-center gap-1 text-[13px] font-medium text-brand-600 hover:text-brand-700 dark:text-brand-300 dark:hover:text-brand-200">
                 Lihat library
                 <ArrowUpRight className="size-3" strokeWidth={1.75} />
               </Link>
@@ -229,11 +229,11 @@ export default async function ContentDetail({ params }: Props) {
           )}
 
           <GlassCard variant="thin" className="p-5">
-            <h3 className="flex items-center gap-1.5 text-[12.5px] text-foreground/50">
+            <h3 className="flex items-center gap-1.5 text-[13px] text-foreground/60">
               <ShieldCheck className="size-3" strokeWidth={1.75} />
               Compliance
             </h3>
-            <p className="mt-2 text-[12px] text-foreground/65">
+            <p className="mt-2 text-[13px] text-foreground/65">
               Konten ini sudah lewat etika syar&apos;i AI filter. Sumber kutipan
               tercantum dan tidak ada potensi misinformasi.
             </p>
@@ -247,7 +247,7 @@ export default async function ContentDetail({ params }: Props) {
 function Metric({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
   return (
     <div className="flex flex-col items-start gap-1 rounded-xl bg-foreground/5 p-2 dark:bg-white/5">
-      <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-wider text-foreground/55">
+      <span className="inline-flex items-center gap-1 text-[13px] uppercase tracking-wider text-foreground/60">
         {icon}
         {label}
       </span>

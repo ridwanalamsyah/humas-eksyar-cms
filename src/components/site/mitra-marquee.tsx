@@ -71,7 +71,7 @@ export function MitraMarquee() {
   return (
     <section className="border-t border-hairline/60 bg-[#FAF9F5] py-7 sm:py-9 dark:bg-[#0B171C]">
       <div className="mx-auto max-w-[1320px] px-4 text-center">
-        <p className="text-[10.5px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500">
+        <p className="text-[14px] sm:text-[14px] font-bold uppercase tracking-[0.2em] text-neutral-400 dark:text-neutral-500">
           Kemitraan &amp; Jejaring Industri Resmi
         </p>
       </div>

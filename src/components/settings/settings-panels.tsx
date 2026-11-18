@@ -71,7 +71,7 @@ export function SettingsPanels({ member }: Props) {
             <p className="font-display text-lg font-semibold tracking-tight">
               {member.name}
             </p>
-            <p className="text-[12px] text-foreground/65">{member.email}</p>
+            <p className="text-[13px] text-foreground/65">{member.email}</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
               <Pill tone="brand">{ROLE_LABEL[member.role]}</Pill>
               <Pill>Angkatan {member.angkatan}</Pill>
@@ -163,7 +163,7 @@ export function SettingsPanels({ member }: Props) {
                   setTheme(v);
                   toast.success(`Tema: ${label}`);
                 }}
-                className={`flex flex-col items-start gap-1 rounded-2xl border px-3 py-2.5 text-left text-[12px] transition-colors ${
+                className={`flex flex-col items-start gap-1 rounded-2xl border px-3 py-2.5 text-left text-[13px] transition-colors ${
                   active
                     ? "border-brand-500/45 bg-brand-500/10"
                     : "border-foreground/10 bg-foreground/[0.04] dark:border-white/10 dark:bg-white/5"
@@ -213,14 +213,14 @@ export function SettingsPanels({ member }: Props) {
               key={l}
               type="button"
               onClick={() => setLang(l)}
-              className={`rounded-2xl border px-3 py-2 text-left text-[12px] transition-colors ${
+              className={`rounded-2xl border px-3 py-2 text-left text-[13px] transition-colors ${
                 lang === l
                   ? "border-brand-500/45 bg-brand-500/10"
                   : "border-foreground/10 bg-foreground/[0.04] dark:border-white/10 dark:bg-white/5"
               }`}
             >
               <p className="font-medium">{l === "id" ? "Indonesia" : "English"}</p>
-              <p className="text-[10px] text-foreground/55">
+              <p className="text-[13px] text-foreground/60">
                 {l === "id" ? "Bahasa utama" : "Segera hadir"}
               </p>
             </button>
@@ -257,12 +257,12 @@ function Panel({
 }) {
   return (
     <GlassCard className="p-5">
-      <div className="flex items-center gap-2 text-[12.5px] text-foreground/50">
+      <div className="flex items-center gap-2 text-[13px] text-foreground/60">
         {icon}
         {title}
       </div>
       {hint && (
-        <p className="mt-1 text-[12px] text-foreground/65">{hint}</p>
+        <p className="mt-1 text-[13px] text-foreground/65">{hint}</p>
       )}
       <div className="mt-3 flex flex-wrap items-center gap-2">{children}</div>
     </GlassCard>
@@ -290,9 +290,9 @@ function AdminLink({
       </span>
       <span className="min-w-0 flex-1">
         <span className="block text-[13px] font-medium leading-tight">{title}</span>
-        <span className="block text-[11px] text-foreground/55">{desc}</span>
+        <span className="block text-[13px] text-foreground/60">{desc}</span>
       </span>
-      <ChevronRight className="size-4 text-foreground/40 transition-transform group-hover:translate-x-0.5" strokeWidth={1.75} />
+      <ChevronRight className="size-4 text-foreground/60 transition-transform group-hover:translate-x-0.5" strokeWidth={1.75} />
     </Link>
   );
 }

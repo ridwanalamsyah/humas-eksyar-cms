@@ -52,7 +52,7 @@ export function KurikulumTabs({ years }: { years: KurikulumYear[] }) {
       >
         {year.semesters.map((s) => (
           <div key={s.name} className="rounded-[28px] bg-canvas p-8">
-            <p className="text-[21px] font-semibold tracking-[-0.01em] text-label">
+            <p className="text-[24px] font-semibold tracking-[-0.01em] text-label">
               {s.name}
             </p>
             <ul className="mt-4">

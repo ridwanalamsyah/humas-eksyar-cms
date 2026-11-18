@@ -61,7 +61,7 @@ export function ViewsAreaChart({ data }: ViewsChartProps) {
     <div className="rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="text-[12px] font-semibold uppercase tracking-wider text-accent">
+          <p className="text-[13px] font-semibold uppercase tracking-wider text-accent">
             Aktivitas Pengunjung
           </p>
           <h3 className="mt-0.5 text-[17px] font-bold text-label">
@@ -72,7 +72,7 @@ export function ViewsAreaChart({ data }: ViewsChartProps) {
           <p className="text-[22px] font-extrabold tabular-nums text-label">
             {totalViews.toLocaleString("id-ID")}
           </p>
-          <p className="text-[11.5px] text-label-2">Total kunjungan halaman</p>
+          <p className="text-[13px] text-label-2">Total kunjungan halaman</p>
         </div>
       </div>
 
@@ -163,7 +163,7 @@ export function ViewsAreaChart({ data }: ViewsChartProps) {
               transform: "translateX(-50%)",
             }}
           >
-            <p className="text-[11px] font-medium text-label-3">
+            <p className="text-[13px] font-medium text-label-3">
               {points[hoverIdx].label}
             </p>
             <p className="text-[13.5px] font-bold text-accent tabular-nums">
@@ -173,7 +173,7 @@ export function ViewsAreaChart({ data }: ViewsChartProps) {
         )}
       </div>
 
-      <div className="mt-2 flex items-center justify-between text-[11px] text-label-3">
+      <div className="mt-2 flex items-center justify-between text-[13px] text-label-3">
         <span>{chartPoints[0]?.label}</span>
         <span>{chartPoints[14]?.label}</span>
         <span>{chartPoints[chartPoints.length - 1]?.label}</span>
@@ -200,7 +200,7 @@ export function ContentDistributionCard({
 
   return (
     <div className="rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
-      <p className="text-[12px] font-semibold uppercase tracking-wider text-accent">
+      <p className="text-[13px] font-semibold uppercase tracking-wider text-accent">
         Distribusi Konten
       </p>
       <h3 className="mt-0.5 text-[17px] font-bold text-label">
@@ -239,7 +239,7 @@ export function ContentDistributionCard({
           </span>
           <span className="font-bold tabular-nums text-label">
             {published}{" "}
-            <span className="text-[11.5px] font-normal text-label-3">
+            <span className="text-[13px] font-normal text-label-3">
               ({pPub}%)
             </span>
           </span>
@@ -252,7 +252,7 @@ export function ContentDistributionCard({
           </span>
           <span className="font-bold tabular-nums text-label">
             {review}{" "}
-            <span className="text-[11.5px] font-normal text-label-3">
+            <span className="text-[13px] font-normal text-label-3">
               ({pRev}%)
             </span>
           </span>
@@ -265,7 +265,7 @@ export function ContentDistributionCard({
           </span>
           <span className="font-bold tabular-nums text-label">
             {draft}{" "}
-            <span className="text-[11.5px] font-normal text-label-3">
+            <span className="text-[13px] font-normal text-label-3">
               ({pDrf}%)
             </span>
           </span>
@@ -293,7 +293,7 @@ export function TopPagesList({ views }: PopularPagesProps) {
 
   return (
     <div className="rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
-      <p className="text-[12px] font-semibold uppercase tracking-wider text-accent">
+      <p className="text-[13px] font-semibold uppercase tracking-wider text-accent">
         Halaman Populer
       </p>
       <h3 className="mt-0.5 text-[17px] font-bold text-label">
@@ -310,7 +310,7 @@ export function TopPagesList({ views }: PopularPagesProps) {
             const pct = Math.max(6, Math.round((count / top.max) * 100));
             return (
               <li key={path} className="space-y-1">
-                <div className="flex items-center justify-between text-[12.5px]">
+                <div className="flex items-center justify-between text-[13px]">
                   <span className="truncate font-mono font-medium text-label">
                     {path}
                   </span>

@@ -27,7 +27,7 @@ export function MoneyInput({
         {label}
       </span>
       <span className="flex items-center rounded-[14px] border border-hairline bg-canvas focus-within:border-accent focus-within:ring-4 focus-within:ring-accent/10">
-        <span className="pl-4 text-[15px] text-label-3">Rp</span>
+        <span className="pl-4 text-[16px] text-label-3">Rp</span>
         <input
           inputMode="numeric"
           value={value ? value.toLocaleString("id-ID") : ""}
@@ -39,7 +39,7 @@ export function MoneyInput({
         />
       </span>
       {hint && (
-        <span className="mt-1 block text-[13px] text-label-3">{hint}</span>
+        <span className="mt-1 block text-[14px] text-label-3">{hint}</span>
       )}
     </label>
   );
@@ -79,7 +79,7 @@ export function NumberInput({
         )}
       </span>
       {hint && (
-        <span className="mt-1 block text-[13px] text-label-3">{hint}</span>
+        <span className="mt-1 block text-[14px] text-label-3">{hint}</span>
       )}
     </label>
   );

@@ -33,10 +33,10 @@ export function DeadlineCard({
       )}
     >
       <div className="flex items-start justify-between gap-3">
-        <p className="text-[13px] font-semibold text-accent">{meta}</p>
+        <p className="text-[14px] font-semibold text-accent">{meta}</p>
         <span
           className={cn(
-            "shrink-0 rounded-full px-2.5 py-1 text-[12px] font-bold",
+            "shrink-0 rounded-full px-2.5 py-1 text-[14px] font-bold",
             t.open ? "bg-sand text-navy" : "bg-hairline text-label-3",
           )}
         >
@@ -52,12 +52,12 @@ export function DeadlineCard({
         {title}
       </h3>
       {description && (
-        <p className="mt-2 text-[14.5px] leading-[1.55] text-label-2">
+        <p className="mt-2 text-[14px] leading-[1.55] text-label-2">
           {description}
         </p>
       )}
       <div className="mt-auto flex items-center justify-between gap-3 pt-5">
-        <span className="text-[13px] text-label-3">
+        <span className="text-[14px] text-label-3">
           {tanggal && `Tenggat ${tanggal}`}
         </span>
         {href && t.open && (

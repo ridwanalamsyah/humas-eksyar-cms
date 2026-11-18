@@ -22,13 +22,13 @@ export function HeroNow({ items }: { items: HeroNowItem[] }) {
       className={`mx-auto mt-12 text-left ${items.length === 1 ? "max-w-md" : "max-w-[1024px]"}`}
     >
       <div className="mb-3 flex items-center justify-between px-1">
-        <p className="inline-flex items-center gap-2 text-[12px] font-bold uppercase tracking-[0.08em] text-label-2">
+        <p className="inline-flex items-center gap-2 text-[14px] font-bold uppercase tracking-[0.08em] text-label-2">
           <span className="size-2 rounded-xs bg-accent" aria-hidden />
           Sekarang di Eksyar
         </p>
         <Link
           href="/prodi/kalender"
-          className="text-[12.5px] font-semibold text-accent hover:underline"
+          className="text-[14px] font-semibold text-accent hover:underline"
         >
           Agenda lengkap ›
         </Link>
@@ -43,14 +43,14 @@ export function HeroNow({ items }: { items: HeroNowItem[] }) {
               className="group flex h-full items-start justify-between gap-3 p-5 transition-colors hover:bg-mist/60"
             >
               <span className="min-w-0 flex-1">
-                <span className="inline-block rounded-md bg-accent-soft px-2 py-0.5 text-[11.5px] font-semibold text-accent">
+                <span className="inline-block rounded-md bg-accent-soft px-2 py-0.5 text-[14px] font-semibold text-accent">
                   {it.label}
                 </span>
-                <span className="mt-2 line-clamp-2 block break-words text-[15.5px] font-semibold leading-snug text-label group-hover:text-accent">
+                <span className="mt-2 line-clamp-2 break-words text-[16px] font-semibold leading-snug text-label group-hover:text-accent">
                   {it.title}
                 </span>
                 {it.meta && (
-                  <span className="mt-1 line-clamp-1 block text-[12.5px] text-label-2">
+                  <span className="mt-1 line-clamp-1 text-[14px] text-label-2">
                     {it.meta}
                   </span>
                 )}

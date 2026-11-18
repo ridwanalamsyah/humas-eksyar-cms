@@ -35,10 +35,10 @@ export function Countdown({ to }: { to: string }) {
           key={l}
           className="min-w-[68px] rounded-[18px] bg-white/12 px-3 py-3 text-center"
         >
-          <p className="text-[28px] font-extrabold tabular-nums leading-none">
+          <p className="text-[24px] font-extrabold tabular-nums leading-none">
             {String(n).padStart(2, "0")}
           </p>
-          <p className="mt-1 text-[12px] text-white/75">{l}</p>
+          <p className="mt-1 text-[14px] text-white/75">{l}</p>
         </div>
       ))}
     </div>

@@ -21,7 +21,7 @@ export default function ErrorPage({
         <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-rose-500/15">
           <AlertTriangle className="size-7 text-rose-600" strokeWidth={1.5} />
         </div>
-        <p className="mt-4 font-mono text-[12.5px] text-foreground/50">
+        <p className="mt-4 font-mono text-[13px] text-foreground/60">
           500 · sesuatu rusak
         </p>
         <h1 className="mt-2 font-display text-2xl font-semibold tracking-tight">
@@ -31,7 +31,7 @@ export default function ErrorPage({
           Tim teknis sudah dapat log-nya. Coba muat ulang halaman.
         </p>
         {error.digest && (
-          <code className="mx-auto mt-3 inline-block rounded-lg border border-foreground/10 bg-foreground/[0.04] px-2 py-1 font-mono text-[10px] text-foreground/55">
+          <code className="mx-auto mt-3 inline-block rounded-lg border border-foreground/10 bg-foreground/[0.04] px-2 py-1 font-mono text-[13px] text-foreground/60">
             Trace: {error.digest}
           </code>
         )}

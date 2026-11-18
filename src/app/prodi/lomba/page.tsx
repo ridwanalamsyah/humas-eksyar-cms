@@ -45,11 +45,11 @@ export default async function LombaPage() {
               ))}
             </div>
           ) : (
-            <p className="rounded-[24px] bg-mist p-10 text-center text-[17px] text-label-2">
+            <p className="rounded-[24px] bg-mist p-10 text-center text-[16px] text-label-2">
               Belum ada info lomba yang dibuka.
             </p>
           )}
-          <p className="mt-8 text-[15px] text-label-2">
+          <p className="mt-8 text-[16px] text-label-2">
             Sudah juara?{" "}
             <Link
               href="/prodi/formulir/prestasi"
@@ -60,7 +60,7 @@ export default async function LombaPage() {
           </p>
           {prestasi.length > 0 && (
             <div className="mt-16">
-              <h2 className="text-[28px] font-bold tracking-[-0.02em] text-label">
+              <h2 className="text-[24px] font-bold tracking-[-0.02em] text-label">
                 Prestasi terdahulu
               </h2>
               <div className="mt-8">

@@ -8,7 +8,7 @@ export default function NotFound() {
         <div className="mx-auto flex size-14 items-center justify-center rounded-2xl bg-teal-500/10 text-[#237A74] dark:text-[#7BC8C0]">
           <Compass className="size-7" strokeWidth={1.75} />
         </div>
-        <p className="mt-4 font-mono text-[12px] font-medium text-neutral-400">
+        <p className="mt-4 font-mono text-[13px] font-medium text-neutral-400">
           404 · Halaman tidak ditemukan
         </p>
         <h1 className="mt-2 text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">

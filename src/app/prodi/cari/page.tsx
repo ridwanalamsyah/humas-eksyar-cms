@@ -174,11 +174,11 @@ export default async function CariPage({ searchParams }: Props) {
               autoFocus
               maxLength={120}
               placeholder="Beasiswa, kurikulum, nama dosen, judul skripsi…"
-              className="min-w-0 flex-1 bg-transparent py-2 text-[17px] text-label outline-none placeholder:text-label-3"
+              className="min-w-0 flex-1 bg-transparent py-2 text-[16px] text-label outline-none placeholder:text-label-3"
             />
             <button
               type="submit"
-              className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-[15px] font-semibold text-white hover:bg-accent-strong"
+              className="shrink-0 rounded-full bg-accent px-6 py-2.5 text-[16px] font-semibold text-white hover:bg-accent-strong"
             >
               Cari
             </button>
@@ -208,7 +208,7 @@ export default async function CariPage({ searchParams }: Props) {
               </p>
               {found.map((g) => (
                 <div key={g.label} className="mt-10">
-                  <h2 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-accent">
+                  <h2 className="text-[14px] font-semibold uppercase tracking-[0.08em] text-accent">
                     {g.label}
                   </h2>
                   <ul className="mt-3 divide-y divide-hairline overflow-hidden rounded-[20px] border border-hairline bg-canvas">
@@ -220,7 +220,7 @@ export default async function CariPage({ searchParams }: Props) {
                               {h.title}
                             </span>
                             {h.snippet && (
-                              <span className="mt-1 line-clamp-2 block text-[14px] text-label-2">
+                              <span className="mt-1 line-clamp-2 text-[14px] text-label-2">
                                 {h.snippet}
                               </span>
                             )}
@@ -256,7 +256,7 @@ export default async function CariPage({ searchParams }: Props) {
                   {g.more && (
                     <Link
                       href={g.more}
-                      className="mt-3 inline-block text-[15px] font-semibold text-accent hover:underline"
+                      className="mt-3 inline-block text-[16px] font-semibold text-accent hover:underline"
                     >
                       Lihat semua skripsi yang cocok ›
                     </Link>

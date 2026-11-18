@@ -48,15 +48,15 @@ export function DosenIndex({
             >
               <Link
                 href={`/prodi/dosen/${dosenSlug(d.nama)}`}
-                className="text-[16.5px] font-bold leading-snug text-label hover:text-accent"
+                className="text-[16px] font-bold leading-snug text-label hover:text-accent"
               >
                 {d.nama}
               </Link>
               {d.jabatan && (
-                <p className="mt-0.5 text-[13.5px] text-label-2">{d.jabatan}</p>
+                <p className="mt-0.5 text-[14px] text-label-2">{d.jabatan}</p>
               )}
               {d.mataKuliah.length > 0 && (
-                <p className="mt-3 text-[13.5px] leading-relaxed text-label-2">
+                <p className="mt-3 text-[14px] leading-relaxed text-label-2">
                   <span className="font-semibold text-label">Mengampu: </span>
                   {d.mataKuliah.slice(0, 5).join(", ")}
                   {d.mataKuliah.length > 5 &&
@@ -68,7 +68,7 @@ export function DosenIndex({
                   {d.keahlian.map((k) => (
                     <span
                       key={k}
-                      className="rounded-full bg-accent-soft px-2.5 py-1 text-[12px] font-semibold text-accent"
+                      className="rounded-full bg-accent-soft px-2.5 py-1 text-[14px] font-semibold text-accent"
                     >
                       {k}
                     </span>
@@ -96,7 +96,7 @@ export function DosenIndex({
           <button
             type="button"
             onClick={() => setLimit((l) => l + 60)}
-            className="rounded-full bg-mist px-6 py-2.5 text-[15px] font-semibold text-label hover:bg-hairline"
+            className="rounded-full bg-mist px-6 py-2.5 text-[16px] font-semibold text-label hover:bg-hairline"
           >
             Tampilkan lebih banyak ({shown.length - limit} lagi)
           </button>

@@ -51,7 +51,7 @@ export function RepurposePanel({ contentId }: { contentId: string }) {
           {items.map(([k, label]) => (
             <div key={k} className="glass-regular rounded-xl p-3">
               <div className="flex items-center justify-between">
-                <p className="text-[12px] font-semibold text-foreground/60">
+                <p className="text-[13px] font-semibold text-foreground/60">
                   {label}
                 </p>
                 <button
@@ -61,18 +61,18 @@ export function RepurposePanel({ contentId }: { contentId: string }) {
                     await navigator.clipboard.writeText(out[k]);
                     toast.success("Disalin");
                   }}
-                  className="text-foreground/50 hover:text-foreground"
+                  className="text-foreground/60 hover:text-foreground"
                 >
                   <Copy className="size-3.5" />
                 </button>
               </div>
-              <p className="mt-2 whitespace-pre-line text-[12.5px] leading-relaxed">
+              <p className="mt-2 whitespace-pre-line text-[13px] leading-relaxed">
                 {out[k]}
               </p>
             </div>
           ))}
           {!out.ai && (
-            <p className="text-[12px] text-foreground/55 md:col-span-3">
+            <p className="text-[13px] text-foreground/60 md:col-span-3">
               Dibuat tanpa AI (GEMINI_API_KEY belum diatur).
             </p>
           )}

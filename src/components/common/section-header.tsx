@@ -25,7 +25,7 @@ export function SectionHeader({
     <div className={cn("mb-4 flex flex-wrap items-end justify-between gap-3", className)}>
       <div>
         {eyebrow && (
-          <p className="text-[12.5px] text-foreground/50">
+          <p className="text-[13px] text-foreground/60">
             {eyebrow}
           </p>
         )}

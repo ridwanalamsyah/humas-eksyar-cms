@@ -144,7 +144,7 @@ export function PendingAccountView({ identifier }: { identifier: string }) {
           initial={reduce ? false : { opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, ease: EASE_OPUS, delay: 0.26 }}
-          className="mt-5 flex items-start gap-2.5 rounded-xl border border-hairline bg-mist/80 p-3.5 text-left text-[12.5px] leading-relaxed text-label-2"
+          className="mt-5 flex items-start gap-2.5 rounded-xl border border-hairline bg-mist/80 p-3.5 text-left text-[13px] leading-relaxed text-label-2"
         >
           <ShieldAlert className="mt-0.5 size-4 shrink-0 text-amber-600 dark:text-amber-400" />
           <span>

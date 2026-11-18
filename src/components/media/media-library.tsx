@@ -110,12 +110,12 @@ export function MediaLibrary({ media: initial }: Props) {
       <GlassCard className="p-4">
         <div className="flex flex-wrap items-center gap-2">
           <label className="flex flex-1 items-center gap-2 rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 py-2 dark:border-white/10 dark:bg-white/5">
-            <Search className="size-4 text-foreground/55" strokeWidth={1.75} />
+            <Search className="size-4 text-foreground/60" strokeWidth={1.75} />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari keterangan atau label…"
-              className="w-full bg-transparent text-[13px] outline-none placeholder:text-foreground/45"
+              className="w-full bg-transparent text-[13px] outline-none placeholder:text-foreground/60"
             />
           </label>
           <select
@@ -146,8 +146,8 @@ export function MediaLibrary({ media: initial }: Props) {
             {uploading ? "Mengunggah…" : "Unggah foto"}
           </Button>
         </div>
-        <div className="mt-3 flex flex-wrap items-center gap-1.5 text-[11px]">
-          <span className="inline-flex items-center gap-1 text-foreground/55">
+        <div className="mt-3 flex flex-wrap items-center gap-1.5 text-[13px]">
+          <span className="inline-flex items-center gap-1 text-foreground/60">
             <Filter className="size-3" strokeWidth={2} /> Label:
           </span>
           <button
@@ -182,7 +182,7 @@ export function MediaLibrary({ media: initial }: Props) {
       <div
         onDragOver={(e) => e.preventDefault()}
         onDrop={onDrop}
-        className="rounded-3xl border-2 border-dashed border-foreground/15 px-4 py-3 text-center text-[12px] text-foreground/55"
+        className="rounded-3xl border-2 border-dashed border-foreground/15 px-4 py-3 text-center text-[13px] text-foreground/60"
       >
         {uploading
           ? "Mengunggah…"
@@ -214,14 +214,14 @@ export function MediaLibrary({ media: initial }: Props) {
                 sizes="(max-width: 640px) 50vw, 25vw"
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-2 text-[10px] text-white opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 to-transparent p-2 text-[13px] text-white opacity-0 transition-opacity group-hover:opacity-100">
                 <p className="line-clamp-1">{m.alt}</p>
               </div>
             </button>
           );
         })}
         {filtered.length === 0 && (
-          <p className="col-span-full rounded-xl border border-dashed border-foreground/15 p-8 text-center text-[12px] text-foreground/55">
+          <p className="col-span-full rounded-xl border border-dashed border-foreground/15 p-8 text-center text-[13px] text-foreground/60">
             Tidak ada foto yang cocok. Coba kata kunci lain.
           </p>
         )}
@@ -260,7 +260,7 @@ export function MediaLibrary({ media: initial }: Props) {
                 <h3 className="font-display text-lg font-semibold tracking-tight">
                   {active.alt}
                 </h3>
-                <p className="mt-1 text-[12px] text-foreground/65">
+                <p className="mt-1 text-[13px] text-foreground/65">
                   {active.width} × {active.height} · {active.aspect} ·{" "}
                   {(active.url.length).toFixed(0)} bytes URL
                 </p>

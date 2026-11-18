@@ -59,8 +59,8 @@ export default function AlatPage() {
               <span
                 className={
                   i === 0
-                    ? "mt-2 text-[15.5px] text-white/80"
-                    : "mt-2 text-[15.5px] text-label-2"
+                    ? "mt-2 text-[16px] text-white/80"
+                    : "mt-2 text-[16px] text-label-2"
                 }
               >
                 {d}

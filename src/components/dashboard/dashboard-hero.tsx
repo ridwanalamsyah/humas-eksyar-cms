@@ -70,9 +70,9 @@ export function DashboardHero({ member, digest, unreadCount }: Props) {
   return (
     <motion.div {...fadeUp}>
       <GlassCard variant="thick" className="overflow-hidden p-6 sm:p-10">
-        <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
           <div>
-            <p className="text-[12.5px] text-foreground/50">
+            <p className="text-[13px] text-foreground/60">
               Beranda
             </p>
             <h1 className="mt-2 font-display text-[clamp(2rem,1.4rem+2.8vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-balance">
@@ -97,8 +97,8 @@ export function DashboardHero({ member, digest, unreadCount }: Props) {
               <span>{greg || "—"}</span>
               {hijri && (
                 <>
-                  <span aria-hidden className="text-foreground/30">·</span>
-                  <span className="font-mono text-[12px] tracking-tight">{hijri}</span>
+                  <span aria-hidden className="text-foreground/60">·</span>
+                  <span className="font-mono text-[13px] tracking-tight">{hijri}</span>
                 </>
               )}
             </div>
@@ -106,7 +106,7 @@ export function DashboardHero({ member, digest, unreadCount }: Props) {
               <Button asChild>
                 <Link href="/captions/playground">
                   <Wand2 className="size-4" strokeWidth={1.75} />
-                  AI Caption Generator
+                  Pembuat caption
                 </Link>
               </Button>
               <Button asChild variant="secondary">
@@ -120,11 +120,11 @@ export function DashboardHero({ member, digest, unreadCount }: Props) {
 
           <GlassCard variant="regular" className="self-stretch p-6">
             <div className="flex items-center justify-between">
-              <span className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-[color-mix(in_oklab,var(--gold-400)_18%,transparent)] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-gold-700 dark:text-gold-300">
+              <span className="inline-flex items-center gap-2 rounded-full border border-gold-400/40 bg-[color-mix(in_oklab,var(--gold-400)_18%,transparent)] px-2.5 py-1 text-[13px] font-semibold uppercase tracking-wider text-gold-700 dark:text-gold-300">
                 <Sparkles className="size-3.5" strokeWidth={1.75} />
                 AI Digest
               </span>
-              <span className="text-[11px] text-foreground/55">{digest.isoWeek}</span>
+              <span className="text-[13px] text-foreground/60">{digest.isoWeek}</span>
             </div>
             <p className="mt-3 font-display text-lg font-semibold leading-snug text-balance">
               {digest.highlights[0]}

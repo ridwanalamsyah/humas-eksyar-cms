@@ -46,7 +46,7 @@ export default async function KarierPage() {
               ))}
             </div>
           ) : (
-            <p className="rounded-[24px] bg-mist p-10 text-center text-[17px] text-label-2">
+            <p className="rounded-[24px] bg-mist p-10 text-center text-[16px] text-label-2">
               Belum ada lowongan yang dibuka. Info karier UIN SGD juga tersedia
               di{" "}
               <a
@@ -64,7 +64,7 @@ export default async function KarierPage() {
             href="https://cdc.uinsgd.ac.id/"
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-8 inline-block text-[15px] font-semibold text-accent hover:underline"
+            className="mt-8 inline-block text-[16px] font-semibold text-accent hover:underline"
           >
             Career Development Center UIN SGD ↗
           </a>
@@ -83,13 +83,13 @@ export default async function KarierPage() {
             {prospekKarir.map((p, i) => (
               <Reveal key={p.title} delay={(i % 4) * 0.05}>
                 <div className="h-full rounded-[24px] border border-hairline bg-canvas p-6 transition duration-300 hover:-translate-y-1 hover:border-transparent hover:shadow-[0_24px_48px_-24px_rgba(22,58,69,0.35)]">
-                  <span className="text-[13px] font-bold tabular-nums text-accent">
+                  <span className="text-[14px] font-bold tabular-nums text-accent">
                     {String(i + 1).padStart(2, "0")}
                   </span>
                   <h3 className="mt-3 text-[18px] font-bold leading-snug text-label">
                     {p.title}
                   </h3>
-                  <p className="mt-1.5 text-[14.5px] leading-[1.5] text-label-2">
+                  <p className="mt-1.5 text-[14px] leading-[1.5] text-label-2">
                     {p.description}
                   </p>
                 </div>
@@ -127,7 +127,7 @@ export default async function KarierPage() {
                 <p className="mt-2 text-[clamp(1.5rem,1.2rem+1vw,2rem)] font-bold leading-tight tracking-[-0.02em]">
                   Isi tracer study UIN SGD
                 </p>
-                <p className="mt-2 max-w-lg text-[15px] text-white/80">
+                <p className="mt-2 max-w-lg text-[16px] text-white/80">
                   Data karier alumni dipakai untuk evaluasi kurikulum dan
                   akreditasi. Pengisian dikelola Career Development Center UIN
                   SGD.
@@ -139,7 +139,7 @@ export default async function KarierPage() {
                     href={mutu.tracerUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full bg-canvas px-6 py-3 text-[15px] font-semibold text-accent hover:bg-sand"
+                    className="rounded-full bg-canvas px-6 py-3 text-[16px] font-semibold text-accent hover:bg-sand"
                   >
                     Isi tracer study ↗
                   </a>
@@ -149,7 +149,7 @@ export default async function KarierPage() {
                     href={mutu.sebaranUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-full border border-white/40 px-6 py-3 text-[15px] font-semibold text-white hover:bg-white/10"
+                    className="rounded-full border border-white/40 px-6 py-3 text-[16px] font-semibold text-white hover:bg-white/10"
                   >
                     Peta sebaran ↗
                   </a>

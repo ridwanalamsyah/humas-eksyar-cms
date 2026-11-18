@@ -37,13 +37,13 @@ export function PmbCampaign({
             href={pmbUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full bg-sand px-7 py-3 text-[15.5px] font-bold text-navy hover:bg-white"
+            className="rounded-full bg-sand px-7 py-3 text-[16px] font-bold text-navy hover:bg-white"
           >
             Daftar sekarang
           </a>
           <Link
             href="/prodi/akademik"
-            className="rounded-full border border-white/40 px-7 py-3 text-[15.5px] font-semibold hover:bg-white/10"
+            className="rounded-full border border-white/40 px-7 py-3 text-[16px] font-semibold hover:bg-white/10"
           >
             Lihat kurikulum
           </Link>

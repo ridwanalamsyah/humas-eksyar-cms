@@ -186,7 +186,7 @@ export function ContentBoard({ contents }: Props) {
               <span className="relative z-10">{tab.label}</span>
               <span
                 className={cn(
-                  "relative z-10 rounded-full px-1.5 py-0.2 text-[11px] tabular-nums transition-colors",
+                  "relative z-10 rounded-full px-1.5 py-0.2 text-[13px] tabular-nums transition-colors",
                   active
                     ? "bg-white/20 text-white"
                     : "bg-foreground/8 text-foreground/60 dark:bg-white/10",
@@ -221,7 +221,7 @@ export function ContentBoard({ contents }: Props) {
               <select
                 value={rubricFilter}
                 onChange={(e) => setRubricFilter(e.target.value)}
-                className="bg-transparent text-[12.5px] font-medium text-label outline-none"
+                className="bg-transparent text-[13px] font-medium text-label outline-none"
               >
                 <option value="all">Semua Rubrik</option>
                 {rubrics.map((r) => (
@@ -241,7 +241,7 @@ export function ContentBoard({ contents }: Props) {
               type="button"
               onClick={() => setView("list")}
               className={cn(
-                "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[12.5px] font-medium transition-colors",
+                "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[13px] font-medium transition-colors",
                 view === "list"
                   ? "bg-foreground/10 text-label font-semibold dark:bg-white/15"
                   : "text-label-3 hover:text-label",
@@ -254,7 +254,7 @@ export function ContentBoard({ contents }: Props) {
               type="button"
               onClick={() => setView("grid")}
               className={cn(
-                "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[12.5px] font-medium transition-colors",
+                "flex items-center gap-1.5 rounded-lg px-2.5 py-1 text-[13px] font-medium transition-colors",
                 view === "grid"
                   ? "bg-foreground/10 text-label font-semibold dark:bg-white/15"
                   : "text-label-3 hover:text-label",
@@ -281,7 +281,7 @@ export function ContentBoard({ contents }: Props) {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
-                <tr className="border-b border-hairline bg-mist/60 text-[11px] font-semibold uppercase tracking-wider text-label-3">
+                <tr className="border-b border-hairline bg-mist/60 text-[13px] font-semibold uppercase tracking-wider text-label-3">
                   <th className="px-4 py-3 sm:px-6">Judul Artikel</th>
                   <th className="px-3 py-3 hidden md:table-cell">Rubrik</th>
                   <th className="px-3 py-3 hidden sm:table-cell">Penulis</th>
@@ -310,7 +310,7 @@ export function ContentBoard({ contents }: Props) {
                           >
                             {c.title}
                           </Link>
-                          <p className="mt-0.5 line-clamp-1 text-[12px] text-label-3">
+                          <p className="mt-0.5 line-clamp-1 text-[13px] text-label-3">
                             {(c.caption || c.body || "").replace(/[#\n]+/g, " ").trim() || "Tidak ada keterangan tambahan."}
                           </p>
                         </div>
@@ -318,7 +318,7 @@ export function ContentBoard({ contents }: Props) {
 
                       {/* Rubrik */}
                       <td className="px-3 py-3.5 hidden md:table-cell">
-                        <span className="inline-flex items-center rounded-md bg-mist px-2 py-0.5 text-[11.5px] font-medium text-label-2">
+                        <span className="inline-flex items-center rounded-md bg-mist px-2 py-0.5 text-[13px] font-medium text-label-2">
                           {rubricLabel(c.rubric)}
                         </span>
                       </td>
@@ -328,12 +328,12 @@ export function ContentBoard({ contents }: Props) {
                         {author ? (
                           <div className="flex items-center gap-2">
                             <Avatar member={author} size={22} ring={false} />
-                            <span className="text-[12.5px] text-label-2 truncate max-w-[120px]">
+                            <span className="text-[13px] text-label-2 truncate max-w-[120px]">
                               {author.name.split(" ")[0]}
                             </span>
                           </div>
                         ) : (
-                          <span className="text-[12px] text-label-3">—</span>
+                          <span className="text-[13px] text-label-3">—</span>
                         )}
                       </td>
 
@@ -343,7 +343,7 @@ export function ContentBoard({ contents }: Props) {
                       </td>
 
                       {/* Tanggal */}
-                      <td className="px-3 py-3.5 hidden lg:table-cell whitespace-nowrap text-[12px] text-label-3 font-mono">
+                      <td className="px-3 py-3.5 hidden lg:table-cell whitespace-nowrap text-[13px] text-label-3 font-mono">
                         {c.publishedAt ? formatShortDate(c.publishedAt) : relativeFromNow(c.updatedAt)}
                       </td>
 
@@ -357,7 +357,7 @@ export function ContentBoard({ contents }: Props) {
                               disabled={isBusy}
                               onClick={() => handleQuickDraft(c)}
                               title="Tarik kembali ke draf"
-                              className="inline-flex items-center gap-1 rounded-lg border border-hairline bg-canvas px-2.5 py-1 text-[12px] font-medium text-label-2 hover:bg-mist hover:text-label transition-colors disabled:opacity-50"
+                              className="inline-flex items-center gap-1 rounded-lg border border-hairline bg-canvas px-2.5 py-1 text-[13px] font-medium text-label-2 hover:bg-mist hover:text-label transition-colors disabled:opacity-50"
                             >
                               <RotateCcw className="size-3" />
                               <span className="hidden sm:inline">Draf</span>
@@ -368,7 +368,7 @@ export function ContentBoard({ contents }: Props) {
                               disabled={isBusy}
                               onClick={() => handleQuickPublish(c)}
                               title="Terbitkan langsung ke website prodi"
-                              className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[12px] font-semibold text-white hover:bg-emerald-700 shadow-2xs transition-colors disabled:opacity-50 dark:bg-emerald-500"
+                              className="inline-flex items-center gap-1 rounded-lg bg-emerald-600 px-2.5 py-1 text-[13px] font-semibold text-white hover:bg-emerald-700 shadow-2xs transition-colors disabled:opacity-50 dark:bg-emerald-500"
                             >
                               <CheckCircle2 className="size-3" />
                               <span className="hidden sm:inline">Terbitkan</span>

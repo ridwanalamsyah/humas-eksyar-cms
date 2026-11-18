@@ -181,7 +181,7 @@ export function ContentInlineEditor({
   return (
     <GlassCard variant="thick" className="mt-6 p-6">
       <div className="flex items-center justify-between">
-        <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/55">
+        <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/60">
           Edit konten
         </h3>
         <div className="flex items-center gap-2">
@@ -222,7 +222,7 @@ export function ContentInlineEditor({
             rows={8}
             className="w-full rounded-xl border border-foreground/10 bg-background px-3 py-2 text-sm leading-relaxed focus:border-brand-500 focus:outline-none"
           />
-          <p className="mt-1 text-[11px] text-foreground/55">
+          <p className="mt-1 text-[13px] text-foreground/60">
             Edit caption otomatis disimpan sebagai versi baru di Riwayat.
           </p>
         </Field>
@@ -275,14 +275,14 @@ function AutosaveBadge({
   if (state === "idle") return null;
   if (state === "saving")
     return (
-      <span className="inline-flex items-center gap-1.5 rounded-full bg-foreground/[0.06] px-2 py-0.5 text-[10px] text-foreground/55">
+      <span className="inline-flex items-center gap-1.5 rounded-full bg-foreground/[0.06] px-2 py-0.5 text-[13px] text-foreground/60">
         <Loader2 className="size-3 animate-spin" /> Autosave…
       </span>
     );
   if (state === "error")
     return (
       <span
-        className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-2 py-0.5 text-[10px] text-rose-500"
+        className="inline-flex items-center gap-1.5 rounded-full bg-rose-500/10 px-2 py-0.5 text-[13px] text-rose-500"
         title="Autosave gagal"
       >
         <CloudOff className="size-3" /> Offline
@@ -290,7 +290,7 @@ function AutosaveBadge({
     );
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[10px] text-emerald-600"
+      className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[13px] text-emerald-600"
       title={at ?? undefined}
     >
       <Cloud className="size-3" /> Tersimpan
@@ -301,7 +301,7 @@ function AutosaveBadge({
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[12.5px] text-foreground/50">
+      <span className="mb-1.5 block text-[13px] text-foreground/60">
         {label}
       </span>
       {children}

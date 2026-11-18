@@ -62,16 +62,16 @@ export default async function ProfilPage() {
             />
           </Reveal>
 
-          <div className="mt-8 grid items-start gap-8 lg:grid-cols-[1.15fr_1fr]">
+          <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)]">
             <div className="space-y-4">
               {profil.sejarah.map((p, i) => (
                 <Reveal key={i} delay={i * 0.1}>
                   <div className="rounded-[22px] border border-hairline bg-canvas p-6 sm:p-7 shadow-xs transition-all hover:border-accent/40">
-                    <div className="flex items-center gap-2 text-[12px] font-bold uppercase tracking-wider text-accent mb-2.5">
+                    <div className="flex items-center gap-2 text-[14px] font-bold uppercase tracking-wider text-accent mb-2.5">
                       <span className="size-1.5 rounded-xs bg-accent" />
                       Fase Perkembangan {i + 1}
                     </div>
-                    <p className="text-justify text-[15.5px] leading-[1.75] text-label hyphens-auto">
+                    <p className="text-justify text-[16px] leading-[1.75] text-label hyphens-auto">
                       {p}
                     </p>
                   </div>
@@ -81,22 +81,22 @@ export default async function ProfilPage() {
               <Reveal delay={0.25}>
                 <div className="grid grid-cols-3 gap-3 rounded-[22px] border border-hairline bg-mist/60 p-5 text-center">
                   <div className="rounded-xl bg-canvas p-3 border border-hairline/60">
-                    <p className="text-[20px] font-extrabold text-accent">2015</p>
-                    <p className="text-[11.5px] font-semibold text-label-2 mt-0.5">
+                    <p className="text-[18px] font-extrabold text-accent">2015</p>
+                    <p className="text-[14px] font-semibold text-label-2 mt-0.5">
                       SK Pendirian
                     </p>
                   </div>
                   <div className="rounded-xl bg-canvas p-3 border border-hairline/60">
-                    <p className="text-[20px] font-extrabold text-accent">2020</p>
-                    <p className="text-[11.5px] font-semibold text-label-2 mt-0.5">
+                    <p className="text-[18px] font-extrabold text-accent">2020</p>
+                    <p className="text-[14px] font-semibold text-label-2 mt-0.5">
                       Fakultas Mandiri
                     </p>
                   </div>
                   <div className="rounded-xl bg-canvas p-3 border border-hairline/60">
-                    <p className="text-[20px] font-extrabold text-accent">
+                    <p className="text-[18px] font-extrabold text-accent">
                       {identity.totalCredits} SKS
                     </p>
-                    <p className="text-[11.5px] font-semibold text-label-2 mt-0.5">
+                    <p className="text-[14px] font-semibold text-label-2 mt-0.5">
                       Kurikulum S.E.
                     </p>
                   </div>
@@ -109,10 +109,10 @@ export default async function ProfilPage() {
                 <Reveal>
                   <div className="rounded-[22px] border border-hairline bg-canvas p-6 sm:p-7 shadow-xs">
                     <div className="flex items-center justify-between border-b border-hairline/80 pb-3 mb-4">
-                      <h3 className="text-[16.5px] font-bold text-label">
+                      <h3 className="text-[16px] font-bold text-label">
                         Tonggak Sejarah Utama
                       </h3>
-                      <span className="rounded-md bg-accent/10 px-2.5 py-0.5 text-[11px] font-bold text-accent">
+                      <span className="rounded-md bg-accent/10 px-2.5 py-0.5 text-[14px] font-bold text-accent">
                         {sortedTimeline.length} Peristiwa
                       </span>
                     </div>
@@ -126,14 +126,14 @@ export default async function ProfilPage() {
                               className="absolute -left-[25px] top-1.5 size-2.5 rounded-xs bg-accent ring-4 ring-canvas transition-transform group-hover:scale-125"
                             />
                             <div className="flex items-center gap-2">
-                              <span className="rounded-md bg-accent px-2 py-0.5 text-[11px] font-bold text-white tabular-nums">
+                              <span className="rounded-md bg-accent px-2 py-0.5 text-[14px] font-bold text-white tabular-nums">
                                 {t.year}
                               </span>
-                              <h4 className="text-[14.5px] font-bold leading-snug text-label group-hover:text-accent transition-colors">
+                              <h4 className="text-[14px] font-bold leading-snug text-label group-hover:text-accent transition-colors">
                                 {t.title}
                               </h4>
                             </div>
-                            <p className="mt-1.5 text-justify text-[13px] leading-[1.6] text-label-2">
+                            <p className="mt-1.5 text-justify text-[14px] leading-[1.6] text-label-2">
                               {t.description}
                             </p>
                           </li>
@@ -155,7 +155,7 @@ export default async function ProfilPage() {
       >
         <div className="mx-auto max-w-[1060px]">
           <Reveal className="rounded-[24px] bg-accent p-7 text-center text-white sm:p-10">
-            <p className="text-[13px] font-semibold uppercase tracking-[0.1em] text-sand">
+            <p className="text-[14px] font-semibold uppercase tracking-[0.1em] text-sand">
               Visi Keilmuan Program Studi
             </p>
             <p className="mx-auto mt-3 max-w-4xl text-[clamp(1.25rem,1rem+1.1vw,1.85rem)] font-bold leading-[1.35] tracking-[-0.015em] text-balance">
@@ -170,16 +170,16 @@ export default async function ProfilPage() {
             ].map((g) => (
               <Reveal key={g.title}>
                 <div className="h-full rounded-[24px] border border-hairline bg-canvas p-6 sm:p-8">
-                  <h2 className="text-[22px] font-extrabold tracking-[-0.02em] text-label">
+                  <h2 className="text-[24px] font-extrabold tracking-[-0.02em] text-label">
                     {g.title}
                   </h2>
                   <ol className="mt-4 space-y-3.5">
                     {g.items.map((m, i) => (
                       <li
                         key={i}
-                        className="flex gap-3.5 text-justify text-[15px] leading-[1.55] text-label-2"
+                        className="flex gap-3.5 text-justify text-[16px] leading-[1.55] text-label-2"
                       >
-                        <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-md bg-accent-soft text-[12px] font-bold text-accent">
+                        <span className="mt-0.5 grid size-6 shrink-0 place-items-center rounded-md bg-accent-soft text-[14px] font-bold text-accent">
                           {i + 1}
                         </span>
                         <span>{m}</span>
@@ -207,7 +207,7 @@ export default async function ProfilPage() {
             />
             <Link
               href="/prodi/dosen"
-              className="text-[14.5px] font-semibold text-accent hover:underline"
+              className="text-[14px] font-semibold text-accent hover:underline"
             >
               Lihat seluruh dosen & staf ›
             </Link>
@@ -225,15 +225,15 @@ export default async function ProfilPage() {
                       className="size-13 shrink-0 rounded-2xl object-cover"
                     />
                   ) : (
-                    <span className="grid size-13 shrink-0 place-items-center rounded-xl bg-accent-soft text-[15px] font-bold text-accent">
+                    <span className="grid size-13 shrink-0 place-items-center rounded-xl bg-accent-soft text-[16px] font-bold text-accent">
                       {initials(p.name)}
                     </span>
                   )}
                   <div className="min-w-0">
-                    <h3 className="text-[15px] font-bold leading-snug text-label">
+                    <h3 className="text-[16px] font-bold leading-snug text-label">
                       {p.name}
                     </h3>
-                    <p className="mt-0.5 text-[13px] leading-snug text-label-2">
+                    <p className="mt-0.5 text-[14px] leading-snug text-label-2">
                       {p.role}
                     </p>
                   </div>
@@ -266,8 +266,8 @@ export default async function ProfilPage() {
                           <p
                             className={
                               i === 0
-                                ? "text-[11.5px] font-semibold text-sand"
-                                : "text-[11.5px] font-semibold text-accent"
+                                ? "text-[14px] font-semibold text-sand"
+                                : "text-[14px] font-semibold text-accent"
                             }
                           >
                             {x.jabatan}
@@ -333,7 +333,7 @@ export default async function ProfilPage() {
                 <div className="group flex h-full flex-col overflow-hidden rounded-[20px] border border-hairline bg-canvas transition duration-300 hover:border-accent/35">
                   <Photo src={f.image} alt={f.title} ratio="landscape" />
                   <div className="p-5">
-                    <h3 className="text-[17px] font-bold tracking-[-0.01em] text-label">
+                    <h3 className="text-[16px] font-bold tracking-[-0.01em] text-label">
                       {f.title}
                     </h3>
                     <p className="mt-1.5 text-[14px] leading-[1.55] text-label-2">
@@ -364,10 +364,10 @@ export default async function ProfilPage() {
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             <Reveal>
               <div className="flex h-full flex-col rounded-[22px] bg-accent p-6 sm:p-7 text-white">
-                <p className="text-[13px] font-bold text-sand">
+                <p className="text-[14px] font-bold text-sand">
                   Akreditasi Institusi UIN SGD
                 </p>
-                <p className="mt-auto pt-8 text-[34px] sm:text-[42px] font-extrabold leading-none tracking-[-0.03em] break-words">
+                <p className="mt-auto pt-8 text-[40px] sm:text-[40px] font-extrabold leading-none tracking-[-0.03em] break-words">
                   {identity.universityAccreditation}
                 </p>
                 <p className="mt-2.5 text-[14px] text-white/80">
@@ -377,10 +377,10 @@ export default async function ProfilPage() {
             </Reveal>
             <Reveal delay={0.05}>
               <div className="flex h-full flex-col rounded-[22px] border border-hairline bg-canvas p-6 sm:p-7">
-                <p className="text-[13px] font-bold text-accent">
+                <p className="text-[14px] font-bold text-accent">
                   Akreditasi Program Studi
                 </p>
-                <p className="mt-auto pt-8 text-[28px] sm:text-[32px] font-extrabold leading-none tracking-[-0.03em] text-label break-words">
+                <p className="mt-auto pt-8 text-[24px] sm:text-[40px] font-extrabold leading-none tracking-[-0.03em] text-label break-words">
                   {identity.prodiAccreditation || "Baik Sekali"}
                 </p>
                 <Link

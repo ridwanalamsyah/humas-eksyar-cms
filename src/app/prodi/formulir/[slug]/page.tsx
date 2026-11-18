@@ -34,13 +34,13 @@ export default async function FormulirPage({ params }: Props) {
         <h1 className="mt-2 text-[clamp(2rem,1.5rem+2vw,3rem)] font-extrabold tracking-[-0.03em] text-label">
           {def.title}
         </h1>
-        <p className="mt-3 text-[17px] leading-[1.5] text-label-2">
+        <p className="mt-3 text-[16px] leading-[1.5] text-label-2">
           {def.description}
         </p>
         <div className="mt-10 rounded-[28px] border border-hairline bg-canvas p-6 sm:p-8">
           <FormRenderer def={def} options={options} />
         </div>
-        <p className="mt-4 text-[13px] text-label-3">
+        <p className="mt-4 text-[14px] text-label-3">
           Data Anda hanya digunakan oleh pengelola Program Studi Ekonomi Syariah
           untuk keperluan formulir ini.
         </p>

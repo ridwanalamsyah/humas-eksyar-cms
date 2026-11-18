@@ -67,7 +67,7 @@ export default async function BeritaDetailPage({ params }: Props) {
     <>
       <article className="px-4 pb-24 pt-12 sm:px-6 sm:pt-20">
         <header className="mx-auto max-w-[720px]">
-          <div className="flex items-center gap-2 text-[12px] font-semibold uppercase tracking-[0.05em] text-label-2">
+          <div className="flex items-center gap-2 text-[14px] font-semibold uppercase tracking-[0.05em] text-label-2">
             <Link href="/prodi/berita" className="hover:text-accent transition-colors">
               Artikel & Berita
             </Link>
@@ -95,16 +95,16 @@ export default async function BeritaDetailPage({ params }: Props) {
                 </div>
               )}
               <div>
-                <p className="text-[14.5px] font-bold text-label">
+                <p className="text-[14px] font-bold text-label">
                   {authorName}
                 </p>
-                <p className="text-[12px] text-label-3">
+                <p className="text-[14px] text-label-3">
                   {authorRole}
                 </p>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 text-[13px] text-label-2">
+            <div className="flex items-center gap-3 text-[14px] text-label-2">
               <time dateTime={date}>{formatLongDate(date)}</time>
               <span>·</span>
               <span className="rounded-md bg-mist px-2.5 py-0.5 font-medium text-label-2">
@@ -134,7 +134,7 @@ export default async function BeritaDetailPage({ params }: Props) {
               />
             </div>
             {cover.alt && (
-              <figcaption className="mx-auto mt-3 max-w-[720px] text-[13.5px] text-label-2">
+              <figcaption className="mx-auto mt-3 max-w-[720px] text-[14px] text-label-2">
                 {cover.alt}
               </figcaption>
             )}
@@ -156,22 +156,22 @@ export default async function BeritaDetailPage({ params }: Props) {
                 className="size-16 shrink-0 rounded-2xl object-cover ring-2 ring-accent/25"
               />
             ) : (
-              <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-accent/12 text-[20px] font-bold text-accent ring-2 ring-accent/25">
+              <div className="flex size-16 shrink-0 items-center justify-center rounded-2xl bg-accent/12 text-[18px] font-bold text-accent ring-2 ring-accent/25">
                 {author?.initials || "ES"}
               </div>
             )}
             <div className="flex-1 text-center sm:text-left">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                 <div>
-                  <h3 className="text-[17px] font-bold text-label">
+                  <h3 className="text-[16px] font-bold text-label">
                     {authorName}
                   </h3>
-                  <p className="text-[12.5px] font-semibold text-accent">
+                  <p className="text-[14px] font-semibold text-accent">
                     {authorRole}
                   </p>
                 </div>
                 {author?.angkatan && (
-                  <span className="inline-block self-center sm:self-auto rounded-md bg-mist px-2.5 py-0.5 text-[11px] font-semibold text-label-3">
+                  <span className="inline-block self-center sm:self-auto rounded-md bg-mist px-2.5 py-0.5 text-[14px] font-semibold text-label-3">
                     Angkatan {author.angkatan}
                   </span>
                 )}
@@ -180,7 +180,7 @@ export default async function BeritaDetailPage({ params }: Props) {
                 {authorBio}
               </p>
               {author?.email && (
-                <p className="mt-3 text-[12px] text-label-3">
+                <p className="mt-3 text-[14px] text-label-3">
                   Kontak:{" "}
                   <a href={`mailto:${author.email}`} className="text-accent hover:underline">
                     {author.email}
@@ -193,7 +193,7 @@ export default async function BeritaDetailPage({ params }: Props) {
 
         <footer className="mx-auto mt-10 max-w-[720px] border-t border-hairline pt-6">
           {item.hashtags && (
-            <p className="text-[13.5px] text-label-2">{item.hashtags}</p>
+            <p className="text-[14px] text-label-2">{item.hashtags}</p>
           )}
           <div className="mt-4">
             <ShareBar title={cleanTitle} />
@@ -204,7 +204,7 @@ export default async function BeritaDetailPage({ params }: Props) {
       {related.length > 0 && (
         <section className="bg-mist px-4 py-20 sm:px-6">
           <div className="mx-auto max-w-[1024px]">
-            <h2 className="text-[26px] font-bold tracking-[-0.02em] text-label">
+            <h2 className="text-[24px] font-bold tracking-[-0.02em] text-label">
               Artikel & Berita Terkait
             </h2>
             <div className="mt-7 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

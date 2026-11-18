@@ -51,7 +51,7 @@ export function KegiatanExplorer({ items }: { items: Kegiatan[] }) {
               aria-label="Tahun"
               value={year}
               onChange={(e) => setYear(e.target.value)}
-              className="rounded-full border border-hairline bg-canvas px-4 py-2.5 text-[15px] text-label outline-none focus:border-accent"
+              className="rounded-full border border-hairline bg-canvas px-4 py-2.5 text-[16px] text-label outline-none focus:border-accent"
             >
               {years.map((y) => (
                 <option key={y} value={y}>
