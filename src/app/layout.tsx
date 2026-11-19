@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { SITE_URL } from "@/lib/site/url";
 import { Geist, Geist_Mono, Inter, Inter_Tight, Fraunces } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/theme-provider";
@@ -40,6 +41,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "Eksyar — Program Studi Ekonomi Syariah UIN Sunan Gunung Djati Bandung",
     template: "%s · Eksyar UIN SGD",

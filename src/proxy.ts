@@ -34,6 +34,8 @@ const PUBLIC_PREFIXES = [
   "/verifikasi",
   "/link",
   "/manifest",
+  "/robots.txt",
+  "/sitemap.xml",
   "/sw",
   "/icon-",
 ];
