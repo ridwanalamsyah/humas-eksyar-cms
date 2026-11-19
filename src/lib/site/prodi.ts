@@ -34,7 +34,7 @@ export const prodi = {
   totalCredits: 148,
   maxSemesters: 14,
   normalDuration: "8 semester",
-  prodiAccreditation: "Baik Sekali",
+  prodiAccreditation: "Unggul",
   universityAccreditation: "Unggul",
   universityAccreditationPeriod: "2024–2029",
   officialSite: "https://es.uinsgd.ac.id",

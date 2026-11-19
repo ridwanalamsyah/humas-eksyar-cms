@@ -89,7 +89,7 @@ export default async function ProdiHomePage() {
   const custom = identity.heroTitle && identity.heroTitle !== prodi.name ? identity.heroTitle : null;
   const heroMain = custom ?? prodi.name;
   const heroSub = custom ? "" : prodi.university;
-  const akreditasi = identity.universityAccreditation || "Unggul";
+  const akreditasi = identity.prodiAccreditation || identity.universityAccreditation || "Unggul";
   const heroStats = [
     { value: akreditasi, label: "Akreditasi" },
     { num: identity.totalCredits, suffix: " SKS", label: "Kurikulum OBE" },

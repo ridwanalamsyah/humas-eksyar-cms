@@ -403,7 +403,13 @@ function cropPersonPhotos<T>(value: T): T {
 
 export const getSite = cache(async (): Promise<WebsiteConfig> => {
   try {
-    return cropPersonPhotos(mergeWebsiteConfig(await getWebsiteContent()));
+    const site = cropPersonPhotos(mergeWebsiteConfig(await getWebsiteContent()));
+    // Prodi sudah terakreditasi Unggul; nilai lama yang tersimpan di database
+    // ("Baik Sekali") tidak boleh lagi tampil.
+    if (/^baik sekali$/i.test(site.identity.prodiAccreditation?.trim() ?? "")) {
+      site.identity = { ...site.identity, prodiAccreditation: "Unggul" };
+    }
+    return site;
   } catch {
     return defaultWebsiteConfig;
   }
