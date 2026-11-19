@@ -3,22 +3,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnimatePresence, motion } from "motion/react";
-import {
-  ArrowRight,
-  BookOpen,
-  FileCheck2,
-  GraduationCap,
-  Search,
-  UserRound,
-  X,
-} from "lucide-react";
+import { ArrowRight, Search, X } from "lucide-react";
 import { dosen, kurikulum, navGroups } from "@/lib/site/prodi";
 import { dosenSlug } from "@/lib/site/names";
 import { kamusAwal } from "@/lib/site/kamus-data";
 
 type PaletteItem = {
   id: string;
-  category: "Halaman & Layanan" | "Dosen & Pimpinan" | "Mata Kuliah" | "Kamus Ekonomi Syariah";
+  category: "Halaman" | "Dosen" | "Mata kuliah" | "Kamus";
   title: string;
   subtitle: string;
   href: string;
@@ -29,7 +21,7 @@ const STATIC_ITEMS: PaletteItem[] = [
   ...navGroups.flatMap((g) => [
     {
       id: `nav-${g.href}`,
-      category: "Halaman & Layanan" as const,
+      category: "Halaman" as const,
       title: g.label,
       subtitle: `Halaman utama ${g.label}`,
       href: g.href,
@@ -37,7 +29,7 @@ const STATIC_ITEMS: PaletteItem[] = [
     },
     ...(g.items ?? []).map((it) => ({
       id: `sub-${it.href}`,
-      category: "Halaman & Layanan" as const,
+      category: "Halaman" as const,
       title: it.label,
       subtitle: it.description ?? g.label,
       href: it.href,
@@ -46,7 +38,7 @@ const STATIC_ITEMS: PaletteItem[] = [
   ]),
   ...dosen.map((d) => ({
     id: `dosen-${d.name}`,
-    category: "Dosen & Pimpinan" as const,
+    category: "Dosen" as const,
     title: d.name,
     subtitle: `${d.role} · ${(d.expertise ?? []).join(", ")}`,
     href: `/prodi/dosen/${dosenSlug(d.name)}`,
@@ -56,7 +48,7 @@ const STATIC_ITEMS: PaletteItem[] = [
     yr.semesters.flatMap((sem) =>
       sem.courses.map((c) => ({
         id: `mk-${sem.name}-${c}`,
-        category: "Mata Kuliah" as const,
+        category: "Mata kuliah" as const,
         title: c,
         subtitle: `${sem.name} · ${yr.label} Kurikulum S1 Ekonomi Syariah`,
         href: "/prodi/akademik#kurikulum",
@@ -66,13 +58,23 @@ const STATIC_ITEMS: PaletteItem[] = [
   ),
   ...kamusAwal.slice(0, 30).map((k) => ({
     id: `kamus-${k.istilah}`,
-    category: "Kamus Ekonomi Syariah" as const,
+    category: "Kamus" as const,
     title: k.istilah,
     subtitle: k.arti,
     href: `/prodi/alat?q=${encodeURIComponent(k.istilah)}#kamus`,
     keywords: `${k.istilah} ${k.arti} ${k.kategori ?? ""}`,
   })),
 ];
+
+/** Ditampilkan saat kolom masih kosong. */
+const POPULAR: PaletteItem[] = [
+  ["/prodi/skripsi", "Direktori skripsi"],
+  ["/prodi/akademik", "Kurikulum & RPS"],
+  ["/prodi/dosen", "Dosen & staf"],
+  ["/prodi/beasiswa", "Beasiswa"],
+  ["/prodi/kalender", "Kalender akademik"],
+  ["/prodi/berita", "Berita & Buletin"],
+].map(([href, title]) => ({ id: `pop-${href}`, category: "Halaman", title, subtitle: "", href, keywords: title }));
 
 export function ProdiCommandPalette({
   open,
@@ -86,16 +88,18 @@ export function ProdiCommandPalette({
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (open) {
-      setTimeout(() => inputRef.current?.focus(), 60);
-    } else {
-      setQuery("");
-    }
+    if (open) setTimeout(() => inputRef.current?.focus(), 60);
   }, [open]);
+
+  // Teks dikosongkan saat ditutup, supaya dibuka lagi mulai dari awal.
+  const close = () => {
+    setQuery("");
+    onClose();
+  };
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return STATIC_ITEMS.slice(0, 10);
+    if (!q) return POPULAR;
     const tokens = q.split(/\s+/).filter(Boolean);
     return STATIC_ITEMS.filter((item) => {
       const hay = `${item.title} ${item.subtitle} ${item.keywords}`.toLowerCase();
@@ -104,22 +108,12 @@ export function ProdiCommandPalette({
   }, [query]);
 
   const go = (href: string) => {
-    onClose();
+    close();
     router.push(href);
   };
 
-  const iconFor = (cat: PaletteItem["category"]) => {
-    switch (cat) {
-      case "Dosen & Pimpinan":
-        return UserRound;
-      case "Mata Kuliah":
-        return GraduationCap;
-      case "Kamus Ekonomi Syariah":
-        return BookOpen;
-      default:
-        return FileCheck2;
-    }
-  };
+  const q = query.trim();
+  const search = () => go(`/prodi/cari?q=${encodeURIComponent(q)}`);
 
   return (
     <AnimatePresence>
@@ -128,124 +122,105 @@ export function ProdiCommandPalette({
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.16 }}
-          className="fixed inset-0 z-[80] flex items-start justify-center bg-navy/45 px-4 pt-10 pb-8 backdrop-blur-xs sm:pt-20"
-          onClick={onClose}
+          transition={{ duration: 0.15 }}
+          className="fixed inset-0 z-[80] flex items-start justify-center bg-navy/40 backdrop-blur-xs sm:px-4 sm:pt-24"
+          onClick={close}
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.97, y: -8 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.97, y: -8 }}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.18, ease: [0.22, 1, 0.36, 1] }}
             onClick={(e) => e.stopPropagation()}
-            className="flex w-full max-w-2xl max-h-[84dvh] sm:max-h-[78vh] flex-col overflow-hidden rounded-[24px] border border-hairline bg-canvas shadow-[0_24px_64px_rgba(12,35,64,0.28)]"
+            role="dialog"
+            aria-label="Cari di website"
+            className="flex h-dvh w-full flex-col overflow-hidden bg-canvas sm:h-auto sm:max-h-[70vh] sm:max-w-xl sm:rounded-[20px] sm:shadow-[0_24px_64px_rgba(12,35,64,0.25)]"
           >
+            {/* Kolom cari */}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                if (query.trim()) {
-                  go(`/prodi/cari?q=${encodeURIComponent(query.trim())}`);
-                } else if (filtered[0]) {
-                  go(filtered[0].href);
-                }
+                if (q) search();
+                else if (filtered[0]) go(filtered[0].href);
               }}
-              className="flex shrink-0 items-center gap-3 border-b border-hairline px-4 py-3.5 sm:px-5"
+              className="flex shrink-0 items-center gap-3 border-b border-hairline px-4 py-2 sm:px-5"
             >
-              <Search className="size-5 shrink-0 text-accent" />
+              <Search className="size-5 shrink-0 text-label-3" />
               <input
                 ref={inputRef}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Cari dosen, skripsi, mata kuliah, beasiswa, atau istilah syariah…"
-                className="min-w-0 flex-1 bg-transparent text-[16px] text-label outline-none placeholder:text-label-3"
+                placeholder="Cari di website"
+                enterKeyHint="search"
+                className="search-input h-12 min-w-0 flex-1 bg-transparent text-[16px] text-label outline-none placeholder:text-label-3"
               />
               {query && (
                 <button
                   type="button"
                   onClick={() => setQuery("")}
-                  className="rounded-xl p-1 text-label-3 hover:bg-mist hover:text-label"
-                  aria-label="Bersihkan pencarian"
+                  className="grid size-9 place-items-center rounded-full text-label-3 hover:bg-mist hover:text-label"
+                  aria-label="Hapus teks"
                 >
                   <X className="size-4" />
                 </button>
               )}
               <button
                 type="button"
-                onClick={onClose}
-                className="rounded-lg border border-hairline bg-mist px-2 py-1 text-[14px] font-semibold text-label-2 hover:text-label"
+                onClick={close}
+                className="min-h-11 shrink-0 text-[15px] font-semibold text-accent sm:hidden"
               >
-                ESC
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={close}
+                aria-label="Tutup"
+                className="hidden size-9 place-items-center rounded-full text-label-3 hover:bg-mist hover:text-label sm:grid"
+              >
+                <X className="size-5" />
               </button>
             </form>
 
-            <div
-              className="flex-1 min-h-0 overflow-y-auto overscroll-contain p-2 sm:p-3 scroll-smooth"
-              style={{ WebkitOverflowScrolling: "touch" }}
-            >
-              {query.trim().length > 0 && (
+            {/* Hasil */}
+            <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 pb-6 sm:px-5 sm:pb-4">
+              {q && (
                 <button
                   type="button"
-                  onClick={() =>
-                    go(`/prodi/cari?q=${encodeURIComponent(query.trim())}`)
-                  }
-                  className="mb-2 flex w-full items-center justify-between gap-3 rounded-2xl border border-accent/25 bg-accent-soft/60 px-4 py-3 text-left transition-colors hover:bg-accent-soft"
+                  onClick={search}
+                  className="flex w-full items-center justify-between gap-3 border-b border-hairline py-3.5 text-left"
                 >
-                  <span className="flex items-center gap-2.5 min-w-0">
-                    <FileCheck2 className="size-4 shrink-0 text-accent" />
-                    <span className="truncate text-[14px] font-semibold text-label">
-                      Telusuri &ldquo;{query.trim()}&rdquo; di Judul Skripsi, Berita & Dokumen
-                    </span>
+                  <span className="min-w-0 truncate text-[15px] text-label">
+                    Cari &ldquo;<span className="font-semibold">{q}</span>&rdquo; di semua halaman
                   </span>
                   <ArrowRight className="size-4 shrink-0 text-accent" />
                 </button>
               )}
 
+              {!q && <p className="pb-1 pt-4 text-[13px] font-semibold text-label-3">Sering dicari</p>}
+
               {filtered.length > 0 ? (
-                <ul className="space-y-1">
-                  {filtered.map((item) => {
-                    const Icon = iconFor(item.category);
-                    return (
-                      <li key={item.id}>
-                        <button
-                          type="button"
-                          onClick={() => go(item.href)}
-                          className="group flex w-full items-center justify-between gap-3 rounded-xl px-3.5 py-2.5 text-left transition-colors hover:bg-mist"
-                        >
-                          <span className="flex min-w-0 items-center gap-3">
-                            <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-mist text-accent group-hover:bg-canvas">
-                              <Icon className="size-4" />
-                            </span>
-                            <span className="min-w-0">
-                              <span className="block truncate text-[14px] font-semibold text-label group-hover:text-accent">
-                                {item.title}
-                              </span>
-                              <span className="block truncate text-[14px] text-label-2">
-                                {item.category} · {item.subtitle}
-                              </span>
-                            </span>
-                          </span>
-                          <ArrowRight className="size-3.5 shrink-0 text-label-3 transition-transform group-hover:translate-x-0.5 group-hover:text-accent" />
-                        </button>
-                      </li>
-                    );
-                  })}
+                <ul className="divide-y divide-hairline">
+                  {filtered.map((item) => (
+                    <li key={item.id}>
+                      <button
+                        type="button"
+                        onClick={() => go(item.href)}
+                        className="group flex w-full items-baseline justify-between gap-4 py-3 text-left"
+                      >
+                        <span className="min-w-0 truncate text-[15px] font-medium text-label group-hover:text-accent">
+                          {item.title}
+                        </span>
+                        {q && <span className="shrink-0 text-[13px] text-label-3">{item.category}</span>}
+                      </button>
+                    </li>
+                  ))}
                 </ul>
               ) : (
-                <div className="py-12 text-center">
-                  <p className="text-[14px] font-semibold text-label">
-                    Tidak ada hasil langsung untuk &ldquo;{query}&rdquo;
-                  </p>
-                  <p className="mt-1 text-[14px] text-label-2">
-                    Tekan Enter untuk menelusuri di seluruh basis data prodi.
-                  </p>
-                </div>
+                <p className="py-10 text-center text-[15px] text-label-2">
+                  Tidak ada halaman yang cocok. Tekan Enter untuk mencari di semua isi website.
+                </p>
               )}
             </div>
-
-            <footer className="flex shrink-0 items-center justify-between border-t border-hairline bg-mist/40 px-4 py-2.5 text-[14px] text-label-3 sm:px-5">
-              <span>Navigasi cepat Program Studi Ekonomi Syariah</span>
-              <span>Gunakan tombol panah &amp; Enter</span>
-            </footer>
           </motion.div>
         </motion.div>
       )}
