@@ -84,13 +84,13 @@ export function Sidebar({ member }: { member: Member }) {
         </motion.div>
         <span className="leading-tight">
           <span className="block text-[14px] font-semibold tracking-tight transition-colors group-hover:text-brand-600 dark:group-hover:text-brand-300">
-            CMS Humas Eksyar
+            Humas Eksyar
           </span>
           <span className="block text-[13px] text-foreground/60">Ekonomi Syariah UIN SGD</span>
         </span>
       </Link>
 
-      <nav aria-label="Navigasi CMS" className="flex-1 overflow-y-auto px-3 pb-4">
+      <nav aria-label="Navigasi Humas Eksyar" className="flex-1 overflow-y-auto px-3 pb-4">
         {groupsFor(member.role).map((g) => (
           <div key={g.title} className="mt-4 first:mt-1">
             <p className="px-2 pb-1 text-[13px] font-medium text-foreground/60">{g.title}</p>

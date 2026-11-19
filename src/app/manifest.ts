@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Eksyar — Program Studi Ekonomi Syariah UIN SGD",
     short_name: "Eksyar",
     description:
-      "Portal resmi & CMS Humas Jurusan Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.",
+      "Website resmi Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.",
     start_url: "/prodi",
     scope: "/",
     display: "standalone",
@@ -15,9 +15,9 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ["education", "productivity"],
     lang: "id",
     icons: [
-      { src: "/prodi/icon-eksyar.png", sizes: "192x192", type: "image/png", purpose: "any" },
-      { src: "/prodi/icon-eksyar.png", sizes: "512x512", type: "image/png", purpose: "any" },
-      { src: "/prodi/icon-eksyar.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
+      { src: "/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
+      { src: "/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" },
     ],
     shortcuts: [
       {
@@ -35,8 +35,8 @@ export default function manifest(): MetadataRoute.Manifest {
         icons: [{ src: "/prodi/icon-eksyar.png", sizes: "192x192" }],
       },
       {
-        name: "Dashboard CMS Humas",
-        short_name: "CMS",
+        name: "Panel Humas Eksyar",
+        short_name: "Humas",
         description: "Kelola website & publikasi",
         url: "/dashboard",
         icons: [{ src: "/prodi/icon-eksyar.png", sizes: "192x192" }],

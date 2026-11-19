@@ -47,7 +47,7 @@ export const metadata: Metadata = {
     template: "%s · Eksyar UIN SGD",
   },
   description:
-    "Portal resmi & CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, kurikulum, direktori dosen, skripsi Digilib, artikel mahasiswa, dan kegiatan akademik.",
+    "Website resmi Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, kurikulum, direktori dosen, skripsi Digilib, artikel mahasiswa, dan kegiatan akademik.",
   applicationName: "Eksyar",
   authors: [{ name: "Program Studi Ekonomi Syariah UIN SGD" }],
   icons: {
@@ -62,7 +62,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Eksyar — Program Studi Ekonomi Syariah UIN SGD",
     description:
-      "Portal resmi & CMS Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, kurikulum, direktori dosen, skripsi Digilib, artikel mahasiswa, dan kegiatan akademik.",
+      "Website resmi Program Studi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung: profil prodi, kurikulum, direktori dosen, skripsi Digilib, artikel mahasiswa, dan kegiatan akademik.",
     type: "website",
     images: [{ url: "/prodi/og-eksyar.jpg", width: 1200, height: 630, alt: "Ekonomi Syariah UIN Sunan Gunung Djati Bandung" }],
   },

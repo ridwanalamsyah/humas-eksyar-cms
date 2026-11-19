@@ -117,7 +117,7 @@ function CommandPalette({ open, setOpen }: Props) {
                 </Command.Group>
 
                 <Command.Group heading="Navigasi" className="cmd-group">
-                  <CmdItem onSelect={() => go("/")} icon={<Zap className="size-4" />} label="Beranda CMS" />
+                  <CmdItem onSelect={() => go("/")} icon={<Zap className="size-4" />} label="Beranda Humas" />
                   <CmdItem onSelect={() => go("/content")} icon={<PenLine className="size-4" />} label="Konten" />
                   <CmdItem onSelect={() => go("/calendar")} icon={<CalendarDays className="size-4" />} label="Kalender" />
                   <CmdItem onSelect={() => go("/members")} icon={<Users className="size-4" />} label="Anggota" />

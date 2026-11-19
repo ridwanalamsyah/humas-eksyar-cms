@@ -645,7 +645,7 @@ const RAW_TABS: { value: string; label: string; sections: SectionSpec[] }[] = [
       {
         key: "kegiatan",
         title: "Sorotan kegiatan",
-        hint: "Tampil di beranda (saat belum ada berita CMS), halaman Mahasiswa, dan Berita.",
+        hint: "Tampil di beranda (saat belum ada berita), halaman Mahasiswa, dan Berita.",
         kind: "list",
         itemTitle: (k) => String(k.title || "Kegiatan baru"),
         fields: [
