@@ -72,15 +72,15 @@ const nim: FormField = { name: "nim", label: "NIM", type: "text", max: 20 };
 export const FORMS: FormDef[] = [
   {
     slug: "buletin-artikel",
-    title: "Kirim Buletin Artikel HMJ",
+    title: "Kirim Buletin Mahasiswa",
     description:
-      "Program kolaborasi HMJ Ekonomi Syariah & Prodi: kirimkan naskah Buletin Artikel, opini ilmiah populer, atau liputan kajian mahasiswa untuk diterbitkan di website resmi prodi.",
+      "Kirim naskah Buletin Mahasiswa: opini ilmiah populer atau liputan kajian mahasiswa untuk diterbitkan di website resmi prodi.",
     group: "Mahasiswa",
     titleField: "judul",
     success:
-      "Naskah Buletin Artikel berhasil dikirim ke redaksi Humas & Prodi Ekonomi Syariah untuk ditinjau dan dipublikasikan.",
+      "Naskah Buletin Mahasiswa berhasil dikirim ke redaksi Humas & Prodi Ekonomi Syariah untuk ditinjau dan dipublikasikan.",
     consent:
-      "Saya menyatakan artikel ini karya asli dan menyetujui publikasinya di rubrik Buletin Artikel HMJ pada website Prodi Ekonomi Syariah.",
+      "Saya menyatakan artikel ini karya asli dan menyetujui publikasinya di rubrik Buletin Mahasiswa pada website Prodi Ekonomi Syariah.",
     fields: [
       nama,
       nim,

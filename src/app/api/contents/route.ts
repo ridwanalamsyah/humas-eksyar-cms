@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
   const hmj = member.role === "anggota";
   if (hmj && body.rubric !== BULETIN_HMJ_RUBRIC) {
     return NextResponse.json(
-      { error: "Akun HMJ hanya bisa menulis Buletin Artikel HMJ." },
+      { error: "Akun Penulis Buletin hanya bisa menulis Buletin Mahasiswa." },
       { status: 403 },
     );
   }

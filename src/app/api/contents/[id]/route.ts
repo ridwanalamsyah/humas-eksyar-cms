@@ -63,7 +63,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   if (member.role === "anggota") {
     if (prev.authorId !== member.id) {
       return NextResponse.json(
-        { error: "Akun HMJ hanya bisa mengubah tulisannya sendiri." },
+        { error: "Akun Penulis Buletin hanya bisa mengubah tulisannya sendiri." },
         { status: 403 },
       );
     }

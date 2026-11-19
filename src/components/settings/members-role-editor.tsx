@@ -20,7 +20,7 @@ type PillTone = "neutral" | "brand" | "gold" | "danger" | "success" | "info";
 
 const ROLES: { value: Role; label: string; desc: string; tone: PillTone }[] = [
   { value: "monitoring", label: "Pembina", desc: "Hanya bisa melihat (cocok untuk dosen pembina).", tone: "neutral" },
-  { value: "anggota", label: "Penulis HMJ", desc: "Untuk pengurus HMJ: hanya menulis Buletin Artikel HMJ dan mengunggah fotonya. Terbit setelah diperiksa Humas.", tone: "neutral" },
+  { value: "anggota", label: "Penulis Buletin", desc: "Untuk mahasiswa penulis: hanya menulis Buletin Mahasiswa dan mengunggah fotonya. Terbit setelah diperiksa Humas.", tone: "neutral" },
   { value: "pengurus", label: "Pengurus", desc: "Menulis dan ikut menyunting konten.", tone: "info" },
   { value: "ketua_divisi", label: "Koordinator", desc: "Memeriksa konten kiriman tim.", tone: "gold" },
   { value: "sekjen", label: "Sekretaris", desc: "Mengoordinasikan antartim.", tone: "gold" },

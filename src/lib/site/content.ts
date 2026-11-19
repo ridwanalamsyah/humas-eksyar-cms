@@ -72,7 +72,7 @@ export function contentExcerpt(item: ContentItem, max = 180): string {
 }
 
 const RUBRIC_LABELS: Record<string, string> = {
-  buletin_hmj: "Buletin Artikel HMJ",
+  buletin_hmj: "Buletin Mahasiswa",
   pengumuman: "Pengumuman",
   rilis_pers: "Rilis Pers",
   dokumentasi: "Kegiatan",

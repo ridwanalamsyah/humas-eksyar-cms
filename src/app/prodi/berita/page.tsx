@@ -15,9 +15,9 @@ import { cn } from "@/lib/utils";
 import { getSite } from "@/lib/site/get-site";
 
 export const metadata: Metadata = {
-  title: "Berita & Buletin Artikel HMJ",
+  title: "Berita & Buletin Mahasiswa",
   description:
-    "Berita resmi, pengumuman akademik, dan Buletin Artikel kolaborasi HMJ Ekonomi Syariah UIN Sunan Gunung Djati Bandung.",
+    "Berita resmi, pengumuman akademik, dan Buletin Mahasiswa Ekonomi Syariah UIN Sunan Gunung Djati Bandung.",
 };
 
 export const revalidate = 300;
@@ -25,7 +25,7 @@ export const revalidate = 300;
 const TABS = [
   { key: "semua", label: "Semua" },
   { key: "berita", label: "Prodi" },
-  { key: "buletin_hmj", label: "Buletin HMJ" },
+  { key: "buletin_hmj", label: "Buletin Mahasiswa" },
   { key: "pengumuman", label: "Pengumuman" },
 ] as const;
 
