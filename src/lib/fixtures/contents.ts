@@ -19,9 +19,7 @@ export const contents: ContentItem[] = [
     status: "published",
     divisionId: "div-humas-eksyar",
     authorId: "mbr-husen",
-    body: `*Program Kolaborasi Buletin Artikel — Himpunan Mahasiswa Jurusan (HMJ) Ekonomi Syariah & Humas Prodi Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.*
-
-Implementasi kewajiban sertifikasi halal bagi produk makanan dan minuman usaha mikro dan kecil (UMK) membuka ruang kontribusi yang sangat luas bagi mahasiswa Ekonomi Syariah. Melalui skema *self-declare* pada program Sertifikasi Halal Gratis (SEHATI) BPJPH, keberadaan Pendamping Proses Produk Halal (P3H) menjadi kunci utama percepatan ekosistem halal di daerah.
+    body: `Implementasi kewajiban sertifikasi halal bagi produk makanan dan minuman usaha mikro dan kecil (UMK) membuka ruang kontribusi yang sangat luas bagi mahasiswa Ekonomi Syariah. Melalui skema *self-declare* pada program Sertifikasi Halal Gratis (SEHATI) BPJPH, keberadaan Pendamping Proses Produk Halal (P3H) menjadi kunci utama percepatan ekosistem halal di daerah.
 
 ## Tiga Peran Strategis Mahasiswa Ekonomi Syariah
 1. **Edukasi Titik Kritis Kehalalan Bahan**: Membantu pelaku UMKM mengidentifikasi bahan baku, bahan tambahan pangan, dan proses produksi yang bebas dari unsur non-halal sesuai standar SJPH.
@@ -59,9 +57,7 @@ Melalui program **Buletin Artikel HMJ Ekonomi Syariah**, mahasiswa didorong untu
     status: "published",
     divisionId: "div-humas-eksyar",
     authorId: "mbr-alya",
-    body: `*Program Kolaborasi Buletin Artikel — Bidang Kajian Keilmuan HMJ Ekonomi Syariah, KSPM GIS BEI FEBI, & Prodi Ekonomi Syariah UIN Sunan Gunung Djati Bandung.*
-
-Perkembangan pasar modal syariah di Indonesia menunjukkan tren positif seiring meningkatnya jumlah investor muda dari kalangan mahasiswa. Dua instrumen yang kini menjadi sorotan utama dalam arsitektur keuangan berkelanjutan (*sustainable finance*) adalah **Green Sukuk** (Sukuk Hijau) dan **Saham Syariah** yang tergabung dalam Indeks Saham Syariah Indonesia (ISSI).
+    body: `Perkembangan pasar modal syariah di Indonesia menunjukkan tren positif seiring meningkatnya jumlah investor muda dari kalangan mahasiswa. Dua instrumen yang kini menjadi sorotan utama dalam arsitektur keuangan berkelanjutan (*sustainable finance*) adalah **Green Sukuk** (Sukuk Hijau) dan **Saham Syariah** yang tergabung dalam Indeks Saham Syariah Indonesia (ISSI).
 
 ## Mengapa Green Sukuk Relevan dengan Maqashid Syariah?
 Penerbitan Green Sukuk tidak hanya memenuhi prinsip bebas *riba*, *gharar*, dan *maisir*, tetapi juga secara langsung membiayai proyek energi terbarukan, transportasi ramah lingkungan, serta pengelolaan limbah berkelanjutan. Hal ini sejalan dengan penjagaan lingkungan hidup (*hifzh al-bi'ah*) sebagai bagian tak terpisahkan dari *Maqashid Syariah*.
@@ -97,14 +93,12 @@ Di lingkungan FEBI UIN SGD Bandung, mahasiswa dapat mempelajari analisis fundame
     status: "published",
     divisionId: "div-humas-eksyar",
     authorId: "mbr-ridwan",
-    body: `*Program Kolaborasi Buletin Artikel — Departemen Keilmuan & Jurnalistik HMJ Ekonomi Syariah FEBI UIN Sunan Gunung Djati Bandung.*
-
-Wakaf uang (*cash waqf*) memiliki potensi besar sebagai sumber pembiayaan sosial-ekonomi umat yang abadi pokoknya dan produktif manfaatnya. Di era pembayaran digital, integrasi kanal QRIS pada lembaga nazhir wakaf memungkinkan mahasiswa dan masyarakat berwakaf mulai dari nominal terjangkau secara transparan dan *real-time*.
+    body: `Wakaf uang (*cash waqf*) memiliki potensi besar sebagai sumber pembiayaan sosial-ekonomi umat yang abadi pokoknya dan produktif manfaatnya. Di era pembayaran digital, integrasi kanal QRIS pada lembaga nazhir wakaf memungkinkan mahasiswa dan masyarakat berwakaf mulai dari nominal terjangkau secara transparan dan *real-time*.
 
 ## Kunci Kepercayaan Muzakki dan Wakif Muda
 1. **Transparansi Laporan Dampak (*Impact Reporting*)**: Wakif generasi Z membutuhkan pembaruan berkala mengenai penyaluran hasil investasi wakaf, baik untuk beasiswa pendidikan maupun pemberdayaan usaha mikro.
 2. **Tata Kelola Nazhir Profesional**: Sinergi antara nazhir tersertifikasi BWI dengan lembaga keuangan syariah penerima wakaf uang (LKS-PWU).
-3. **Literasi Kampus**: Melalui kolaborasi Buletin Artikel HMJ dan mata kuliah Manajemen ZISWAF, mahasiswa Ekonomi Syariah UIN SGD terus mengampanyekan gerakan sadar wakaf produktif.`,
+3. **Literasi Kampus**: Melalui Buletin Mahasiswa dan mata kuliah Manajemen ZISWAF, mahasiswa Ekonomi Syariah UIN SGD terus mengampanyekan gerakan sadar wakaf produktif.`,
     caption:
       "Buletin Artikel HMJ Ekonomi Syariah Edisi I: Transformasi Wakaf Uang Digital melalui QRIS dan peran generasi muda dalam filantropi Islam.",
     hashtags: "#BuletinArtikelHMJ #HMJEksyar #WakafProduktif #ZISWAF #UINSGD",

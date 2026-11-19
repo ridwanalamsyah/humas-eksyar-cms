@@ -60,8 +60,16 @@ export function estimateReadingTime(text?: string | null): string {
 }
 
 /** Teks polos dari body markdown / caption, untuk ringkasan & meta description. */
+/**
+ * Buletin lama diawali baris "*Program Kolaborasi Buletin Artikel — …*".
+ * Baris pembuka seperti itu tidak ditampilkan lagi di website.
+ */
+export function stripProgramLine(text: string): string {
+  return text.replace(/^\s*\*?\s*Program Kolaborasi[^\n]*\n*/i, "").trimStart();
+}
+
 export function contentExcerpt(item: ContentItem, max = 180): string {
-  const source = item.body?.trim() || item.caption?.trim() || "";
+  const source = stripProgramLine(item.body?.trim() || item.caption?.trim() || "");
   const plain = source
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")

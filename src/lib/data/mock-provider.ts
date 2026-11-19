@@ -614,7 +614,7 @@ export async function setWebsiteContent(value: Record<string, unknown>): Promise
 
 const nowIso = new Date().toISOString();
 const rubricsStore: Rubric[] = [
-  { id: "rub-buletin-hmj", slug: "buletin_hmj", label: "Buletin Mahasiswa", description: "Program kolaborasi Buletin Artikel bersama HMJ Ekonomi Syariah yang tayang di website prodi.", emoji: "\u{1F4F0}", isActive: true, sortOrder: 1, createdAt: nowIso, updatedAt: nowIso },
+  { id: "rub-buletin-hmj", slug: "buletin_hmj", label: "Buletin Mahasiswa", description: "Tulisan mahasiswa Ekonomi Syariah yang tayang di website prodi.", emoji: "\u{1F4F0}", isActive: true, sortOrder: 1, createdAt: nowIso, updatedAt: nowIso },
   { id: "rub-refleksi-harian", slug: "refleksi_harian", label: "Refleksi harian", description: "Kutipan / refleksi pagi singkat.", emoji: "\u{1F305}", isActive: true, sortOrder: 2, createdAt: nowIso, updatedAt: nowIso },
   { id: "rub-pengumuman", slug: "pengumuman", label: "Pengumuman resmi", description: "Announcement resmi prodi.", emoji: "\u{1F4E3}", isActive: true, sortOrder: 3, createdAt: nowIso, updatedAt: nowIso },
   { id: "rub-kajian", slug: "kajian", label: "Kajian akademik", description: "Tema diskusi / kajian / seminar.", emoji: "\u{1F4D6}", isActive: true, sortOrder: 4, createdAt: nowIso, updatedAt: nowIso },
