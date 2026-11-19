@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { listEvents } from "@/lib/data/provider";
 import type { Event } from "@/lib/data/types";
-import { formatDateTime } from "@/lib/format/dates";
+import { formatDateTime, formatLongDate } from "@/lib/format/dates";
 import {
   coverFor,
   getMediaMap,
@@ -66,6 +66,7 @@ export default async function ProdiHomePage() {
   const articles = news
     .filter((n) => !isAnnouncement(n) && !isBuletinHmj(n))
     .slice(0, 3);
+  const buletin = news.filter(isBuletinHmj).slice(0, 3);
   const upcoming = events
     .filter((e) => PUBLIC_EVENT_CATEGORIES.includes(e.category))
     .slice(0, 3);
@@ -215,20 +216,50 @@ export default async function ProdiHomePage() {
           </div>
 
           <div className="mt-8 grid items-start gap-10 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)] lg:gap-8">
+            <div className="flex min-w-0 flex-col gap-12">
             {articles.length > 0 ? (
-              <div className="grid content-start gap-5 sm:grid-cols-2">
-                {articles.slice(0, 2).map((n) => (
-                  <NewsCard
-                    key={n.id}
-                    item={n}
-                    cover={coverFor(n, media)}
-                    author={members.get(n.authorId)}
-                  />
-                ))}
-              </div>
-            ) : (
-              <p className="text-[16px] text-label-2">Belum ada berita.</p>
-            )}
+                <div className="grid content-start gap-5 sm:grid-cols-2">
+                  {articles.slice(0, 2).map((n) => (
+                    <NewsCard
+                      key={n.id}
+                      item={n}
+                      cover={coverFor(n, media)}
+                      author={members.get(n.authorId)}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[16px] text-label-2">Belum ada berita.</p>
+              )}
+
+              {buletin.length > 0 && (
+                <div>
+                  <div className="flex items-center justify-between border-b border-hairline pb-3">
+                    <h3 className="text-[18px] font-bold text-label">Buletin Mahasiswa</h3>
+                    <Link
+                      href="/prodi/berita?kategori=buletin_hmj"
+                      className="text-[14px] font-semibold text-accent hover:underline"
+                    >
+                      Semua buletin
+                    </Link>
+                  </div>
+                  <ul className="divide-y divide-hairline">
+                    {buletin.map((n) => (
+                      <li key={n.id}>
+                        <Link href={`/prodi/berita/${n.slug}`} className="group block py-3">
+                          <p className="text-[14px] text-label-3">
+                            {formatLongDate(n.publishedAt ?? n.updatedAt)}
+                          </p>
+                          <p className="mt-0.5 line-clamp-2 text-[16px] font-semibold leading-snug text-label group-hover:text-accent">
+                            {n.title.replace(/^\[(?:Buletin\s+Artikel\s+HMJ|Buletin\s+HMJ)\]\s*/i, "")}
+                          </p>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
 
             <div className="flex min-w-0 flex-col gap-10">
               <div>
