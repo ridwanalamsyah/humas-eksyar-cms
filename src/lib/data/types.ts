@@ -33,7 +33,7 @@ export type Role =
 /** Nama peran yang ditampilkan ke pengguna. */
 export const ROLE_LABEL: Record<Role, string> = {
   monitoring: "Pembina",
-  anggota: "Penulis HMJ",
+  anggota: "Penulis Buletin",
   pengurus: "Pengurus",
   ketua_divisi: "Koordinator",
   sekjen: "Sekretaris",
