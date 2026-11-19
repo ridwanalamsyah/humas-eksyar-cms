@@ -13,7 +13,8 @@ type Props = {
   description: string;
   image: string;
   imageAlt: string;
-  accreditation: string;
+  /** Tidak lagi ditampilkan terpisah: sudah ada sebagai angka pertama di stats. */
+  accreditation?: string;
   stats: Stat[];
 };
 
@@ -41,7 +42,6 @@ export function InteractiveHero({
   description,
   image,
   imageAlt,
-  accreditation,
   stats,
 }: Props) {
   const [s1, s2, s3] = stats;
@@ -65,8 +65,7 @@ export function InteractiveHero({
               "linear-gradient(0deg, rgba(8,28,34,.78) 0%, rgba(8,28,34,.45) 40%, rgba(8,28,34,.05) 70%)",
           }}
         />
-        <p className="text-[14px] font-medium text-white/80">Akreditasi {accreditation}</p>
-        <h1 className="mt-2 text-balance text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em]">
+                <h1 className="mt-2 text-balance text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em]">
           {title}
           <span className="mt-2 block text-[20px] font-semibold leading-tight tracking-[-0.01em] text-white/85">
             {subtitle}
@@ -86,11 +85,11 @@ export function InteractiveHero({
             Cari skripsi
           </Link>
         </div>
-        <dl className="mt-6 flex gap-8 border-t border-white/20 pt-4">
-          {[s2, s3].filter(Boolean).map((s) => (
-            <div key={s.label} className="flex flex-col-reverse">
-              <dt className="text-[13px] text-white/75">{s.label}</dt>
-              <dd className="text-[24px] font-bold leading-tight tracking-[-0.02em]">
+        <dl className="mt-6 grid grid-cols-3 gap-3 border-t border-white/20 pt-4">
+          {[s1, s2, s3].filter(Boolean).map((s) => (
+            <div key={s.label} className="flex min-w-0 flex-col-reverse">
+              <dt className="truncate text-[13px] text-white/75">{s.label}</dt>
+              <dd className="truncate text-[22px] font-bold leading-tight tracking-[-0.02em]">
                 <StatValue s={s} />
               </dd>
             </div>

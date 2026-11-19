@@ -94,7 +94,7 @@ export function Sidebar({ member }: { member: Member }) {
         {groupsFor(member.role).map((g) => (
           <div key={g.title} className="mt-4 first:mt-1">
             <p className="px-2 pb-1 text-[13px] font-medium text-foreground/60">{g.title}</p>
-            <ul className="grid gap-0.5">
+            <ul className="grid grid-cols-1 gap-0.5">
               {g.items.map(({ href, label, icon: Icon, external }) => {
                 const active = !external && isActivePath(pathname, href);
                 return (

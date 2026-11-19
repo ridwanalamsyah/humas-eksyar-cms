@@ -82,7 +82,7 @@ function LoginInner() {
   };
 
   return (
-    <main className="grid min-h-dvh bg-white text-[#14201a] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
+    <main className="grid grid-cols-1 min-h-dvh bg-white text-[#14201a] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
       {/* Foto kampus di kiri (desktop saja) */}
       <aside className="relative hidden overflow-hidden bg-[#152e2b] lg:block">
         {/* eslint-disable-next-line @next/next/no-img-element */}

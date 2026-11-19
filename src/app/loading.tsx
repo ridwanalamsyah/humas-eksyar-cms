@@ -4,12 +4,12 @@ export default function Loading() {
       <div className="space-y-4">
         <Shimmer className="h-8 w-1/2" />
         <Shimmer className="h-4 w-2/3" />
-        <div className="grid gap-3 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           {Array.from({ length: 4 }).map((_, i) => (
             <Shimmer key={i} className="h-28 rounded-2xl" />
           ))}
         </div>
-        <div className="grid gap-4 pt-2 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+        <div className="grid grid-cols-1 gap-4 pt-2 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
           <Shimmer className="h-72 rounded-2xl" />
           <Shimmer className="h-72 rounded-2xl" />
         </div>

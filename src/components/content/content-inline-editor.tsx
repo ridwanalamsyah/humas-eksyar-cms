@@ -192,7 +192,7 @@ export function ContentInlineEditor({
         </div>
       </div>
 
-      <div className="mt-4 grid gap-4">
+      <div className="mt-4 grid grid-cols-1 gap-4">
         <Field label="Judul">
           <input
             value={title}

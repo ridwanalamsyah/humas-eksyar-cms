@@ -100,7 +100,7 @@ export function InboxView({
   }
 
   return (
-    <div className="mt-6 grid gap-5 lg:grid-cols-[220px_1fr]">
+    <div className="mt-6 grid grid-cols-1 gap-5 lg:grid-cols-[220px_1fr]">
       <nav className="flex gap-1 overflow-x-auto lg:flex-col">
         {forms.map((f) => (
           <button
@@ -158,7 +158,7 @@ export function InboxView({
         </div>
 
         {avg.length > 0 && list.length > 0 && (
-          <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-4">
             {avg.map((a) => (
               <div key={a.label} className="glass-regular rounded-xl px-4 py-3">
                 <p className="text-[13px] text-foreground/60">{a.label}</p>
@@ -173,7 +173,7 @@ export function InboxView({
           </div>
         )}
 
-        <div className="mt-4 grid gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
+        <div className="mt-4 grid grid-cols-1 gap-4 xl:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)]">
           <ul className="glass-regular max-h-[640px] divide-y divide-foreground/[0.06] overflow-y-auto rounded-xl">
             {list.length === 0 && (
               <li className="px-4 py-10 text-center text-[13px] text-foreground/60">
@@ -226,7 +226,7 @@ export function InboxView({
               call={call}
             />
           ) : (
-            <div className="glass-regular grid place-items-center rounded-xl p-10 text-[13px] text-foreground/60">
+            <div className="glass-regular grid grid-cols-1 place-items-center rounded-xl p-10 text-[13px] text-foreground/60">
               Pilih isian untuk melihat detail.
             </div>
           )}
@@ -263,7 +263,7 @@ function Detail({
 
   return (
     <div className="glass-regular rounded-xl p-5">
-      <dl className="grid gap-3 text-[13.5px]">
+      <dl className="grid grid-cols-1 gap-3 text-[13.5px]">
         {def.fields.map((f) =>
           sub.data[f.name] === undefined ? null : (
             <div key={f.name}>

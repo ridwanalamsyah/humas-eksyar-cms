@@ -72,7 +72,7 @@ export default async function AnalyticsPage() {
         description={`${contents.length} konten publish.`}
       />
 
-      <div className="mt-2 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-2 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <KPI
           icon={<Eye className="size-4" strokeWidth={1.75} />}
           label="Total views"
@@ -101,7 +101,7 @@ export default async function AnalyticsPage() {
         <AnalyticsCharts series={series} />
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <GlassCard className="p-5">
           <p className="text-[13px] text-foreground/60">
             Top 5 konten publish
@@ -115,7 +115,7 @@ export default async function AnalyticsPage() {
                   className="flex items-center justify-between gap-3 py-3"
                 >
                   <div className="flex min-w-0 items-center gap-3">
-                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-foreground/[0.04] font-mono text-[13px] font-semibold text-foreground/65 dark:bg-white/5">
+                    <span className="grid grid-cols-1 size-7 shrink-0 place-items-center rounded-full bg-foreground/[0.04] font-mono text-[13px] font-semibold text-foreground/65 dark:bg-white/5">
                       {i + 1}
                     </span>
                     <div className="min-w-0">

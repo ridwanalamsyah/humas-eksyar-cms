@@ -47,7 +47,7 @@ export function RepurposePanel({ contentId }: { contentId: string }) {
         Buat versi IG, WhatsApp & ringkasan
       </Button>
       {out && (
-        <div className="mt-3 grid gap-3 md:grid-cols-3">
+        <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-3">
           {items.map(([k, label]) => (
             <div key={k} className="glass-regular rounded-xl p-3">
               <div className="flex items-center justify-between">

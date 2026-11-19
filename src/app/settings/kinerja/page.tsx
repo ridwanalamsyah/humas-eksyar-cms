@@ -148,7 +148,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
         ))}
       </dl>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <BarChart
           title="Kunjungan per hari"
           unit="kunjungan"
@@ -159,7 +159,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
         <section className="glass-regular rounded-xl p-5">
           <h2 className="text-[14px] font-semibold">Halaman terpopuler</h2>
           {topPages.length ? (
-            <ol className="mt-3 grid gap-1.5 text-[13px]">
+            <ol className="mt-3 grid grid-cols-1 gap-1.5 text-[13px]">
               {topPages.map(([p, n]) => (
                 <li key={p} className="flex justify-between gap-3">
                   <span className="truncate">{p}</span>
@@ -177,12 +177,12 @@ export default async function KinerjaPage({ searchParams }: Props) {
         </section>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
         <section className="glass-regular rounded-xl p-5">
           <h2 className="text-[14px] font-semibold">
             Berita terbit ({newsMonth.length})
           </h2>
-          <ul className="mt-3 grid gap-1.5 text-[13px]">
+          <ul className="mt-3 grid grid-cols-1 gap-1.5 text-[13px]">
             {newsMonth.map((n) => (
               <li key={n.id} className="flex justify-between gap-3">
                 <span className="truncate">{n.title}</span>
@@ -200,7 +200,7 @@ export default async function KinerjaPage({ searchParams }: Props) {
           <h2 className="text-[14px] font-semibold">
             Formulir masuk ({subsMonth.length})
           </h2>
-          <ul className="mt-3 grid gap-1.5 text-[13px]">
+          <ul className="mt-3 grid grid-cols-1 gap-1.5 text-[13px]">
             {ACTIVE_FORMS.map((f) => {
               const n = subsMonth.filter((s) => s.type === f.slug).length;
               return n ? (

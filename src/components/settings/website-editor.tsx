@@ -1868,7 +1868,7 @@ export function WebsiteEditor({
       </div>
 
       {/* Render Kartu Bagian */}
-      <div className="mt-5 grid gap-5">
+      <div className="mt-5 grid grid-cols-1 gap-5">
         {displayedSections.map((section) => {
           const isCollapsed = focusedSection === "all" && !!collapsedMap[section.key];
           const rawVal = config[section.key];
@@ -2039,7 +2039,7 @@ function FieldGrid({
   onChange: (v: AnyObj) => void;
 }) {
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       {fields.map((f) => (
         <div key={f.name} className={cn(f.wide && "sm:col-span-2")}>
           <FieldInput
@@ -2632,7 +2632,7 @@ function ListEditor({
   };
 
   return (
-    <div className="grid gap-2">
+    <div className="grid grid-cols-1 gap-2">
       {list.map((item, i) => (
         <div
           key={i}
@@ -2752,15 +2752,15 @@ function KurikulumEditor({
         const semesters =
           (year.semesters as { name: string; courses: string[] }[]) ?? [];
         return (
-          <div className="grid gap-4">
+          <div className="grid grid-cols-1 gap-4">
             <FieldInput
               spec={{ name: "label", label: "Label tahun", type: "text" }}
               value={year.label}
               onChange={(v) => update({ ...year, label: v })}
             />
-            <div className="grid gap-4 sm:grid-cols-2">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {semesters.map((s, si) => (
-                <div key={si} className="grid gap-2">
+                <div key={si} className="grid grid-cols-1 gap-2">
                   <FieldInput
                     spec={{
                       name: "name",
@@ -2857,7 +2857,7 @@ function IconBtn({
       onClick={onClick}
       disabled={disabled}
       className={cn(
-        "grid size-7 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/5 disabled:opacity-30",
+        "grid grid-cols-1 size-7 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/5 disabled:opacity-30",
         danger ? "hover:text-red-500" : "hover:text-foreground",
       )}
     >

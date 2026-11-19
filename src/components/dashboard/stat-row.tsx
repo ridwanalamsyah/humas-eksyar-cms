@@ -76,7 +76,7 @@ export function StatRow({
             className="flex h-full flex-col justify-between gap-3 p-4"
           >
             <div className="flex items-center justify-between">
-              <span className={`grid size-9 place-items-center rounded-xl bg-foreground/5 ${it.color} dark:bg-white/5`}>
+              <span className={`grid grid-cols-1 size-9 place-items-center rounded-xl bg-foreground/5 ${it.color} dark:bg-white/5`}>
                 <it.icon className="size-4" strokeWidth={1.75} />
               </span>
               <span className="font-display text-2xl font-semibold tracking-tight tabular-nums">

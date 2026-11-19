@@ -120,7 +120,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
   const titleWords = title.trim() ? title.trim().split(/\s+/).length : 0;
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+    <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
       <GlassCard variant="thick" className="p-6">
         <input
           value={title}
@@ -280,7 +280,7 @@ export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props
                 >
                   <img src={m.url} alt={m.alt} className="size-full object-cover" />
                   {picked && (
-                    <span className="absolute right-1 top-1 grid size-5 place-items-center rounded-full bg-brand-500 text-white shadow-[0_2px_6px_rgba(0,0,0,0.3)]">
+                    <span className="absolute right-1 top-1 grid grid-cols-1 size-5 place-items-center rounded-full bg-brand-500 text-white shadow-[0_2px_6px_rgba(0,0,0,0.3)]">
                       <X className="size-3" strokeWidth={2.5} />
                     </span>
                   )}

@@ -36,7 +36,7 @@ export default async function KemahasiswaanPage() {
       {/* Kegiatan mahasiswa */}
       <section
         id="organisasi"
-        className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32"
+        className="scroll-mt-28 bg-mist px-4 py-14 sm:px-6 sm:py-32"
       >
         <Reveal>
           <SectionHeading
@@ -45,14 +45,14 @@ export default async function KemahasiswaanPage() {
             description="Kegiatan akademik dan nonakademik yang dapat diikuti mahasiswa Ekonomi Syariah di luar perkuliahan."
           />
         </Reveal>
-        <div className="rail mx-auto mt-10 grid max-w-[1024px] gap-x-10 gap-y-8 sm:mt-14 sm:grid-cols-2">
+        <div className="mx-auto mt-10 grid max-w-[1024px] gap-x-10 gap-y-8 sm:mt-14 sm:grid-cols-2">
           {kegiatanMahasiswa.map((k, i) => (
             <Reveal key={`${k.title}-${i}`} delay={(i % 2) * 0.06}>
               <div className="h-full pt-6 border-t border-hairline">
                 <h3 className="text-[20px] font-bold leading-snug tracking-[-0.01em] text-label sm:text-[24px]">
                   {k.title}
                 </h3>
-                <p className="mt-2 text-[16px] leading-[1.5] text-label-2">
+                <p className="mt-2 line-clamp-2 text-[15px] leading-[1.5] text-label-2 sm:line-clamp-none sm:text-[16px]">
                   {k.description}
                 </p>
               </div>
@@ -64,7 +64,7 @@ export default async function KemahasiswaanPage() {
       {/* Prestasi */}
       <section
         id="prestasi"
-        className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32"
+        className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-32"
       >
         <Reveal>
           <SectionHeading
@@ -80,7 +80,7 @@ export default async function KemahasiswaanPage() {
       {/* Kegiatan */}
       <section
         id="kegiatan"
-        className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32"
+        className="scroll-mt-28 bg-mist px-4 py-14 sm:px-6 sm:py-32"
       >
         <Reveal>
           <SectionHeading eyebrow="Kegiatan" title="Kegiatan terbaru" />
@@ -97,7 +97,7 @@ export default async function KemahasiswaanPage() {
       {/* Beasiswa */}
       <section
         id="beasiswa"
-        className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-32"
+        className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-32"
       >
         <Reveal>
           <SectionHeading
@@ -126,7 +126,7 @@ export default async function KemahasiswaanPage() {
       {/* Alumni */}
       <section
         id="alumni"
-        className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-32"
+        className="scroll-mt-28 bg-mist px-4 py-14 sm:px-6 sm:py-32"
       >
         <Reveal>
           <SectionHeading

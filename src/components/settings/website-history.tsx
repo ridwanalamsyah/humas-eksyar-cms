@@ -25,7 +25,7 @@ export function WebsiteHistory({
         <History className="size-4" /> Riwayat perubahan ({items.length} versi)
       </button>
       {open && (
-        <ul className="mt-3 grid gap-1.5 text-[13px]">
+        <ul className="mt-3 grid grid-cols-1 gap-1.5 text-[13px]">
           {items.map((h) => (
             <li key={h.at} className="flex items-center justify-between gap-3">
               <span>

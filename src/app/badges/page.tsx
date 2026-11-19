@@ -75,7 +75,7 @@ export default async function BadgesPage() {
         title="Badge Library"
         description={`${me.badges.length} dari ${badges.length} badge sudah kamu unlock.`}
       />
-      <div className="mt-2 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {badges.map((b) => {
           const Icon = ICON_MAP[b.icon] ?? Award;
           const color = TIER_COLOR[b.tier];
@@ -90,7 +90,7 @@ export default async function BadgesPage() {
             >
               <div className="flex items-start gap-3">
                 <div
-                  className={`grid size-14 place-items-center rounded-2xl bg-gradient-to-br ${color.bg} ring-1 ring-inset ${color.ring}`}
+                  className={`grid grid-cols-1 size-14 place-items-center rounded-2xl bg-gradient-to-br ${color.bg} ring-1 ring-inset ${color.ring}`}
                 >
                   <Icon
                     className={`size-7 ${color.text}`}

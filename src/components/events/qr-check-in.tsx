@@ -30,7 +30,7 @@ export function QRCheckIn({ eventId, eventTitle }: Props) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ type: "spring", stiffness: 280, damping: 22 }}
-          className="grid size-28 place-items-center rounded-2xl bg-white p-2 ring-1 ring-foreground/10 dark:ring-white/10"
+          className="grid grid-cols-1 size-28 place-items-center rounded-2xl bg-white p-2 ring-1 ring-foreground/10 dark:ring-white/10"
         >
           {revealed ? (
             <span
@@ -41,7 +41,7 @@ export function QRCheckIn({ eventId, eventTitle }: Props) {
             <button
               type="button"
               onClick={() => setRevealed(true)}
-              className="grid size-full place-items-center rounded-xl bg-foreground/[0.04] text-foreground/60 transition-colors hover:bg-foreground/[0.08] dark:bg-white/5"
+              className="grid grid-cols-1 size-full place-items-center rounded-xl bg-foreground/[0.04] text-foreground/60 transition-colors hover:bg-foreground/[0.08] dark:bg-white/5"
               title="Klik untuk tampilkan QR"
             >
               <QrCode className="size-7" strokeWidth={1.5} />

@@ -40,7 +40,7 @@ export default async function KontakPage() {
       />
 
       {/* Kartu kontak */}
-      <section className="px-4 py-16 sm:px-6 sm:py-14 sm:py-20">
+      <section className="px-4 py-16 sm:px-6 sm:py-20">
         <div className="mx-auto grid max-w-[1024px] gap-4 md:grid-cols-2">
           <Reveal>
             <div className="flex h-full flex-col justify-between rounded-[28px] bg-mist p-8 sm:p-10">

@@ -87,7 +87,7 @@ export function SkripsiEditor({ initial, sync }: { initial: SkripsiItem[]; sync:
   }
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+    <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
       <GlassCard variant="thick" className="p-5 sm:p-6 lg:col-span-2">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -151,7 +151,7 @@ export function SkripsiEditor({ initial, sync }: { initial: SkripsiItem[]; sync:
           <Search className="size-4 text-foreground/60" />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Cari judul, nama, tahun…" className="w-full bg-transparent text-[14px] outline-none" />
         </label>
-        <ul className="mt-3 grid max-h-[520px] gap-1 overflow-y-auto">
+        <ul className="mt-3 grid grid-cols-1 max-h-[520px] gap-1 overflow-y-auto">
           {visible.map(({ it, idx }) => (
             <li key={`${idx}-${it.judul}`} className="flex items-start gap-3 rounded-xl px-2 py-2 hover:bg-foreground/5">
               <span className="w-10 shrink-0 font-mono text-[13px] text-foreground/60">{it.tahun}</span>

@@ -58,7 +58,7 @@ export default async function NotificationsPage() {
                 >
                   <div className="flex items-start gap-3">
                     <span
-                      className={`grid size-9 shrink-0 place-items-center rounded-xl ${
+                      className={`grid grid-cols-1 size-9 shrink-0 place-items-center rounded-xl ${
                         n.read
                           ? "bg-foreground/[0.06]"
                           : "bg-brand-500/15 text-brand-700 dark:text-brand-300"

@@ -91,12 +91,12 @@ export function RubricsEditor({ initial }: Props) {
   }
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
+    <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]">
       <GlassCard variant="thick" className="p-6">
         <p className="text-[13px] text-foreground/60">
           Rubrik baru
         </p>
-        <div className="mt-4 grid gap-3">
+        <div className="mt-4 grid grid-cols-1 gap-3">
           <Field label="Emoji">
             <input
               value={nEmoji}

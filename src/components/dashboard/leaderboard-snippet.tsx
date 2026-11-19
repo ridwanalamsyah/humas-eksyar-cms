@@ -38,7 +38,7 @@ export function LeaderboardSnippet({ members }: { members: Member[] }) {
               className="flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-foreground/5 dark:hover:bg-white/5"
             >
               <span
-                className={`grid size-7 place-items-center rounded-full bg-foreground/5 font-mono text-[13px] font-semibold dark:bg-white/5 ${
+                className={`grid grid-cols-1 size-7 place-items-center rounded-full bg-foreground/5 font-mono text-[13px] font-semibold dark:bg-white/5 ${
                   tierColor[i] ?? "text-foreground/60"
                 }`}
               >

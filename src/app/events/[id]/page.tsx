@@ -81,7 +81,7 @@ export default async function EventDetail({ params }: PageProps) {
             {event.description}
           </p>
 
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             <InfoStat
               icon={<CalendarDays className="size-4" strokeWidth={1.75} />}
               label="Tanggal"
@@ -114,7 +114,7 @@ export default async function EventDetail({ params }: PageProps) {
         </div>
       </GlassCard>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <section className="space-y-4">
           <GlassCard className="p-5">
             <p className="text-[13px] text-foreground/60">

@@ -24,7 +24,7 @@ function resolveLogo(item: Mitra): string | null {
 /** Kartu mitra kerja sama dengan logo resmi lembaga, bentuk kolaborasi, dan tautan. */
 export function MitraList({ items }: { items: Mitra[] }) {
   return (
-    <ul className="rail grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((m, idx) => {
         const logoSrc = resolveLogo(m);
         const body = (

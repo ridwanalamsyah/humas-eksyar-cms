@@ -37,7 +37,7 @@ export function MataKuliahDirectory({ items }: { items: MK[] }) {
       (grp === ALL || m.kategori.some((k) => top(k) === grp)) &&
       matches(`${m.nama} ${m.dosen.join(" ")}`, q),
   );
-  const [limit, setLimit] = useState(24);
+  const [limit, setLimit] = useState(8);
 
   return (
     <div>
@@ -57,7 +57,7 @@ export function MataKuliahDirectory({ items }: { items: MK[] }) {
         {shown.length} mata kuliah
       </p>
       {shown.length ? (
-        <ul className="mt-3 grid gap-3 md:grid-cols-2">
+        <ul className="mt-3 grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2">
           {shown.slice(0, limit).map((m) => (
             <li
               key={m.nama}
@@ -71,22 +71,17 @@ export function MataKuliahDirectory({ items }: { items: MK[] }) {
                 {m.kategori[0] ? ` · ${m.kategori.slice(0, 2).join(", ")}` : ""}
               </p>
               {m.dosen.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
-                  {m.dosen.slice(0, 6).map((d) => (
-                    <Link
-                      key={d}
-                      href={`/prodi/dosen?q=${encodeURIComponent(d)}`}
-                      className="rounded-full bg-mist px-2.5 py-1 text-[14px] font-medium text-label-2 hover:text-accent"
-                    >
-                      {d}
-                    </Link>
-                  ))}
-                  {m.dosen.length > 6 && (
-                    <span className="px-1 py-1 text-[14px] text-label-3">
-                      +{m.dosen.length - 6}
+                <p className="mt-1.5 line-clamp-2 text-[14px] text-label-2">
+                  {m.dosen.slice(0, 3).map((d, i) => (
+                    <span key={d}>
+                      {i > 0 && ", "}
+                      <Link href={`/prodi/dosen?q=${encodeURIComponent(d)}`} className="hover:text-accent">
+                        {d}
+                      </Link>
                     </span>
-                  )}
-                </div>
+                  ))}
+                  {m.dosen.length > 3 && <span className="text-label-3"> +{m.dosen.length - 3}</span>}
+                </p>
               )}
             </li>
           ))}
@@ -100,10 +95,10 @@ export function MataKuliahDirectory({ items }: { items: MK[] }) {
         <div className="mt-6 text-center">
           <button
             type="button"
-            onClick={() => setLimit((l) => l + 48)}
-            className="rounded-full bg-mist px-6 py-2.5 text-[16px] font-semibold text-label hover:bg-hairline"
+            onClick={() => setLimit((l) => l + 24)}
+            className="min-h-11 text-[16px] font-semibold text-accent hover:underline"
           >
-            Tampilkan lebih banyak ({shown.length - limit} lagi)
+            Tampilkan {Math.min(24, shown.length - limit)} lagi
           </button>
         </div>
       )}

@@ -51,7 +51,7 @@ function Section({
       <h2 className="mb-3 font-display text-lg font-semibold tracking-tight">
         {title}
       </h2>
-      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {events.map((e) => {
           return (
             <Link key={e.id} href={`/events/${e.id}`}>

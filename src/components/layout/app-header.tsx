@@ -48,7 +48,7 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
           type="button"
           aria-label="Cari"
           onClick={() => setOpenSearch(true)}
-          className="grid size-9 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/[0.05] hover:text-foreground sm:hidden"
+          className="grid grid-cols-1 size-9 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/[0.05] hover:text-foreground sm:hidden"
         >
           <Search className="size-4" strokeWidth={1.75} />
         </button>
@@ -69,7 +69,7 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
                 onClick={() => signOut({ redirectTo: "/login" })}
                 aria-label="Keluar"
                 title="Keluar"
-                className="grid size-9 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/[0.05] hover:text-foreground"
+                className="grid grid-cols-1 size-9 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-foreground/[0.05] hover:text-foreground"
               >
                 <LogOut className="size-4" strokeWidth={1.75} />
               </button>

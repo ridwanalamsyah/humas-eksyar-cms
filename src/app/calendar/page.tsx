@@ -26,7 +26,7 @@ export default async function CalendarPage() {
         title="Kalender Hijriah &amp; Masehi"
         description="Jadwal kegiatan bulanan + pengingat hari besar untuk konten ucapan."
       />
-      <div className="mt-2 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="mt-2 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <CalendarView events={events} />
         <UpcomingHolidays holidays={holidays.slice(0, 10)} />
       </div>

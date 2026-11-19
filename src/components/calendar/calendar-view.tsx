@@ -62,7 +62,7 @@ export function CalendarView({ events }: Props) {
 
 
   return (
-    <div className="mt-4 grid gap-6 lg:grid-cols-[1fr_minmax(280px,360px)]">
+    <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[1fr_minmax(280px,360px)]">
       <GlassCard variant="thick" className="p-5">
         <div className="flex items-center justify-between">
           <div>

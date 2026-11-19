@@ -38,12 +38,12 @@ export function BrandingEditor({ initial }: Props) {
   }
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+    <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
       <GlassCard variant="thick" className="p-6">
         <p className="text-[13px] text-foreground/60">
           Editor
         </p>
-        <div className="mt-4 grid gap-4">
+        <div className="mt-4 grid grid-cols-1 gap-4">
           <Field
             label="Penutup caption"
             hint="Baris yang ditambahkan otomatis di akhir setiap caption."

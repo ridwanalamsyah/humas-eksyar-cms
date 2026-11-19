@@ -101,7 +101,7 @@ export function InstagramPilihan() {
                 type="button"
                 onClick={() => remove(i)}
                 aria-label="Hapus dari beranda"
-                className="absolute right-1.5 top-1.5 grid size-9 place-items-center rounded-full bg-black/60 text-white"
+                className="absolute right-1.5 top-1.5 grid grid-cols-1 size-9 place-items-center rounded-full bg-black/60 text-white"
               >
                 <Trash2 className="size-4" />
               </button>
@@ -113,8 +113,8 @@ export function InstagramPilihan() {
       )}
 
       {(items?.length ?? 0) < MAX && (
-        <form onSubmit={add} className="mt-5 grid gap-3 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-          <label className="grid gap-1 text-[13px] font-medium text-foreground/70">
+        <form onSubmit={add} className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
+          <label className="grid grid-cols-1 gap-1 text-[13px] font-medium text-foreground/70">
             Tautan unggahan Instagram
             <input
               type="url"
@@ -128,7 +128,7 @@ export function InstagramPilihan() {
               <span className="text-[13px] text-amber-700">Pakai tautan satu unggahan, mis. https://www.instagram.com/p/ABC123/</span>
             )}
           </label>
-          <label className="grid gap-1 text-[13px] font-medium text-foreground/70">
+          <label className="grid grid-cols-1 gap-1 text-[13px] font-medium text-foreground/70">
             Foto (JPG/PNG, dari unggahan itu)
             <input
               type="file"
@@ -138,7 +138,7 @@ export function InstagramPilihan() {
               className="text-[14px] file:mr-3 file:h-11 file:rounded-xl file:border-0 file:bg-foreground/[0.06] file:px-4 file:font-medium"
             />
           </label>
-          <label className="grid gap-1 text-[13px] font-medium text-foreground/70 sm:col-span-2">
+          <label className="grid grid-cols-1 gap-1 text-[13px] font-medium text-foreground/70 sm:col-span-2">
             Keterangan singkat (opsional)
             <input
               value={caption}

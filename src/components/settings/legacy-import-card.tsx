@@ -109,7 +109,7 @@ export function LegacyImportCard() {
       </dl>
 
       {/* Rincian Sumber & Vektor yang Diblokir */}
-      <div className="mt-4 grid gap-3 lg:grid-cols-2">
+      <div className="mt-4 grid grid-cols-1 gap-3 lg:grid-cols-2">
         <div className="rounded-lg border border-foreground/[0.08] bg-background/60 p-3.5">
           <p className="flex items-center gap-1.5 text-[13px] font-semibold text-foreground">
             <Database className="size-3.5 text-emerald-600 dark:text-emerald-400" />
@@ -187,7 +187,7 @@ export function LegacyImportCard() {
             </div>
           </div>
 
-          <div className="mt-3 grid gap-3 lg:grid-cols-2">
+          <div className="mt-3 grid grid-cols-1 gap-3 lg:grid-cols-2">
             <div>
               <label className="block text-[13px] font-medium text-foreground/70">
                 HTML Mentah (Sebelum Sanitasi)

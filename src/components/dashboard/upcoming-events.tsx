@@ -42,7 +42,7 @@ export function UpcomingEvents({ events }: Props) {
               href={`/events/${e.id}`}
               className="flex items-center gap-3 rounded-xl p-2 transition-colors hover:bg-foreground/5 dark:hover:bg-white/5"
             >
-              <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-300">
+              <div className="grid grid-cols-1 size-12 shrink-0 place-items-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-300">
                 <span className="text-[13px] uppercase tracking-wider">{formatShortDate(e.startsAt).split(" ")[2] ?? ""}</span>
                 <span className="font-display text-base font-semibold leading-none">
                   {new Date(e.startsAt).getDate()}
