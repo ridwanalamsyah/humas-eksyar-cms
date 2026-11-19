@@ -6,6 +6,7 @@
  *   DELETE /api/contents/:id   (auth required)
  */
 
+import { SITE_URL } from "@/lib/site/url";
 import { BULETIN_HMJ_RUBRIC } from "@/lib/site/content";
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
@@ -120,7 +121,7 @@ async function notifyApprovers(
   const appUrl =
     process.env.NEXT_PUBLIC_APP_URL ||
     process.env.NEXTAUTH_URL ||
-    "https://humas-eksyar-cms.vercel.app";
+    SITE_URL;
   const reviewUrl = `${appUrl.replace(/\/$/, "")}/approval`;
   const stageLabel =
     targetRole === "ketua_divisi" ? "Review Koordinator" : "Review Admin";

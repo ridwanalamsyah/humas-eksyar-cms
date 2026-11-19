@@ -58,9 +58,20 @@ Aturannya: cahaya alami, posisi foto mendatar (landscape) untuk hero dan berita,
 - Satu foto, satu tempat: jangan pakai foto yang sama di hero, kegiatan, dan galeri.
 - Jangan pakai screenshot (Zoom, poster, tangkapan layar berita) sebagai foto kegiatan.
 
-## 5. Satu alamat website
+## 5. Pindah ke domain resmi es.uinsgd.ac.id
 
-Sekarang ada dua alamat: `humas-eksyar-cms.vercel.app` (dijeda) dan `eksyar-cms.vercel.app`. Di Vercel, pilih satu sebagai alamat utama dan alihkan yang lain ke sana (Settings → Domains → Redirect). Kalau bisa, minta subdomain resmi dari UIN SGD (misalnya `eksyar.uinsgd.ac.id`).
+Kode website sudah siap memakai **es.uinsgd.ac.id**. Langkah yang perlu dilakukan:
+
+1. **Vercel → project website → Settings → Domains → Add**, ketik `es.uinsgd.ac.id`. Vercel menampilkan satu rekaman DNS (biasanya `CNAME es → cname.vercel-dns.com`, atau sebuah alamat IP untuk rekaman `A`).
+2. **Kirim rekaman DNS itu ke Pusat TIK/PTIPD UIN SGD** dan minta dipasang di DNS `uinsgd.ac.id`. Tunggu sampai di Vercel statusnya **Valid Configuration** (sertifikat HTTPS dibuat otomatis).
+3. Di Vercel, jadikan `es.uinsgd.ac.id` sebagai domain utama, lalu alihkan `eksyar-cms.vercel.app` ke sana (Domains → Edit → Redirect to `es.uinsgd.ac.id`, 308).
+4. **Settings → Environment Variables (Production)**, tambahkan `NEXT_PUBLIC_SITE_URL` = `https://es.uinsgd.ac.id`, lalu **Redeploy**. Ini dipakai untuk pratinjau tautan di WhatsApp/Instagram, sitemap Google, dan tautan di email notifikasi.
+5. **Login Google CMS:** di Google Cloud Console → APIs & Services → Credentials → OAuth client yang dipakai CMS, tambahkan:
+   - Authorized JavaScript origins: `https://es.uinsgd.ac.id`
+   - Authorized redirect URIs: `https://es.uinsgd.ac.id/api/auth/callback/google`
+6. Daftarkan `https://es.uinsgd.ac.id` di Google Search Console dan kirim `https://es.uinsgd.ac.id/sitemap.xml`.
+
+Selama langkah 1–4 belum selesai, website tetap berjalan di `eksyar-cms.vercel.app`.
 
 ## 6. Aturan menulis
 
