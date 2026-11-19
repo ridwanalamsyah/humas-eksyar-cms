@@ -14,6 +14,7 @@ import {
   getMemberMap,
   listPublishedNews,
   rubricLabel,
+  stripProgramLine,
 } from "@/lib/site/content";
 
 export const revalidate = 300;
@@ -54,7 +55,7 @@ export default async function BeritaDetailPage({ params }: Props) {
   const cover = coverFor(item, media);
   const author = members.get(item.authorId);
   const date = item.publishedAt ?? item.updatedAt;
-  const text = item.body?.trim() || item.caption?.trim() || "";
+  const text = stripProgramLine(item.body?.trim() || item.caption?.trim() || "");
   const readTime = estimateReadingTime(text);
   const cleanTitle = item.title.replace(/^\[(?:Buletin\s+Artikel\s+HMJ|Buletin\s+HMJ)\]\s*/i, "");
   const related = all.filter((c) => c.id !== item.id).slice(0, 3);
