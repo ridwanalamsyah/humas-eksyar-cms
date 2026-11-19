@@ -24,8 +24,8 @@ export const revalidate = 300;
 
 const TABS = [
   { key: "semua", label: "Semua" },
-  { key: "berita", label: "Berita Prodi" },
-  { key: "buletin_hmj", label: "Buletin Artikel HMJ" },
+  { key: "berita", label: "Prodi" },
+  { key: "buletin_hmj", label: "Buletin HMJ" },
   { key: "pengumuman", label: "Pengumuman" },
 ] as const;
 
@@ -54,8 +54,8 @@ export default async function BeritaPage({ searchParams }: Props) {
   return (
     <div className="bg-mist px-4 pb-24 pt-12 sm:px-6 sm:pb-28 sm:pt-16">
       <div className="mx-auto max-w-[1060px]">
-        <h1 className="text-[clamp(2.25rem,1.8rem+1.8vw,3.25rem)] font-semibold tracking-[-0.03em] text-label">
-          Berita & Buletin Artikel
+        <h1 className="text-[clamp(2rem,1.6rem+1.8vw,3.25rem)] font-bold leading-tight tracking-[-0.03em] text-label">
+          Berita & Buletin
         </h1>
         <p className="mt-2 max-w-[68ch] text-[16px] leading-[1.55] text-label-2">
           Kegiatan, pengumuman, dan tulisan mahasiswa.
@@ -63,7 +63,7 @@ export default async function BeritaPage({ searchParams }: Props) {
 
         <nav
           aria-label="Kategori"
-          className="mt-7 inline-flex flex-wrap gap-1 rounded-full bg-[#e3eef0] p-1 dark:bg-canvas"
+          className="mt-6 flex gap-6 overflow-x-auto whitespace-nowrap shadow-[inset_0_-1px_0_var(--color-hairline)] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {TABS.map((t) => (
             <Link
@@ -75,10 +75,11 @@ export default async function BeritaPage({ searchParams }: Props) {
               }
               aria-current={tab === t.key ? "page" : undefined}
               className={cn(
-                "rounded-full px-4 py-1.5 text-[14px] font-semibold transition-colors",
+                "relative flex min-h-11 shrink-0 items-center text-[15px] font-semibold transition-colors",
+                "after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-full",
                 tab === t.key
-                  ? "bg-accent text-white shadow-xs"
-                  : "text-label-2 hover:text-label",
+                  ? "text-accent after:bg-accent"
+                  : "text-label-2 after:bg-transparent hover:text-label",
               )}
             >
               {t.label}
