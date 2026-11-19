@@ -37,6 +37,16 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
   const [menu, setMenu] = useState<string | null>(null);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [cmdOpen, setCmdOpen] = useState(false);
+  // Di beranda, navbar transparan di atas foto hero selama belum digulir.
+  const isHome = pathname === "/" || pathname === "/prodi";
+  const [atTop, setAtTop] = useState(true);
+  useEffect(() => {
+    if (!isHome) return;
+    const onScroll = () => setAtTop(window.scrollY < 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const groups = navGroups.map((g) => ({
@@ -86,13 +96,15 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
   };
 
   const ctaCurrent = itemActive(pathname, navCta.href);
+  const clear = isHome && atTop && !menu && !open;
 
   return (
     <>
-      <header className="sticky top-0 z-50" onMouseLeave={scheduleClose}>
+      <header className={cn("sticky top-0 z-50", isHome && "-mb-16")} onMouseLeave={scheduleClose}>
         <div
           className={cn(
-            "relative z-10 border-b border-hairline bg-canvas",
+            "relative z-10 border-b transition-colors duration-300",
+            clear ? "border-transparent bg-transparent" : "border-hairline bg-canvas",
           )}
         >
           <nav
@@ -109,9 +121,9 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                 priority
                 className="transition-transform duration-300 group-hover:scale-[1.04]"
               />
-              <span className="whitespace-nowrap text-[16px] font-bold tracking-[-0.015em] text-label">
+              <span className={cn("whitespace-nowrap text-[16px] font-bold tracking-[-0.015em] transition-colors", clear ? "text-white" : "text-label")}>
                 {prodi.name}
-                <span className="ml-1.5 hidden font-medium text-label-2 sm:inline">
+                <span className={cn("ml-1.5 hidden font-medium sm:inline", clear ? "text-white/80" : "text-label-2")}>
                   {prodi.universityShort}
                 </span>
               </span>
@@ -124,11 +136,13 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                 const cls = cn(
                   "relative flex h-16 items-center gap-1 px-3 text-[16px] transition-colors",
                   "after:absolute after:inset-x-3 after:bottom-0 after:h-0.5 after:rounded-full after:transition-colors",
-                  isActive
-                    ? "font-semibold text-label after:bg-accent"
-                    : isOpen
-                      ? "font-medium text-label after:bg-hairline"
-                      : "font-medium text-label/75 after:bg-transparent hover:text-label",
+                  clear
+                    ? "font-medium text-white/90 after:bg-transparent hover:text-white"
+                    : isActive
+                      ? "font-semibold text-label after:bg-accent"
+                      : isOpen
+                        ? "font-medium text-label after:bg-hairline"
+                        : "font-medium text-label/75 after:bg-transparent hover:text-label",
                 );
                 return (
                   <li
@@ -174,20 +188,20 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
                 onClick={() => setCmdOpen(true)}
                 aria-label="Cari di website (⌘K)"
                 title="Cari (⌘K)"
-                className="grid size-11 place-items-center rounded-full text-label-2 transition-colors hover:bg-mist hover:text-label"
+                className={cn("grid size-11 place-items-center rounded-full transition-colors", clear ? "text-white hover:bg-white/15" : "text-label-2 hover:bg-mist hover:text-label")}
               >
                 <Search className="size-[18px]" />
               </button>
               <Link
                 href={navCta.href}
                 aria-current={ctaCurrent ? "page" : undefined}
-                className="hidden h-10 items-center rounded-full bg-accent px-4 text-[14px] font-semibold text-white transition-colors hover:bg-accent-strong md:inline-flex"
+                className={cn("hidden h-10 items-center rounded-full px-4 text-[14px] font-semibold transition-colors md:inline-flex", clear ? "bg-white text-navy hover:bg-mist" : "bg-accent text-white hover:bg-accent-strong")}
               >
                 {navCta.label}
               </Link>
               <button
                 type="button"
-                className="relative -mr-1 grid size-11 place-items-center rounded-full hover:bg-mist lg:hidden"
+                className={cn("relative -mr-1 grid size-11 place-items-center rounded-full lg:hidden", clear ? "hover:bg-white/15" : "hover:bg-mist")}
                 aria-label={open ? "Tutup menu" : "Buka menu"}
                 aria-expanded={open}
                 aria-controls="menu-mobile"
@@ -195,13 +209,15 @@ export function SiteNavbar({ hidden = [] }: { hidden?: string[] }) {
               >
                 <span
                   className={cn(
-                    "absolute h-[1.5px] w-[17px] rounded bg-label transition-transform duration-300",
+                    "absolute h-[1.5px] w-[17px] rounded transition-transform duration-300",
+                    clear ? "bg-white" : "bg-label",
                     open ? "rotate-45" : "-translate-y-[4px]",
                   )}
                 />
                 <span
                   className={cn(
-                    "absolute h-[1.5px] w-[17px] rounded bg-label transition-transform duration-300",
+                    "absolute h-[1.5px] w-[17px] rounded transition-transform duration-300",
+                    clear ? "bg-white" : "bg-label",
                     open ? "-rotate-45" : "translate-y-[4px]",
                   )}
                 />

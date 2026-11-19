@@ -48,7 +48,7 @@ export function InteractiveHero({
   return (
     <>
       {/* ─── Ponsel: foto penuh, teks di atas lapisan tipis ─── */}
-      <section className="relative isolate flex min-h-[calc(100svh-4rem)] flex-col justify-end overflow-hidden bg-navy px-5 pb-8 pt-24 text-white sm:hidden">
+      <section className="relative isolate flex min-h-[100svh] flex-col justify-end overflow-hidden bg-navy px-5 pb-8 pt-24 text-white sm:hidden">
         <Image
           src={image}
           alt={imageAlt}
@@ -62,7 +62,7 @@ export function InteractiveHero({
           className="absolute inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(0deg, rgba(8,28,34,.78) 0%, rgba(8,28,34,.45) 40%, rgba(8,28,34,.05) 70%)",
+              "linear-gradient(180deg, rgba(8,28,34,.5) 0%, transparent 22%), linear-gradient(0deg, rgba(8,28,34,.78) 0%, rgba(8,28,34,.45) 40%, rgba(8,28,34,.05) 70%)",
           }}
         />
                 <h1 className="mt-2 text-balance text-[40px] font-extrabold leading-[1.02] tracking-[-0.035em]">
@@ -98,7 +98,7 @@ export function InteractiveHero({
       </section>
 
       {/* ─── Tablet dan desktop ──────────────────────────────── */}
-      <section className="relative isolate hidden min-h-[calc(100svh-4rem)] w-full overflow-hidden bg-navy text-white sm:flex">
+      <section className="relative isolate hidden min-h-[100svh] w-full overflow-hidden bg-navy text-white sm:flex">
         <Image
           src={image}
           alt={imageAlt}
@@ -113,7 +113,7 @@ export function InteractiveHero({
           className="absolute inset-0 -z-10"
           style={{
             background:
-              "linear-gradient(90deg, rgba(8,28,34,.86) 0%, rgba(8,28,34,.55) 45%, rgba(8,28,34,.08) 80%), linear-gradient(0deg, rgba(8,28,34,.7) 0%, transparent 45%)",
+              "linear-gradient(180deg, rgba(8,28,34,.45) 0%, transparent 20%), linear-gradient(90deg, rgba(8,28,34,.86) 0%, rgba(8,28,34,.55) 45%, rgba(8,28,34,.08) 80%), linear-gradient(0deg, rgba(8,28,34,.7) 0%, transparent 45%)",
           }}
         />
 
