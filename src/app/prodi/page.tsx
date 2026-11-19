@@ -24,7 +24,7 @@ import { BidangKajian } from "@/components/site/bidang-kajian";
 import { HighlightCard } from "@/components/site/highlight-card";
 import { InteractiveHero } from "@/components/site/interactive-hero";
 import { MitraMarquee } from "@/components/site/mitra-marquee";
-import { NewsCard } from "@/components/site/news-card";
+import { CoverFallback, NewsCard } from "@/components/site/news-card";
 import { PrestasiCard } from "@/components/site/prestasi-card";
 import { SectionHeading } from "@/components/site/section-heading";
 import { SkripsiTrendExplorer } from "@/components/site/skripsi-trend-explorer";
@@ -243,19 +243,40 @@ export default async function ProdiHomePage() {
                       Semua buletin
                     </Link>
                   </div>
-                  <ul className="divide-y divide-hairline">
-                    {buletin.map((n) => (
-                      <li key={n.id}>
-                        <Link href={`/prodi/berita/${n.slug}`} className="group block py-3">
-                          <p className="text-[14px] text-label-3">
-                            {formatLongDate(n.publishedAt ?? n.updatedAt)}
-                          </p>
-                          <p className="mt-0.5 line-clamp-2 text-[16px] font-semibold leading-snug text-label group-hover:text-accent">
-                            {n.title.replace(/^\[(?:Buletin\s+Artikel\s+HMJ|Buletin\s+HMJ)\]\s*/i, "")}
-                          </p>
-                        </Link>
-                      </li>
-                    ))}
+                  <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5">
+                    {buletin.map((n) => {
+                      const cover = coverFor(n, media);
+                      return (
+                        <li key={n.id}>
+                          <Link
+                            href={`/prodi/berita/${n.slug}`}
+                            className="group flex gap-4 sm:flex-col sm:gap-0"
+                          >
+                            <div className="relative isolate aspect-square w-24 shrink-0 overflow-hidden rounded-2xl bg-mist sm:aspect-[4/3] sm:w-auto">
+                              {cover ? (
+                                // eslint-disable-next-line @next/next/no-img-element
+                                <img
+                                  src={cover.url}
+                                  alt={cover.alt}
+                                  loading="lazy"
+                                  className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+                                />
+                              ) : (
+                                <CoverFallback />
+                              )}
+                            </div>
+                            <div className="min-w-0 self-center sm:self-auto sm:pt-3">
+                              <p className="text-[13px] text-label-3">
+                                {formatLongDate(n.publishedAt ?? n.updatedAt)}
+                              </p>
+                              <p className="mt-0.5 line-clamp-3 text-[15px] font-semibold leading-snug text-label group-hover:text-accent">
+                                {n.title.replace(/^\[(?:Buletin\s+Artikel\s+HMJ|Buletin\s+HMJ)\]\s*/i, "")}
+                              </p>
+                            </div>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               )}
