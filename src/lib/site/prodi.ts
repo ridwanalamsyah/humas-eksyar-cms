@@ -1198,16 +1198,16 @@ export const navGroups: NavGroup[] = [
     ],
   },
   {
-    label: "Skripsi",
-    href: "/prodi/skripsi",
-  },
-  {
     label: "Kabar",
     href: "/prodi/berita",
     items: [
       { href: "/prodi/berita", label: "Berita & Buletin", description: "Kabar prodi dan tulisan mahasiswa" },
       { href: "/prodi/galeri", label: "Galeri & Video", description: "Foto dan video kegiatan" },
     ],
+  },
+  {
+    label: "Skripsi",
+    href: "/prodi/skripsi",
   },
 ];
 
