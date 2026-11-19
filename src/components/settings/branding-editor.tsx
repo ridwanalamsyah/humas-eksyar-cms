@@ -68,7 +68,7 @@ export function BrandingEditor({ initial }: Props) {
           </Field>
           <Field
             label="Nama organisasi"
-            hint="Ditampilkan di CMS dan dipakai AI saat menyusun tulisan."
+            hint="Ditampilkan di panel Humas dan dipakai AI saat menyusun tulisan."
           >
             <input
               value={orgName}

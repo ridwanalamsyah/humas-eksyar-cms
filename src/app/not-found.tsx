@@ -30,7 +30,7 @@ export default function NotFound() {
             className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-neutral-200 bg-white px-5 text-[13.5px] font-medium text-neutral-700 transition-all hover:bg-neutral-50 dark:border-white/15 dark:bg-white/5 dark:text-white"
           >
             <LogIn className="size-4" />
-            <span>Login CMS</span>
+            <span>Masuk Humas Eksyar</span>
           </Link>
         </div>
       </div>

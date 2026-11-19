@@ -105,7 +105,7 @@ function LoginInner() {
           className="mx-auto w-full max-w-[380px]"
         >
           <EksyarLogo size={44} />
-          <h1 className="mt-6 text-[28px] font-extrabold tracking-[-0.025em]">Masuk CMS</h1>
+          <h1 className="mt-6 text-[28px] font-extrabold tracking-[-0.025em]">Masuk Humas Eksyar</h1>
           <p className="mt-1 text-[15px] text-[#4a5c54]">Humas Ekonomi Syariah FEBI UIN SGD</p>
 
           <AnimatePresence mode="wait">

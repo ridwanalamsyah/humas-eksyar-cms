@@ -33,7 +33,7 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
         <EksyarLogo size={34} />
         <div className="leading-tight">
           <p className="text-[15px] font-semibold tracking-tight">
-            CMS Humas Eksyar
+            Humas Eksyar
           </p>
           <p className="hidden text-[13px] text-foreground/60 sm:block">
             Humas Jurusan Ekonomi Syariah · UIN SGD
