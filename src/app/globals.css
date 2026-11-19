@@ -263,6 +263,10 @@ body {
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
+/* Kolom pencarian sudah punya garis bawah sendiri; tanpa kotak fokus tambahan. */
+.search-input:focus-visible {
+  outline: none;
+}
 
 /* ============================================================
    GLASS UTILITIES — Apple Liquid Glass adapted
