@@ -32,6 +32,17 @@ const ROLE_INDEX: Record<Role, (typeof ROLES)[number]> = Object.fromEntries(
   ROLES.map((r) => [r.value, r]),
 ) as Record<Role, (typeof ROLES)[number]>;
 
+/**
+ * Peran dari database bisa berisi nilai lama yang tidak ada di daftar (mis.
+ * dari versi sebelumnya). Jangan sampai satu baris seperti itu membuat seluruh
+ * halaman gagal dibuka: tampilkan apa adanya dengan warna netral.
+ */
+function roleInfo(role: string) {
+  return (
+    ROLE_INDEX[role as Role] ?? { value: role as Role, label: role || "Tanpa peran", desc: "", tone: "neutral" as PillTone }
+  );
+}
+
 /** NIM UIN SGD: digit ke-2–3 = tahun masuk (mis. 1239… → 2023). */
 function angkatanDariNim(nim: string): number {
   const d = nim.replace(/\D/g, "");
@@ -72,7 +83,7 @@ export function MembersRoleEditor({
         return;
       }
       setMembers((prev) => [...prev, j.member as Member]);
-      setPendingList((prev) => prev.filter((x) => x.email.toLowerCase() !== p.email.toLowerCase()));
+      setPendingList((prev) => prev.filter((x) => (x.email ?? "").toLowerCase() !== (p.email ?? "").toLowerCase()));
       toast.success(`${p.name || p.email} berhasil dikonfirmasi sebagai ${ROLE_INDEX[assignedRole]?.label || assignedRole}.`);
     });
   }
@@ -88,7 +99,7 @@ export function MembersRoleEditor({
         toast.error(j.error ?? "Gagal menolak pendaftar");
         return;
       }
-      setPendingList((prev) => prev.filter((x) => x.email.toLowerCase() !== p.email.toLowerCase()));
+      setPendingList((prev) => prev.filter((x) => (x.email ?? "").toLowerCase() !== (p.email ?? "").toLowerCase()));
       toast.success(`Pendaftaran ${p.name || p.email} telah ditolak.`);
     });
   }
@@ -98,9 +109,9 @@ export function MembersRoleEditor({
     if (!q) return members;
     return members.filter(
       (m) =>
-        m.name.toLowerCase().includes(q) ||
-        m.email.toLowerCase().includes(q) ||
-        m.position.toLowerCase().includes(q),
+        (m.name ?? "").toLowerCase().includes(q) ||
+        (m.email ?? "").toLowerCase().includes(q) ||
+        (m.position ?? "").toLowerCase().includes(q),
     );
   }, [filter, members]);
 
@@ -128,7 +139,7 @@ export function MembersRoleEditor({
           prev.map((m) => (m.id === memberId ? (j.member as Member) : m)),
         );
         toast.success(
-          `Peran ${j.member.name} → ${ROLE_INDEX[nextRole].label}`,
+          `Peran ${j.member.name} → ${roleInfo(nextRole).label}`,
         );
       }
     });
@@ -203,11 +214,11 @@ export function MembersRoleEditor({
                 <li key={p.email} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-3">
                     <span className="flex size-10 items-center justify-center rounded-full bg-accent-soft font-semibold text-accent text-sm">
-                      {p.name ? p.name.slice(0, 2).toUpperCase() : p.email.slice(0, 2).toUpperCase()}
+                      {(p.name || p.email || "?").slice(0, 2).toUpperCase()}
                     </span>
                     <div>
                       <p className="text-[14px] font-semibold text-foreground">{p.name || p.email}</p>
-                      <p className="text-[13px] text-foreground/60">{p.email} · Mendaftar {new Date(p.at || p.createdAt || Date.now()).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}</p>
+                      <p className="text-[13px] text-foreground/60">{p.email}{(p.at || p.createdAt) && ` · Mendaftar ${new Date((p.at || p.createdAt) as string).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric", timeZone: "Asia/Jakarta" })}`}</p>
                     </div>
                   </div>
 
@@ -261,7 +272,7 @@ export function MembersRoleEditor({
             Gunakan email Google yang dipakai orang itu untuk masuk. Setelah ditambahkan,
             anggota langsung bisa masuk sesuai perannya.
           </p>
-          <form onSubmit={addMember} className="mt-4 grid gap-3 sm:grid-cols-2">
+          <form onSubmit={addMember} className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <label className="text-[13px] text-foreground/65">
               Nama lengkap
               <input
@@ -358,11 +369,11 @@ export function MembersRoleEditor({
                     )}
                   </p>
                   <p className="truncate text-[13px] text-foreground/60">
-                    {m.email} · {m.position}
+                    {[m.email, m.position].filter(Boolean).join(" · ")}
                   </p>
                 </div>
-                <Pill tone={ROLE_INDEX[m.role].tone}>
-                  {ROLE_INDEX[m.role].label}
+                <Pill tone={roleInfo(m.role).tone}>
+                  {roleInfo(m.role).label}
                 </Pill>
                 {isAdmin ? (
                   <>
@@ -387,7 +398,7 @@ export function MembersRoleEditor({
                         onClick={() => removeMember(m)}
                         aria-label={`Hapus ${m.name}`}
                         title="Hapus anggota"
-                        className="grid size-8 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-red-500/10 hover:text-red-600"
+                        className="grid grid-cols-1 size-8 place-items-center rounded-lg text-foreground/60 transition-colors hover:bg-red-500/10 hover:text-red-600"
                       >
                         <Trash2 className="size-4" strokeWidth={1.75} />
                       </button>

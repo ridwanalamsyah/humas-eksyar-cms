@@ -44,14 +44,14 @@ export function RpsList({ items }: { items: Rps[] }) {
                     href={r.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex shrink-0 items-center gap-1 rounded-full bg-mist px-3 py-1.5 text-[14px] font-semibold text-accent hover:bg-accent hover:text-white"
+                    className="inline-flex min-h-11 shrink-0 items-center gap-1 text-[14px] font-semibold text-accent hover:underline"
                   >
                     RPS <ArrowUpRight className="size-3.5" />
                   </a>
                 )}
               </div>
               {r.referensi.length > 0 && (
-                <ul className="mt-3 list-disc space-y-1 pl-5 text-[14px] leading-snug text-label-2">
+                <ul className="mt-3 hidden list-disc space-y-1 pl-5 text-[14px] leading-snug text-label-2 sm:block">
                   {r.referensi.map((ref) => (
                     <li key={ref}>{ref}</li>
                   ))}

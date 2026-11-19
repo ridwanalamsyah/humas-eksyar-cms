@@ -28,7 +28,7 @@ export function NewsCard({
       href={`/prodi/berita/${item.slug}`}
       className={cn(
         "group relative flex h-full",
-        featured ? "flex-col md:flex-row" : "flex-col",
+        featured ? "flex-col md:flex-row" : "flex-row gap-4 sm:flex-col sm:gap-0",
       )}
     >
       <div
@@ -36,7 +36,7 @@ export function NewsCard({
           "relative isolate overflow-hidden rounded-[20px] bg-mist",
           featured
             ? "aspect-[16/9] md:aspect-auto md:w-[54%]"
-            : "aspect-[16/9]",
+            : "aspect-square w-28 shrink-0 rounded-2xl sm:aspect-[16/9] sm:w-auto sm:rounded-[20px]",
         )}
       >
         {cover ? (
@@ -61,7 +61,7 @@ export function NewsCard({
       <div
         className={cn(
           "flex min-w-0 flex-1 flex-col",
-          featured ? "pt-5 md:justify-center md:pl-9 md:pt-0" : "pt-4",
+          featured ? "pt-5 md:justify-center md:pl-9 md:pt-0" : "justify-center sm:justify-start sm:pt-4",
         )}
       >
         <div className="flex items-center gap-2">
@@ -77,7 +77,7 @@ export function NewsCard({
             "mt-2.5 break-words font-semibold tracking-[-0.015em] text-label group-hover:text-accent transition-colors",
             featured
               ? "text-[clamp(1.4rem,1.15rem+1vw,1.95rem)] font-bold leading-[1.2]"
-              : "text-[18px] font-bold leading-[1.3]",
+              : "line-clamp-3 text-[16px] font-bold leading-[1.3] sm:text-[18px]",
           )}
         >
           {cleanTitle}
@@ -90,7 +90,7 @@ export function NewsCard({
         )}
 
         {/* Info Penulis & Tanggal Terbit */}
-        <div className="flex items-center justify-between gap-3 pt-4">
+        <div className={cn("items-center justify-between gap-3 pt-4", featured ? "flex" : "hidden sm:flex")}>
           <div className="flex items-center gap-2.5 min-w-0">
             {author?.avatarUrl ? (
               // eslint-disable-next-line @next/next/no-img-element

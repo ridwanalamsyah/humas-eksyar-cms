@@ -17,11 +17,10 @@ const NAV_LINKS = [
 const PORTAL = utilityLinks.slice(0, 4);
 
 const link =
-  "flex min-h-11 shrink-0 snap-start items-center whitespace-nowrap transition-colors hover:text-accent md:min-h-0 md:py-1";
+  "flex min-h-10 items-center whitespace-nowrap transition-colors hover:text-accent md:min-h-0 md:py-1";
 
-/** Di ponsel daftar tautan menjadi satu baris yang digeser ke samping; di desktop kolom biasa. */
-const row =
-  "-mx-4 mt-1 flex snap-x gap-x-6 overflow-x-auto px-4 [scrollbar-width:none] md:mx-0 md:mt-2 md:block md:overflow-visible md:px-0 [&::-webkit-scrollbar]:hidden";
+/** Di ponsel tautan berjajar dan turun ke baris berikutnya; di desktop satu kolom. */
+const row = "mt-1 flex flex-wrap gap-x-5 md:mt-2 md:block";
 
 /** Footer: identitas dan kontak, sistem kampus, tautan halaman, media sosial. */
 export function SiteFooter() {

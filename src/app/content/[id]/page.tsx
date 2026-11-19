@@ -44,7 +44,7 @@ export default async function ContentDetail({ params }: Props) {
         <ArrowLeft className="size-4" strokeWidth={1.75} /> Kembali ke Konten
       </Link>
 
-      <div className="mt-4 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="mt-4 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <article>
           <div className="flex flex-wrap items-center gap-2">
             <StatusPill status={content.status} />
@@ -97,7 +97,7 @@ export default async function ContentDetail({ params }: Props) {
           )}
 
           {media.length > 0 && (
-            <div className="mt-6 grid gap-3 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <div className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
               {media.map((m, i) => (
                 <div
                   key={m!.id}

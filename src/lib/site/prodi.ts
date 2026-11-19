@@ -1170,8 +1170,8 @@ export const navGroups: NavGroup[] = [
     label: "Profil",
     href: "/prodi/profil",
     items: [
-      { href: "/prodi/profil", label: "Tentang Prodi", description: "Visi, misi, akreditasi" },
-      { href: "/prodi/profil#pimpinan", label: "Pimpinan", description: "Kaprodi dan jajarannya" },
+      { href: "/prodi/profil", label: "Tentang Prodi", description: "Sejarah, visi, misi" },
+      { href: "/prodi/pimpinan", label: "Pimpinan & Struktur", description: "Kaprodi dan jajarannya" },
       { href: "/prodi/dosen", label: "Dosen & Staf", description: "Keahlian dan profil" },
       { href: "/prodi/alumni", label: "Alumni & Karier", description: "Ke mana lulusan bekerja" },
       { href: "/prodi/kontak", label: "Kontak", description: "Alamat dan admin jurusan" },

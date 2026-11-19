@@ -16,9 +16,9 @@ export default function ErrorPage({
     console.error("App error boundary:", error);
   }, [error]);
   return (
-    <div className="grid min-h-[70vh] place-items-center px-4 py-12">
+    <div className="grid grid-cols-1 min-h-[70vh] place-items-center px-4 py-12">
       <GlassCard variant="thick" className="max-w-lg p-8 text-center">
-        <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-rose-500/15">
+        <div className="mx-auto grid grid-cols-1 size-14 place-items-center rounded-2xl bg-rose-500/15">
           <AlertTriangle className="size-7 text-rose-600" strokeWidth={1.5} />
         </div>
         <p className="mt-4 font-mono text-[13px] text-foreground/60">

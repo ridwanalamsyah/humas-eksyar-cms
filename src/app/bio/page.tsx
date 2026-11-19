@@ -50,7 +50,7 @@ export default async function BioPage() {
       {/* ─── Hero ─────────────────────────────────────────── */}
       <header className="flex flex-col items-center text-center">
         <div
-          className="grid size-24 place-items-center rounded-full text-4xl shadow-[0_24px_60px_-12px_rgba(13,148,136,0.45)]"
+          className="grid grid-cols-1 size-24 place-items-center rounded-full text-4xl shadow-[0_24px_60px_-12px_rgba(13,148,136,0.45)]"
           style={{
             background:
               config.accent ??
@@ -183,7 +183,7 @@ function BioLinkButton({ link }: { link: { id: string; label: string; href: stri
       }`}
     >
       {link.icon && (
-        <span aria-hidden className="grid size-9 shrink-0 place-items-center rounded-xl bg-foreground/5 text-[18px]">
+        <span aria-hidden className="grid grid-cols-1 size-9 shrink-0 place-items-center rounded-xl bg-foreground/5 text-[18px]">
           {link.icon}
         </span>
       )}
@@ -246,7 +246,7 @@ function MagazineCard({ issue }: { issue: MagazineIssue }) {
               className="absolute inset-0 size-full object-cover transition-transform group-hover:scale-105"
             />
           ) : (
-            <div className="absolute inset-0 grid place-items-center text-foreground/60">
+            <div className="absolute inset-0 grid grid-cols-1 place-items-center text-foreground/60">
               <BookOpen className="size-8" strokeWidth={1.5} />
             </div>
           )}

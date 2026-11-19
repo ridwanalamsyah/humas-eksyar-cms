@@ -96,7 +96,7 @@ export function InstagramImporter({
   }
 
   return (
-    <div className="mt-6 grid gap-6">
+    <div className="mt-6 grid grid-cols-1 gap-6">
       {isAdmin && (
         <label className="flex w-fit items-center gap-2 text-[13px] text-foreground/70">
           <input
@@ -170,7 +170,7 @@ export function InstagramImporter({
         ) : feed.error ? (
           <p className="px-5 py-6 text-[13px] text-red-500">{feed.error}</p>
         ) : (
-          <ul className="grid gap-px bg-foreground/[0.06] sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-px bg-foreground/[0.06] sm:grid-cols-2 lg:grid-cols-3">
             {(feed.posts ?? []).map((p) => (
               <li key={p.shortcode} className="flex flex-col bg-background p-4">
                 <div className="flex gap-3">
@@ -282,7 +282,7 @@ function ManualImport({
         Tempel tautan postingan dan caption-nya (salin dari Instagram), unggah
         fotonya, lalu AI menyusun artikel berita.
       </p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <input
           value={url}
           onChange={(e) => setUrl(e.target.value)}
@@ -313,13 +313,13 @@ function ManualImport({
               type="button"
               aria-label="Hapus foto"
               onClick={() => setImages(images.filter((x) => x !== src))}
-              className="absolute -right-1.5 -top-1.5 grid size-5 place-items-center rounded-full bg-foreground text-background"
+              className="absolute -right-1.5 -top-1.5 grid grid-cols-1 size-5 place-items-center rounded-full bg-foreground text-background"
             >
               <X className="size-3" />
             </button>
           </span>
         ))}
-        <label className="grid size-16 cursor-pointer place-items-center rounded-lg border border-dashed border-foreground/20 text-foreground/60 hover:text-foreground">
+        <label className="grid grid-cols-1 size-16 cursor-pointer place-items-center rounded-lg border border-dashed border-foreground/20 text-foreground/60 hover:text-foreground">
           {uploading ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (

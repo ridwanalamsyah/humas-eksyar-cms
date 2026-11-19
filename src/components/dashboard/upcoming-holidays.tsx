@@ -71,7 +71,7 @@ export function UpcomingHolidays({ holidays }: { holidays: Holiday[] }) {
         {holidays.map((h) => (
           <li key={h.id}>
             <div className="flex items-center gap-3 rounded-xl p-2">
-              <div className="grid size-12 shrink-0 place-items-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-300">
+              <div className="grid grid-cols-1 size-12 shrink-0 place-items-center rounded-xl bg-brand-500/10 text-brand-600 dark:text-brand-300">
                 <span className="text-[13px] uppercase tracking-wider">
                   {formatDateID(h.date).split(" ")[2] ?? ""}
                 </span>

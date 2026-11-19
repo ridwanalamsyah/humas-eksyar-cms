@@ -12,7 +12,7 @@ export function EmptyState({ icon, title, description, action }: EmptyStateProps
   return (
     <GlassCard variant="thin" className="flex flex-col items-center gap-3 p-10 text-center">
       {icon && (
-        <div className="grid place-items-center rounded-2xl bg-foreground/5 p-3 dark:bg-white/5">
+        <div className="grid grid-cols-1 place-items-center rounded-2xl bg-foreground/5 p-3 dark:bg-white/5">
           {icon}
         </div>
       )}

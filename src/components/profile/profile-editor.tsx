@@ -89,7 +89,7 @@ export function ProfileEditor({ member }: Props) {
   }
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+    <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
       <GlassCard variant="thick" className="p-6">
         <p className="text-[13px] text-foreground/60">
           Preview
@@ -140,7 +140,7 @@ export function ProfileEditor({ member }: Props) {
         <p className="text-[13px] text-foreground/60">
           Detail
         </p>
-        <div className="mt-4 grid gap-4">
+        <div className="mt-4 grid grid-cols-1 gap-4">
           <Field label="Nama lengkap">
             <input
               value={name}

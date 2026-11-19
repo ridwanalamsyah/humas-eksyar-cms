@@ -96,13 +96,13 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
   }
 
   return (
-    <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
+    <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)]">
       <GlassCard variant="thick" className="p-6">
         <h3 className="font-display text-lg font-semibold tracking-tight">
           Brief konten
         </h3>
 
-        <div className="mt-5 grid gap-4">
+        <div className="mt-5 grid grid-cols-1 gap-4">
           <Field label="Topik">
             <input
               value={title}
@@ -195,7 +195,7 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
               strokeWidth={1.75}
             />
           </summary>
-          <div className="grid gap-2 px-4 pb-4">
+          <div className="grid grid-cols-1 gap-2 px-4 pb-4">
             {templates.slice(0, 6).map((t) => (
               <button
                 key={t.id}
@@ -256,7 +256,7 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
                   <div className="flex items-center gap-2 text-[13px] text-foreground/60">
                     <Quote className="size-3.5" strokeWidth={2} /> Alternatif
                   </div>
-                  <div className="mt-3 grid gap-3">
+                  <div className="mt-3 grid grid-cols-1 gap-3">
                     {result.alternatives.map((alt, i) => (
                       <div
                         key={i}
@@ -320,7 +320,7 @@ export function CaptionPlayground({ templates, rubrics }: Props) {
               exit={{ opacity: 0 }}
             >
               <GlassCard variant="thin" className="p-8 text-center">
-                <div className="mx-auto grid size-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/20 to-gold-400/15">
+                <div className="mx-auto grid grid-cols-1 size-14 place-items-center rounded-2xl bg-gradient-to-br from-brand-500/20 to-gold-400/15">
                   <Sparkles className="size-6 text-brand-600 dark:text-brand-300" />
                 </div>
                 <h4 className="mt-3 font-display text-lg font-semibold">

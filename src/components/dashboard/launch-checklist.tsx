@@ -77,7 +77,7 @@ export async function LaunchChecklist() {
           {doneCount}/{items.length} selesai · Lihat Audit Sanitasi ›
         </Link>
       </header>
-      <ul className="grid sm:grid-cols-2">
+      <ul className="grid grid-cols-1 sm:grid-cols-2">
         {items.map((i) => (
           <li key={i.label}>
             <Link

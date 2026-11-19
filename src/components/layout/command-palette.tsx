@@ -160,7 +160,7 @@ function CmdItem({
       onSelect={onSelect}
       className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 text-[14px] text-foreground/85 outline-none aria-selected:bg-foreground/[0.06] dark:aria-selected:bg-white/[0.06]"
     >
-      <span className="grid size-7 place-items-center rounded-lg bg-foreground/[0.05] text-foreground/85 dark:bg-white/[0.05]">
+      <span className="grid grid-cols-1 size-7 place-items-center rounded-lg bg-foreground/[0.05] text-foreground/85 dark:bg-white/[0.05]">
         {icon}
       </span>
       <span className="flex-1">{label}</span>

@@ -26,7 +26,7 @@ interface Props {
 
 export function AnalyticsCharts({ series }: Props) {
   return (
-    <div className="grid gap-6">
+    <div className="grid grid-cols-1 gap-6">
       <GlassCard className="p-5">
         <p className="text-[13px] text-foreground/60">
           Performa publish — views &amp; likes

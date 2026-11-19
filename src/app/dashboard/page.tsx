@@ -118,7 +118,7 @@ export default async function DashboardPage() {
       {member.role === "admin" && <OpsAlerts />}
 
       {/* Hari ini: tugas saya dan jadwal minggu ini, paling atas */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)]">
         {/* Perlu review */}
         <section className="min-w-0 rounded-2xl border border-foreground/[0.08] bg-canvas p-5 shadow-xs dark:border-white/[0.08]">
           <header className="flex items-center justify-between border-b border-foreground/[0.07] pb-3.5 dark:border-white/[0.07]">
@@ -218,7 +218,7 @@ export default async function DashboardPage() {
       </dl>
 
       {/* Baris Grafik & Distribusi */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
         <ViewsAreaChart data={views} />
         <ContentDistributionCard
           published={publishedCount}
@@ -228,7 +228,7 @@ export default async function DashboardPage() {
       </div>
 
       {/* Baris Halaman Populer & Konten Terbaru */}
-      <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+      <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
         <TopPagesList views={views} />
 
         {/* Konten terbaru */}

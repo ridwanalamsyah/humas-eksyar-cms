@@ -70,7 +70,7 @@ export function ApprovalChain({ content }: { content: ContentItem }) {
                   : "bg-foreground/5 dark:bg-white/5"
             }`}
           >
-            <span className="grid size-7 place-items-center rounded-full bg-background text-foreground/65 ring-1 ring-foreground/10 dark:bg-foreground/15 dark:ring-white/10">
+            <span className="grid grid-cols-1 size-7 place-items-center rounded-full bg-background text-foreground/65 ring-1 ring-foreground/10 dark:bg-foreground/15 dark:ring-white/10">
               {isCurrent ? (
                 <Clock4 className="size-3.5 text-amber-600 dark:text-amber-300" strokeWidth={2} />
               ) : reached ? (

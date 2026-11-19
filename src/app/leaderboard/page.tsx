@@ -25,7 +25,7 @@ export default async function LeaderboardPage() {
         description="Peringkat berdasarkan kontribusi."
       />
 
-      <div className="mt-2 grid gap-4 sm:grid-cols-3">
+      <div className="mt-2 grid grid-cols-1 gap-4 sm:grid-cols-3">
         {top3.map((m, i) => {
           const ranks: Array<{
             color: string;
@@ -58,7 +58,7 @@ export default async function LeaderboardPage() {
               >
                 <div className="flex items-center gap-3">
                   <div
-                    className={`grid size-12 place-items-center rounded-2xl bg-gradient-to-br ${meta.color} text-white shadow`}
+                    className={`grid grid-cols-1 size-12 place-items-center rounded-2xl bg-gradient-to-br ${meta.color} text-white shadow`}
                   >
                     <Trophy className="size-6" strokeWidth={1.75} />
                   </div>
@@ -91,7 +91,7 @@ export default async function LeaderboardPage() {
         })}
       </div>
 
-      <div className="mt-8 grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+      <div className="mt-8 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
         <GlassCard className="overflow-hidden p-0">
           <div className="border-b border-foreground/10 px-5 py-3 dark:border-white/10">
             <p className="text-[13px] text-foreground/60">
@@ -106,7 +106,7 @@ export default async function LeaderboardPage() {
                     href={`/members/${m.id}`}
                     className="flex items-center gap-3 px-5 py-3 transition-colors hover:bg-foreground/[0.04] dark:hover:bg-white/5"
                   >
-                    <span className="grid size-7 shrink-0 place-items-center rounded-full bg-foreground/[0.04] font-mono text-[13px] font-semibold text-foreground/70 dark:bg-white/5">
+                    <span className="grid grid-cols-1 size-7 shrink-0 place-items-center rounded-full bg-foreground/[0.04] font-mono text-[13px] font-semibold text-foreground/70 dark:bg-white/5">
                       {i + 4}
                     </span>
                     <Avatar member={m} size={32} ring={false} />

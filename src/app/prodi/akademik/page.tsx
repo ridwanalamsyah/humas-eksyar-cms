@@ -61,7 +61,8 @@ export default async function AkademikPage() {
             educationalCredentialAwarded: identity.degree,
             timeToComplete: "P4Y",
             numberOfCredits: identity.totalCredits,
-            occupationalCategory: "Ekonom Syariah, Praktisi Perbankan Syariah, Analis Pasar Modal Syariah, Auditor Halal",
+            occupationalCategory:
+              "Ekonom Syariah, Praktisi Perbankan Syariah, Analis Pasar Modal Syariah, Auditor Halal",
           }).replace(/</g, "\\u003c"),
         }}
       />
@@ -71,7 +72,10 @@ export default async function AkademikPage() {
         description="Kurikulum yang memadukan teori ekonomi, fiqh muamalah, dan praktik industri."
       />
       {/* Dibuka langsung dengan mata kuliah per tahun: yang paling dicari. */}
-      <section id="kurikulum" className="scroll-mt-28 px-4 pb-16 sm:px-6 sm:pb-24">
+      <section
+        id="kurikulum"
+        className="scroll-mt-28 px-4 pb-16 sm:px-6 sm:pb-24"
+      >
         <div className="mx-auto max-w-[1024px]">
           <KurikulumTabs years={kurikulum} />
           <div className="mt-8 flex justify-center" data-print-hide>
@@ -81,7 +85,7 @@ export default async function AkademikPage() {
       </section>
 
       {/* Angka */}
-      <section className="border-t border-hairline px-4 py-16 sm:px-6 sm:py-14 sm:py-24">
+      <section className="border-t border-hairline px-4 py-16 sm:px-6 sm:py-24">
         <dl className="mx-auto grid max-w-[1024px] grid-cols-2 gap-y-12 text-center md:grid-cols-4">
           {facts.map((f) => (
             <Reveal key={f.k}>
@@ -107,29 +111,31 @@ export default async function AkademikPage() {
             title="Kelompok mata kuliah"
           />
         </Reveal>
-        <div className="rail mx-auto mt-10 grid max-w-[1024px] gap-8 sm:mt-14 md:grid-cols-3">
+        <div className="mx-auto mt-8 grid max-w-[1024px] grid-cols-1 gap-5 sm:mt-14 sm:gap-8 md:grid-cols-3">
           {kelompokMataKuliah.map((k, i) => (
             <Reveal key={k.code} delay={i * 0.06}>
               <div className="h-full pt-6 border-t border-hairline">
-                <p className="text-[32px] font-semibold leading-none tracking-[-0.03em] text-accent">
+                <p className="text-[24px] font-semibold leading-none tracking-[-0.03em] text-accent sm:text-[32px]">
                   {k.code}
                 </p>
-                <h3 className="mt-4 text-[20px] font-semibold leading-snug tracking-[-0.01em] text-label">
+                <h3 className="mt-2 text-[17px] font-semibold leading-snug sm:mt-4 sm:text-[20px] tracking-[-0.01em] text-label">
                   {k.title}
                 </h3>
-                <p className="mt-2 text-[16px] leading-[1.45] text-label-2">
+                <p className="mt-2 hidden text-[16px] leading-[1.45] text-label-2 sm:block">
                   {k.description}
                 </p>
               </div>
             </Reveal>
           ))}
         </div>
-
       </section>
 
       {/* Peminatan & roadmap */}
       {peminatan.length > 0 && (
-        <section id="peminatan" className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-14 sm:py-24">
+        <section
+          id="peminatan"
+          className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-24"
+        >
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading
@@ -139,38 +145,41 @@ export default async function AkademikPage() {
                 description="Pilihan fokus studi beserta mata kuliah yang disarankan dan arah kariernya."
               />
             </Reveal>
-            <div className="rail mt-10 grid gap-x-10 gap-y-10 md:grid-cols-2">
-              {peminatan.map((p, i) => (
-                <div
-                  key={p.nama}
-                  className="border-t-2 border-accent pt-5"
-                >
+            <div className="mt-8 grid grid-cols-1 gap-x-10 gap-y-8 md:grid-cols-2">
+              {peminatan.map((p) => (
+                <div key={p.nama} className="border-t-2 border-accent pt-5">
                   <h3 className="text-[22px] font-bold leading-snug tracking-[-0.01em] text-label">
                     {p.nama}
                   </h3>
-                  <p
-                    className="mt-2 text-[16px] leading-relaxed text-label-2"
-                  >
+                  <p className="mt-2 text-[16px] leading-relaxed text-label-2">
                     {p.deskripsi}
                   </p>
-                  {p.mataKuliah.length > 0 && (
-                    <ol className="mt-4 space-y-1.5 text-[15px] text-label">
-                      {p.mataKuliah.map((mk, k) => (
-                        <li key={mk} className="flex gap-2">
-                          <span className="font-bold tabular-nums opacity-60">
-                            {k + 1}.
-                          </span>{" "}
-                          {mk}
-                        </li>
-                      ))}
-                    </ol>
-                  )}
-                  {p.karier.length > 0 && (
-                    <p
-                      className="mt-4 text-[14px] leading-relaxed text-label-3"
-                    >
-                      Arah karier: {p.karier.join(", ")}
-                    </p>
+                  {(p.mataKuliah.length > 0 || p.karier.length > 0) && (
+                    <details className="group mt-3">
+                      <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-1.5 text-[15px] font-semibold text-accent">
+                        <span className="group-open:hidden">
+                          Lihat mata kuliah & karier
+                        </span>
+                        <span className="hidden group-open:inline">Tutup</span>
+                      </summary>
+                      {p.mataKuliah.length > 0 && (
+                        <ol className="mt-4 space-y-1.5 text-[15px] text-label">
+                          {p.mataKuliah.map((mk, k) => (
+                            <li key={mk} className="flex gap-2">
+                              <span className="font-bold tabular-nums opacity-60">
+                                {k + 1}.
+                              </span>{" "}
+                              {mk}
+                            </li>
+                          ))}
+                        </ol>
+                      )}
+                      {p.karier.length > 0 && (
+                        <p className="mt-4 text-[14px] leading-relaxed text-label-3">
+                          Arah karier: {p.karier.join(", ")}
+                        </p>
+                      )}
+                    </details>
                   )}
                 </div>
               ))}
@@ -181,7 +190,10 @@ export default async function AkademikPage() {
 
       {/* RPS & referensi */}
       {rps.length > 0 && (
-        <section id="rps" className="scroll-mt-28 bg-mist px-4 py-14 sm:px-6 sm:py-14 sm:py-24">
+        <section
+          id="rps"
+          className="scroll-mt-28 bg-mist px-4 py-14 sm:px-6 sm:py-24"
+        >
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
               <SectionHeading
@@ -327,7 +339,7 @@ export default async function AkademikPage() {
       </section>
 
       {/* Layanan */}
-      <section className="bg-mist px-4 py-14 sm:px-6 sm:py-14 sm:py-24">
+      <section className="bg-mist px-4 py-14 sm:px-6 sm:py-24">
         <div className="mx-auto grid max-w-[1024px] gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {layananAkademik.map((l) => (
             <a

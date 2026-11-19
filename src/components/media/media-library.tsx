@@ -233,7 +233,7 @@ export function MediaLibrary({ media: initial }: Props) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 grid place-items-center bg-black/50 p-4 backdrop-blur-md"
+            className="fixed inset-0 z-50 grid grid-cols-1 place-items-center bg-black/50 p-4 backdrop-blur-md"
             onClick={() => setActive(null)}
           >
             <motion.div

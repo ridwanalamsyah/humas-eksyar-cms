@@ -89,7 +89,7 @@ export function QuickActions() {
                 aria-hidden
                 className={`pointer-events-none absolute -right-6 -top-6 size-24 rounded-full bg-gradient-to-br ${a.accent} blur-2xl`}
               />
-              <span className={`relative grid size-10 place-items-center rounded-xl bg-foreground/5 dark:bg-white/5 ${a.iconColor}`}>
+              <span className={`relative grid grid-cols-1 size-10 place-items-center rounded-xl bg-foreground/5 dark:bg-white/5 ${a.iconColor}`}>
                 <a.icon className="size-4" strokeWidth={1.75} />
               </span>
               <p className="relative mt-3 font-display text-sm font-semibold tracking-tight">

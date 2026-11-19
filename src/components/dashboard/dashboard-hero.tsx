@@ -70,7 +70,7 @@ export function DashboardHero({ member, digest, unreadCount }: Props) {
   return (
     <motion.div {...fadeUp}>
       <GlassCard variant="thick" className="overflow-hidden p-6 sm:p-10">
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
           <div>
             <p className="text-[13px] text-foreground/60">
               Beranda

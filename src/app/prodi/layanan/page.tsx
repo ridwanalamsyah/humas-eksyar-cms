@@ -37,7 +37,7 @@ export default async function LayananPage() {
       {/* Formulir online */}
       <section
         id="formulir"
-        className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-28"
+        className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-28"
       >
         <div className="mx-auto max-w-[1024px]">
           <Reveal>
@@ -93,7 +93,7 @@ export default async function LayananPage() {
       {unduhan.length > 0 && (
         <section
           id="unduhan"
-          className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-28"
+          className="scroll-mt-28 bg-mist px-4 py-14 sm:px-6 sm:py-28"
         >
           <div className="mx-auto max-w-[1024px]">
             <Reveal>
@@ -113,7 +113,7 @@ export default async function LayananPage() {
 
       {/* Alur layanan akademik */}
       {prosedur.length > 0 && (
-        <section id="alur" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-28">
+        <section id="alur" className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-28">
           <div className="mx-auto max-w-[860px]">
             <Reveal>
               <SectionHeading
@@ -131,7 +131,7 @@ export default async function LayananPage() {
       {/* Sistem kampus */}
       <section
         id="digital"
-        className="scroll-mt-28 bg-mist px-4 py-24 sm:px-6 sm:py-28"
+        className="scroll-mt-28 bg-mist px-4 py-14 sm:px-6 sm:py-28"
       >
         <Reveal>
           <SectionHeading eyebrow="Sistem kampus" title="Akses cepat" />
@@ -162,7 +162,7 @@ export default async function LayananPage() {
       </section>
 
       {/* FAQ + kirim pertanyaan */}
-      <section id="faq" className="scroll-mt-28 px-4 py-24 sm:px-6 sm:py-28">
+      <section id="faq" className="scroll-mt-28 px-4 py-14 sm:px-6 sm:py-28">
         <Reveal>
           <SectionHeading title="Pertanyaan yang sering diajukan" />
         </Reveal>

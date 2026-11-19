@@ -34,7 +34,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
 
   return (
     <AppShell width="wide">
-      <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)]">
         <aside className="space-y-4">
           <GlassCard variant="thick" className="p-6 text-center">
             <div className="mx-auto inline-block">
@@ -83,7 +83,7 @@ export default async function MemberDetailPage({ params }: PageProps) {
             <p className="mt-1 text-[13px] text-foreground/65">
               Semua konten yang ditulis atau dijadwalkan anggota ini.
             </p>
-            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {allContents.slice(0, 6).map((c) => {
                 const author = findMember(c.authorId);
                 const cover = c.mediaIds[0] ? findMedia(c.mediaIds[0]) : null;
