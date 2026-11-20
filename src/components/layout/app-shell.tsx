@@ -1,4 +1,5 @@
 import { AppHeader } from "@/components/layout/app-header";
+import { isSuperAdminEmail } from "@/lib/auth/admins";
 import { Sidebar } from "@/components/layout/sidebar";
 import { getCurrentMember, listNotifications } from "@/lib/data/provider";
 import { cn } from "@/lib/utils";
@@ -29,13 +30,9 @@ export async function AppShell({
   }
 
   const emailLower = (member.email || "").toLowerCase();
-  const isSuperAdminEmail =
-    emailLower.includes("1239220061") ||
-    emailLower === "1239220061@student.uinsgd.ac.id" ||
-    emailLower === "humaseksyaruinbdg@gmail.com" ||
-    emailLower === "ridwanalamsyah122@gmail.com";
+  const isSuperAdmin = isSuperAdminEmail(emailLower);
 
-  if (isSuperAdminEmail && (member.role === "pending" || member.id.startsWith("pending-"))) {
+  if (isSuperAdmin && (member.role === "pending" || member.id.startsWith("pending-"))) {
     member = {
       ...member,
       id: "mbr-ridwan",
@@ -46,7 +43,7 @@ export async function AppShell({
     };
   }
 
-  if (!isSuperAdminEmail && (member.id.startsWith("pending-") || member.role === "pending")) {
+  if (!isSuperAdmin && (member.id.startsWith("pending-") || member.role === "pending")) {
     return <PendingAccountView identifier={member.email || member.name} />;
   }
 

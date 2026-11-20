@@ -5,6 +5,7 @@
  * data so previews and local dev don't require Neon provisioning.
  */
 
+import { canonicalMemberEmail } from "@/lib/auth/admins";
 import { divisions, findDivision } from "@/lib/fixtures/divisions";
 import {
   members,
@@ -537,7 +538,8 @@ export async function deleteMember(id: ID, reassignTo?: ID): Promise<boolean> {
 }
 
 export async function findMemberByEmail(email: string): Promise<Member | null> {
-  return membersStore.find((m) => m.email.toLowerCase() === email.toLowerCase()) ?? null;
+  const target = canonicalMemberEmail(email);
+  return membersStore.find((m) => m.email.toLowerCase() === target) ?? null;
 }
 
 export async function listPendingMembers(): Promise<PendingMember[]> {

@@ -120,20 +120,20 @@ export default async function KinerjaPage({ searchParams }: Props) {
             Kinerja {label}
           </h1>
         </div>
-        <div className="flex items-center gap-2" data-print-hide>
+        <div className="flex w-full flex-wrap items-center gap-1 sm:w-auto sm:gap-2" data-print-hide>
           <Link
             href={`/settings/kinerja?bulan=${prev.toISOString().slice(0, 7)}`}
-            className="rounded-lg px-3 py-1.5 text-[13px] hover:bg-foreground/[0.05]"
+            className="inline-flex min-h-10 items-center whitespace-nowrap rounded-lg px-3 text-[13px] hover:bg-foreground/[0.05]"
           >
             ‹ Sebelumnya
           </Link>
           <Link
             href={`/settings/kinerja?bulan=${next.toISOString().slice(0, 7)}`}
-            className="rounded-lg px-3 py-1.5 text-[13px] hover:bg-foreground/[0.05]"
+            className="inline-flex min-h-10 items-center whitespace-nowrap rounded-lg px-3 text-[13px] hover:bg-foreground/[0.05]"
           >
             Berikutnya ›
           </Link>
-          <PrintButton label="Cetak laporan / PDF" />
+          <span className="ml-auto sm:ml-0"><PrintButton label="Cetak / PDF" /></span>
         </div>
       </header>
 

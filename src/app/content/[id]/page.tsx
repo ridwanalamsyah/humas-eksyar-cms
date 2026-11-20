@@ -14,7 +14,6 @@ import { ContentInlineEditor } from "@/components/content/content-inline-editor"
 import { CommentThread } from "@/components/content/comment-thread";
 import { auth } from "@/auth";
 import { findMemberByEmail } from "@/lib/data/provider";
-import { findMedia } from "@/lib/fixtures/media";
 import { humanNumber, percent, formatDateTime, formatLongDate } from "@/lib/format/dates";
 
 interface Props { params: Promise<{ id: string }> }
@@ -32,8 +31,9 @@ export default async function ContentDetail({ params }: Props) {
   const canDelete = me?.role === "admin" || me?.role === "ketua_divisi";
 
   const author = await getMember(content.authorId);
-  const media = content.mediaIds.map((m) => findMedia(m)).filter(Boolean);
   const allMedia = await listMedia();
+  const mediaById = new Map(allMedia.map((m) => [m.id, m]));
+  const media = content.mediaIds.map((m) => mediaById.get(m)).filter(Boolean);
   const relatedMedia = allMedia
     .filter((m) => !content.mediaIds.includes(m.id) && m.tags.some((t) => content.title.toLowerCase().includes(t.toLowerCase())))
     .slice(0, 3);

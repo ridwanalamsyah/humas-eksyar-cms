@@ -22,22 +22,33 @@ import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/common/avatar";
 import { StatusPill } from "@/components/common/pill";
 import { ContentCard } from "@/components/content/content-card";
-import { findMember } from "@/lib/fixtures/members";
-import { findMedia } from "@/lib/fixtures/media";
 import { rubricLabel } from "@/lib/site/content";
 import { relativeFromNow, formatShortDate } from "@/lib/format/dates";
 import { cn } from "@/lib/utils";
-import type { ContentItem } from "@/lib/data/types";
+import type { ContentItem, MediaAsset, Member } from "@/lib/data/types";
 
 type View = "list" | "grid";
 type StatusFilter = "all" | "published" | "draft" | "review" | "archived";
 
 interface Props {
   contents: ContentItem[];
+  /** Anggota & media dari database (bukan data contoh). */
+  members: Member[];
+  media: MediaAsset[];
 }
 
-export function ContentBoard({ contents }: Props) {
+/** Judul tanpa awalan teknis seperti "[Buletin Artikel HMJ]" atau "[Arsip …]". */
+export const cleanTitle = (t: string) => t.replace(/^\s*\[[^\]]{2,60}\]\s*/, "");
+
+/** Pengganti bila penulis sudah tidak ada di daftar anggota. */
+const REDAKSI = { id: "redaksi", name: "Redaksi Eksyar", initials: "RE", accentHue: 175 } as unknown as Member;
+
+export function ContentBoard({ contents, members, media }: Props) {
   const router = useRouter();
+  const memberById = useMemo(() => new Map(members.map((m) => [m.id, m])), [members]);
+  const mediaById = useMemo(() => new Map(media.map((m) => [m.id, m])), [media]);
+  const findMember = (id: string) => memberById.get(id) ?? null;
+  const findMedia = (id: string) => mediaById.get(id) ?? null;
   const [view, setView] = useState<View>("list");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [rubricFilter, setRubricFilter] = useState<string>("all");
@@ -236,7 +247,7 @@ export function ContentBoard({ contents }: Props) {
 
         {/* Switch View & Tombol Konten Baru */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center rounded-xl border border-hairline bg-canvas p-0.5 shadow-2xs">
+          <div className="hidden items-center rounded-xl border border-hairline bg-canvas p-0.5 shadow-2xs sm:flex">
             <button
               type="button"
               onClick={() => setView("list")}
@@ -277,7 +288,24 @@ export function ContentBoard({ contents }: Props) {
       {filtered.length === 0 ? (
         <EmptyState search={search} onReset={() => { setSearch(""); setStatusFilter("all"); setRubricFilter("all"); }} />
       ) : view === "list" ? (
-        <div className="overflow-hidden rounded-2xl border border-hairline bg-canvas shadow-2xs">
+        <>
+        {/* Ponsel: daftar ringkas (tabel terlalu lebar untuk layar kecil) */}
+        <ul className="divide-y divide-hairline overflow-hidden rounded-2xl border border-hairline bg-canvas sm:hidden">
+          {filtered.map((c) => (
+            <li key={c.id}>
+              <Link href={`/content/${c.id}`} className="block px-4 py-3 active:bg-mist/60">
+                <p className="line-clamp-2 text-[15px] font-medium leading-snug text-label">{cleanTitle(c.title)}</p>
+                <div className="mt-1.5 flex items-center gap-2 text-[13px] text-label-3">
+                  <StatusPill status={c.status} size="xs" />
+                  <span>{rubricLabel(c.rubric)}</span>
+                  <span>·</span>
+                  <span>{formatShortDate(c.updatedAt)}</span>
+                </div>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="hidden overflow-hidden rounded-2xl border border-hairline bg-canvas shadow-2xs sm:block">
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
               <thead>
@@ -308,7 +336,7 @@ export function ContentBoard({ contents }: Props) {
                             href={`/content/${c.id}`}
                             className="font-medium text-label hover:text-accent transition-colors line-clamp-1 leading-snug"
                           >
-                            {c.title}
+                            {cleanTitle(c.title)}
                           </Link>
                           <p className="mt-0.5 line-clamp-1 text-[13px] text-label-3">
                             {(c.caption || c.body || "").replace(/[#\n]+/g, " ").trim() || "Tidak ada keterangan tambahan."}
@@ -415,14 +443,14 @@ export function ContentBoard({ contents }: Props) {
             </table>
           </div>
         </div>
+        </>
       ) : (
         /* 4. Tampilan Grid Kartu */
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {filtered.map((c) => {
-            const author = findMember(c.authorId);
+            const author = findMember(c.authorId) ?? REDAKSI;
             const cover = c.mediaIds[0] ? findMedia(c.mediaIds[0]) : null;
-            if (!author) return null;
-            return <ContentCard key={c.id} content={c} author={author} cover={cover} />;
+            return <ContentCard key={c.id} content={{ ...c, title: cleanTitle(c.title) }} author={author} cover={cover} />;
           })}
         </div>
       )}

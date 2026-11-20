@@ -7,6 +7,7 @@
  * `provider.ts` can swap them seamlessly.
  */
 
+import { canonicalMemberEmail, isSuperAdminEmail } from "@/lib/auth/admins";
 import { and, asc, desc, eq, ilike, inArray, or, sql as drizzleSql } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
 import * as fixtures from "./mock-provider";
@@ -196,12 +197,7 @@ export async function getCurrentMember(): Promise<Member> {
     const normEmail = (email || "").toLowerCase().trim();
 
     // 0. Ridwan & Alya instant identification (Super Admin & Penulis)
-    if (
-      normEmail === "1239220061@student.uinsgd.ac.id" ||
-      normEmail.includes("1239220061") ||
-      normEmail === "humaseksyaruinbdg@gmail.com" ||
-      normEmail === "ridwanalamsyah122@gmail.com"
-    ) {
+    if (isSuperAdminEmail(normEmail)) {
       try {
         const rows = await client()
           .select()
@@ -1210,13 +1206,25 @@ export async function deleteMember(id: ID, reassignTo?: ID): Promise<boolean> {
   return deleted.length > 0;
 }
 
+/**
+ * Cari anggota dari email sesi. Tidak peka huruf besar/kecil, dan alias email
+ * admin dipetakan ke akun admin (dulu alias Gmail ditolak di semua API).
+ */
 export async function findMemberByEmail(email: string): Promise<Member | null> {
+  const target = canonicalMemberEmail(email);
+  if (!target) return null;
   const rows = await client()
     .select()
     .from(schema.members)
-    .where(eq(schema.members.email, email))
+    .where(drizzleSql`lower(${schema.members.email}) = ${target}`)
     .limit(1);
-  return rows[0] ? row<Member>(rows[0]) : null;
+  let found = rows[0] ? row<Member>(rows[0]) : null;
+  if (!found && isSuperAdminEmail(email)) {
+    const byId = await client().select().from(schema.members).where(eq(schema.members.id, "mbr-ridwan")).limit(1);
+    found = byId[0] ? row<Member>(byId[0]) : null;
+  }
+  if (found && isSuperAdminEmail(email)) found = { ...found, role: "admin" };
+  return found;
 }
 
 /* ------------------------------------------------------------------ */

@@ -1607,13 +1607,16 @@ export function WebsiteEditor({
     setCollapsedMap({});
   };
 
-  // Pindah bagian saat pintasan di sidebar (?bagian=…) diklik.
-  useEffect(() => {
+  // Pindah bagian saat pintasan di sidebar (?bagian=…) diklik: disesuaikan
+  // saat render (pola React untuk props yang berubah), bukan lewat effect.
+  const [seenTab, setSeenTab] = useState(initialTab);
+  if (initialTab !== seenTab) {
+    setSeenTab(initialTab);
     if (initialTab && TABS.some((t) => t.value === initialTab)) {
       setTab(initialTab);
       setFocusedSection("all");
     }
-  }, [initialTab]);
+  }
   const [config, setConfig] = useState<WebsiteConfig>(initial);
   const [saved, setSaved] = useState(() => JSON.stringify(initial));
   const dirty = useMemo(

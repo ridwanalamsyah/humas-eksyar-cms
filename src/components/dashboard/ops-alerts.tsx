@@ -33,6 +33,23 @@ export async function OpsAlerts() {
   ]);
   const now = nowMs();
   const alerts: Alert[] = [];
+  // Pengaturan Vercel yang belum diisi: fitur terkait diam-diam tidak jalan.
+  const env = (k: string) => Boolean(process.env[k]?.trim());
+  if (process.env.VERCEL) {
+    if (!env("BLOB_READ_WRITE_TOKEN"))
+      alerts.push({ text: "Penyimpanan foto (Vercel Blob) belum tersambung: unggah foto di Media dan Instagram akan gagal.", href: "/media", tone: "warn" });
+    if (!env("CRON_SECRET"))
+      alerts.push({ text: "CRON_SECRET belum diisi di Vercel: sinkron skripsi, Instagram, kalender, dan cadangan otomatis tidak berjalan.", href: "/settings/skripsi", tone: "warn" });
+    if (!env("CMS_LOGIN_PASSWORD"))
+      alerts.push({ text: "CMS_LOGIN_PASSWORD belum diisi di Vercel: login email dimatikan, hanya login Google yang bisa dipakai.", href: "/settings/members", tone: "warn" });
+  }
+  const lastSync = (skripsi as { at?: string } | null)?.at;
+  if (lastSync && now - new Date(lastSync).getTime() > 3 * DAY)
+    alerts.push({
+      text: `Direktori skripsi terakhir sinkron ${Math.floor((now - new Date(lastSync).getTime()) / DAY)} hari lalu.`,
+      href: "/settings/skripsi",
+      tone: "warn",
+    });
   for (const s of skripsi?.sources ?? [])
     if (s.error)
       alerts.push({

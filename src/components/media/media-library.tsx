@@ -109,19 +109,19 @@ export function MediaLibrary({ media: initial }: Props) {
     <div className="mt-2 space-y-5">
       <GlassCard className="p-4">
         <div className="flex flex-wrap items-center gap-2">
-          <label className="flex flex-1 items-center gap-2 rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 py-2 dark:border-white/10 dark:bg-white/5">
+          <label className="flex w-full items-center gap-2 rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 py-2 sm:w-auto sm:flex-1 dark:border-white/10 dark:bg-white/5">
             <Search className="size-4 text-foreground/60" strokeWidth={1.75} />
             <input
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari keterangan atau label…"
-              className="w-full bg-transparent text-[13px] outline-none placeholder:text-foreground/60"
+              className="w-full bg-transparent text-[14px] outline-none placeholder:text-foreground/60"
             />
           </label>
           <select
             value={aspect}
             onChange={(e) => setAspect(e.target.value as MediaAsset["aspect"] | "all")}
-            className="h-10 rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 text-[13px] dark:border-white/10 dark:bg-white/5"
+            className="h-10 flex-1 rounded-2xl border border-foreground/10 bg-foreground/[0.04] px-3 text-[13px] sm:flex-none dark:border-white/10 dark:bg-white/5"
           >
             <option value="all">Semua bentuk</option>
             {ASPECT_RATIOS.map((a) => (
@@ -146,14 +146,15 @@ export function MediaLibrary({ media: initial }: Props) {
             {uploading ? "Mengunggah…" : "Unggah foto"}
           </Button>
         </div>
-        <div className="mt-3 flex flex-wrap items-center gap-1.5 text-[13px]">
-          <span className="inline-flex items-center gap-1 text-foreground/60">
+        {/* Ponsel: satu baris yang digeser; desktop: berjajar */}
+        <div className="-mx-4 mt-3 flex items-center gap-1.5 overflow-x-auto whitespace-nowrap px-4 text-[13px] [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:px-0 [&::-webkit-scrollbar]:hidden">
+          <span className="inline-flex shrink-0 items-center gap-1 text-foreground/60">
             <Filter className="size-3" strokeWidth={2} /> Label:
           </span>
           <button
             type="button"
             onClick={() => setActiveTag("all")}
-            className={`rounded-full border px-2 py-0.5 ${
+            className={`shrink-0 rounded-full border px-2.5 py-1 ${
               activeTag === "all"
                 ? "border-brand-500/45 bg-brand-500/15 text-brand-700 dark:text-brand-300"
                 : "border-foreground/15 bg-foreground/5 text-foreground/65"
@@ -166,7 +167,7 @@ export function MediaLibrary({ media: initial }: Props) {
               key={t}
               type="button"
               onClick={() => setActiveTag(t === activeTag ? "all" : t)}
-              className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 ${
+              className={`inline-flex shrink-0 items-center gap-1 rounded-full border px-2.5 py-1 ${
                 activeTag === t
                   ? "border-brand-500/45 bg-brand-500/15 text-brand-700 dark:text-brand-300"
                   : "border-foreground/15 bg-foreground/5 text-foreground/65"

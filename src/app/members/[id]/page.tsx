@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getMember, listContents } from "@/lib/data/provider";
+import { getMember, listContents, listMedia } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { GlassCard } from "@/components/ui/glass-card";
 import { Avatar } from "@/components/common/avatar";
 import { Pill } from "@/components/common/pill";
 import { ContentCard } from "@/components/content/content-card";
 import { Mail, Calendar as CalIcon } from "lucide-react";
-import { findMember } from "@/lib/fixtures/members";
-import { findMedia } from "@/lib/fixtures/media";
 import { formatLongDate } from "@/lib/format/dates";
 
 interface PageProps {
@@ -30,7 +28,8 @@ export default async function MemberDetailPage({ params }: PageProps) {
   const member = await getMember(id);
   if (!member) notFound();
 
-  const allContents = await listContents({ authorId: id });
+  const [allContents, allMedia] = await Promise.all([listContents({ authorId: id }), listMedia()]);
+  const mediaById = new Map(allMedia.map((m) => [m.id, m]));
 
   return (
     <AppShell width="wide">
@@ -85,9 +84,8 @@ export default async function MemberDetailPage({ params }: PageProps) {
             </p>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
               {allContents.slice(0, 6).map((c) => {
-                const author = findMember(c.authorId);
-                const cover = c.mediaIds[0] ? findMedia(c.mediaIds[0]) : null;
-                if (!author) return null;
+                const author = member;
+                const cover = c.mediaIds[0] ? (mediaById.get(c.mediaIds[0]) ?? null) : null;
                 return (
                   <ContentCard
                     key={c.id}

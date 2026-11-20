@@ -1,4 +1,4 @@
-import { listContents } from "@/lib/data/provider";
+import { listContents, listMedia, listMembers } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { ContentBoard } from "@/components/content/content-board";
 
@@ -6,7 +6,7 @@ export const metadata = { title: "Artikel & Berita" };
 export const dynamic = "force-dynamic";
 
 export default async function ContentPage() {
-  const contents = await listContents();
+  const [contents, members, media] = await Promise.all([listContents(), listMembers(), listMedia()]);
   return (
     <AppShell width="wide">
       <header className="mb-6 flex flex-wrap items-end justify-between gap-4">
@@ -22,7 +22,7 @@ export default async function ContentPage() {
           </p>
         </div>
       </header>
-      <ContentBoard contents={contents} />
+      <ContentBoard contents={contents} members={members} media={media} />
     </AppShell>
   );
 }

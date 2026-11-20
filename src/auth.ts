@@ -8,6 +8,7 @@
  * and preview deploys without env vars still compile.
  */
 
+import { ADMIN_PRIMARY_EMAIL, isSuperAdminEmail } from "@/lib/auth/admins";
 import NextAuth, { type NextAuthConfig } from "next-auth";
 import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
@@ -93,17 +94,12 @@ const baseConfig: NextAuthConfig = {
         if (!rawEmail || !passwordOk(credentials?.password)) return null;
 
         // Pengurus Admin Utama (Ridwan)
-        if (
-          rawEmail.includes("1239220061") ||
-          rawEmail === "admin@eksyar.ac.id" ||
-          rawEmail === "humaseksyaruinbdg@gmail.com" ||
-          rawEmail === "ridwanalamsyah122@gmail.com"
-        ) {
+        if (isSuperAdminEmail(rawEmail)) {
           const m = members.find((x) => x.id === "mbr-ridwan") ?? members[0];
           return {
             id: m.id,
             name: m.name,
-            email: "1239220061@student.uinsgd.ac.id",
+            email: ADMIN_PRIMARY_EMAIL,
             image: null,
           };
         }
