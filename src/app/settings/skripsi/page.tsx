@@ -14,6 +14,8 @@ export default async function SkripsiSettingsPage() {
   if (!member) redirect("/login");
   if (member.role !== "admin") redirect("/settings");
   const [items, sync] = await Promise.all([getSkripsi(), getSkripsiSync()]);
+  // eslint-disable-next-line react-hooks/purity -- dihitung sekali di server per permintaan
+  const staleDays = sync ? Math.floor((Date.now() - new Date(sync.at).getTime()) / 86_400_000) : 0;
 
   return (
     <AppShell>
@@ -30,7 +32,7 @@ export default async function SkripsiSettingsPage() {
           memeriksa kemiripan judul sebelum mengajukan proposal. Data diperbarui otomatis dari Digilib setiap hari.
         </p>
       </header>
-      <SkripsiEditor initial={items} sync={sync} />
+      <SkripsiEditor initial={items} sync={sync} staleDays={staleDays} />
     </AppShell>
   );
 }

@@ -26,7 +26,16 @@ function parse(text: string) {
   return { items, errors };
 }
 
-export function SkripsiEditor({ initial, sync }: { initial: SkripsiItem[]; sync: SkripsiSync | null }) {
+export function SkripsiEditor({
+  initial,
+  sync,
+  staleDays = 0,
+}: {
+  initial: SkripsiItem[];
+  sync: SkripsiSync | null;
+  /** Hari sejak sinkron terakhir (dihitung di server). */
+  staleDays?: number;
+}) {
   const router = useRouter();
   const [items, setItems] = useState(initial);
   const [bulk, setBulk] = useState("");
@@ -101,6 +110,16 @@ export function SkripsiEditor({ initial, sync }: { initial: SkripsiItem[]; sync:
             <RefreshCw className={syncing ? "size-3.5 animate-spin" : "size-3.5"} /> {syncing ? "Mengambil… (±1 menit)" : "Sinkronkan sekarang"}
           </Button>
         </div>
+        {staleDays >= 3 && (
+          <div className="mt-4 rounded-xl bg-amber-50 px-4 py-3 text-[13px] leading-relaxed text-amber-900">
+            <p className="font-semibold">Sinkron otomatis tidak berjalan sejak {staleDays} hari lalu.</p>
+            <p className="mt-1">
+              Jadwal harian (02.17 UTC) membutuhkan variabel <span className="font-mono">CRON_SECRET</span> di Vercel →
+              Settings → Environment Variables. Isi dengan teks acak panjang, lalu Redeploy. Sementara itu, tekan
+              &ldquo;Sinkronkan sekarang&rdquo;.
+            </p>
+          </div>
+        )}
         {sync && (
           <p className="mt-3 text-[13px] text-foreground/60">
             Terakhir: {new Date(sync.at).toLocaleString("id-ID")} · {sync.total.toLocaleString("id-ID")} judul ({sync.added} baru)

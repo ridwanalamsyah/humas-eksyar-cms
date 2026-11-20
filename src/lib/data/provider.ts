@@ -33,6 +33,9 @@ export const createMedia = impl.createMedia;
 
 export const listEvents = impl.listEvents;
 export const getEvent = impl.getEvent;
+export const createEvent = impl.createEvent;
+export const updateEvent = impl.updateEvent;
+export const deleteEvent = impl.deleteEvent;
 
 export const listBadges = impl.listBadges;
 export const getBadge = impl.getBadge;

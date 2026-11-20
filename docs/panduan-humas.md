@@ -10,6 +10,7 @@ Login email CMS sekarang memakai **kata sandi tim**, dan kunci sesi tidak lagi m
 |---|---|
 | `AUTH_SECRET` | Teks acak panjang. Buat dengan perintah `openssl rand -base64 32`, atau pakai generator kata sandi minimal 32 karakter. |
 | `CMS_LOGIN_PASSWORD` | Kata sandi tim untuk login email. Bagikan hanya ke pengurus Humas, jangan di grup publik. |
+| `CRON_SECRET` | Teks acak panjang (cara buat sama dengan `AUTH_SECRET`). Wajib supaya jadwal otomatis berjalan: sinkron skripsi Digilib setiap hari, Instagram, kalender akademik, dan cadangan data. Tanpa ini semua jadwal ditolak dan direktori skripsi tidak bertambah. |
 
 Tanpa `CMS_LOGIN_PASSWORD`, login email dimatikan dan hanya login Google yang bisa dipakai. Tanpa `AUTH_SECRET`, login tetap aman, tapi pengguna bisa sering keluar sendiri.
 
