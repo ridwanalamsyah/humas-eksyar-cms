@@ -19,7 +19,6 @@ import {
   formatTime,
   relativeFromNow,
 } from "@/lib/format/dates";
-import { findMember } from "@/lib/fixtures/members";
 import type { ContentItem } from "@/lib/data/types";
 import {
   ContentDistributionCard,
@@ -85,7 +84,7 @@ export default async function DashboardPage() {
 
   const recent = contents.slice(0, 5);
   const authorName = (id: string) =>
-    members.find((m) => m.id === id)?.name ?? findMember(id)?.name ?? "Pengurus";
+    members.find((m) => m.id === id)?.name ?? "Pengurus";
 
   return (
     <AppShell>

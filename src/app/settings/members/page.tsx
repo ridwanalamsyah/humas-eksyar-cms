@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { isSuperAdminEmail } from "@/lib/auth/admins";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { AppShell } from "@/components/layout/app-shell";
@@ -15,13 +16,9 @@ export default async function MembersSettingsPage() {
   }
 
   const emailLower = (member.email || "").toLowerCase();
-  const isSuperAdminEmail =
-    emailLower.includes("1239220061") ||
-    emailLower === "1239220061@student.uinsgd.ac.id" ||
-    emailLower === "humaseksyaruinbdg@gmail.com" ||
-    emailLower === "ridwanalamsyah122@gmail.com";
+  const isSuperAdmin = isSuperAdminEmail(emailLower);
 
-  const isAdmin = member.role === "admin" || isSuperAdminEmail;
+  const isAdmin = member.role === "admin" || isSuperAdmin;
 
   const [members, pendingMembers] = await Promise.all([
     listMembers().catch(() => []),

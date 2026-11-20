@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { isSuperAdminEmail } from "@/lib/auth/admins";
 import Link from "next/link";
 import { ArrowLeft, SlidersHorizontal } from "lucide-react";
 import { AppShell } from "@/components/layout/app-shell";
@@ -28,18 +29,14 @@ export default async function WebsiteSettingsPage({
   }
 
   const emailLower = (member.email || "").toLowerCase();
-  const isSuperAdminEmail =
-    emailLower.includes("1239220061") ||
-    emailLower === "1239220061@student.uinsgd.ac.id" ||
-    emailLower === "humaseksyaruinbdg@gmail.com" ||
-    emailLower === "ridwanalamsyah122@gmail.com";
+  const isSuperAdmin = isSuperAdminEmail(emailLower);
 
   const canEdit =
     member.role === "admin" ||
     member.role === "sekjen" ||
     member.role === "ketua_divisi" ||
     member.role === "pengurus" ||
-    isSuperAdminEmail;
+    isSuperAdmin;
 
   if (!canEdit) redirect("/settings");
 

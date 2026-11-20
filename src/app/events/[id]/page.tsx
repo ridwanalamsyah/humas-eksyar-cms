@@ -7,6 +7,7 @@ import {
   getMember,
   getMedia,
   getCurrentMember,
+  listMembers,
 } from "@/lib/data/provider";
 import { AppShell } from "@/components/layout/app-shell";
 import { GlassCard } from "@/components/ui/glass-card";
@@ -21,7 +22,6 @@ import {
   durationLabel,
   formatHijri,
 } from "@/lib/format/dates";
-import { findMember } from "@/lib/fixtures/members";
 import { MapPin, Users, Globe, CalendarDays } from "lucide-react";
 
 interface PageProps {
@@ -46,9 +46,10 @@ export default async function EventDetail({ params }: PageProps) {
     getCurrentMember(),
   ]);
 
+  const roster = new Map((await listMembers()).map((m) => [m.id, m]));
   const rsvpMembers = event.rsvpIds
-    .map((id) => findMember(id))
-    .filter((m): m is NonNullable<ReturnType<typeof findMember>> => Boolean(m));
+    .map((id) => roster.get(id))
+    .filter((m): m is NonNullable<typeof m> => Boolean(m));
   const userRsvp = event.rsvpIds.includes(me.id);
   const canEdit = !["anggota", "monitoring", "pending"].includes(me.role);
 

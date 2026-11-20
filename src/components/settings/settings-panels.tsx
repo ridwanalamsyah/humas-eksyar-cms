@@ -1,5 +1,6 @@
 "use client";
 
+import { isSuperAdminEmail } from "@/lib/auth/admins";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import {
@@ -28,17 +29,13 @@ interface Props {
 export function SettingsPanels({ member }: Props) {
 
   const emailLower = (member.email || "").toLowerCase();
-  const isSuperAdminEmail =
-    emailLower.includes("1239220061") ||
-    emailLower === "1239220061@student.uinsgd.ac.id" ||
-    emailLower === "humaseksyaruinbdg@gmail.com" ||
-    emailLower === "ridwanalamsyah122@gmail.com";
+  const isSuperAdmin = isSuperAdminEmail(emailLower);
   const canManage =
     member.role === "admin" ||
     member.role === "sekjen" ||
     member.role === "ketua_divisi" ||
     member.role === "pengurus" ||
-    isSuperAdminEmail;
+    isSuperAdmin;
 
   return (
     <div className="mt-4 space-y-6">
@@ -49,14 +46,14 @@ export function SettingsPanels({ member }: Props) {
             <p className="font-display text-lg font-semibold tracking-tight">
               {member.name}
             </p>
-            <p className="text-[13px] text-foreground/65">{member.email}</p>
+            <p className="truncate text-[13px] text-foreground/65">{member.email}</p>
             <div className="mt-2 flex flex-wrap gap-1.5">
-              <Pill tone="brand">{ROLE_LABEL[member.role]}</Pill>
+              <Pill tone="brand">{ROLE_LABEL[member.role] ?? member.role}</Pill>
               <Pill>Angkatan {member.angkatan}</Pill>
             </div>
           </div>
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/profile/edit">Ubah profil</Link>
+          <Button variant="ghost" size="sm" asChild className="shrink-0">
+            <Link href="/profile/edit">Ubah</Link>
           </Button>
         </div>
       </GlassCard>
