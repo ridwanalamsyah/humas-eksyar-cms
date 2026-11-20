@@ -15,6 +15,7 @@ import { Pill } from "@/components/common/pill";
 import { Button } from "@/components/ui/button";
 import { QRCheckIn } from "@/components/events/qr-check-in";
 import { RSVPToggle } from "@/components/events/rsvp-toggle";
+import { EventForm } from "@/components/events/event-form";
 import {
   formatLongDate,
   durationLabel,
@@ -49,6 +50,7 @@ export default async function EventDetail({ params }: PageProps) {
     .map((id) => findMember(id))
     .filter((m): m is NonNullable<ReturnType<typeof findMember>> => Boolean(m));
   const userRsvp = event.rsvpIds.includes(me.id);
+  const canEdit = !["anggota", "monitoring", "pending"].includes(me.role);
 
   return (
     <AppShell width="wide">
@@ -191,6 +193,14 @@ export default async function EventDetail({ params }: PageProps) {
           </GlassCard>
         </aside>
       </div>
+      {canEdit && (
+        <GlassCard className="mt-6 p-5 sm:p-6">
+          <h2 className="text-[16px] font-semibold">Ubah jadwal</h2>
+          <div className="mt-4">
+            <EventForm event={event} />
+          </div>
+        </GlassCard>
+      )}
     </AppShell>
   );
 }

@@ -16,7 +16,11 @@ import {
   captionTemplates,
 } from "@/lib/fixtures/contents";
 import { media as mediaFixtures } from "@/lib/fixtures/media";
-import { events, findEvent } from "@/lib/fixtures/events";
+import { events as eventFixtures } from "@/lib/fixtures/events";
+// Disimpan di globalThis agar halaman dan API (bundel terpisah) berbagi data yang sama.
+const ge = globalThis as unknown as { __eventsStore?: Event[] };
+const events: Event[] = (ge.__eventsStore ??= eventFixtures.slice());
+const findEvent = (id: ID) => events.find((e) => e.id === id) ?? null;
 import { badges, findBadge, quests } from "@/lib/fixtures/badges";
 import {
   notifications,
@@ -183,6 +187,27 @@ export async function listEvents(opts?: {
 
 export async function getEvent(id: ID): Promise<Event | null> {
   return findEvent(id);
+}
+
+export type EventInput = Pick<Event, "title" | "description" | "location" | "isOnline" | "startsAt" | "endsAt" | "category">;
+
+export async function createEvent(input: EventInput, coordinatorId: ID, divisionId: ID): Promise<Event> {
+  const id = `evt-${Date.now().toString(36)}`;
+  const ev = { id, slug: id, divisionId, coordinatorId, rsvpIds: [], checkedInIds: [], contentIds: [], ...input } as unknown as Event;
+  events.push(ev);
+  return ev;
+}
+
+export async function updateEvent(id: ID, patch: Partial<EventInput>): Promise<Event | null> {
+  const i = events.findIndex((e) => e.id === id);
+  if (i < 0) return null;
+  events[i] = { ...events[i], ...patch };
+  return events[i];
+}
+
+export async function deleteEvent(id: ID): Promise<void> {
+  const i = events.findIndex((e) => e.id === id);
+  if (i >= 0) events.splice(i, 1);
 }
 
 export async function listBadges(): Promise<Badge[]> {

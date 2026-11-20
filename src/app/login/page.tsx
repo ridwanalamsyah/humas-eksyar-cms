@@ -4,7 +4,7 @@ import { Suspense, useState } from "react";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2 } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { EksyarLogo } from "@/components/brand/eksyar-logo";
 
@@ -82,31 +82,31 @@ function LoginInner() {
   };
 
   return (
-    <main className="grid grid-cols-1 min-h-dvh bg-white text-[#14201a] lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)]">
-      {/* Foto kampus di kiri (desktop saja) */}
-      <aside className="relative hidden overflow-hidden bg-[#152e2b] lg:block">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/prodi/hero-mahasiswa.jpg" alt="" className="absolute inset-0 size-full object-cover opacity-80" />
-        <div
-          aria-hidden
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(0deg, rgba(8,28,34,.75), rgba(8,28,34,.1) 60%)" }}
-        />
-        <p className="absolute bottom-10 left-10 max-w-[28ch] text-[28px] font-bold leading-tight tracking-[-0.02em] text-white">
-          Ruang kerja Humas Ekonomi Syariah.
-        </p>
-      </aside>
+    <main className="relative flex min-h-dvh items-center justify-center bg-[#F4F6F5] px-5 py-12 text-[#14201a]">
+      {/* Cahaya lembut di belakang kartu, tanpa foto */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(60% 50% at 50% 0%, rgba(25,122,111,0.14), transparent 70%), radial-gradient(40% 40% at 100% 100%, rgba(238,178,95,0.10), transparent 70%)",
+        }}
+      />
 
-      <div className="flex flex-col justify-center px-6 py-12 sm:px-12">
-        <motion.div
-          initial={reduce ? false : { opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: EASE_OPUS }}
-          className="mx-auto w-full max-w-[380px]"
-        >
-          <EksyarLogo size={44} />
-          <h1 className="mt-6 text-[28px] font-extrabold tracking-[-0.025em]">Masuk Humas Eksyar</h1>
-          <p className="mt-1 text-[15px] text-[#4a5c54]">Humas Ekonomi Syariah FEBI UIN SGD</p>
+      <motion.div
+        initial={reduce ? false : { opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.45, ease: EASE_OPUS }}
+        className="relative w-full max-w-[400px]"
+      >
+        <div className="rounded-[24px] bg-white px-6 py-8 shadow-[0_1px_2px_rgba(20,32,26,0.06),0_24px_48px_-24px_rgba(20,32,26,0.25)] sm:px-8 sm:py-10">
+          <div className="flex items-center justify-center gap-3">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/prodi/logo-eksyar.png" alt="Ekonomi Syariah" className="size-12 rounded-full" />
+            <span aria-hidden className="h-8 w-px bg-[#14201a]/10" />
+            <EksyarLogo size={44} />
+          </div>
+          <h1 className="mt-5 text-center text-[24px] font-extrabold tracking-[-0.02em]">Humas Eksyar</h1>
 
           <AnimatePresence mode="wait">
             {error && (
@@ -117,7 +117,7 @@ function LoginInner() {
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
                 transition={{ duration: 0.3, ease: EASE_OPUS }}
-                className="mt-5 overflow-hidden text-[14px] font-medium text-red-600"
+                className="mt-4 overflow-hidden rounded-xl bg-red-50 px-4 py-3 text-center text-[14px] font-medium text-red-700"
               >
                 {error}
               </motion.p>
@@ -128,7 +128,7 @@ function LoginInner() {
             type="button"
             onClick={handleGoogle}
             disabled={busy}
-            className="mt-8 flex h-12 w-full items-center justify-center gap-3 rounded-full border border-[#14201a]/15 text-[15px] font-semibold transition-colors hover:bg-[#f4f6f5] disabled:opacity-50"
+            className="mt-7 flex h-12 w-full items-center justify-center gap-3 rounded-xl border border-[#14201a]/12 bg-white text-[15px] font-semibold transition-colors hover:bg-[#f4f6f5] disabled:opacity-50"
           >
             <GoogleMark className="size-5" />
             Masuk dengan Google
@@ -136,54 +136,50 @@ function LoginInner() {
 
           <div className="my-6 flex items-center gap-3 text-[13px] text-[#758a80]">
             <span className="h-px flex-1 bg-[#14201a]/10" />
-            atau email
+            atau
             <span className="h-px flex-1 bg-[#14201a]/10" />
           </div>
 
-          <form onSubmit={handleEmailSubmit} className="space-y-4">
-            <label className="block text-[14px] font-medium">
-              Email
-              <input
-                type="email"
-                required
-                value={emailInput}
-                onChange={(e) => setEmailInput(e.target.value)}
-                placeholder="nama@uinsgd.ac.id"
-                disabled={busy}
-                autoComplete="email"
-                className="mt-1.5 h-12 w-full rounded-xl border border-[#14201a]/15 px-4 text-[15px] font-normal outline-none transition placeholder:text-[#758a80] focus:border-[#197a6f] focus:ring-3 focus:ring-[#197a6f]/15"
-              />
-            </label>
-            <label className="block text-[14px] font-medium">
-              Kata sandi tim
-              <input
-                type="password"
-                required
-                value={passwordInput}
-                onChange={(e) => setPasswordInput(e.target.value)}
-                autoComplete="current-password"
-                disabled={busy}
-                className="mt-1.5 h-12 w-full rounded-xl border border-[#14201a]/15 px-4 text-[15px] font-normal outline-none transition focus:border-[#197a6f] focus:ring-3 focus:ring-[#197a6f]/15"
-              />
-            </label>
+          <form onSubmit={handleEmailSubmit} className="space-y-3">
+            <input
+              type="email"
+              required
+              value={emailInput}
+              onChange={(e) => setEmailInput(e.target.value)}
+              placeholder="Email"
+              aria-label="Email"
+              disabled={busy}
+              autoComplete="email"
+              className="h-12 w-full rounded-xl border border-[#14201a]/12 bg-[#f9faf9] px-4 text-[15px] outline-none transition placeholder:text-[#758a80] focus:border-[#197a6f] focus:bg-white focus:ring-3 focus:ring-[#197a6f]/15"
+            />
+            <input
+              type="password"
+              required
+              value={passwordInput}
+              onChange={(e) => setPasswordInput(e.target.value)}
+              placeholder="Kata sandi tim"
+              aria-label="Kata sandi tim"
+              autoComplete="current-password"
+              disabled={busy}
+              className="h-12 w-full rounded-xl border border-[#14201a]/12 bg-[#f9faf9] px-4 text-[15px] outline-none transition placeholder:text-[#758a80] focus:border-[#197a6f] focus:bg-white focus:ring-3 focus:ring-[#197a6f]/15"
+            />
             <button
               type="submit"
               disabled={busy || !emailInput.trim() || !passwordInput}
-              className="group flex h-12 w-full items-center justify-center gap-2 rounded-full bg-[#197a6f] text-[15px] font-semibold text-white transition-colors hover:bg-[#14635a] disabled:opacity-50"
+              className="flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#197a6f] text-[15px] font-semibold text-white transition-colors hover:bg-[#14635a] disabled:opacity-45"
             >
               {busy ? <Loader2 className="size-4 animate-spin" /> : "Masuk"}
-              {!busy && <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />}
             </button>
           </form>
+        </div>
 
-          <Link
-            href="/"
-            className="mt-10 inline-flex min-h-11 items-center gap-1.5 text-[14px] font-medium text-[#4a5c54] hover:text-[#14201a]"
-          >
-            <ArrowLeft className="size-4" /> Kembali ke website
-          </Link>
-        </motion.div>
-      </div>
+        <Link
+          href="/"
+          className="mx-auto mt-6 flex min-h-11 w-fit items-center gap-1.5 text-[14px] font-medium text-[#4a5c54] hover:text-[#14201a]"
+        >
+          <ArrowLeft className="size-4" /> Kembali ke website
+        </Link>
+      </motion.div>
     </main>
   );
 }

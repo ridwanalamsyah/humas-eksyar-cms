@@ -8,7 +8,6 @@ import { EksyarLogo } from "@/components/brand/eksyar-logo";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/common/avatar";
 import { CommandPaletteTrigger } from "@/components/layout/command-palette";
-import { ThemeToggle } from "@/components/ui/theme-toggle";
 import type { Member } from "@/lib/data/types";
 
 interface AppHeaderProps {
@@ -42,7 +41,6 @@ export function AppHeader({ member, unread = 0 }: AppHeaderProps) {
       </Link>
 
       <div className="flex items-center gap-2">
-        <ThemeToggle />
         <CommandPaletteTrigger open={openSearch} setOpen={setOpenSearch} />
         <button
           type="button"

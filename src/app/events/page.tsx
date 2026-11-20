@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { listEvents } from "@/lib/data/provider";
+import { getCurrentMember, listEvents } from "@/lib/data/provider";
+import { EventForm } from "@/components/events/event-form";
 import { AppShell } from "@/components/layout/app-shell";
 import { SectionHeader } from "@/components/common/section-header";
 import { GlassCard } from "@/components/ui/glass-card";
@@ -9,11 +10,12 @@ import { formatLongDate, formatTime } from "@/lib/format/dates";
 import { MapPin, Users } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Kegiatan",
+  title: "Jadwal",
 };
 
 export default async function EventsListPage() {
-  const events = await listEvents();
+  const [events, me] = await Promise.all([listEvents(), getCurrentMember()]);
+  const canEdit = !["anggota", "monitoring", "pending"].includes(me.role);
   const upcoming = events
     .filter((e) => new Date(e.startsAt) >= new Date())
     .sort((a, b) => a.startsAt.localeCompare(b.startsAt));
@@ -25,10 +27,21 @@ export default async function EventsListPage() {
     <AppShell width="wide">
       <SectionHeader
         eyebrow="Agenda"
-        title="Kegiatan Eksyar"
+        title="Jadwal kegiatan"
         description={`${upcoming.length} akan datang · ${past.length} sudah selesai.`}
         cta={{ label: "Buka kalender", href: "/calendar" }}
       />
+      {canEdit && (
+        <details className="group mb-8 rounded-2xl border border-foreground/10 bg-white p-4 sm:p-5" open={upcoming.length === 0}>
+          <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between text-[15px] font-semibold">
+            Tambah jadwal
+            <span aria-hidden className="text-[22px] leading-none text-brand-600 transition-transform group-open:rotate-45">+</span>
+          </summary>
+          <div className="mt-4">
+            <EventForm />
+          </div>
+        </details>
+      )}
       <div className="mt-2 space-y-8">
         <Section title="Akan datang" events={upcoming} />
         <Section title="Sudah berlalu" events={past} dim />

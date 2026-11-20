@@ -422,14 +422,18 @@ export async function confirmPendingMember(
   const pending = await listPendingMembers();
   const target = pending.find((p) => p.email.toLowerCase() === email.toLowerCase());
   if (!target) return null;
+  // Divisi diambil dari database (id "div-humas-eksyar" belum tentu ada → gagal FK).
+  const divisions = await listDivisions();
+  const divisionId =
+    divisions.find((d) => d.id === "div-humas-eksyar")?.id ?? divisions[0]?.id ?? "div-humas-eksyar";
   const newMember = await createMember({
     name: target.name || email.split("@")[0],
     email: target.email,
     role: role || "anggota",
-    divisionId: "div-humas-eksyar",
+    divisionId,
     position: position || "Anggota Eksyar",
     angkatan: new Date().getFullYear(),
-    nimSuffix: "",
+    nimSuffix: "0000",
     avatarEmoji: "",
   });
   if (target.userId) {
@@ -666,7 +670,9 @@ export async function listEvents(opts?: {
       fixtures.listEvents(opts),
     ]);
     const dbEvents = rows.map((r) => row<Event>(r));
-    const seen = new Set(dbEvents.flatMap((e) => [e.id, e.slug]));
+    // Kegiatan bawaan yang dihapus tim lewat CMS tidak ditampilkan lagi.
+    const hidden = new Set(await hiddenEventIds());
+    const seen = new Set([...dbEvents.flatMap((e) => [e.id, e.slug]), ...hidden]);
     for (const s of seedEvents) {
       if (!seen.has(s.id) && !seen.has(s.slug)) {
         dbEvents.push(s);
@@ -680,6 +686,57 @@ export async function listEvents(opts?: {
   }
 }
 
+const HIDDEN_EVENTS_KEY = "hidden_event_ids";
+
+async function hiddenEventIds(): Promise<string[]> {
+  const v = await getSiteSetting(HIDDEN_EVENTS_KEY).catch(() => null);
+  return Array.isArray(v) ? (v as string[]) : [];
+}
+
+export type EventInput = Pick<Event, "title" | "description" | "location" | "isOnline" | "startsAt" | "endsAt" | "category">;
+
+/** Tambah kegiatan baru dari CMS. */
+export async function createEvent(input: EventInput, coordinatorId: ID, divisionId: ID): Promise<Event> {
+  const id = `evt-${slugify(input.title).slice(0, 40) || "kegiatan"}-${Date.now().toString(36).slice(-5)}`;
+  const inserted = await client()
+    .insert(schema.events)
+    .values({ id, slug: id, divisionId, coordinatorId, rsvpIds: [], checkedInIds: [], contentIds: [], ...input })
+    .returning();
+  return row<Event>(inserted[0]);
+}
+
+/**
+ * Ubah kegiatan. Kegiatan bawaan (belum ada di database) disalin dulu ke
+ * database dengan id yang sama, sehingga versi baru menggantikannya.
+ */
+export async function updateEvent(id: ID, patch: Partial<EventInput>): Promise<Event | null> {
+  const current = await getEvent(id);
+  if (!current) return null;
+  const next = { ...current, ...patch };
+  const values = {
+    title: next.title, slug: next.slug, description: next.description ?? "", divisionId: next.divisionId,
+    location: next.location, isOnline: next.isOnline, startsAt: next.startsAt, endsAt: next.endsAt,
+    category: next.category, capacity: next.capacity ?? null, rsvpIds: next.rsvpIds ?? [],
+    checkedInIds: (next as { checkedInIds?: string[] }).checkedInIds ?? [], coverMediaId: next.coverMediaId ?? null,
+    coordinatorId: next.coordinatorId, contentIds: next.contentIds ?? [],
+  };
+  const saved = await client()
+    .insert(schema.events)
+    .values({ id, ...values })
+    .onConflictDoUpdate({ target: schema.events.id, set: values })
+    .returning();
+  return row<Event>(saved[0]);
+}
+
+/** Hapus kegiatan; kegiatan bawaan disembunyikan supaya tidak muncul lagi. */
+export async function deleteEvent(id: ID): Promise<void> {
+  await client().delete(schema.events).where(eq(schema.events.id, id));
+  if (await fixtures.getEvent(id)) {
+    const hidden = await hiddenEventIds();
+    if (!hidden.includes(id)) await setSiteSetting(HIDDEN_EVENTS_KEY, [...hidden, id]);
+  }
+}
+
 export async function getEvent(id: ID): Promise<Event | null> {
   try {
     const rows = await client()
@@ -688,6 +745,7 @@ export async function getEvent(id: ID): Promise<Event | null> {
       .where(eq(schema.events.id, id))
       .limit(1);
     if (rows[0]) return row<Event>(rows[0]);
+    if ((await hiddenEventIds()).includes(id)) return null;
     return fixtures.getEvent(id);
   } catch {
     return fixtures.getEvent(id);

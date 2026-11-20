@@ -1,18 +1,8 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { motion } from "motion/react";
-import { useTheme } from "next-themes";
-import { toast } from "sonner";
 import { signOut } from "next-auth/react";
 import {
-  Sun,
-  Moon,
-  Monitor,
-  Bell,
-  Volume2,
-  Languages,
   LogOut,
   ShieldCheck,
   ChevronRight,
@@ -34,20 +24,8 @@ interface Props {
   member: Member;
 }
 
-const subscribeNoop = () => () => {};
 
 export function SettingsPanels({ member }: Props) {
-  const { theme, setTheme } = useTheme();
-  const mounted = useSyncExternalStore(
-    subscribeNoop,
-    () => true,
-    () => false,
-  );
-  const [notifEmail, setNotifEmail] = useState(true);
-  const [notifPush, setNotifPush] = useState(true);
-  const [sounds, setSounds] = useState(false);
-  const [haptics, setHaptics] = useState(true);
-  const [lang, setLang] = useState<"id" | "en">("id");
 
   const emailLower = (member.email || "").toLowerCase();
   const isSuperAdminEmail =
@@ -143,94 +121,8 @@ export function SettingsPanels({ member }: Props) {
       )}
 
       <Panel
-        icon={<Sun className="size-4" strokeWidth={1.75} />}
-        title="Tampilan"
-        hint="Ikuti perangkat, atau pilih sendiri."
-      >
-        <div className="grid grid-cols-3 gap-2">
-          {[
-            { v: "light", Icon: Sun, label: "Terang" },
-            { v: "dark", Icon: Moon, label: "Gelap" },
-            { v: "system", Icon: Monitor, label: "Sistem" },
-          ].map(({ v, Icon, label }) => {
-            const active = mounted && theme === v;
-            return (
-              <motion.button
-                key={v}
-                type="button"
-                whileTap={{ scale: 0.97 }}
-                onClick={() => {
-                  setTheme(v);
-                  toast.success(`Tema: ${label}`);
-                }}
-                className={`flex flex-col items-start gap-1 rounded-2xl border px-3 py-2.5 text-left text-[13px] transition-colors ${
-                  active
-                    ? "border-brand-500/45 bg-brand-500/10"
-                    : "border-foreground/10 bg-foreground/[0.04] dark:border-white/10 dark:bg-white/5"
-                }`}
-              >
-                <Icon className="size-4" strokeWidth={1.75} />
-                <span className="font-medium">{label}</span>
-              </motion.button>
-            );
-          })}
-        </div>
-      </Panel>
-
-      <Panel
-        icon={<Bell className="size-4" strokeWidth={1.75} />}
-        title="Notifikasi"
-        hint="Pilih cara menerima pemberitahuan."
-      >
-        <Toggle
-          label="Ringkasan mingguan lewat email"
-          checked={notifEmail}
-          onChange={setNotifEmail}
-        />
-        <Toggle
-          label="Pemberitahuan di perangkat"
-          checked={notifPush}
-          onChange={setNotifPush}
-        />
-      </Panel>
-
-      <Panel
-        icon={<Volume2 className="size-4" strokeWidth={1.75} />}
-        title="Suara &amp; getar"
-        hint="Di ponsel, getaran lembut saat tindakan penting."
-      >
-        <Toggle label="Efek suara halus" checked={sounds} onChange={setSounds} />
-        <Toggle label="Getar di ponsel" checked={haptics} onChange={setHaptics} />
-      </Panel>
-
-      <Panel
-        icon={<Languages className="size-4" strokeWidth={1.75} />}
-        title="Bahasa"
-      >
-        <div className="grid grid-cols-2 gap-2">
-          {(["id", "en"] as const).map((l) => (
-            <button
-              key={l}
-              type="button"
-              onClick={() => setLang(l)}
-              className={`rounded-2xl border px-3 py-2 text-left text-[13px] transition-colors ${
-                lang === l
-                  ? "border-brand-500/45 bg-brand-500/10"
-                  : "border-foreground/10 bg-foreground/[0.04] dark:border-white/10 dark:bg-white/5"
-              }`}
-            >
-              <p className="font-medium">{l === "id" ? "Indonesia" : "English"}</p>
-              <p className="text-[13px] text-foreground/60">
-                {l === "id" ? "Bahasa utama" : "Segera hadir"}
-              </p>
-            </button>
-          ))}
-        </div>
-      </Panel>
-
-      <Panel
         icon={<ShieldCheck className="size-4" strokeWidth={1.75} />}
-        title="Privasi &amp; akun"
+        title="Akun"
       >
         <Button
           variant="ghost"
@@ -294,37 +186,5 @@ function AdminLink({
       </span>
       <ChevronRight className="size-4 text-foreground/60 transition-transform group-hover:translate-x-0.5" strokeWidth={1.75} />
     </Link>
-  );
-}
-
-function Toggle({
-  label,
-  checked,
-  onChange,
-}: {
-  label: string;
-  checked: boolean;
-  onChange: (v: boolean) => void;
-}) {
-  return (
-    <label className="flex w-full items-center justify-between gap-3 rounded-2xl border border-foreground/10 bg-foreground/[0.03] px-3 py-2.5 text-[13px] dark:border-white/10 dark:bg-white/[0.03]">
-      <span>{label}</span>
-      <button
-        type="button"
-        onClick={() => onChange(!checked)}
-        aria-pressed={checked}
-        className={`relative h-6 w-11 rounded-full transition-colors ${
-          checked ? "bg-brand-500" : "bg-foreground/15"
-        }`}
-      >
-        <motion.span
-          layout
-          transition={{ type: "spring", stiffness: 400, damping: 28 }}
-          className={`absolute top-0.5 size-5 rounded-full bg-white shadow ${
-            checked ? "right-0.5" : "left-0.5"
-          }`}
-        />
-      </button>
-    </label>
   );
 }
