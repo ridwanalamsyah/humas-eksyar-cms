@@ -74,6 +74,15 @@ Kode website sudah siap memakai **es.uinsgd.ac.id**. Langkah yang perlu dilakuka
 
 Selama langkah 1–4 belum selesai, website tetap berjalan di `eksyar-cms.vercel.app`.
 
+## Cara menulis di CMS (foto + konteks → beres)
+
+1. **Konten → Tulis konten.** Pilih jenis: **Berita kegiatan** (liputan acara, oleh Humas), **Buletin Mahasiswa** (artikel opini/analisis ekonomi syariah, bukan berita acara), atau **Pengumuman**.
+2. **Foto & konteks.** Unggah foto (otomatis diubah ke JPG ukuran ringan) atau pilih dari Media, lalu tulis konteks singkat: apa, siapa, kapan, di mana, poin penting. Untuk buletin: topik, gagasan utama, poin argumen, sumber.
+3. Tekan **Tulis dengan AI**. AI menyusun judul, isi untuk website, caption Instagram, dan hashtag. AI hanya memakai fakta dari konteks; periksa nama, tanggal, dan angka sebelum terbit.
+4. **Terbitkan.** Bila "Kirim juga ke Instagram saat terbit" dicentang (dan ada foto), postingan ikut diunggah ke @eksyaruinsgd. Hasilnya terlihat di halaman konten (kartu **Instagram**), lengkap dengan tombol kirim ulang bila gagal.
+
+Akun **Penulis Buletin** hanya bisa menulis Buletin Mahasiswa dan mengirimnya untuk diperiksa; tim Humas yang menerbitkan.
+
 ## 6. Aturan menulis
 
 - **Judul** maksimal 8 kata dan menyebut bendanya: "Studium Generale Wakaf Produktif 12 November", bukan "Kegiatan Inspiratif Bersama Narasumber Hebat".

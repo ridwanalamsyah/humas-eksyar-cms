@@ -5,6 +5,7 @@
  *   POST /api/contents         → create a content draft (auth required)
  */
 
+import { queueInstagramPost } from "@/lib/instagram/publish";
 import { BULETIN_HMJ_RUBRIC } from "@/lib/site/content";
 import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
@@ -14,6 +15,9 @@ import {
   createContent,
   findMemberByEmail,
 } from "@/lib/data/provider";
+
+/** Posting Instagram berjalan sesudah respons (after); beri waktu cukup. */
+export const maxDuration = 60;
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -80,5 +84,6 @@ export async function POST(req: NextRequest) {
   });
   revalidatePath("/", "layout");
   revalidatePath("/prodi", "layout");
+  queueInstagramPost(content);
   return NextResponse.json({ content }, { status: 201 });
 }
