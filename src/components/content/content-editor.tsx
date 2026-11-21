@@ -1,16 +1,13 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "motion/react";
 import { toast } from "sonner";
-import { Sparkles, Save, Send, ImageIcon, X, ChevronDown, Wand2, Hash, Calendar, CheckCircle2 } from "lucide-react";
-import { GlassCard } from "@/components/ui/glass-card";
+import { Check, ImagePlus, Images, Loader2, Send, Sparkles, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Pill } from "@/components/common/pill";
-import { STYLE_LIST } from "@/lib/ai/captions";
-import type { MediaAsset, Member, ContentChannel, CaptionStyle, ContentRubric, Rubric } from "@/lib/data/types";
+import type { ContentChannel, ContentRubric, MediaAsset, Member, Rubric } from "@/lib/data/types";
 import { HASHTAG_BLOCK } from "@/lib/fixtures/contents";
+import { cn } from "@/lib/utils";
 
 interface Props {
   media: MediaAsset[];
@@ -19,321 +16,338 @@ interface Props {
   defaultHashtags?: string;
 }
 
-const CHANNELS: { value: ContentChannel; label: string }[] = [
-  { value: "instagram", label: "Instagram" },
-  { value: "twitter", label: "Twitter / X" },
-  { value: "facebook", label: "Facebook" },
-  { value: "tiktok", label: "TikTok" },
-  { value: "linktree", label: "Linktree" },
+type Kind = "kegiatan" | "buletin" | "pengumuman";
+
+const KINDS: { value: Kind; label: string; hint: string; placeholder: string }[] = [
+  {
+    value: "kegiatan",
+    label: "Berita kegiatan",
+    hint: "Liputan acara oleh tim Humas.",
+    placeholder:
+      "Contoh: Seminar Literasi Wakaf Produktif, Kamis 12 Desember 2026, Aula FEBI. Narasumber Dr. ... dari BWI. Diikuti 120 mahasiswa. Poin penting: ...",
+  },
+  {
+    value: "buletin",
+    label: "Buletin Mahasiswa",
+    hint: "Artikel opini/analisis ekonomi syariah karya mahasiswa.",
+    placeholder:
+      "Topik, gagasan utama, dan poin argumen. Contoh: Peran sukuk hijau untuk transisi energi. Poin: 1) ... 2) ... Sumber yang dipakai: ...",
+  },
+  {
+    value: "pengumuman",
+    label: "Pengumuman",
+    hint: "Informasi resmi untuk mahasiswa.",
+    placeholder: "Apa yang diumumkan, untuk siapa, batas waktu, dan cara/tautan pendaftaran.",
+  },
 ];
 
-export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props) {
-  void author;
-  const router = useRouter();
-  const [pending, startTransition] = useTransition();
-  const [generating, setGenerating] = useState(false);
+const field =
+  "w-full rounded-xl border border-foreground/10 bg-white px-3.5 py-3 text-[15px] outline-none transition focus:border-brand-500/50 focus:ring-3 focus:ring-brand-500/10";
 
+/** Foto apa pun → JPG maks 2048 px (Instagram hanya menerima JPG; unggahan lebih ringan). */
+async function toJpeg(file: File): Promise<{ file: File; width: number; height: number }> {
+  const bmp = await createImageBitmap(file);
+  const scale = Math.min(1, 2048 / Math.max(bmp.width, bmp.height));
+  const w = Math.round(bmp.width * scale);
+  const h = Math.round(bmp.height * scale);
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  canvas.getContext("2d")!.drawImage(bmp, 0, 0, w, h);
+  const blob: Blob = await new Promise((r, j) => canvas.toBlob((b) => (b ? r(b) : j(new Error("Foto gagal diproses."))), "image/jpeg", 0.86));
+  return { file: new File([blob], file.name.replace(/\.[a-z0-9]+$/i, "") + ".jpg", { type: "image/jpeg" }), width: w, height: h };
+}
+
+/**
+ * Editor "foto + konteks → beres": pilih jenis tulisan, beri foto dan konteks,
+ * AI menyusun judul, isi, dan caption Instagram; tim tinggal memeriksa lalu
+ * menerbitkan. Saat terbit, postingan ikut dikirim ke Instagram bila dicentang.
+ */
+export function ContentEditor({ media, author, rubrics, defaultHashtags }: Props) {
+  const router = useRouter();
+  const isWriter = author.role === "anggota";
+  const canPublish = !["anggota", "monitoring", "pending"].includes(author.role);
+  const [pending, startTransition] = useTransition();
+  const [writing, setWriting] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [library, setLibrary] = useState(media);
+  const [showLibrary, setShowLibrary] = useState(false);
+  const fileRef = useRef<HTMLInputElement>(null);
+
+  const [kind, setKind] = useState<Kind>(isWriter ? "buletin" : "kegiatan");
+  const categories = useMemo(
+    () => rubrics.filter((r) => r.slug !== "buletin_hmj" && r.slug !== "pengumuman"),
+    [rubrics],
+  );
+  const [category, setCategory] = useState<string>(
+    categories.find((r) => r.slug === "dokumentasi")?.slug ?? categories[0]?.slug ?? "dokumentasi",
+  );
+  const [photos, setPhotos] = useState<string[]>([]);
+  const [context, setContext] = useState("");
   const [title, setTitle] = useState("");
-  const [details, setDetails] = useState("");
+  const [body, setBody] = useState("");
   const [caption, setCaption] = useState("");
   const [hashtags, setHashtags] = useState(defaultHashtags ?? HASHTAG_BLOCK);
-  const initialRubric = (rubrics[0]?.slug ?? "dokumentasi") as ContentRubric;
-  const [rubric, setRubric] = useState<ContentRubric>(initialRubric);
-  const [style, setStyle] = useState<CaptionStyle>("formal_organisasi");
-  const [selectedMedia, setSelectedMedia] = useState<string[]>([]);
-  const [channels, setChannels] = useState<ContentChannel[]>(["instagram"]);
-  const [scheduledFor, setScheduledFor] = useState("");
+  const [toInstagram, setToInstagram] = useState(true);
 
-  async function generate() {
-    if (!title.trim()) {
-      toast.error("Masukkan judul / topik dulu sebelum generate.");
+  const kindInfo = KINDS.find((k) => k.value === kind)!;
+  const rubric: ContentRubric = (kind === "buletin" ? "buletin_hmj" : kind === "pengumuman" ? "pengumuman" : category) as ContentRubric;
+  const byId = useMemo(() => new Map(library.map((m) => [m.id, m])), [library]);
+
+  async function upload(files: FileList) {
+    setUploading(true);
+    try {
+      for (const f of Array.from(files).slice(0, 10)) {
+        const { file, width, height } = await toJpeg(f);
+        const form = new FormData();
+        form.append("file", file);
+        form.append("width", String(width));
+        form.append("height", String(height));
+        form.append("alt", title || context.slice(0, 80) || "Foto kegiatan Ekonomi Syariah");
+        form.append("tags", kind);
+        const res = await fetch("/api/media", { method: "POST", body: form });
+        const j = await res.json().catch(() => ({}));
+        if (!res.ok || !j.media) throw new Error(j.error ?? "Foto gagal diunggah.");
+        setLibrary((cur) => [j.media as MediaAsset, ...cur]);
+        setPhotos((cur) => [...cur, (j.media as MediaAsset).id].slice(0, 10));
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Foto gagal diunggah.");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  async function writeWithAI() {
+    if (context.trim().length < 20) {
+      toast.error("Tulis konteks dulu, minimal satu-dua kalimat.");
       return;
     }
-    setGenerating(true);
+    setWriting(true);
     try {
-      const res = await fetch("/api/captions", {
+      const res = await fetch("/api/ai/write", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          title,
-          details,
-          rubric,
-          style,
-          variants: 2,
-          includeHook: false,
-        }),
+        body: JSON.stringify({ kind, context, title, mediaIds: photos }),
       });
-      const json = await res.json();
-      if (!json.caption) throw new Error("AI gagal membalas");
-      setCaption(json.caption);
-      setHashtags(json.hashtags);
-      toast.success(json.provider === "gemini" ? "Caption AI siap" : "Caption tersusun (mock)");
-    } catch (e) {
-      console.error(e);
-      toast.error("Gagal generate caption — coba lagi.");
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(j.error ?? "AI gagal menulis.");
+      setTitle(j.title);
+      setBody(j.body);
+      setCaption(j.caption);
+      if (j.hashtags) setHashtags(j.hashtags);
+      toast.success("Tulisan siap. Periksa dulu sebelum diterbitkan.");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "AI gagal menulis.");
     } finally {
-      setGenerating(false);
+      setWriting(false);
     }
   }
 
   function submit(action: "draft" | "review" | "publish") {
-    if (!title.trim()) {
-      toast.error("Judul artikel wajib diisi.");
-      return;
-    }
+    if (!title.trim()) return toast.error("Judul wajib diisi.");
+    if (action !== "draft" && !body.trim()) return toast.error("Isi tulisan masih kosong. Tekan “Tulis dengan AI” atau tulis sendiri.");
+    const channels: ContentChannel[] = toInstagram && photos.length ? ["instagram"] : ["internal"];
     startTransition(async () => {
-      try {
-        const targetStatus = action === "publish" ? "published" : action === "review" ? "review_divisi" : "draft";
-        const res = await fetch("/api/contents", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            title: title.trim(),
-            rubric,
-            status: targetStatus,
-            caption,
-            hashtags,
-            channels,
-            mediaIds: selectedMedia,
-            scheduledFor: scheduledFor ? new Date(scheduledFor).toISOString() : null,
-          }),
-        });
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          throw new Error(err.error || "Gagal menyimpan konten");
-        }
-        const msg =
-          action === "publish"
-            ? "Artikel berhasil diterbitkan ke website!"
-            : action === "review"
-              ? "Artikel dikirim untuk ditinjau."
-              : "Draf berhasil disimpan.";
-        toast.success(msg);
-        router.push("/content");
-        router.refresh();
-      } catch (err: unknown) {
-        toast.error((err as Error).message || "Kendala saat menyimpan artikel.");
+      const status = action === "publish" ? "published" : action === "review" ? "review_divisi" : "draft";
+      const res = await fetch("/api/contents", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ title: title.trim(), rubric, status, body, caption, hashtags, channels, mediaIds: photos }),
+      });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        toast.error(j.error ?? "Gagal menyimpan.");
+        return;
       }
+      toast.success(
+        action === "publish"
+          ? channels.includes("instagram")
+            ? "Terbit di website. Sedang dikirim ke Instagram…"
+            : "Terbit di website."
+          : action === "review"
+            ? "Dikirim untuk diperiksa."
+            : "Draf tersimpan.",
+      );
+      router.push(j.content?.id ? `/content/${j.content.id}` : "/content");
+      router.refresh();
     });
   }
 
   const titleWords = title.trim() ? title.trim().split(/\s+/).length : 0;
 
   return (
-    <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-      <GlassCard variant="thick" className="p-6">
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Judul yang menyebut acaranya…"
-          aria-describedby="judul-panduan"
-          className="w-full bg-transparent text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px] outline-none placeholder:text-foreground/60"
-        />
-        {/* Aturan menulis tim (docs/panduan-humas.md): judul maksimal 8 kata. */}
-        <p
-          id="judul-panduan"
-          className={`mt-1 text-[13px] ${titleWords > 8 ? "text-amber-600" : "text-foreground/60"}`}
-        >
-          {titleWords} kata · judul maksimal 8 kata
-        </p>
-
-        <div className="mt-3 flex flex-wrap items-center gap-2 text-[13px]">
-          <SelectField label="Rubrik">
-            <select
-              value={rubric}
-              onChange={(e) => setRubric(e.target.value as ContentRubric)}
-              className="bg-transparent text-[13px] outline-none"
-            >
-              {rubrics.map((r) => (
-                <option key={r.id} value={r.slug}>
-                  {r.label}
-                </option>
-              ))}
-            </select>
-          </SelectField>
-          <SelectField label="Gaya">
-            <select
-              value={style}
-              onChange={(e) => setStyle(e.target.value as CaptionStyle)}
-              className="bg-transparent text-[13px] outline-none"
-            >
-              {STYLE_LIST.map((s) => (
-                <option key={s.value} value={s.value}>{s.label}</option>
-              ))}
-            </select>
-          </SelectField>
-        </div>
-
-        <div className="mt-5">
-          <label className="text-[13px] text-foreground/60">
-            Ceritakan acaranya
-          </label>
-          <textarea
-            value={details}
-            onChange={(e) => setDetails(e.target.value)}
-            placeholder="Apa, kapan, di mana, narasumber, poin penting…"
-            className="mt-2 h-24 w-full resize-y rounded-2xl border border-foreground/10 bg-foreground/5 p-3 text-[14px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
-          />
-        </div>
-
-        <div className="mt-4 flex items-center justify-between">
-          <label className="text-[13px] text-foreground/60">
-            Caption
-          </label>
-          <Button
-            type="button"
-            size="sm"
-            onClick={generate}
-            disabled={generating}
-            className="bg-gradient-to-b from-gold-400 to-gold-500 text-ink-soft"
-          >
-            {generating ? (
-              <>
-                <span className="size-3 animate-pulse rounded-full bg-ink-soft/60" />
-                Menyusun…
-              </>
-            ) : (
-              <>
-                <Wand2 className="size-3.5" strokeWidth={1.75} />
-                Susun dengan AI
-              </>
-            )}
-          </Button>
-        </div>
-        <textarea
-          value={caption}
-          onChange={(e) => setCaption(e.target.value)}
-          placeholder="Tulis isi konten di sini, atau biarkan AI yang menyusun."
-          className="mt-2 h-72 w-full resize-y rounded-2xl border border-foreground/10 bg-foreground/5 p-4 font-mono text-[13.5px] leading-[1.7] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
-        />
-
-        <div className="mt-4">
-          <label className="flex items-center gap-1.5 text-[13px] text-foreground/60">
-            <Hash className="size-3" strokeWidth={1.75} /> Tagar
-          </label>
-          <textarea
-            value={hashtags}
-            onChange={(e) => setHashtags(e.target.value)}
-            className="mt-2 h-16 w-full resize-y rounded-2xl border border-foreground/10 bg-foreground/5 p-3 font-mono text-[13px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
-          />
-        </div>
-
-        <div className="mt-6 flex flex-wrap items-center gap-3">
-          <Button
-            onClick={() => submit("publish")}
-            disabled={pending}
-            className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-xs dark:bg-emerald-500"
-          >
-            <CheckCircle2 className="size-4" strokeWidth={2} /> Terbitkan Sekarang
-          </Button>
-          <Button onClick={() => submit("draft")} variant="secondary" disabled={pending} className="gap-2">
-            <Save className="size-4" strokeWidth={1.75} /> Simpan Draf
-          </Button>
-          <Button onClick={() => submit("review")} variant="ghost" disabled={pending} className="gap-2">
-            <Send className="size-4" strokeWidth={1.75} /> Kirim Review
-          </Button>
-        </div>
-      </GlassCard>
-
-      <aside className="flex flex-col gap-4">
-        <GlassCard variant="regular" className="p-5">
-          <h3 className="text-[13px] text-foreground/60">Channel</h3>
-          <div className="mt-3 grid grid-cols-2 gap-1.5">
-            {CHANNELS.map((c) => {
-              const active = channels.includes(c.value);
-              return (
-                <button
-                  key={c.value}
-                  type="button"
-                  onClick={() => setChannels((cur) => (active ? cur.filter((x) => x !== c.value) : [...cur, c.value]))}
-                  className={`rounded-xl px-3 py-2 text-left text-[13px] font-medium transition-colors ${
-                    active
-                      ? "bg-brand-500/15 text-brand-700 ring-1 ring-brand-500/40 dark:text-brand-200"
-                      : "bg-foreground/5 text-foreground/65 hover:text-foreground dark:bg-white/5"
-                  }`}
-                >
-                  {c.label}
-                </button>
-              );
-            })}
+    <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)]">
+      <div className="space-y-6">
+        {/* 1. Jenis */}
+        <section className="rounded-2xl border border-foreground/10 bg-white p-5">
+          <h2 className="text-[13px] font-semibold uppercase tracking-wide text-foreground/50">1 · Jenis tulisan</h2>
+          <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3">
+            {KINDS.filter((k) => !isWriter || k.value === "buletin").map((k) => (
+              <button
+                key={k.value}
+                type="button"
+                onClick={() => setKind(k.value)}
+                className={cn(
+                  "rounded-xl border px-4 py-3 text-left transition-colors",
+                  kind === k.value ? "border-brand-500/60 bg-brand-500/[0.07]" : "border-foreground/10 hover:bg-foreground/[0.03]",
+                )}
+              >
+                <span className="block text-[15px] font-semibold">{k.label}</span>
+                <span className="block text-[13px] text-foreground/60">{k.hint}</span>
+              </button>
+            ))}
           </div>
-        </GlassCard>
-
-        <GlassCard variant="regular" className="p-5">
-          <h3 className="flex items-center gap-1.5 text-[13px] text-foreground/60">
-            <ImageIcon className="size-3" strokeWidth={1.75} /> Media
-          </h3>
-          <div className="mt-3 grid grid-cols-3 gap-1.5">
-            {media.slice(0, 9).map((m) => {
-              const picked = selectedMedia.includes(m.id);
-              return (
-                <button
-                  key={m.id}
-                  type="button"
-                  onClick={() =>
-                    setSelectedMedia((cur) => (picked ? cur.filter((x) => x !== m.id) : [...cur, m.id]))
-                  }
-                  className={`relative aspect-square overflow-hidden rounded-xl ring-2 transition-all ${
-                    picked ? "ring-brand-500" : "ring-transparent hover:ring-foreground/20"
-                  }`}
-                  aria-pressed={picked}
-                >
-                  <img src={m.url} alt={m.alt} className="size-full object-cover" />
-                  {picked && (
-                    <span className="absolute right-1 top-1 grid grid-cols-1 size-5 place-items-center rounded-full bg-brand-500 text-white shadow-[0_2px_6px_rgba(0,0,0,0.3)]">
-                      <X className="size-3" strokeWidth={2.5} />
-                    </span>
-                  )}
-                </button>
-              );
-            })}
-          </div>
-          {selectedMedia.length > 0 && (
-            <p className="mt-2 text-[13px] text-foreground/60">{selectedMedia.length} aset dipilih</p>
+          {kind === "kegiatan" && categories.length > 1 && (
+            <label className="mt-3 flex items-center gap-2 text-[14px] text-foreground/70">
+              Kategori
+              <select value={category} onChange={(e) => setCategory(e.target.value)} className="h-10 rounded-lg border border-foreground/10 bg-white px-2 text-[14px]">
+                {categories.map((r) => (
+                  <option key={r.id} value={r.slug}>
+                    {r.label}
+                  </option>
+                ))}
+              </select>
+            </label>
           )}
-        </GlassCard>
+        </section>
 
-        <GlassCard variant="regular" className="p-5">
-          <h3 className="flex items-center gap-1.5 text-[13px] text-foreground/60">
-            <Calendar className="size-3" strokeWidth={1.75} /> Penjadwalan
-          </h3>
-          <input
-            type="datetime-local"
-            value={scheduledFor}
-            onChange={(e) => setScheduledFor(e.target.value)}
-            className="mt-3 w-full rounded-xl border border-foreground/10 bg-foreground/5 px-3 py-2 text-[13px] outline-none focus:border-brand-500/40 dark:border-white/10 dark:bg-white/5"
-          />
-          <p className="mt-2 text-[13px] text-foreground/60">
-            Posting otomatis ke channel terpilih saat tanggal jatuh tempo.
-          </p>
-        </GlassCard>
-
-        <GlassCard variant="thin" className="p-5">
-          <h3 className="text-[13px] text-foreground/60">Setelah dikirim</h3>
+        {/* 2. Foto + konteks */}
+        <section className="rounded-2xl border border-foreground/10 bg-white p-5">
+          <h2 className="text-[13px] font-semibold uppercase tracking-wide text-foreground/50">2 · Foto & konteks</h2>
           <div className="mt-3 flex flex-wrap gap-2">
-            <Pill tone="brand">{rubric.replace(/_/g, " ")}</Pill>
-            <Pill tone="gold">
-              <Sparkles className="size-3" strokeWidth={2} /> {style.replace(/_/g, " ")}
-            </Pill>
+            {photos.map((id) => {
+              const m = byId.get(id);
+              return (
+                <div key={id} className="relative size-24 overflow-hidden rounded-xl bg-foreground/5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  {m && <img src={m.url} alt={m.alt} className="size-full object-cover" />}
+                  <button
+                    type="button"
+                    onClick={() => setPhotos((cur) => cur.filter((x) => x !== id))}
+                    aria-label="Lepas foto"
+                    className="absolute right-1 top-1 grid size-7 place-items-center rounded-full bg-black/60 text-white"
+                  >
+                    <X className="size-3.5" />
+                  </button>
+                </div>
+              );
+            })}
+            <button
+              type="button"
+              onClick={() => fileRef.current?.click()}
+              disabled={uploading}
+              className="grid size-24 place-items-center rounded-xl border border-dashed border-foreground/20 text-[12px] text-foreground/60 hover:bg-foreground/[0.03]"
+            >
+              {uploading ? <Loader2 className="size-5 animate-spin" /> : (
+                <span className="flex flex-col items-center gap-1"><ImagePlus className="size-5" />Unggah</span>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowLibrary((v) => !v)}
+              className="grid size-24 place-items-center rounded-xl border border-dashed border-foreground/20 text-[12px] text-foreground/60 hover:bg-foreground/[0.03]"
+            >
+              <span className="flex flex-col items-center gap-1"><Images className="size-5" />Dari Media</span>
+            </button>
+            <input
+              ref={fileRef}
+              type="file"
+              accept="image/*"
+              multiple
+              hidden
+              onChange={(e) => {
+                if (e.target.files?.length) void upload(e.target.files);
+                e.target.value = "";
+              }}
+            />
           </div>
-          <p className="mt-3 text-[13px] text-foreground/65">
-            {scheduledFor ? "Konten akan terbit sesuai jadwal." : "Konten akan diperiksa koordinator sebelum terbit."}
-          </p>
-        </GlassCard>
+          {showLibrary && (
+            <div className="mt-3 grid max-h-64 grid-cols-4 gap-2 overflow-y-auto sm:grid-cols-6">
+              {library.slice(0, 60).map((m) => {
+                const on = photos.includes(m.id);
+                return (
+                  <button
+                    key={m.id}
+                    type="button"
+                    onClick={() => setPhotos((cur) => (on ? cur.filter((x) => x !== m.id) : [...cur, m.id].slice(0, 10)))}
+                    className={cn("relative aspect-square overflow-hidden rounded-lg", on && "ring-2 ring-brand-500")}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={m.url} alt={m.alt} loading="lazy" className="size-full object-cover" />
+                    {on && <span className="absolute right-1 top-1 grid size-5 place-items-center rounded-full bg-brand-600 text-white"><Check className="size-3" /></span>}
+                  </button>
+                );
+              })}
+            </div>
+          )}
+          <textarea
+            value={context}
+            onChange={(e) => setContext(e.target.value)}
+            rows={5}
+            placeholder={kindInfo.placeholder}
+            className={cn(field, "mt-4 resize-y")}
+          />
+          <Button type="button" onClick={writeWithAI} disabled={writing} className="mt-3 h-12 w-full gap-2 text-[15px] sm:w-auto">
+            {writing ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
+            {writing ? "AI sedang menulis…" : body ? "Tulis ulang dengan AI" : "Tulis dengan AI"}
+          </Button>
+        </section>
+
+        {/* 3. Hasil */}
+        <section className="rounded-2xl border border-foreground/10 bg-white p-5">
+          <h2 className="text-[13px] font-semibold uppercase tracking-wide text-foreground/50">3 · Periksa tulisan</h2>
+          <input
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Judul"
+            className="mt-3 w-full bg-transparent text-[22px] font-semibold leading-tight tracking-tight outline-none placeholder:text-foreground/35 sm:text-[26px]"
+          />
+          <p className={cn("mt-1 text-[13px]", titleWords > 10 ? "text-amber-600" : "text-foreground/50")}>{titleWords} kata · judul sebaiknya maks 10 kata</p>
+          <label className="mt-4 block text-[13px] font-medium text-foreground/60">
+            Isi untuk website
+            <textarea value={body} onChange={(e) => setBody(e.target.value)} rows={14} placeholder="Isi tulisan muncul di sini." className={cn(field, "mt-1.5 resize-y leading-relaxed")} />
+          </label>
+        </section>
+      </div>
+
+      {/* Samping: Instagram + kirim */}
+      <aside className="space-y-6 lg:sticky lg:top-6 lg:self-start">
+        <section className="rounded-2xl border border-foreground/10 bg-white p-5">
+          <h2 className="text-[13px] font-semibold uppercase tracking-wide text-foreground/50">Instagram</h2>
+          <label className="mt-3 flex items-start gap-2.5 text-[14px]">
+            <input type="checkbox" checked={toInstagram} onChange={(e) => setToInstagram(e.target.checked)} className="mt-0.5 size-4" />
+            <span>
+              Kirim juga ke Instagram saat terbit
+              {!photos.length && <span className="block text-[13px] text-amber-700">Butuh minimal satu foto.</span>}
+            </span>
+          </label>
+          <label className="mt-4 block text-[13px] font-medium text-foreground/60">
+            Caption
+            <textarea value={caption} onChange={(e) => setCaption(e.target.value)} rows={7} placeholder="Caption dibuat AI bersama tulisan." className={cn(field, "mt-1.5 resize-y text-[14px]")} />
+          </label>
+          <label className="mt-3 block text-[13px] font-medium text-foreground/60">
+            Hashtag
+            <input value={hashtags} onChange={(e) => setHashtags(e.target.value)} className={cn(field, "mt-1.5 py-2.5 text-[14px]")} />
+          </label>
+        </section>
+
+        <section className="space-y-2 rounded-2xl border border-foreground/10 bg-white p-5">
+          {canPublish && (
+            <Button onClick={() => submit("publish")} disabled={pending} className="h-12 w-full gap-2 text-[15px]">
+              {pending ? <Loader2 className="size-4 animate-spin" /> : <Send className="size-4" />}
+              Terbitkan{toInstagram && photos.length ? " + Instagram" : ""}
+            </Button>
+          )}
+          <Button onClick={() => submit("review")} disabled={pending} variant={canPublish ? "secondary" : "primary"} className="h-11 w-full">
+            Kirim untuk diperiksa
+          </Button>
+          <Button onClick={() => submit("draft")} disabled={pending} variant="ghost" className="h-11 w-full">
+            Simpan draf
+          </Button>
+          {isWriter && <p className="pt-1 text-[13px] text-foreground/60">Tulisanmu terbit setelah diperiksa tim Humas.</p>}
+        </section>
       </aside>
     </div>
-  );
-}
-
-function SelectField({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <motion.label
-      whileHover={{ y: -1 }}
-      className="inline-flex items-center gap-2 rounded-full border border-foreground/10 bg-foreground/5 px-3 py-1.5 text-foreground/85 dark:border-white/10 dark:bg-white/5"
-    >
-      <span className="text-[13px] uppercase tracking-wider text-foreground/60">{label}</span>
-      {children}
-      <ChevronDown className="size-3 text-foreground/60" strokeWidth={1.75} />
-    </motion.label>
   );
 }

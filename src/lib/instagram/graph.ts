@@ -23,14 +23,14 @@ type StoredToken = { token: string; refreshedAt: string };
 
 export class InstagramNotConfiguredError extends Error {}
 
-async function getToken(): Promise<string> {
+export async function getToken(): Promise<string> {
   const stored = (await getSiteSetting(TOKEN_KEY).catch(
     () => null,
   )) as StoredToken | null;
   const token = stored?.token || process.env.INSTAGRAM_ACCESS_TOKEN;
   if (!token) {
     throw new InstagramNotConfiguredError(
-      "Instagram belum terhubung: tambahkan INSTAGRAM_ACCESS_TOKEN di environment Vercel (lihat panduan di halaman ini).",
+      "Instagram belum tersambung. Admin: buka Pengaturan → Instagram, tempel token, lalu tekan Sambungkan.",
     );
   }
   // Perpanjang token bila sudah lebih dari 7 hari sejak terakhir diperbarui.

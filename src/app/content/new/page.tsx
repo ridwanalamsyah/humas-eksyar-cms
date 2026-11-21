@@ -37,11 +37,10 @@ export default async function NewContentPage() {
           Editor
         </p>
         <h1 className="mt-1 text-[24px] font-semibold leading-tight tracking-tight sm:text-[28px]">
-          Konten baru
+          Tulis konten
         </h1>
         <p className="mt-2 max-w-prose text-foreground/65">
-          Tulis isi, pilih foto, lalu kirim untuk diperiksa. Bantuan AI di
-          sebelah kanan bisa merapikan tulisan.
+          Beri foto dan konteks, lalu tekan &ldquo;Tulis dengan AI&rdquo;. Periksa hasilnya, lalu terbitkan.
         </p>
       </header>
       <ContentEditor

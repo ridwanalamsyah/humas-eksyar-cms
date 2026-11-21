@@ -6,6 +6,7 @@
  *   DELETE /api/contents/:id   (auth required)
  */
 
+import { queueInstagramPost } from "@/lib/instagram/publish";
 import { SITE_URL } from "@/lib/site/url";
 import { BULETIN_HMJ_RUBRIC } from "@/lib/site/content";
 import { NextRequest, NextResponse } from "next/server";
@@ -20,6 +21,9 @@ import {
   listMembers,
 } from "@/lib/data/provider";
 import { sendEmail, htmlEmail } from "@/lib/email/send";
+
+/** Posting Instagram berjalan sesudah respons (after); beri waktu cukup. */
+export const maxDuration = 60;
 
 interface Params {
   params: Promise<{ id: string }>;
@@ -103,6 +107,7 @@ export async function PATCH(req: NextRequest, { params }: Params) {
   }
   revalidatePath("/", "layout");
   revalidatePath("/prodi", "layout");
+  if (prev.status !== "published") queueInstagramPost(content);
   return NextResponse.json({ content });
 }
 

@@ -9,6 +9,7 @@ import { rubricLabel } from "@/lib/site/content";
 import { RepurposePanel } from "@/components/content/repurpose-panel";
 import { Avatar } from "@/components/common/avatar";
 import { PublishControlCard } from "@/components/content/publish-control-card";
+import { InstagramPostStatus } from "@/components/content/instagram-post-status";
 import { CaptionHistory } from "@/components/content/caption-history";
 import { ContentInlineEditor } from "@/components/content/content-inline-editor";
 import { CommentThread } from "@/components/content/comment-thread";
@@ -110,16 +111,25 @@ export default async function ContentDetail({ params }: Props) {
             </div>
           )}
 
-          <GlassCard variant="regular" className="mt-6 p-6">
+          {content.body?.trim() && (
+            <GlassCard variant="regular" className="mt-6 p-6">
+              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/60">
+                Isi untuk website
+              </h3>
+              <div className="mt-3 whitespace-pre-wrap text-[15px] leading-[1.75] text-foreground/85">{content.body}</div>
+            </GlassCard>
+          )}
+
+          <GlassCard variant="thin" className="mt-4 p-6">
             <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/60">
-              Caption
+              Caption Instagram
             </h3>
             <pre className="mt-3 whitespace-pre-wrap font-sans text-[14.5px] leading-[1.75] text-foreground/85">
-              {content.caption || "(Belum ada caption — masih draft.)"}
+              {content.caption || "Belum ada caption Instagram."}
             </pre>
             {content.hashtags && (
               <div className="mt-4 flex flex-wrap gap-1.5">
-                {content.hashtags.split(" ").map((h) => (
+                {content.hashtags.split(" ").filter(Boolean).map((h) => (
                   <span key={h} className="rounded-full bg-brand-500/10 px-2 py-0.5 font-mono text-[13px] text-brand-700 dark:text-brand-300">
                     {h}
                   </span>
@@ -127,15 +137,6 @@ export default async function ContentDetail({ params }: Props) {
               </div>
             )}
           </GlassCard>
-
-          {content.body && content.body !== content.caption && (
-            <GlassCard variant="thin" className="mt-4 p-6">
-              <h3 className="font-display text-sm font-semibold uppercase tracking-[0.16em] text-foreground/60">
-                Catatan internal
-              </h3>
-              <p className="mt-3 whitespace-pre-wrap text-[14px] text-foreground/75">{content.body}</p>
-            </GlassCard>
-          )}
 
           {canEdit && (
             <ContentInlineEditor
@@ -152,6 +153,11 @@ export default async function ContentDetail({ params }: Props) {
 
         <aside className="flex flex-col gap-4">
           <PublishControlCard content={content} canEdit={canEdit} />
+          <InstagramPostStatus
+            contentId={content.id}
+            published={content.status === "published"}
+            canPost={!!me && me.role !== "anggota" && me.role !== "monitoring"}
+          />
 
           {content.metrics && (
             <GlassCard variant="regular" className="p-5">
