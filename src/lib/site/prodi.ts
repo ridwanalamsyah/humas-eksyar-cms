@@ -358,6 +358,48 @@ export const prospekKarir = [
  */
 export const sorotan = [
   {
+    date: "2026-11-22",
+    category: "Kemahasiswaan",
+    title: "Cetak Generasi Adaptif, Eksyar Gelar Kompetisi Nasional Esai dan Business Case 2026",
+    summary:
+      "Sebanyak 54 mahasiswa dari 21 perguruan tinggi beradu gagasan inovatif di Cipta Nusantara Fest x Ex-Tion 2026 yang digelar HMJ Ekonomi Syariah, lewat National Essay Competition dan National Business Case Competition.",
+    source:
+      "https://uinsgd.ac.id/cetak-generasi-adaptif-eksyar-gelar-kompetisi-nasional-esai-dan-business-case-2026/",
+    image:
+      "https://uinsgd.ac.id/wp-content/uploads/2026/11/IMG-20261122-WA0008.jpg",
+  },
+  {
+    date: "2026-11-21",
+    category: "Prestasi",
+    title: "Lulusan Ekonomi Syariah Raih Adhi Djati Utama pada Wisuda ke-110",
+    summary:
+      "Hakiki Ramadhan, S.E., lulusan Ekonomi Syariah FEBI, meraih Adhi Djati Utama, anugerah tertinggi bagi wisudawan terbaik, pada Wisuda ke-110 UIN Sunan Gunung Djati Bandung di Gedung Anwar Musaddad.",
+    source:
+      "https://uinsgd.ac.id/lulusan-ekonomi-syariah-raih-adhi-djati-utama-pada-wisuda-ke-110/",
+    image:
+      "https://uinsgd.ac.id/wp-content/uploads/2026/11/IMG-20261121-WA00101.jpg",
+  },
+  {
+    date: "2026-11-05",
+    category: "Kemahasiswaan",
+    title: "HMJ Ekonomi Syariah STAI Muttaqien Purwakarta Studi Banding ke UIN Bandung",
+    summary:
+      "HMJ Ekonomi Syariah UIN Bandung menerima studi banding HIMAPS Ekonomi Syariah STAI Dr. KH. EZ. Muttaqien Purwakarta di Aula FEBI untuk memperkuat kolaborasi dan wawasan akademik mahasiswa.",
+    source:
+      "https://genhalal.id/perkuat-kolaborasi-dan-wawasan-akademik-hmj-ekonomi-syariah-stai-muttaqien-purwakarta-studi-banding-ke-uin-bandung/",
+    image: "/prodi/kegiatan/studi-banding-stai-muttaqien.jpg",
+  },
+  {
+    date: "2026-11-05",
+    category: "Kerja Sama",
+    title: "Perkuat Tridharma, Prodi Ekonomi Syariah Jalin Kemitraan dengan STAI Muttaqien Purwakarta",
+    summary:
+      "Prodi S-1 Ekonomi Syariah UIN Bandung dan STAI Dr. KH. EZ. Muttaqien Purwakarta menandatangani MoU kemitraan Tridharma yang mencakup pendidikan, penelitian, pengabdian, dan MBKM.",
+    source: "https://uinsgd.ac.id/perkuat-tridharma-perguruan-tinggi/",
+    image:
+      "https://uinsgd.ac.id/wp-content/uploads/2026/11/IMG-20261120-WA0037-scaled.jpg",
+  },
+  {
     date: "2026-09-24",
     category: "Pengabdian",
     title: "Siapkan Generasi Qurani yang Melek Digital, Prodi Eksyar Gelar PkM Tata Kelola Masjid di Garut",
@@ -497,7 +539,7 @@ export const prestasi = [
     name: "Hakiki Ramadhan",
     initials: "HR",
     achievement:
-      "Lulus Munaqasah Jalur Publikasi Jurnal SINTA 2 (Share UIN Ar-Raniry) & Kontributor Islamic Finance News (IFN)",
+      "Wisudawan terbaik Adhi Djati Utama Wisuda ke-110 UIN SGD, lulus jalur publikasi jurnal SINTA 2 & kontributor Islamic Finance News (IFN)",
     group: "Mahasiswa & Alumni",
     photo: "/prodi/prestasi/hakiki-ramadhan.jpg",
   },
